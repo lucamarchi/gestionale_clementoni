@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Product = require('./app/models/product');
 
-mongoose.connect('mongodb://127.0.0.1:27017/my_database');
+mongoose.connect('mongodb://127.0.0.1:27017/db_clementoni');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
