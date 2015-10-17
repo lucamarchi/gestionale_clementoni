@@ -27,7 +27,18 @@ router.get('/', function(req,res) {
 router.route('/products')
 	.post(function(req,res) {
 		var product = new Product();
-		product.name = req.body.name;
+		product.matricola = req.body.matricola;
+		product.materiale = req.body.materiale;
+		product.cop = req.body.cop;
+		product.quantita = req.body.quantita;
+		product.dimensioni = req.body.dimensioni;
+		product.pesokg = req.body.pesokg;
+		product.pesoton = req.body.pesoton;
+		product.qualita = req.body.qualita;
+		product.colore = req.body.colore;
+		product.ral = req.body.ral;
+		product.note = req.body.note;
+		product.finitura = req.body.finitura;
 
 		product.save(function(err) {
 			if (err)
@@ -59,8 +70,18 @@ router.route('/products/:product_id')
 			if (err)
 				res.send(err)
 
-			product.name = req.body.name;
-
+			product.matricola = req.body.matricola;
+			product.materiale = req.body.materiale;
+			product.cop = req.body.cop;
+			product.quantita = req.body.quantita;
+			product.dimensioni = req.body.dimensioni;
+			product.pesokg = req.body.pesokg;
+			product.pesoton = req.body.pesoton;
+			product.qualita = req.body.qualita;
+			product.colore = req.body.colore;
+			product.ral = req.body.ral;
+			product.note = req.body.note;
+			product.finitura = req.body.finitura;
 			product.save(function(err) {
 				if (err)
 					res.send(err);
