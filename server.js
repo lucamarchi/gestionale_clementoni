@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Product = require('./app/models/product');
+var control = require('./app/control/checkval');
 
 mongoose.connect('mongodb://127.0.0.1:27017/db_clementoni');
 
@@ -26,29 +27,34 @@ router.get('/', function(req,res) {
 
 router.route('/products')
 	.post(function(req,res) {
-		var product = new Product();
-		product.matricola = req.body.matricola;
-		product.materiale = req.body.materiale;
-		product.cop = req.body.cop;
-		product.quantita = req.body.quantita;
-		product.dimensioni = req.body.dimensioni;
-		product.pesokg = req.body.pesokg;
-		product.pesoton = req.body.pesoton;
-		product.qualita = req.body.qualita;
-		product.colore = req.body.colore;
-		product.ral = req.body.ral;
-		product.note = req.body.note;
-		product.finitura = req.body.finitura;
-
-		product.save(function(err) {
-			if (err)
-				res.send(err);
+		var check = control.check(req);
+		if (check) {
 			
-			res.json({message: 'Product created!'});
-		});
+			var product = new Product();
+			product.matricola = req.body.matricola;
+			product.materiale = req.body.materiale;
+			product.cop = req.body.cop;
+			product.quantita = req.body.quantita;
+			product.dimensioni = req.body.dimensioni;
+			product.pesokg = req.body.pesokg;
+			product.pesoton = req.body.pesoton;
+			product.qualita = req.body.qualita;
+			product.colore = req.body.colore;
+			product.ral = req.body.ral;
+			product.note = req.body.note;
+			product.finitura = req.body.finitura;
+
+			product.save(function(err) {
+				if (err)
+					res.send(err);
+				
+				res.json({message: 'Prodotto creato'});
+			});
+		} else res.status(500).json({message: 'Dato non valido'});
 	})
+
 	.get(function(req,res) {
-		Product.find(function(err,products) {
+		Product.find({}, function(err,products) {
 			if (err)
 				res.send(err);
 			res.json(products);
@@ -69,24 +75,28 @@ router.route('/products/:product_id')
 		Product.findById(req.params.product_id, function(err,product) {
 			if (err)
 				res.send(err)
-
-			product.matricola = req.body.matricola;
-			product.materiale = req.body.materiale;
-			product.cop = req.body.cop;
-			product.quantita = req.body.quantita;
-			product.dimensioni = req.body.dimensioni;
-			product.pesokg = req.body.pesokg;
-			product.pesoton = req.body.pesoton;
-			product.qualita = req.body.qualita;
-			product.colore = req.body.colore;
-			product.ral = req.body.ral;
-			product.note = req.body.note;
-			product.finitura = req.body.finitura;
-			product.save(function(err) {
-				if (err)
-					res.send(err);
-				res.json({message: 'Product updated!'});
-			});
+			
+				product.matricola = req.body.matricola;
+				product.materiale = req.body.materiale;
+				product.cop = req.body.cop;
+				product.quantita = req.body.quantita;
+				product.dimensioni = req.body.dimensioni;
+				product.pesokg = req.body.pesokg;
+				product.pesoton = req.body.pesoton;
+				product.qualita = req.body.qualita;
+				product.colore = req.body.colore;
+				product.ral = req.body.ral;
+				product.note = req.body.note;
+				product.finitura = req.body.finitura;
+				
+				var check = control.check(req);
+				if (check) {						
+						product.save(function(err) {
+							if (err)
+								res.send(err);
+							res.json({message: 'Prodotto modificato'});
+						});
+				} else res.status(500).json({message: 'Dato non valido'});
 		});
 	})
 	.delete(function(req,res) {
@@ -95,7 +105,7 @@ router.route('/products/:product_id')
 		}, function(err,product) {
 			if (err)
 				res.send(err);
-			res.json({message: 'Product removed!'});
+			res.json({message: 'Prodotto cancellato'});
 		});
 	});
 
