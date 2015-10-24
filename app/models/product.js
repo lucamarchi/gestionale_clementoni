@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ProductSchema = new Schema({
+	ordineId: {type: Number, require: true},
 	matricola: {type: Number,required: true},
 	materiale: {type: String, required: true},
 	cop: {type: String, enum: ['coil', 'pacco']},
