@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Product = require('./app/models/product');
+var Order = require('./app/models/order');
 var control = require('./app/control/checkval');
 
 mongoose.connect('mongodb://127.0.0.1:27017/db_clementoni');
@@ -108,6 +109,41 @@ router.route('/products/:product_id')
 			res.json({message: 'Prodotto cancellato'});
 		});
 	});
+
+// AGGIUNTA DI UN ORDINE POST /api/orders ED VISUALIZZAZIONE ORDINI GET /api/orders
+
+
+router.route('/orders')
+	.post(function(req,res) {
+		
+			
+			var order = new Order();
+			order.numOrdine = req.body.numOrdine;
+			order.ddt = req.body.ddt;
+			order.fornitore = req.body.fornitore;
+			order.cTrasporto = req.body.cTrasporto;
+			order.cOrdine = req.body.cOrdine;
+			order.cTotale = req.body.cTotale;
+			for (i in req.body.products)
+				order.products.push(i);
+			order.save(function(err) {
+				if (err)
+					res.send(err);
+				
+				res.json({message: 'Ordine creato'});
+			});
+		
+	})
+
+	.get(function(req,res) {
+		Order.find({}, function(err,orders) {
+			if (err)
+				res.send(err);
+			res.json(orders);
+		});	
+	});
+
+
 
 app.use('/api', router);
 
