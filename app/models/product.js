@@ -3,7 +3,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ProductSchema = new Schema({
-	ordineId: {type: Number, require: true},
 	matricola: {type: Number,required: true},
 	materiale: {type: String, required: true},
 	cop: {type: String, enum: ['coil', 'pacco']},
@@ -15,7 +14,8 @@ var ProductSchema = new Schema({
 	colore: {type: String},
 	ral: {type: String},
 	note: {type: String},
-	finitura: {type: String}
+	finitura: {type: String},
+	orderId: {type: Schema.ObjectId, ref: 'Order'}
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
