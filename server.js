@@ -4,7 +4,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Product = require('./app/models/product');
 var Order = require('./app/models/order');
-var control = require('./app/control/checkval');
+var controlPrd = require('./app/control/checkvalprd');
+var controlOrd = require('./app/control/checkvalord');
 
 mongoose.connect('mongodb://127.0.0.1:27017/db_clementoni');
 
@@ -16,19 +17,20 @@ var port = process.env.PORT || 8080;
 var router = express.Router();
 
 router.use(function(req,res,next) {
-	console.log('Something is happening.');
+	console.log('Starting...');
 	next();
 })
 
 router.get('/', function(req,res) {
-	res.json({message: 'Welcome to my API!'});
+	res.json({message: 'Gestionale Clementoni API!'});
 });
 
 // AGGIUNTA DI UN PRODOTTO POST /api/products ED VISUALIZZAZIONE PRODOTTI GET /api/products
 
 router.route('/products')
 	.post(function(req,res) {
-		var check = control.check(req);
+		var check = controlPrd.check(req);
+		console.log('Check status product %s',check + '\n');
 		if (check) {
 			
 			var product = new Product();
@@ -44,14 +46,23 @@ router.route('/products')
 			product.ral = req.body.ral;
 			product.note = req.body.note;
 			product.finitura = req.body.finitura;
-
+			product.orderId = req.body.orderId;
+			console.log(JSON.stringify(product,null,4) +'\n');
 			product.save(function(err) {
 				if (err)
 					res.send(err);
-				
-				res.json({message: 'Prodotto creato'});
 			});
-		} else res.status(500).json({message: 'Dato non valido'});
+			Order.findById(req.body.orderId, function(err,order) {
+					if (err)
+						res.send.err;
+					order.productIds.push(product);
+					order.save(function(err) {
+						if (err) return res.send(err);
+					});
+				});
+			res.json({message: 'Prodotto inserito nell ordine'});
+			console.log('Prodotto inserito \n');
+		} else res.status(500).json({message: 'Dato non valido,post'});
 	})
 
 	.get(function(req,res) {
@@ -89,15 +100,15 @@ router.route('/products/:product_id')
 				product.ral = req.body.ral;
 				product.note = req.body.note;
 				product.finitura = req.body.finitura;
-				
-				var check = control.check(req);
-				if (check) {						
+				var check = controlPrd.check(req);
+				if (true) {						
 						product.save(function(err) {
 							if (err)
 								res.send(err);
 							res.json({message: 'Prodotto modificato'});
+
 						});
-				} else res.status(500).json({message: 'Dato non valido'});
+				} else res.status(500).json({message: 'Dato non valido (prodotto,put)'});
 		});
 	})
 	.delete(function(req,res) {
@@ -115,8 +126,9 @@ router.route('/products/:product_id')
 
 router.route('/orders')
 	.post(function(req,res) {
-		
-			
+		var check = controlOrd.check(req);
+		console.log('Check order status %s', check);
+		if (check) {			
 			var order = new Order();
 			order.numOrdine = req.body.numOrdine;
 			order.ddt = req.body.ddt;
@@ -124,21 +136,21 @@ router.route('/orders')
 			order.cTrasporto = req.body.cTrasporto;
 			order.cOrdine = req.body.cOrdine;
 			order.cTotale = req.body.cTotale;
-			for (i in req.body.products)
-				order.products.push(i);
 			order.save(function(err) {
 				if (err)
 					res.send(err);
-				
-				res.json({message: 'Ordine creato'});
+				console.log('Ordine inserito');
+				console.log(JSON.stringify(order,null,4));
+				res.json({message: JSON.stringify(order._id,null,4)});
 			});
-		
+		} else res.status(500).json({message: 'Dato non valido (ordine)'});
 	})
 
 	.get(function(req,res) {
 		Order.find({}, function(err,orders) {
 			if (err)
 				res.send(err);
+			console.log('GET number orders %s', orders.length + '\n');
 			res.json(orders);
 		});	
 	});
@@ -148,5 +160,5 @@ router.route('/orders')
 app.use('/api', router);
 
 app.listen(port);
-console.log('Magic happens on port ' + port);
+console.log('Magic happens on port ' + port + '\n');
 

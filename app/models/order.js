@@ -11,7 +11,7 @@ var OrderSchema = new Schema({
 	cTrasporto: {type: Number},
 	cOrdine: {type: Number},
 	cTotale: {type: Number},
-	products: [{ type: String}]
+	productIds: [{ type: Schema.ObjectId, ref: 'Product'}]
 });
 
 module.exports = mongoose.model('Order', OrderSchema);
