@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="store">
+	<head>
+		<link rel="stylesheet" type="text/css" href="bootstrap-3.3.5-dist/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div ng-controller="orderController">
+		<h1>Inserire Ordine</h1> 
+			<style>
+				.ng-dirty.ng-invalid {border-color: #FA787E;}
+				.ng-dirty.ng-valid {border-color: #78FA89;}
+			</style>
+  			<form name="orderForm" class="form-horizontal" ng-submit="orderForm.$valid && createOrder()" novalidate>
+  				<div>
+    				<label for="numOrdine" class="control-label">Numero Ordine: </label>
+    				<input type="number" ng-model="order.numOrdine" class="ng-dirty" required/>
+    			</div>
+    			
+    			<div>
+    				<label for="ddt" class="control-label">DDT: </label> 
+    				<input type="number" ng-model="order.ddt" class="ng-dirty" required/>
+    			</div>
+    			
+    			<div>
+    				<label for="fornitore" class="control-label">Fornitore: </label> 
+    				<input type="text" ng-model="order.fornitore" class="ng-dirty" required/>
+    			</div>
+    			
+    			<div>
+    				<label for="cTrasporto" class="control-label">Costo Trasporto: </label> 
+    				<input type="number" ng-model="order.cTrasporto" class="ng-dirty" required/>
+    			</div>
+
+    			<div>
+    				<label for="cOrdine" class="control-label">Costo Ordine: </label> 
+    				<input type="number" ng-model="order.cOrdine" class="ng-dirty" required/><br/>
+    			</div>
+
+    			<div>
+    				<label for="cTotale" class="control-label">Costo Totale: </label> 
+    				{{(order.cTrasporto+order.cOrdine)|currency}}
+    			</div>
+    			
+    			<div>
+    				<button type="submit" class="btn btn-default">Inserisci</button>
+    			</div>
+  			</form>
+  			<pre>Ordine= {{order | json}}</pre>
+		</div>
+		<script src="angular.min.js"></script>
+		<script src="store.js"></script>
+	</body>
+</html>

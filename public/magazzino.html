@@ -1,0 +1,33 @@
+<h2>MAGAZZINO</h2> 
+<table class="table table-bordered">
+	<thead>
+	    <tr>
+			<th>Matricola</th>
+			<th>Materiale</th>
+  			<th>Cop</th>
+			<th>Quantita</th>
+	      	<th>Dimensioni</th>
+	      	<th>Peso Kg</th>
+	      	<th>Peso t</th>
+	      	<th>Qualita</th>
+	      	<th>Colore</th>
+	      	<th>Ral</th>
+	      	<th>Finitura</th>
+	      	<th>Note</th>
+	    </tr>
+	</thead>
+  	<tbody>
+    	<tr ng-repeat="product in products">
+      		<td>{{product.matricola}}</td>
+      		<td>{{product.materiale}}</td>
+      		<td>{{product.cop}}</td>
+      		<td>{{product.quantita}}</td>
+      		<td>{{product.pesokg}}</td>
+      		<td>{{product.qualita}}</td>
+      		<td>{{product.colore}}</td>
+      		<td>{{product.ral}}</td>
+      		<td>{{product.finitura}}</td>
+      		<td>{{product.note}}</td>
+      	</tr>
+    </tbody>
+</table>

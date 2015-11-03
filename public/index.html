@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="store">
+
+<head>
+    <title>Clementoni</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Clementoni</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a ui-sref="magazzino">Magazzino</a></li>
+                    <li><a ui-sref="carichiIn">Carichi in entrata</a></li>
+            		<li><a ui-sref="ordiniTaglio">Ordini di taglio</a></li>
+            		<li><a ui-sref="carichiOut">Carichi in uscita</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="jumbotron">
+            <div ui-view></div>
+        </div>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
+    <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+    <script src="js/app.js"></script>
+	<script src="js/store.js"></script>
+</body>
+
+</html>
