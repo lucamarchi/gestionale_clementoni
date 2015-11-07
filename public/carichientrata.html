@@ -13,7 +13,7 @@
 	</thead>
   	<tbody>
     	<tr ng-repeat="order in orders">
-    		<td>{{order.numOrdine}}</td>
+    		<td><a ui-sref="productsList">{{order.numOrdine}}</a></td>
 			<td>{{order.ddt}}</td>
   			<td>{{order.fornitore}}</td>
 			<td>{{order.date}}</td>
@@ -23,4 +23,6 @@
 		</tr>
 	</tbody>
 </table>
-	
+<div>
+<button ui-sref="addOrder" class="btn btn-primary">Aggiungi Ordine</button>
+</div>

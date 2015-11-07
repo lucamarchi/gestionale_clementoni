@@ -5,8 +5,8 @@ store.factory('productFactory', function ($http) {
         get : function () {
             return $http.get('http://localhost:8080/api/products');
         },
-        post : function (product) {
-            return $http.post('http://localhost:8080/api/products/', product);
+        post : function (product,orderId) {
+            return $http.post('http://localhost:8080/api/products/:orderId', product, orderId);
         },
         delete : function (id) {
             return $http.delete('http://localhost:8080/api/products/' + id);
@@ -19,17 +19,18 @@ store.controller('productController', function ($scope, productFactory) {
     productFactory.get()
         .success(function (data) {
             $scope.products = data;
-            console.log(data.message);
+            console.log('Lista prodotti ordine');
         })
         .error(function (data) {
             console.log('Error: ' + data.message);
         });
 
     $scope.createProduct = function () {
-        productFactory.post($scope.product)
+        $scope.orderId = "563655bb04d67032fff2c969";
+        productFactory.post($scope.product, $scope.orderId)
             .success(function (data) {
             $scope.product = {};
-            console.log('YEAH');
+            console.log('Prodotto Aggiunto ');
             })
             .error(function(data) {
             console.log('Error: ' + data);
@@ -57,35 +58,28 @@ store.controller('orderController', function ($scope, orderFactory) {
     orderFactory.get()
         .success(function (data) {
             $scope.orders = data;
-            console.log('YEAH ');
+            console.log('Lista Ordini');
         })
         .error(function (data) {
             console.log('Error: ' + data);
         });
 
     $scope.createOrder = function () {
-        orderFactory.post($scope.order)
-            .success(function (data) {
-                $scope.order = {};
-                console.log('YEAH');
-                console.log(data);
-            })
-            .error(function (data) {
-                console.log('Error: ' + data);
-            }); 
-    };
+        if ($scope.order != undefined) {
+            if ($scope.order.numOrdine != null && $scope.order.ddt != null && $scope.order.fornitore != null) {
+                orderFactory.post($scope.order)
+                .success(function (data) {
+                    $scope.order = {};
+                    console.log('Ordine Creato');
+                    console.log(data);
+                })
+                .error(function (data) {
+                    console.log('Error: ' + data);
+                });
+            }else{
+                alert("Compilare tutti i campi");
+            }
+        }
+    }
 });
-
-
-/*store.controller("panelController", ['$scope', function($scope){
-$scope.tab = 1
-
-$scope.selectTab = function(setTab) {
-  $scope.tab = setTab;
-};
-
-$scope.isSelected = function(checkTab){
-  return $scope.tab === checkTab;
-};
-}]);*/
 

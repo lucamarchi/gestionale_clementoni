@@ -8,11 +8,16 @@ var myapp = angular.module('store', ["ui.router"])
 			.state('magazzino', {
             	url: '/magazzino',
             	templateUrl: 'magazzino.html',
-		  		controller: 'productController'
-        	})
-		  	.state('carichiIn', {
-				url: "/carichiIn",
-              	templateUrl: "carichientrata.html",
-              	controller: 'orderController'
-	  		})
+		  		    controller: 'productController'
+      })
+		  .state('carichiIn', {
+              url: "/carichiIn",
+              templateUrl: "carichientrata.html",
+              controller: 'orderController'
+	  	})
+      .state('addOrder', {
+              url: "/addOrder",
+              templateUrl: "order.html",
+              controller: 'orderController'
+      })
 	})
