@@ -5,8 +5,6 @@
 			<th>Matricola</th>
 			<th>Materiale</th>
   			<th>Cop</th>
-			<th>Quantita</th>
-	      	<th>Dimensioni</th>
 	      	<th>Peso Kg</th>
 	      	<th>Peso t</th>
 	      	<th>Qualita</th>
@@ -21,8 +19,8 @@
       		<td>{{product.matricola}}</td>
       		<td>{{product.materiale}}</td>
       		<td>{{product.cop}}</td>
-      		<td>{{product.quantita}}</td>
       		<td>{{product.pesokg}}</td>
+			<td>{{(product.pesokg)/100}}</td>
       		<td>{{product.qualita}}</td>
       		<td>{{product.colore}}</td>
       		<td>{{product.ral}}</td>
@@ -31,3 +29,6 @@
       	</tr>
     </tbody>
 </table>
+<div>
+	<button ui-sref="createProduct" class="btn btn-primary">Aggiungi Prodotto</button>
+</div>
