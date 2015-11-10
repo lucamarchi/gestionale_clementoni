@@ -37,8 +37,9 @@ router.route('/products/:order_id')
 			product.matricola = req.body.matricola;
 			product.materiale = req.body.materiale;
 			product.cop = req.body.cop;
-			product.quantita = req.body.quantita;
-			product.dimensioni = req.body.dimensioni;
+			product.lunghezza = req.body.lunghezza;
+			product.larghezza = req.body.larghezza;
+			product.spessore = req.body.spessore;
 			product.pesokg = req.body.pesokg;
 			product.pesoton = req.body.pesoton;
 			product.qualita = req.body.qualita;
@@ -46,6 +47,7 @@ router.route('/products/:order_id')
 			product.ral = req.body.ral;
 			product.note = req.body.note;
 			product.finitura = req.body.finitura;
+			product.prezzo = req.body.prezzo;
 			product.orderId = req.params.order_id;
 			console.log(JSON.stringify(product,null,4) +'\n');
 			product.save(function(err) {
@@ -104,10 +106,14 @@ router.route('/products/:product_id')
 					product.materiale = req.body.materiale;
 				if (req.body.cop)
 					product.cop = req.body.cop;
-				if (req.body.quantita)
-					product.quantita = req.body.quantita;
-				if (req.body.dimensioni)
-					product.dimensioni = req.body.dimensioni;
+				if (req.body.lunghezza)
+					product.lunghezza = req.body.lunghezza;
+				if (req.body.larghezza)
+					product.larghezza = req.body.larghezza;
+				if (req.body.spessore)
+					product.spessore = req.body.spessore;
+				if (req.body.prezzo)
+					product.prezzo = req.body.prezzo;
 				if (req.body.pesokg)
 					product.pesokg = req.body.pesokg;
 				if (req.body.pesoton)
