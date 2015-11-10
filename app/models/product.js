@@ -5,9 +5,10 @@ var Schema = mongoose.Schema;
 var ProductSchema = new Schema({
 	matricola: {type: Number,required: true},
 	materiale: {type: String, required: true},
-	cop: {type: String, enum: ['coil', 'pacco']},
-	quantita: {type: Number, default: 0},
-	dimenisioni: {type: String},
+	cop: {type: String, enum: ['coil', 'pacco','nastro']},
+	lunghezza: {type: Number},
+	larghezza: {type: Number},
+	spessore: {type: Number},
 	pesokg: {type: Number},
 	pesoton: {type: Number},
 	qualita: {type: String},
@@ -15,6 +16,7 @@ var ProductSchema = new Schema({
 	ral: {type: String},
 	note: {type: String},
 	finitura: {type: String},
+	prezzo: {type: Number},
 	orderId: {type: Schema.ObjectId, ref: 'Order'}
 });
 
