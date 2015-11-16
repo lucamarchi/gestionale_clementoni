@@ -1,4 +1,4 @@
-<h2>MAGAZZINO</h2> 
+<h2>Elenco prodotti ordine n. {{nOrdine}}</h2> 
 <table class="table table-bordered">
 	<thead>
 	    <tr>
@@ -19,7 +19,7 @@
 	    </tr>
 	</thead>
   	<tbody>
-    	<tr ng-repeat="product in products">
+    	<tr ng-repeat="product in productsOrder">
       		<td>{{product.matricola}}</td>
       		<td>{{product.cop}}</td>
 			<td>{{product.materiale}}</td>
@@ -37,8 +37,10 @@
       	</tr>
     </tbody>
 </table>
-<!--
 <div>
-	<button ui-sref="createProduct" class="btn btn-primary">Aggiungi Prodotto</button>
+	<button ui-sref="addProduct" class="btn btn-primary">Aggiungi Prodotto</button>
 </div>
--->
+<div ng-if="order != undefined">
+	<button ng-click="confirmOrder()" ui-sref="carichiIn" class="btn btn-primary">Conferma Ordine</button>
+</div>
+{{params | json}}

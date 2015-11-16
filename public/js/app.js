@@ -7,30 +7,37 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 		.state('magazzino', {
 			url: '/magazzino',
 			templateUrl: 'magazzino.html',
-			controller: 'productController'
+			controller: 'magazzinoController'
 		})
 
 		.state('carichiIn', {
 			url: '/carichiIn',
-			templateUrl: 'carichientrata.html',
-			controller: 'orderController'
+			templateUrl: 'carichi_in.html',
+			controller: 'carichiInController'
 		})
-
-		.state('productsList', {
-			url: '/productList',
-			templateUrl: 'orderproducts.html',
-			controller: 'orderController'
-		})
-
+		
 		.state('createOrder', {
 			url: '/createOrder',
-			templateUrl: 'newOrder.html',
+			templateUrl: 'new_order.html',
 			controller: 'orderController'
 		})
+		
+		.state('orderProducts2', {
+			url: '/orderPreview',
+			templateUrl: 'order_products.html',
+			controller: 'orderProductsController'
+		})
+		
+		
+		.state('orderProducts', {
+			url: '/orderPreview/:nOrdine/:orderId',
+			templateUrl: 'order_products.html',
+			controller: 'orderProductsController'
+		})
 
-		.state('createProduct', {
-			url: '/addProduct',
-			templateUrl: 'newProduct.html',
+		.state('addProduct', {
+			url: '/addproduct',
+			templateUrl: 'new_product.html',
 			controller: 'productController'
 		})
 })

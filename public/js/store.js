@@ -1,10 +1,16 @@
 var store = angular.module('store');
 
+//FACTORY
 store.factory('productFactory', function ($http) {
     return {
         get : function () {
             return $http.get('http://localhost:8080/api/products');
         },
+		
+		getProduct: function(id) {
+            return $http.get('http://localhost:8080/api/products/' + id);
+        },
+		
         post : function (product, orderId) {
             return $http.post('http://localhost:8080/api/products/' + orderId, product);
         },
@@ -32,8 +38,9 @@ store.factory('orderFactory', function ($http){
     };
 });
 
-store.controller('indexController', function ($scope, productFactory,orderFactory) {
-    $scope.getProducts = function() {
+//MAGAZZINO.HTML
+store.controller('magazzinoController', function ($scope, productFactory) {
+    
 		productFactory.get()
         	.success(function (data) {
             	$scope.products = data;
@@ -42,9 +49,10 @@ store.controller('indexController', function ($scope, productFactory,orderFactor
         	.error(function (data) {
             	console.log('Error: ' + data.message);
         	});
-	}
-	
-	$scope.getOrders = function () {
+});
+
+//CARICHIIN.HTML
+store.controller('carichiInController', function ($scope, orderFactory) {
         orderFactory.get()
             .success(function (data) {
                 $scope.orders = data;
@@ -53,79 +61,84 @@ store.controller('indexController', function ($scope, productFactory,orderFactor
             .error(function (data) {
                 console.log('Error: ' + data.message);
             });
-    }
-
 });
 
-store.controller('productController', function ($scope, productFactory) {
-    $scope.getProducts = function() {
-		productFactory.get()
-			.success(function (data) {
-				$scope.products = data;
-				console.log('Magazzino');
+
+//NEWORDER.HTML
+store.controller('orderController', function ($scope, $rootScope, orderFactory) {
+	console.log('Crea Ordine');
+	$scope.createOrder = function () {	
+		$rootScope.order = $scope.order;
+		$rootScope.products = [];
+	}
+});
+    
+//ORDERPRODUCTS.HTML
+store.controller('orderProductsController', function ($scope,$rootScope, $state, $stateParams, orderFactory, productFactory) {
+	var productIds;
+	var products;
+	if ($stateParams.orderId != undefined) {
+		$scope.nOrdine = $stateParams.nOrdine;
+		orderFactory.getOrder($stateParams.orderId)
+			.success(function(data) {
+				if(data != undefined) {
+					productIds = data.productIds;
+					var products = [];
+					for (ids of productIds) {
+						productFactory.getProduct(ids)
+							.success(function(data) {
+								if (data != undefined){
+									products.push(data);
+								}
+							})
+							.error(function(data) { 
+								console.log('Error' +data.message);
+							})
+					}
+					$scope.productsOrder = products;
+				}
 			})
 			.error(function (data) {
-				console.log('Error: ' + data.message);
+				console.log('Error: ' + data);
 			});
 	}
+	else {
+		$scope.order = $rootScope.order;
+		$scope.nOrdine = $rootScope.order.numOrdine;
+		$scope.productsOrder = $rootScope.products;
+	}
 	
-    $scope.createProduct = function () {
-       productFactory.post($scope.product, $scope.product.orderId)
-      		.success(function (data) {
-            	$scope.product = {};
-            	console.log('Prodotto Aggiunto ');
-            })
-            .error(function(data) {
-            	console.log('Error: ' + data.message);
-            }); 
-    }
-});
-
-store.controller('orderController', function ($scope, orderFactory) {
-    
-    $scope.getOrders = function () {
-        orderFactory.get()
-            .success(function (data) {
-                $scope.orders = data;
-                console.log('Lista Ordini');
-            })
-            .error(function (data) {
-                console.log('Error: ' + data);
-            });
-    }
-
-    $scope.productsList = function (id,nOrdine) {
-        orderFactory.getOrder(id)
-            .success(function(data) {
-                $scope.nOrdine = nOrdine;
-                $scope.productIds = data.productIds;
-                console.log("ID ORDINE ", id);
-                console.log("NUMERO ORDINE ", $scope.nOrdine);
-                console.log("PRODUCTSIDS ",	$scope.productIds);
-            })
-            .error(function (data) {
-                console.log('Error: ' + data);
-            });
-    }
-    
-
-
-    $scope.createOrder = function () {
-        if ($scope.order != undefined) {
-            if ($scope.order.numOrdine != null && $scope.order.ddt != null && $scope.order.fornitore != null) {
-                orderFactory.post($scope.order)
+	$scope.confirmOrder = function (){
+		orderFactory.post($scope.order)
+			.success(function (data) {
+				var order_Id = data.message;
+				console.log('Ordine Creato ', order_Id);
+				for (product of $scope.productsOrder){
+					console.log('Prodotto', product);
+					productFactory.post(product, order_Id)
 					.success(function (data) {
-						$scope.order = {};
-						console.log('Ordine Creato');
-						console.log(data);
+						console.log(data.message);
 					})
-					.error(function (data) {
-						console.log('Error: ' + data);
-					});
-            }else{
-                	alert("Compilare tutti i campi");
-            }
-        }
-    }
+					.error(function(data) {
+						console.log('Error: ' + data.message);
+					}); 
+				}
+			})
+			.error(function (data) {
+				console.log('Error: ' + data);
+			});
+	}
+	console.log("ID ORDINE ", $stateParams.orderId);
+	console.log("NUMERO ORDINE ", $scope.nOrdine);
+	console.log("PRODUCTSORDER ", $scope.productsOrder);
 });
 
+
+//NEWPRODUCT.HTML
+store.controller('productController', function ($scope, $rootScope, productFactory) {
+	console.log('Aggiungi Prodotto ordine');
+	$scope.addProduct = function () {
+		$rootScope.products.push($scope.product);
+		console.log('PUSHATO');
+	}
+})

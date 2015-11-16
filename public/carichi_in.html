@@ -13,7 +13,7 @@
 	</thead>
   	<tbody>
     	<tr ng-repeat="order in orders">
-    		<td><a ui-sref="productsList" ng-click="productsList(order._id, order.numOrdine)">{{order.numOrdine}}</a></td>
+    		<td><a ui-sref="orderProducts({nOrdine : order.numOrdine, orderId : order._id})">{{order.numOrdine}}</a></td>
 			<td>{{order.ddt}}</td>
   			<td>{{order.fornitore}}</td>
 			<td>{{order.date}}</td>

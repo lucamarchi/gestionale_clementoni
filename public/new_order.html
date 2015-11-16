@@ -21,7 +21,7 @@
     </div>
 
     <div>
-	   <label for="cTrasporto" class="control-label">Costo Trasporto: </label> 
+	   <label for="cTrasporto" class="control-label">Costo Trasporto:</label> 
 	   <input type="number" ng-model="order.cTrasporto" class="ng-dirty"/>
     </div>
 
@@ -35,7 +35,7 @@
 	   {{(order.cTrasporto+order.cOrdine)|currency}}<br/>
     </div>
     <div>
-        <button ng-if="orderForm.$valid" type="submit" ui-sref="carichiIn" ng-click="createOrder()" class="btn btn-primary">Inserisci</button>
+        <button ng-if="orderForm.$valid" type="submit" ng-click="createOrder()" ui-sref="orderProducts2({nOrdine : order.numOrdine})" class="btn btn-primary">Crea Ordine</button>
     </div>
 </form>
 <pre>Ordine= {{order | json}}</pre>
