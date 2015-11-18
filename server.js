@@ -6,11 +6,13 @@ var Product = require('./app/models/product');
 var Order = require('./app/models/order');
 var controlPrd = require('./app/control/checkvalprd');
 var controlOrd = require('./app/control/checkvalord');
+var cors = require('cors');
 
 mongoose.connect('mongodb://127.0.0.1:27017/db_clementoni');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cors());
 
 var port = process.env.PORT || 8080;
 
@@ -51,25 +53,30 @@ router.route('/products/:order_id')
 			product.orderId = req.params.order_id;
 			console.log(JSON.stringify(product,null,4) +'\n');
 			product.save(function(err) {
-				if (err)
-					res.send(err);
-			});
-			Order.findById(req.params.order_id, function(err,order) {
-					if (err) {
-						console.log('Ordine non trovato \n');
-						res.send.err;
-					}
-					else {
-						order.productIds.push(product);
-						order.save(function(err) {
-							if (err) {
-								console.log(JSON.stringify(order,null,4) +'\n');
-								return res.send(err);}
-						});
-					}
+				if (err){
+					console.log("Errore post product: " + err);
+					return res.send(err);
+				} else {
+					Order.findById(req.params.order_id, function(err,order) {
+						if (err) {
+							console.log('Ordine non trovato \n');
+							res.send.err;
+						}
+						else {
+							order.productIds.push(product);
+							order.save(function(err) {
+								if (err) {
+									console.log(JSON.stringify(order,null,4) +'\n');
+									return res.send(err);}
+							});
+						}
 				});
 			res.json({message: 'Prodotto inserito nell ordine'});
 			console.log('Prodotto inserito \n');
+				}
+
+			});
+			
 		} else res.status(500).json({message: 'Dato non valido,post'});
 	});
 
