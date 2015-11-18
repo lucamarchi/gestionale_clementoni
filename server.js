@@ -60,7 +60,7 @@ router.route('/products/:order_id')
 					Order.findById(req.params.order_id, function(err,order) {
 						if (err) {
 							console.log('Ordine non trovato \n');
-							res.send.err;
+							return res.send.err;
 						}
 						else {
 							order.productIds.push(product);
@@ -68,10 +68,11 @@ router.route('/products/:order_id')
 								if (err) {
 									console.log(JSON.stringify(order,null,4) +'\n');
 									return res.send(err);}
+								
 							});
 						}
 				});
-			res.json({message: 'Prodotto inserito nell ordine'});
+			res.json({message: product.id});
 			console.log('Prodotto inserito \n');
 				}
 
@@ -182,7 +183,8 @@ router.route('/orders')
 				else {
 					console.log('Ordine inserito');
 					console.log(JSON.stringify(order,null,4));
-					res.json({message: JSON.stringify(order._id,null,4)});}
+					res.json({message: order.id});
+				}
 			});
 		} else res.status(500).json({message: 'Dato non valido (ordine)'});
 	})
