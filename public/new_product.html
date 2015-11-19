@@ -1,95 +1,132 @@
-<h4>Inserire Prodotto</h4> 
+<h2>Inserire Prodotto</h2> 
 <style>
-	.ng-dirty.ng-invalid {border-color: #FA787E;}
+	.ng-invalid {border-color: #FA787E;}
 	.ng-dirty.ng-valid {border-color: #78FA89;}
 </style>
 <form name="productForm" class="form-horizontal" novalidate>
-	<div>
-		<label for="matricola" class="control-label">Matricola:</label> 
-		<input type="text" ng-model="product.matricola" class="ng-dirty" required/>
+	
+	<div class="form-group">
+		<label for="matricola" class="col-md-2 control-label">Matricola:</label> 
+		<div class="col-md-10">
+			<input type="text" ng-model="product.matricola" class="form-control" required/>
+		</div>
 	</div>
 	
-	<div>
-		<label for="cop" class="control-label">Cop:</label>  
-		<select ng-model="product.cop" class="ng-dirty" required>
-			<option value="coil">Coil</option>
-			<option value="pacco">Pacco</option>
-			<option value="nastro">Nastro</option>
-		</select>
+	<div class="form-group">
+		<label for="cop" class="col-md-2 control-label">Cop:</label>  
+		<div class="col-md-10">
+			<select ng-model="product.cop" class="form-control" required>
+				<option value="coil">Coil</option>
+				<option value="pacco">Pacco</option>
+				<option value="nastro">Nastro</option>
+			</select>
+		</div>
 	</div>
 	
-	<div>
-		<label for="materiale" class="control-label">Materiale:</label> 
-		<input type="text" ng-model="product.materiale" class="ng-dirty" required/>
+	<div class="form-group">
+		<label for="materiale" class="col-md-2 control-label">Materiale:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="product.materiale" class="form-control" required/>
+		</div>
 	</div>
 	
-	<div>
-		<label for="qualita" class="control-label">Qualita:</label>
-		<input type="text" ng-model="product.qualita" class="ng-dirty" required/>
+	<div class="form-group">
+		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="product.qualita" class="form-control" required/>
+		</div>
 	</div>
 	
-	<div ng-if = "product.materiale == 'preverniciato' || product.materiale == 'zincato'">
-		<label for="finitura" class="control-label">Finitura:</label> 
-		<input type="text" ng-model="product.finitura" class="ng-dirty" required/>
+	<div class="form-group" ng-if = "product.materiale == 'preverniciato' || product.materiale == 'zincato'">
+		<label for="finitura" class="col-md-2 control-label">Finitura:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="product.finitura" class="form-control" required/>
+		</div>
 	</div>
-	<div ng-if = "product.materiale != 'preverniciato' && product.materiale != 'zincato'">
-		<label for="finitura" class="control-label">Finitura:</label> 
-		<input type="text" ng-model="product.finitura" disabled/>
-	</div>
-	
-	<div ng-if = "product.materiale == 'preverniciato'">
-		<label for="colore" class="control-label">Colore:</label>
-		<input type="text" ng-model="product.colore" class="ng-dirty" required/>
-	</div>
-	<div ng-if = "product.materiale != 'preverniciato'">
-		<label for="colore" class="control-label">Colore:</label>
-		<input type="text" ng-model="product.colore" disabled/>
+	<div class="form-group" ng-if = "product.materiale != 'preverniciato' && product.materiale != 'zincato'">
+		<label for="finitura" class="col-md-2 control-label">Finitura:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="product.finitura" class="form-control" disabled/>
+		</div>
 	</div>
 	
-	<div ng-if = "product.materiale == 'preverniciato'">
-		<label for="ral" class="control-label">Ral:</label> 
-		<input type="text" ng-model="product.ral" class="ng-dirty" required/>
+	<div class="form-group" ng-if = "product.materiale == 'preverniciato'">
+		<label for="colore" class="col-md-2 control-label">Colore:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="product.colore" class="form-control" required/>
+		</div>
 	</div>
-	<div ng-if = "product.materiale != 'preverniciato'">
-		<label for="ral" class="control-label">Ral:</label> 
-		<input type="text" ng-model="product.ral" disabled/>
-	</div>
-	
-	<div>
-		<label for="lunghezza" class="control-label">Lunghezza:</label> 
-		<input type="number" ng-model="product.lunghezza" class="ng-dirty" required/>
-	</div>
-	<div>
-		<label for="larghezza" class="control-label">Larghezza:</label> 
-		<input type="number" ng-model="product.larghezza" class="ng-dirty" required/>
-	</div>
-	<div>
-		<label for="spessore" class="control-label">Spessore:</label> 
-		<input type="number" ng-model="product.spessore" class="ng-dirty" required/>
-	</div>
-	<div>
-		<label for="pesokg" class="control-label">Peso (kg):</label> 
-		<input type="number" ng-model="product.pesokg" class="ng-dirty" required/>
-	</div>
-	<div>
-		<label for="pesoton" class="control-label">Peso (t):</label> 
-		{{product.pesokg/1000}}t
+	<div class="form-group" ng-if = "product.materiale != 'preverniciato'">
+		<label for="colore" class="col-md-2 control-label">Colore:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="product.colore" class="form-control" disabled/>
+		</div>
 	</div>
 	
-	<div>
-		<label for="prezzo" class="control-label">Prezzo:</label> 
-		<input type="number" ng-model="product.prezzo" class="ng-dirty" required/>
+	<div class="form-group" ng-if = "product.materiale == 'preverniciato'">
+		<label for="ral" class="col-md-2 control-label">Ral:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="product.ral" class="form-control" required/>
+		</div>
+	</div>
+	<div class="form-group" ng-if = "product.materiale != 'preverniciato'">
+		<label for="ral" class="col-md-2 control-label">Ral:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="product.ral" class="form-control" disabled/>
+		</div>
 	</div>
 	
-	<div>
-		<label for="note" class="control-label">Note:              
-		<textarea name="textArea" ng-model="product.note" class="ng-dirty"></textarea>
+	<div class="form-group">
+		<label for="lunghezza" class="col-md-2 control-label">Lunghezza:</label>
+		<div class="col-md-10">
+			<input type="number" ng-model="product.lunghezza" class="form-control" required/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="larghezza" class="col-md-2 control-label">Larghezza:</label>
+		<div class="col-md-10">
+			<input type="number" ng-model="product.larghezza" class="form-control" required/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="spessore" class="col-md-2 control-label">Spessore:</label>
+		<div class="col-md-10">
+			<input type="number" ng-model="product.spessore" class="form-control" required/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="pesokg" class="col-md-2 control-label">Peso (kg):</label>
+		<div class="col-md-10">
+			<input type="number" ng-model="product.pesokg" class="form-control" required/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="pesoton" class="col-md-2 control-label">Peso (t):</label>
+		<div class="col-md-10">
+			{{product.pesokg/1000}}
+		</div>
 	</div>
 	
-	<div>
-		<button ng-if="productForm.$valid" type="submit" ng-click= "addProduct()" ui-sref="orderProducts2" class="btn btn-primary">Inserisci</button>
+	<div class="form-group">
+		<label for="prezzo" class="col-md-2 control-label">Prezzo:</label>
+		<div class="col-md-10">
+			<input type="number" ng-model="product.prezzo" class="form-control" required/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="note" class="col-md-2 control-label">Note:</label>
+		<div class="col-md-10">
+			<textarea name="textArea" ng-model="product.note" class="form-control"></textarea>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<button ng-if="productForm.$valid" type="submit" ng-click= "addProduct()" ui-sref="orderProducts2" class="btn btn-primary">Inserisci</button>
+		</div>
 	</div>
 		
 </form>
-<pre>Prodotto= {{product | json}}</pre>
+<!--<pre>Prodotto= {{product | json}}</pre>-->
   		
