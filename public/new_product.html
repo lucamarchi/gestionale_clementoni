@@ -4,7 +4,6 @@
 	.ng-dirty.ng-valid {border-color: #78FA89;}
 </style>
 <form name="productForm" class="form-horizontal" novalidate>
-	
 	<div>
 		<label for="matricola" class="control-label">Matricola:</label> 
 		<input type="text" ng-model="product.matricola" class="ng-dirty" required/>
@@ -29,18 +28,31 @@
 		<input type="text" ng-model="product.qualita" class="ng-dirty" required/>
 	</div>
 	
-	<div>
+	<div ng-if = "product.materiale == 'preverniciato' || product.materiale == 'zincato'">
 		<label for="finitura" class="control-label">Finitura:</label> 
 		<input type="text" ng-model="product.finitura" class="ng-dirty" required/>
 	</div>
+	<div ng-if = "product.materiale != 'preverniciato' && product.materiale != 'zincato'">
+		<label for="finitura" class="control-label">Finitura:</label> 
+		<input type="text" ng-model="product.finitura" disabled/>
+	</div>
 	
-	<div>
+	<div ng-if = "product.materiale == 'preverniciato'">
 		<label for="colore" class="control-label">Colore:</label>
 		<input type="text" ng-model="product.colore" class="ng-dirty" required/>
 	</div>
-	<div>
+	<div ng-if = "product.materiale != 'preverniciato'">
+		<label for="colore" class="control-label">Colore:</label>
+		<input type="text" ng-model="product.colore" disabled/>
+	</div>
+	
+	<div ng-if = "product.materiale == 'preverniciato'">
 		<label for="ral" class="control-label">Ral:</label> 
 		<input type="text" ng-model="product.ral" class="ng-dirty" required/>
+	</div>
+	<div ng-if = "product.materiale != 'preverniciato'">
+		<label for="ral" class="control-label">Ral:</label> 
+		<input type="text" ng-model="product.ral" disabled/>
 	</div>
 	
 	<div>

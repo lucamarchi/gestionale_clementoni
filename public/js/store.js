@@ -96,6 +96,8 @@ store.controller('orderProductsController', function ($scope,$rootScope, $state,
 							})
 					}
 					$scope.productsOrder = products;
+					console.log("PRODUCTSORDER ", $scope.productsOrder);
+					console.log("PRODUCTSORDER ", products);
 				}
 			})
 			.error(function (data) {
@@ -130,7 +132,6 @@ store.controller('orderProductsController', function ($scope,$rootScope, $state,
 	}
 	console.log("ID ORDINE ", $stateParams.orderId);
 	console.log("NUMERO ORDINE ", $scope.nOrdine);
-	console.log("PRODUCTSORDER ", $scope.productsOrder);
 });
 
 
