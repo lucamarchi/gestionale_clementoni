@@ -12,5 +12,8 @@
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "mongoose": "^4.1.11"
+  },
+  "devDependencies": {
+    "cors": "^2.7.1"
   }
 }
