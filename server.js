@@ -2,8 +2,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
 var Product = require('./app/models/product');
 var Order = require('./app/models/order');
+var User = require('./app/models/user');
+var config = require('./config');
 var controlPrd = require('./app/control/checkvalprd');
 var controlOrd = require('./app/control/checkvalord');
 var cors = require('cors');
@@ -13,6 +16,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/db_clementoni');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
+app.set('superSecret', config.secret);
 
 var port = process.env.PORT || 8080;
 
@@ -25,6 +29,64 @@ router.use(function(req,res,next) {
 
 router.get('/', function(req,res) {
 	res.json({message: 'Gestionale Clementoni API!'});
+});
+
+// GESTIONE UTENTI
+
+router.post('/setup', function(req,res) {
+	var user = new User({
+		username: req.body.username,
+		password: req.body.password,
+		role: 'user'
+	});
+	user.save(function(err) {
+		if (err)
+			res.status(500).json({success: false, message: 'Errore: ' + err});
+		console.log("User saved!");
+		res.json({success: true, message: 'User created!'});
+	});
+});
+
+router.post('/authenticate', function(req,res) {
+	User.findOne({
+		username: req.body.username,
+	}, function(err,user) {
+		if (err)
+			res.status(500).json({success: false, message: 'Errore: '+ err});
+		if (!user) {
+			res.status(500).json({success: false, message: 'Authentication failed, user not found'});
+		} 	else if (user) {
+			if (user.password != req.body.password) {
+				res.status(500).json({success: false, message: 'Password not valid'});
+			} else {
+				var token = jwt.sign({user: user}, app.get('superSecret'), {expiresIn: '24h'});
+			res.json({
+				success: true,
+				token: token,
+				message: 'Token generated'
+			});
+			}
+		}
+	});
+});
+
+router.use(function(req,res,next) {
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	if (token) {
+		jwt.verify(token, app.get('superSecret'), function(err,decoded) {
+			if (err) {
+				return res.json({success: false, message: 'Failed to authenticate token'});
+			} else {
+				req.decoded = decoded;
+				next();
+			}
+		});	
+	} else {
+		return res.status(403).json({
+			success: false,
+			message: 'No token'
+		});
+	}
 });
 
 // AGGIUNTA DI UN PRODOTTO POST /api/products/:order_id
