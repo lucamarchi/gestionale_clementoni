@@ -33,42 +33,65 @@ router.get('/', function(req,res) {
 
 // GESTIONE UTENTI
 
-router.post('/setup', function(req,res) {
-	var user = new User({
-		username: req.body.username,
-		password: req.body.password,
-		role: 'user'
+	router.post('/setup', function(req,res) {
+		var user = new User({
+			username: req.body.username,
+			password: req.body.password,
+			role: 'user'
+		});
+		user.save(function(err) {
+			if (err)
+				res.status(500).json({success: false, message: 'Errore: ' + err});
+			console.log("User saved!");
+			res.json({success: true, message: 'User created!'});
+		});
 	});
-	user.save(function(err) {
-		if (err)
-			res.status(500).json({success: false, message: 'Errore: ' + err});
-		console.log("User saved!");
-		res.json({success: true, message: 'User created!'});
-	});
-});
 
-router.post('/authenticate', function(req,res) {
-	User.findOne({
-		username: req.body.username,
-	}, function(err,user) {
-		if (err)
-			res.status(500).json({success: false, message: 'Errore: '+ err});
-		if (!user) {
-			res.status(500).json({success: false, message: 'Authentication failed, user not found'});
-		} 	else if (user) {
-			if (user.password != req.body.password) {
-				res.status(500).json({success: false, message: 'Password not valid'});
-			} else {
-				var token = jwt.sign({user: user}, app.get('superSecret'), {expiresIn: '24h'});
-			res.json({
-				success: true,
-				token: token,
-				message: 'Token generated'
-			});
+	router.post('/authenticate', function(req,res) {
+		User.findOne({
+			username: req.body.username,
+		}, function(err,user) {
+			if (err)
+				res.status(500).json({success: false, message: 'Errore: '+ err});
+			if (!user) {
+				res.status(500).json({success: false, message: 'Authentication failed, user not found'});
+			} 	else if (user) {
+				user.comparePassword(req.body.password, function(err, isMatch) {
+            		if (err) res.status(500).json({success: false, message: 'Errore: '+ err});
+            		if (isMatch) {
+            			console.log(req.body.password +" "+isMatch);
+            			var token = jwt.sign({user: user}, app.get('superSecret'), {expiresIn: '24h'});
+						res.json({
+							success: true,
+							token: token,
+							message: 'Token generated'
+						});
+					} else {
+						console.log(req.body.password+"  "+isMatch);
+            			res.status(500).json({success: false, message: 'Password not valid'});
+					}
+        		});
 			}
+		});
+	});
+
+	router.post('/verify', function(req,res) {
+		var token = req.body.token || req.query.token || req.headers['x-access-token'];
+		if (token) {
+			jwt.verify(token, app.get('superSecret'), function(err,decoded) {
+				if (err) {
+					return res.json({success: false, message: 'Failed to authenticate token'});
+				} else {
+					return res.json({success: true, message: 'Token valid'});
+				}
+			});	
+		} else {
+			return res.status(403).json({
+				success: false,
+				message: 'No token'
+			});
 		}
 	});
-});
 
 router.use(function(req,res,next) {
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -314,8 +337,6 @@ router.route('/orders/:order_id')
 				console.log(JSON.stringify(order,null,4) +'\n');}
 		});
 	});
-
-
 
 app.use('/api', router);
 
