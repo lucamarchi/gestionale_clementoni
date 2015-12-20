@@ -3,15 +3,18 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
-var Product = require('./app/models/product');
-var Order = require('./app/models/order');
-var User = require('./app/models/user');
-var config = require('./config');
-var controlPrd = require('./app/control/checkvalprd');
-var controlOrd = require('./app/control/checkvalord');
 var cors = require('cors');
+var path = require('path');
+var config = require('./config');
+var router = express.Router();
 
 mongoose.connect('mongodb://127.0.0.1:27017/db_clementoni');
+mongoose.connection.on('error', function() {
+	console.log("Mongoose connection error");
+});
+mongoose.connection.on('open', function(){
+	console.log("Mongoose connected to the database");
+});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -20,80 +23,13 @@ app.set('superSecret', config.secret);
 
 var port = process.env.PORT || 8080;
 
-var router = express.Router();
-
 router.use(function(req,res,next) {
-	console.log('Starting...');
 	next();
-})
-
-router.get('/', function(req,res) {
-	res.json({message: 'Gestionale Clementoni API!'});
 });
 
-// GESTIONE UTENTI
+app.use('/api', require(path.join(__dirname, "routes", "default.js"))());
 
-	router.post('/setup', function(req,res) {
-		var user = new User({
-			username: req.body.username,
-			password: req.body.password,
-			role: 'user'
-		});
-		user.save(function(err) {
-			if (err)
-				res.status(500).json({success: false, message: 'Errore: ' + err});
-			console.log("User saved!");
-			res.json({success: true, message: 'User created!'});
-		});
-	});
-
-	router.post('/authenticate', function(req,res) {
-		User.findOne({
-			username: req.body.username,
-		}, function(err,user) {
-			if (err)
-				res.status(500).json({success: false, message: 'Errore: '+ err});
-			if (!user) {
-				res.status(500).json({success: false, message: 'Authentication failed, user not found'});
-			} 	else if (user) {
-				user.comparePassword(req.body.password, function(err, isMatch) {
-            		if (err) res.status(500).json({success: false, message: 'Errore: '+ err});
-            		if (isMatch) {
-            			console.log(req.body.password +" "+isMatch);
-            			var token = jwt.sign({user: user}, app.get('superSecret'), {expiresIn: '24h'});
-						res.json({
-							success: true,
-							token: token,
-							message: 'Token generated'
-						});
-					} else {
-						console.log(req.body.password+"  "+isMatch);
-            			res.status(500).json({success: false, message: 'Password not valid'});
-					}
-        		});
-			}
-		});
-	});
-
-	router.post('/verify', function(req,res) {
-		var token = req.body.token || req.query.token || req.headers['x-access-token'];
-		if (token) {
-			jwt.verify(token, app.get('superSecret'), function(err,decoded) {
-				if (err) {
-					return res.json({success: false, message: 'Failed to authenticate token'});
-				} else {
-					return res.json({success: true, message: 'Token valid'});
-				}
-			});	
-		} else {
-			return res.status(403).json({
-				success: false,
-				message: 'No token'
-			});
-		}
-	});
-
-router.use(function(req,res,next) {
+app.use(function(req,res,next) {
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err,decoded) {
@@ -112,234 +48,11 @@ router.use(function(req,res,next) {
 	}
 });
 
-// AGGIUNTA DI UN PRODOTTO POST /api/products/:order_id
-
-router.route('/products/:order_id')
-	.post(function(req,res) {
-		var check = controlPrd.check(req);
-		console.log('Check status product %s',check + '\n');
-		if (check && req.params.order_id!=null) {
-			
-			var product = new Product();
-			product.matricola = req.body.matricola;
-			product.materiale = req.body.materiale;
-			product.cop = req.body.cop;
-			product.lunghezza = req.body.lunghezza;
-			product.larghezza = req.body.larghezza;
-			product.spessore = req.body.spessore;
-			product.pesokg = req.body.pesokg;
-			product.pesoton = req.body.pesoton;
-			product.qualita = req.body.qualita;
-			product.colore = req.body.colore;
-			product.ral = req.body.ral;
-			product.note = req.body.note;
-			product.finitura = req.body.finitura;
-			product.prezzo = req.body.prezzo;
-			product.orderId = req.params.order_id;
-			console.log(JSON.stringify(product,null,4) +'\n');
-			product.save(function(err) {
-				if (err){
-					console.log("Errore post product: " + err);
-					return res.send(err);
-				} else {
-					Order.findById(req.params.order_id, function(err,order) {
-						if (err) {
-							console.log('Ordine non trovato \n');
-							return res.send.err;
-						}
-						else {
-							order.productIds.push(product);
-							order.save(function(err) {
-								if (err) {
-									console.log(JSON.stringify(order,null,4) +'\n');
-									return res.send(err);}
-								
-							});
-						}
-				});
-			res.json({message: product.id});
-			console.log('Prodotto inserito \n');
-				}
-
-			});
-			
-		} else res.status(500).json({message: 'Dato non valido,post'});
-	});
-
-// VISUALIZZAZIONE PRODOTTI GET /api/products
-
-router.route('/products')
-	.get(function(req,res) {
-		Product.find({}, function(err,products) {
-			if (err)
-				res.send(err);
-			res.json(products);
-		});	
-	});
-
-// MODIFICA DI UN PRODOTTO PUT /api/products/:product_id, RIMOZIONE DI UN PRODOTTO DELETE /api/products/:product_id E VISUALIZZAZIONE PRODOTTO GET /api/products/:product_id
-
-router.route('/products/:product_id')
-	.get(function(req,res) {
-		Product.findById(req.params.product_id, function(err,product) {
-			if (err)
-				res.send(err);
-			else {
-				console.log(JSON.stringify(product,null,4) +'\n');
-				res.json(product)}
-		});
-	})
-	.put(function(req,res) {
-		Product.findById(req.params.product_id, function(err,product) {
-			if (err)
-				res.send(err)
-				if (req.body.matricola)
-					product.matricola = req.body.matricola;
-				if (req.body.materiale)
-					product.materiale = req.body.materiale;
-				if (req.body.cop)
-					product.cop = req.body.cop;
-				if (req.body.lunghezza)
-					product.lunghezza = req.body.lunghezza;
-				if (req.body.larghezza)
-					product.larghezza = req.body.larghezza;
-				if (req.body.spessore)
-					product.spessore = req.body.spessore;
-				if (req.body.prezzo)
-					product.prezzo = req.body.prezzo;
-				if (req.body.pesokg)
-					product.pesokg = req.body.pesokg;
-				if (req.body.pesoton)
-					product.pesoton = req.body.pesoton;
-				if (req.body.qualita)
-					product.qualita = req.body.qualita;
-				if (req.body.colore)
-					product.colore = req.body.colore;
-				if (req.body.ral)
-					product.ral = req.body.ral;
-				if (req.body.note)
-					product.note = req.body.note;
-				if (req.body.finitura)
-					product.finitura = req.body.finitura;
-				product.save(function(err) {
-							if (err) {
-								console.log('Errore, dati non validi');
-								res.send(err);
-							}
-							else {
-								res.json({message: 'Prodotto modificato'});
-								console.log(JSON.stringify(product,null,4) +'\n');}
-
-						});
-		});
-	})
-	.delete(function(req,res) {
-		Product.remove({
-			_id: req.params.product_id
-		}, function(err,product) {
-			if (err) {
-				console.log('Errore');
-				res.send(err);
-			}
-			else {
-				res.json({message: 'Prodotto cancellato'});
-				console.log(JSON.stringify(product,null,4) +'\n');}
-		});
-	});
-
-
-// AGGIUNTA DI UN ORDINE POST /api/orders ED VISUALIZZAZIONE ORDINI GET /api/orders
-
-router.route('/orders')
-	.post(function(req,res) {
-		var check = controlOrd.check(req);
-		console.log('Check order status %s', check);
-		if (check) {			
-			var order = new Order();
-			order.numOrdine = req.body.numOrdine;
-			order.ddt = req.body.ddt;
-			order.fornitore = req.body.fornitore;
-			order.cTrasporto = req.body.cTrasporto;
-			order.cOrdine = req.body.cOrdine;
-			order.cTotale = req.body.cTotale;
-			order.save(function(err) {
-				if (err)
-					res.send(err);
-				else {
-					console.log('Ordine inserito');
-					console.log(JSON.stringify(order,null,4));
-					res.json({message: order.id});
-				}
-			});
-		} else res.status(500).json({message: 'Dato non valido (ordine)'});
-	})
-
-	.get(function(req,res) {
-		Order.find({}, function(err,orders) {
-			if (err)
-				res.send(err);
-			console.log('GET number orders %s', orders.length + '\n');
-			res.json(orders);
-		});	
-	});
-
-// MODIFICA DI UN ORDINE PUT /api/ordine/:ordine_id, RIMOZIONE DI UN ORDINE DELETE /api/orders/:order_id E VISUALIZZAZIONE ORDINE GET /api/orders/:order_id
-
-router.route('/orders/:order_id')
-	.get(function(req,res) {
-		Order.findById(req.params.order_id, function(err,order) {
-			if (err)
-				res.send(err);
-			else {
-				console.log(JSON.stringify(order,null,4) +'\n');
-				res.json(order)}
-		});
-	})
-	.put(function(req,res) {
-		Order.findById(req.params.order_id, function(err,order) {
-			if (err)
-				res.send(err)
-				if (req.body.numOrdine)
-					order.numOrdine = req.body.numOrdine;
-				if (req.body.ddt)
-					order.ddt = req.body.ddt;
-				if (req.body.fornitore)
-					order.fornitore = req.body.fornitore;
-				if (req.body.cTrasporto)
-					order.cTrasporto = req.body.cTrasporto;
-				if (req.body.cOrdine)
-					order.cOrdine = req.body.cOrdine;
-				if (req.body.cTotale)
-					order.cTotale = req.body.cTotale;
-			
-				order.save(function(err) {
-							if (err) {
-								console.log('Errore, dati non validi (ordine,put');
-								res.send(err);
-							}
-							else {
-								res.json({message: 'Ordine modificato'});
-								console.log(JSON.stringify(order,null,4) +'\n');}
-
-						});
-		});
-	})
-	.delete(function(req,res) {
-		Order.remove({
-			_id: req.params.order_id
-		}, function(err,order) {
-			if (err) {
-				console.log('Errore');
-				res.send(err);
-			}
-			else {
-				res.json({message: 'Ordine cancellato'});
-				console.log(JSON.stringify(order,null,4) +'\n');}
-		});
-	});
-
+app.use('/api', require(path.join(__dirname, "routes", "products.js"))());
+app.use('/api', require(path.join(__dirname, "routes", "orders.js"))());
+app.use('/api', require(path.join(__dirname, "routes", "cuts.js"))());
 app.use('/api', router);
 
 app.listen(port);
-console.log('Magic happens on port ' + port + '\n');
+console.log("Starting server on localhost:" + port + '\n');
 
