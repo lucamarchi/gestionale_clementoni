@@ -1,0 +1,31 @@
+<style>
+	.ng-invalid {border-color: #FA787E;}
+	.ng-valid {border-color: #78FA89;}
+</style>
+
+<form name="loginForm" class="form-horizontal" novalidate>
+    <div class="form-group">
+    	<label for="username" class="col-md-2 control-label">Username: </label>
+		<div class="col-md-10">
+    		<input type="string" ng-model="user.username" class="form-control" required/>
+		</div>
+    </div>
+
+    <div class="form-group">
+	   	<label for="ddt" class="col-md-2 control-label">Password: </label>
+		<div class="col-md-10">
+	   		<input type="password" ng-model="user.password" class="form-control" required/>
+		</div>
+    </div>
+	
+<!--
+	<div class="form-group"> 
+    	<div class="col-sm-offset-2 col-sm-10">
+      		<div class="checkbox">
+        		<label><input type="checkbox">Ricordami</label>
+      		</div>
+    	</div>
+  	</div>
+-->
+	<button ng-if="loginForm.$valid" type="button" class="btn btn-default btn-block">Accedi</button>
+</form>

@@ -1,42 +1,41 @@
-<h1>Inserire Ordine</h1> 
 <style>
 	.ng-invalid {border-color: #FA787E;}
 	.ng-valid {border-color: #78FA89;}
 </style>
 
-<form name="orderForm" class="form-horizontal" novalidate>
+<form name="$parent.orderForm" class="form-horizontal" novalidate>
     <div class="form-group">
     	<label for="numOrdine" class="col-md-2 control-label">Numero Ordine: </label>
 		<div class="col-md-10">
-    		<input type="number" ng-model="order.numOrdine" class="form-control" required/>
+    		<input type="number" ng-model="$parent.order.numOrdine" class="form-control" required/>
 		</div>
     </div>
 
     <div class="form-group">
 	   	<label for="ddt" class="col-md-2 control-label">DDT: </label>
 		<div class="col-md-10">
-	   		<input type="number" ng-model="order.ddt" class="form-control" required/>
+	   		<input type="number" ng-model="$parent.order.ddt" class="form-control" required/>
 		</div>
     </div>
 
     <div class="form-group">
 	   	<label for="fornitore" class="col-md-2 control-label">Fornitore: </label>
 		<div class="col-md-10">
-	   		<input type="text" ng-model="order.fornitore" class="form-control" required/>
+	   		<input type="text" ng-model="$parent.order.fornitore" class="form-control" required/>
 		</div>
     </div>
 
     <div class="form-group">
 	   	<label for="cTrasporto" class="col-md-2 control-label">Costo Trasporto:</label>
 		<div class="col-md-10">
-	   		<input type="number" ng-model="order.cTrasporto" class="form-control"/>
+	   		<input type="number" ng-model="$parent.order.cTrasporto" class="form-control"/>
 		</div>
     </div>
 
     <div class="form-group">
 	   	<label for="cOrdine" class="col-md-2 control-label">Costo Ordine: </label>
 		<div class="col-md-10">
-	   		<input type="number" ng-model="order.cOrdine" class="form-control"/>
+	   		<input type="number" ng-model="$parent.order.cOrdine" class="form-control"/>
 		</div>
     </div>
 
@@ -44,12 +43,6 @@
 	   	<label for="cTotale" class="col-md-2 control-label">Costo Totale: </label>
 		<div class="col-md-10">
 	   		{{(order.cTrasporto+order.cOrdine)|currency}}
-		</div>
-    </div>
-    
-	<div class="form-group">
-		<div class="col-md-offset-2 col-md-10">
-        	<button ng-if="orderForm.$valid" type="submit" ng-click="createOrder()" ui-sref="orderProducts2({nOrdine : order.numOrdine})" class="btn btn-primary">Crea Ordine</button>
 		</div>
     </div>
 </form>

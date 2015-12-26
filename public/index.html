@@ -17,7 +17,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse navbar-fixed">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">Clementoni</a>
@@ -29,6 +29,10 @@
 					<li><a ui-sref="ordiniTaglio">Ordini di taglio</a></li>
 					<li><a ui-sref="carichiOut">Carichi in uscita</a></li>
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+        			<li><a ui-sref="login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
+        			<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+      			</ul>
 			</div>
 		</div>
 	</nav>
@@ -39,13 +43,16 @@
 		</div>
 	</div>
 
-	<!-- angular.js  & ui-router-->
+	<!-- angular.js  & ui-router -->
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
 
-	<script src="js/app.js"></script>
-	<script src="js/controllers.js"></script>
-	<script src="js/services.js"></script>
+	<script src="app.js"></script>
+	<script src="magazzino/magazzino.controller.js"></script>
+	<script src="carichi_in/carichi_in.controller.js"></script>
+	<script src="login/login.controller.js"></script>
+	<script src="components/services.js"></script>
 </body>
 
 </html>
