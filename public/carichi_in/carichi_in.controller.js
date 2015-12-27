@@ -11,6 +11,7 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		});
 
 	$scope.openOrder = function (orderId) {
+		$scope.order = undefined;
 		var productIds, products, nOrder;
 		orderFactory.getOrder(orderId)
 		.success(function(data) {
@@ -30,8 +31,11 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 					})
 				}
 			}
+			$scope.orderId = orderId;
 			$scope.nOrder = nOrder;
 			$scope.productsOrder = products;
+			$scope.productsOrder2 = [];
+			console.log($scope.order);
 		})
 		.error(function (data) {
 			console.log('Error: ' + data);
@@ -39,33 +43,54 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	}
 	
 	$scope.createOrder = function () {
+		console.log($scope.order);
+		$scope.orderId = undefined;
 		$scope.nOrder = $scope.order.numOrdine;
 		$scope.productsOrder = [];
+		$scope.productsOrder2 = [];
 	}
 	
 	$scope.addProduct = function () {
 		$scope.productsOrder.push($scope.product);
+		$scope.productsOrder2.push($scope.product);
+		delete $scope.product;
 	}
 	
-	$scope.confirmOrder = function (){
-		orderFactory.post($scope.order)
-			.success(function (data) {
-				var order_Id = data.message;
-				console.log('Ordine Creato ', order_Id);
-				for (product of $scope.productsOrder){
-					productFactory.post(product, order_Id)
+	$scope.confirmOrder = function () {
+		var orderId;
+		if($scope.order != undefined) {
+			orderFactory.post($scope.order)
+				.success(function (data) {
+					orderId = data.message;
+					console.log('Ordine Creato ', orderId);
+					for (product of $scope.productsOrder){
+						productFactory.post(product, orderId)
+							.success(function (data) {
+								console.log(data.message);
+							})
+							.error(function(data) {
+								console.log('Error: ' + data.message);
+							}); 
+					}
+					//settare la data e all'ordine prima di pusharlo nello scope
+					$scope.order._id = data.message;
+					$scope.orders.push($scope.order);
+				})
+				.error(function (data) {
+					console.log('Error: ' + data);
+				});
+		}
+		else {
+			orderId = $scope.orderId;
+			for (product of $scope.productsOrder2){
+				productFactory.post(product, orderId)
 					.success(function (data) {
 						console.log(data.message);
 					})
 					.error(function(data) {
 						console.log('Error: ' + data.message);
 					}); 
-				}
-				//settare la data all'ordine prima di pusharlo nello scope
-				$scope.orders.push($scope.order);
-			})
-			.error(function (data) {
-				console.log('Error: ' + data);
-			});
+			}
+		}
 	}
 });
