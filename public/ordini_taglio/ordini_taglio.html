@@ -1,0 +1,21 @@
+<h2>ORDINI DI TAGLIO</h2> 
+<table class="table table-bordered">
+	<thead>
+	    <tr>
+			<th>Id</th>
+			<th>Indirizzo</th>
+			<th>Località</th>
+  			<th>Nome</th>
+			<th>Partita Iva</th>
+	    </tr>
+	</thead>
+  	<tbody>
+    	<tr ng-repeat="cut in cuts">
+      		<td>{{cut.Id}}</td>
+      		<td>{{cut.Indirizzo}}</td>
+			<td>{{cut.Localita}}</td>
+			<td>{{cut.Name}}</td>
+			<td>{{cut.PartitaIva}}</td>
+      	</tr>
+    </tbody>
+</table>

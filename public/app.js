@@ -48,4 +48,11 @@ myapp.config(function($stateProvider, $urlRouterProvider){
 			templateUrl: 'login/login.html',
 			controller:'loginController'
 		})
+		
+		.state('ordiniTaglio', {
+				url: '/ordinitaglio',
+				templateUrl: 'ordini_taglio/ordini_taglio.html',
+				controller: 'ordiniTaglioController'
+		})
+		
 })

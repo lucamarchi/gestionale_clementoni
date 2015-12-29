@@ -37,3 +37,11 @@ store.factory('orderFactory', function ($http){
         }
     };
 });
+
+store.factory('orderCutFactory', function ($http) {
+	return {
+		get : function () {
+			return $http.get('http://localhost:8080/api/cuts');
+		}
+	};
+});
