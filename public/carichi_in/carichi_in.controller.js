@@ -36,15 +36,20 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	}
 	
 	$scope.createOrder = function () {
+		$scope.order = undefined;
 		$scope.productsOrder = [];
 		$scope.productsOrder2 = [];
 		console.log($scope.order);
 	}
 	
+	
+	$scope.createProduct = function () {
+		$scope.product = undefined;	
+	}
+	
 	$scope.addProduct = function () {
 		$scope.productsOrder.push($scope.product);
 		$scope.productsOrder2.push($scope.product);
-		delete $scope.product;
 	}
 	
 	$scope.confirmOrder = function () {

@@ -32,7 +32,7 @@
 		</tr>
 	</tbody>
 </table>
-<button type="button" class="btn btn-primary btn-block" data-toggle="modal" href="#neworder">Aggiungi Ordine</button>
+<button type="button" class="btn btn-primary btn-block" data-toggle="modal" href="#neworder" ng-click="createOrder()">Aggiungi Ordine</button>
 
 <!-- Modal order_products.html-->
 <div id="orderproducts" class="modal container fade" style="display: none;" data-focus-on="input:first">
@@ -85,7 +85,7 @@
 				<div ng-include src="'carichi_in/new_order.html'"></div>
 			</div>
 			<div class="modal-footer">
-				<button ng-if="orderForm.$valid" type="button" class="btn btn-success" data-toggle="modal" ng-click="createOrder()" href="#orderproducts" data-dismiss="modal">Conferma</button>
+				<button ng-if="orderForm.$valid" type="button" class="btn btn-success" data-toggle="modal" href="#orderproducts" data-dismiss="modal">Conferma</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 			</div>
 		</div>
