@@ -12,7 +12,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="cop" class="col-md-2 control-label">Cop:</label>  
+		<label for="cop" class="col-md-2 control-label">Tipo:</label>  
 		<div class="col-md-10">
 			<select ng-model="$parent.product.cop" class="form-control" required>
 				<option value="coil">Coil</option>
@@ -106,7 +106,7 @@
 	<div class="form-group">
 		<label for="pesoton" class="col-md-2 control-label">Peso (t):</label>
 		<div class="col-md-10">
-			{{product.pesokg/1000}}
+			{{$parent.product.pesokg/1000}}
 		</div>
 	</div>
 

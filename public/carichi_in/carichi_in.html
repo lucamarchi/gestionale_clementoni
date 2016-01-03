@@ -1,5 +1,5 @@
 <h2>CRONOLOGIA ORDINI IN ENTRATA</h2>
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<thead>
 	    <tr>
 			<th>Numero Ordine</th>
@@ -12,11 +12,11 @@
 		</tr>
 	</thead>
   	<tbody>
-    	<tr ng-repeat="order in orders">
-			<td><button type="button" class="btn btn-info btn-block" ng-click="openOrder(order)" href="#orderproducts" data-toggle="modal">{{order.numOrdine}}</button></td>
+    	<tr ng-repeat="order in orders | orderBy:'date':true">
+			<td><button type="button" class="btn btn-info btn-block" ng-click="openProductsOrder(order)" href="#orderproducts" data-toggle="modal">{{order.numOrdine}}</button></td>
 			<td>{{order.ddt}}</td>
   			<td>{{order.fornitore}}</td>
-			<td>{{order.date}}</td>
+			<td>{{order.date | date:'medium'}}</td>
 	      	<td>{{order.cTrasporto}}</td>
 	      	<td>{{order.cOrdine}}</td>
 	      	<td>{{order.cTotale}}</td>
@@ -24,8 +24,8 @@
 				<div class="dropdown">
   					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
   					<ul class="dropdown-menu">
-    					<li><button type="button" class="btn btn-warning btn-block" href="#">Modifica</button></li>
-    					<li><button type="button" class="btn btn-danger btn-block" href="#">Cancella</button></li>
+    					<li><button type="button" class="btn btn-warning btn-block" ng-click="openOrder(order)" href="#neworder" data-toggle="modal">Modifica</button></li>
+    					<li><button type="button" class="btn btn-danger btn-block" href="#" ng-click="deleteOrder(order._id)">Cancella</button></li>
   					</ul>
 				</div>
 			</td>
@@ -35,25 +35,25 @@
 <button type="button" class="btn btn-primary btn-block" data-toggle="modal" href="#neworder" ng-click="createOrder()">Aggiungi Ordine</button>
 
 <!-- Modal order_products.html-->
-<div id="orderproducts" class="modal container fade" style="display: none;" data-focus-on="input:first">
-	<!-- Modal content-->
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4 class="modal-title">PRODOTTI ORDINE N. {{order.numOrdine}}</h4>
+<div id="orderproducts" class="modal container fade" style="display: none;">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">PRODOTTI ORDINE N. {{order.numOrdine}}</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'carichi_in/order_products.html'"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" ng-click="confirmOrder()" data-dismiss="modal">Conferma</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+			</div>
 		</div>
-		<div class="modal-body">
-			<div ng-include src="'carichi_in/order_products.html'"></div>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-success" ng-click="confirmOrder()" data-dismiss="modal">Conferma</button>
-			<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-		</div>
-	</div>
 </div>
 
 <!-- Modal new_product.html-->
-<div id="newproduct" class="modal fade" role="dialog" data-focus-on="input:first" >
+<div id="newproduct" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
@@ -73,19 +73,21 @@
 </div>
 
 <!-- Modal new_order.html-->
-<div id="neworder" class="modal fade" role="dialog" data-focus-on="input:first" >
+<div id="neworder" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">CREA ORDINE</h4>
+				<h4 ng-if="order._id == null" class="modal-title">CREA ORDINE</h4>
+				<h4 ng-if="order._id != null" class="modal-title">MODIFICA ORDINE</h4>
 			</div>
 			<div class="modal-body">
 				<div ng-include src="'carichi_in/new_order.html'"></div>
 			</div>
 			<div class="modal-footer">
-				<button ng-if="orderForm.$valid" type="button" class="btn btn-success" data-toggle="modal" href="#orderproducts" data-dismiss="modal">Conferma</button>
+				<button ng-if="orderForm.$valid && order._id == null" type="button" class="btn btn-success" data-toggle="modal" href="#orderproducts" data-dismiss="modal">Conferma</button>
+				<button ng-if="orderForm.$valid && order._id != null" type="button" class="btn btn-warning" ng-click="updateOrder(order)" data-dismiss="modal">Modifica</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 			</div>
 		</div>

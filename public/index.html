@@ -8,12 +8,16 @@
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-
 <!-- Bootstrap CSS -->
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-<!---->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<!-- angular.js -->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>	
+
 </head>
 
 <body>
@@ -24,29 +28,34 @@
 			</div>
 			<div>
 				<ul class="nav navbar-nav">
-					<li><a ui-sref="magazzino">Magazzino</a></li>
-					<li><a ui-sref="carichiIn">Carichi in entrata</a></li>
-					<li><a ui-sref="ordiniTaglio">Ordini di taglio</a></li>
-					<li><a ui-sref="carichiOut">Carichi in uscita</a></li>
+					<li class="dropdown">
+          				<a class="dropdown-toggle" data-toggle="dropdown" href="">Magazzino<span class="caret"></span></a>
+          						<ul class="dropdown-menu">
+            						<li><a href="#/magazzino">Magazzino Effettivo</a></li>
+            						<li><a href="#">Magazzino Virtuale</a></li> 
+          						</ul>
+        			</li>
+					<li><a href="#/carichiIn">Carichi in entrata</a></li>
+					<li><a href="#/ordiniTaglio">Ordini di taglio</a></li>
+					<li><a href="#">Carichi in uscita</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-        			<li><a ui-sref="login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
+        			<li class="active"><a href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
         			<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
       			</ul>
 			</div>
 		</div>
 	</nav>
 
-	<div class="container">
+	<div class="container-fluid">
 		<div class="jumbotron">
-			<div ui-view></div>
+			<div ng-view></div>
 		</div>
 	</div>
 
-	<!-- angular.js  & ui-router -->
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+	<!-- ng-route -->
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
 
 	<script src="app.js"></script>
 	<script src="magazzino/magazzino.controller.js"></script>

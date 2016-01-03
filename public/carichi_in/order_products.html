@@ -3,17 +3,17 @@
 		<thead>
 			<tr>
 				<th>Matricola</th>
-				<th>Cop</th>
+				<th>Tipo</th>
 				<th>Materiale</th>
 				<th>Qualita</th>
 				<th>Finitura</th>
 				<th>Colore</th>
 				<th>Ral</th>
-				<th>Peso Kg</th>
-				<th>Peso t</th>
 				<th>Lunghezza</th>
 				<th>Larghezza</th>
 				<th>Spessore</th>
+				<th>Peso Kg</th>
+				<th>Peso t</th>
 				<th>Prezzo</th>
 				<th>Note</th>
 			</tr>
@@ -34,35 +34,16 @@
 				<td>{{(product.pesokg)/100}}</td>
 				<td>{{product.prezzo}}</td>
 				<td>{{product.note}}</td>
+				<td>
+				<div class="dropdown">
+  					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+  					<ul class="dropdown-menu">
+    					<li><button type="button" class="btn btn-danger btn-block" href="#" ng-click="">Cancella</button></li>
+  					</ul>
+				</div>
+			</td>
 			</tr>
 		</tbody>
 	</table>
 	<button type="button" class="btn btn-primary" data-toggle="modal" href="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>
 </div>
-
-<!----------------------------------------------- MODALE ---------------------------------------------------------->
-<!--
-<script type="text/ng-template" id="new_product">
-	<div class="modal-header">
-		<h3 class="modal-title">INSERIRE PRODOTTO</h3>
-	</div>
-	<div class="modal-body">
-		<div ng-include src="'new_product.html'"></div>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-primary" type="button" ng-click="ok()">Conferma</button>
-		<button class="btn btn-warning" type="button" ng-click="cancel()">Annulla</button>
-	</div>
-</script>
-<button type="button" class="btn btn-default" ng-click="addProduct()">Aggiungi Prodotto</button>
--->
-<!-------------------------------------------------------------------------------------------------------------->
-
-<!--
-<div>
-	<button ui-sref="addProduct" class="btn btn-primary">Aggiungi Prodotto</button>
-</div>
-
-
-
--->
