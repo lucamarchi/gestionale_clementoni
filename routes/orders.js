@@ -4,6 +4,7 @@ module.exports = function() {
 	var router = express.Router();
 	var Product = require('./../app/models/product');
 	var Order = require('./../app/models/order');
+	var Stock = require('./../app/models/stock');
 	var controlPrd = require('./../app/control/checkvalprd');
 	var controlOrd = require('./../app/control/checkvalord');
 
@@ -84,18 +85,55 @@ module.exports = function() {
 			});
 		})
 		.delete(function(req,res) {
-			Order.remove({
-				_id: req.params.order_id
-			}, function(err,order) {
-				if (err) {
-					console.log('Errore');
+			Order.findById(req.params.order_id, function(err,order) {
+				if (err)
 					res.send(err);
-				}
 				else {
-					res.json({message: 'Ordine cancellato', status: true});
-					console.log(JSON.stringify(order,null,4) +'\n');}
-			});
+					console.log('LUNGHEZZA: '+  order.productIds!=undefined && order.productIds.length);
+					if (typeof order.productIds!=undefined && order.productIds.length > 0) {
+						console.log('Array: '+order.productIds.length > 0);
+						productsId = order.productIds;
+						productsId.forEach(function(id) {
+							Product.remove({
+								_id: id
+							}, function(err,product) {
+								if (err) {
+									console.log('Errore');
+								} else {
+									console.log('Product remove: '+id);
+								}
+							});
+						});
+						if (typeof order.stockIds!=undefined && order.stockIds.length > 0) {
+							stocksId = order.stockIds;
+							stocksId.forEach(function(id) {
+								Stock.remove({
+									_id: id
+								}, function(err,stock) {
+									if (err) {
+										console.log('Errore');
+									} else {
+										console.log('Stock remove: '+id);
+									}
+								});
+							});
+						}
+						Order.remove({
+							_id: req.params.order_id
+							}, function(err,order) {
+								if (err) {
+									console.log('Errore');
+									res.send(err);
+								} else {
+									res.json({message: 'Ordine cancellato', status: true});
+									console.log(JSON.stringify(order,null,4) +'\n');
+								}
+							}
+						);
+					}
+				}
 		});
+	});
 	
 	return router;
 }

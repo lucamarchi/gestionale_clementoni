@@ -50,6 +50,7 @@ app.use(function(req,res,next) {
 
 app.use('/api', require(path.join(__dirname, "routes", "products.js"))());
 app.use('/api', require(path.join(__dirname, "routes", "orders.js"))());
+app.use('/api', require(path.join(__dirname, "routes", "stocks.js"))());
 app.use('/api', require(path.join(__dirname, "routes", "cuts.js"))());
 app.use('/api', router);
 
