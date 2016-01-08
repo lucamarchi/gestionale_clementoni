@@ -38,6 +38,7 @@ module.exports = function() {
             		if (isMatch) {
             			console.log("User authenticated "+isMatch);
             			var token = jwt.sign({user: user}, config.secret, {expiresIn: '24h'});
+            			console.log('Token ok: '+token);
 						res.json({
 							status: true,
 							token: token,

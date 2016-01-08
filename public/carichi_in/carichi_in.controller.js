@@ -78,8 +78,7 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	$scope.confirmOrder = function () {
 		var orderId;
 		if($scope.order._id == undefined) {
-			orderFactory.save({
-				},
+			orderFactory.save({},
 				$scope.order,
 				function(resp){
 					orderId = resp.message;
