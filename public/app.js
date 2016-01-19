@@ -60,24 +60,21 @@ myapp.config(function($locationProvider, $routeProvider) {
 		
 });
 
-myapp.run(function($rootScope, $location, AuthenticationService2, $window) {
-    
+myapp.run(function($rootScope, $location, AuthenticationService, $window) {
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-		console.log("TOKEN", $window.sessionStorage.token);
-		AuthenticationService2.verify()
-			.success (function (data) {
-				console.log("VA BENE", data.status);
-				$rootScope.isLogged = data.status;
-			})
-			.error (function (data) {
+		console.log($rootScope.isLogged);
+		AuthenticationService.save({},{},
+			function(resp) {
+				console.log(resp.message);
+				$rootScope.isLogged = true;
+			},
+			function(err) {
 				if (nextRoute.access && nextRoute.access.requiredLogin) {
-					console.log("NON VA BENE", data.status);
-					$rootScope.isLogged = data.status;
+					console.log(err.data.message);
+					$rootScope.isLogged = false;
 					$location.path("/login");
 				}
-			})
-//        if (nextRoute.access && nextRoute.access.requiredLogin && !(AuthenticationService2.verify($window.sessionStorage.token))) {
-//			$location.path("/login");
-//        }
-    });
+			}
+		);
+	});
 });
