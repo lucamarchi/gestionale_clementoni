@@ -1,58 +1,80 @@
-//var myapp = angular.module('store', ["ui.router"])
-//myapp.config(function($stateProvider, $urlRouterProvider){
-//
-//	$urlRouterProvider.otherwise("/index.html")
-//
-//	$stateProvider
-//		.state('magazzino', {
-//			url: '/magazzino',
-//			templateUrl: 'magazzino.html',
-//			controller: 'magazzinoController'
-//		})
-//
-//		.state('carichiIn', {
-//			url: '/carichiIn',
-//			templateUrl: 'carichi_in.html',
-//			controller: 'carichiInController'
-//		})
-//		
-//		.state('login', {
-//			url:'/login',
-//			templateUrl: 'login.html',
-//			controller:'loginController'
-//		})
-//})
+var myapp = angular.module('store', ["ngRoute", "ngResource"]);
 
+myapp.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('TokenInterceptor');
+});
 
-var myapp = angular.module('store', ["ui.router"]);
-
-myapp.config(function($stateProvider, $urlRouterProvider){
-
-	$urlRouterProvider.otherwise("/index.html")
-
-	$stateProvider
-		.state('magazzino', {
-			url: '/magazzino',
-			templateUrl: 'magazzino/magazzino.html',
-			controller: 'magazzinoController'
-		})
-
-		.state('carichiIn', {
-			url: '/carichiIn',
-			templateUrl: 'carichi_in/carichi_in.html',
-			controller: 'carichiInController'
-		})
+myapp.config(function($locationProvider, $routeProvider) {
+    $routeProvider
+		.when('/', {
+        	templateUrl: 'magazzino/magazzino.html',
+			controller: 'magazzinoController',
+			access: { 
+				requiredLogin: true 
+			}
+      	})
 		
-		.state('login', {
-			url:'/login',
-			templateUrl: 'login/login.html',
-			controller:'loginController'
-		})
+      	.when('/magazzino', {
+        	templateUrl: 'magazzino/magazzino.html',
+			controller: 'magazzinoController',
+			access: { 
+				requiredLogin: true 
+			}
+      	})
+	
+		.when('/carichiIn', {
+        	templateUrl: 'carichi_in/carichi_in.html',
+			controller: 'carichiInController',
+			access: { 
+				requiredLogin: true 
+			}
+      	})
+	
+		.when('/login', {
+        	templateUrl: 'login/login.html',
+			controller:'loginController',
+			access: { 
+				requiredLogin: false 
+			}
+      	})
+	
+		.when('/login', {
+        	templateUrl: 'login/login.html',
+			controller:'loginController',
+			access: { 
+				requiredLogin: false 
+			}
+      	})
+	
+		.when('/ordiniTaglio', {
+        	templateUrl: 'ordini_taglio/ordini_taglio.html',
+			controller: 'ordiniTaglioController',
+			access: { 
+				requiredLogin: true
+			}
+      	})
 		
-		.state('ordiniTaglio', {
-				url: '/ordinitaglio',
-				templateUrl: 'ordini_taglio/ordini_taglio.html',
-				controller: 'ordiniTaglioController'
-		})
+		.otherwise({
+        	redirectTo: '/'
+      	});
 		
-})
+});
+
+myapp.run(function($rootScope, $location, AuthenticationService, $window) {
+	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+		console.log($rootScope.isLogged);
+		AuthenticationService.save({},{},
+			function(resp) {
+				console.log(resp.message);
+				$rootScope.isLogged = true;
+			},
+			function(err) {
+				if (nextRoute.access && nextRoute.access.requiredLogin) {
+					console.log(err.data.message);
+					$rootScope.isLogged = false;
+					$location.path("/login");
+				}
+			}
+		);
+	});
+});
