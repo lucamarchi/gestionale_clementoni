@@ -7,6 +7,7 @@ var cors = require('cors');
 var path = require('path');
 var config = require('./config');
 var router = express.Router();
+var morgan = require('morgan');	
 
 mongoose.connect('mongodb://127.0.0.1:27017/db_clementoni');
 mongoose.connection.on('error', function() {

@@ -7,12 +7,9 @@ var OrderSchema = new Schema({
 	numOrdine: {type: Number, require: true},
 	ddt: {type: Number},
 	fornitore: {type: String},
-	date: {type: Date, default: Date.now },
-	cTrasporto: {type: Number},
-	cOrdine: {type: Number},
-	cTotale: {type: Number},
-	productIds: [{ type: Schema.ObjectId, ref: 'Product'}],
-	stockIds: [{ type: Schema.ObjectId, ref: 'Stock'}]
+	dataDdt: {type: Date},
+	dataArrivo: {type: Date, default: Date.now },
+	productsId: [{ type: Schema.ObjectId, ref: 'Product'}],
 });
 
 module.exports = mongoose.model('Order', OrderSchema);
