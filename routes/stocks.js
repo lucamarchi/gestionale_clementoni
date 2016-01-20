@@ -7,30 +7,24 @@ module.exports = function() {
 	var Stock = require('./../app/models/stock');
 	var Product = require('./../app/models/product');
 
-	// VISUALIZZAZIONE STOCK GET /api/stocks
-
 	router.route('/stocks')
 		.get(function(req,res) {
 			Stock.find({}, function(err,stocks) {
 				if (err)
-					res.send(err);
-				res.json(stocks);
+					res.status(500).json({message: err, status: false});
+				else res.json({data: stocks, status: true});
 			});	
 		});
-
-	// MODIFICA DI UN STOCK PUT /api/stocks/:stock_id, RIMOZIONE DI UN STOCK DELETE /api/stock/:stock_id E VISUALIZZAZIONE STOCK GET /api/stocks/:stock_id
 			
 	router.route('/stocks/:stock_id')
 		.get(function(req,res) {
 			Stock.findById(req.params.stock_id, function(err,stock) {
 				if (err)
-					res.send(err);
-				else {
-					console.log(JSON.stringify(stock,null,4) +'\n');
-					res.json(stock)}
+					res.status(500).json({message: err, status: false});
+				else res.json({data: stock, status: true});
 			});
 		})
-
+		/*
 		.put(function(req,res) {
 			Stock.findById(req.params.stock_id, function(err,stock) {
 				if (err)
@@ -101,16 +95,7 @@ module.exports = function() {
 					}
 				}
 			);
-		});
-
-		router.route('/stocks')
-			.get(function(req,res) {
-				Stock.find({}, function(err,stocks) {
-					if (err)
-						res.send(err);
-					res.json(stocks);
-				});	
-		});
+		});*/
 
 	return router;
 

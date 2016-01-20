@@ -1,24 +1,28 @@
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
+var Stock = require('./stock');
 
 var ProductSchema = new Schema({
 	matricola: {type: String,required: true},
-	materiale: {type: String, required: true},
-	cop: {type: String, enum: ['coil', 'pacco','nastro']},
-	lunghezza: {type: Number},
-	larghezza: {type: Number},
-	spessore: {type: Number},
-	pesokg: {type: Number},
-	pesoton: {type: Number},
+	tipo: {type: String, required: true},
+	materiale: {type: String},
 	qualita: {type: String},
-	colore: {type: String},
-	ral: {type: String},
-	note: {type: String},
+	scelta: {type: String},
 	finitura: {type: String},
+	coloreRal: {type: String},
+	peso: {type: Number},
+	spessore: {type: Number},
+	larghezza: {type: Number},
+	classeLarghezza: {type: Number},
+	lunghezza: {type: Number},
+	numFogli: {type: Number},
 	prezzo: {type: Number},
-	orderId: {type: Schema.ObjectId, ref: 'Order'},
-	stockId: {type: Schema.ObjectId, ref: 'Stock'}
+	difetti: {type: String},
+	stabilimento: {type: Number},
+	stockId: {type: Schema.ObjectId, ref: 'Stock'},
+	figli: [Stock],
+	scarto: {type: Number}
 });
 
 module.exports = mongoose.model('Product', ProductSchema);
