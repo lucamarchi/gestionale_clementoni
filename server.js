@@ -20,6 +20,7 @@ mongoose.connection.on('open', function(){
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(require('morgan')("dev"));
 app.set('superSecret', config.secret);
 
 var port = process.env.PORT || 8080;
