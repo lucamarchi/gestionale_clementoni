@@ -3,10 +3,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CutSchema = new Schema({
-	anno: {type: String},
-	codice: {type: String},
+	anno: {type: Number},
+	codice: {type: Number},
 	clienteCod: {type: Number},
 	note: {type: String},
+	accepted: {type: Boolean, default: false},
+	operator: {type: String},
 	articoli: [{
 		codArticolo: {type: Number},
 		desArticolo: {type: String},
@@ -16,7 +18,7 @@ var CutSchema = new Schema({
 		altezza: {type: Number},
 		larghezza: {type: Number},
 		profondita: {type: Number},
-		dataConsegna: {type: String}
+		dataConsegna: {type: String},
 	}]
 });
 
