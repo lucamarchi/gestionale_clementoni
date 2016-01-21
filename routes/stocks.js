@@ -67,35 +67,25 @@ module.exports = function() {
 					}
 				});
 			});
-		})
-		
+		})*/
+
 		.delete(function(req,res) {
-			Order.update({stockIds: {$elemMatch: {$eq: req.params.stock_id}}},
-				{$pull: {stockIds: req.params.stock_id}},{multi:true}, 
-					function(err) {
-						if (err) {
-							res.json({message: 'Errore',status: false});
-							console.log('Errore: '+err);
-						}
+			Stock.findById(req.params.stock_id, function(err,stock) {
+				if (err)
+					res.status(500).json({message: err, status: false});
+				else if (!stock.fatherId && stock.fatherId==undefined) {
+					Product.update({"stockId": req.params.stock_id},{$unset: {"stockId": ""}}, function(err,product) {
+						if (err)
+							res.status(500).json({message: err, status: false});
+					});
+				}
+				stock.remove(function(err) {
+					if (err)
+						res.status(500).json({message: err, status: false});
+					else res.json({message: "Stock cancellato correttamente", status: true});
 				});
-			Product.update({stockId: req.params.stock_id},{$unset: {stockId: ""}}, function(err){
-				if (err) {
-					res.json({message: 'Errore',status: false});
-					console.log('Errore: '+err);
-				}
-			});
-			Stock.remove({
-					_id: req.params.stock_id
-				}, function(err,stock) {
-					if (err) {
-						console.log('Errore: '+err);
-						res.json({message: 'Errore',status: false});
-					} else {
-						res.json({message: 'Stock cancellato', status: true});
-					}
-				}
-			);
-		});*/
+			}); 
+		});
 
 	return router;
 

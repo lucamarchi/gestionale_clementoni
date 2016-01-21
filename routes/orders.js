@@ -153,7 +153,7 @@ module.exports = function() {
 						stock.prezzo = p.prezzo;
 						stock.difetti = p.difetti;
 						stock.stabilimento = p.stabilimento;
-						stock.save(function(err) {
+						stock.save(function(err,stock) {
 							if (err)
 								res.status(500).json({message: err, status: false});
 							else {
@@ -180,9 +180,10 @@ module.exports = function() {
 									if (err)
 										res.status(500).json({message: err, status: false});
 									else {
-										Order.update({_id: orderId},{$push: {"productsId": product.id}}, function(err) {
+										Order.update({_id: req.params.order_id},{$push: {"productsId": product.id}}, function(err,order) {
 											if (err)
 												res.status(500).json({message: err, status: false});
+											else console.log(order.productsId);
 										});
 									}
 								});
