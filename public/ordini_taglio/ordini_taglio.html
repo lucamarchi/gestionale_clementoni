@@ -2,20 +2,18 @@
 <table class="table table-bordered table-hover">
 	<thead>
 	    <tr>
-			<th>Id</th>
-			<th>Indirizzo</th>
-			<th>Località</th>
-  			<th>Nome</th>
-			<th>Partita Iva</th>
+			<th>Anno</th>
+			<th>Codice</th>
+			<th>CodiceCliente</th>
+  			<th>Note</th>
 	    </tr>
 	</thead>
   	<tbody>
     	<tr ng-repeat="cut in cuts">
-      		<td>{{cut.Id}}</td>
-      		<td>{{cut.Indirizzo}}</td>
-			<td>{{cut.Localita}}</td>
-			<td>{{cut.Name}}</td>
-			<td>{{cut.PartitaIva}}</td>
+      		<td>{{cut.anno}}</td>
+      		<td>{{cut.codice}}</td>
+			<td>{{cut.clienteCod}}</td>
+			<td>{{cut.note}}</td>
       	</tr>
     </tbody>
 </table>

@@ -7,16 +7,16 @@ myapp.config(function ($httpProvider) {
 myapp.config(function($locationProvider, $routeProvider) {
     $routeProvider
 		.when('/', {
-        	templateUrl: 'magazzino/magazzino.html',
-			controller: 'magazzinoController',
+        	templateUrl: 'stock/stock.html',
+			controller: 'stockController',
 			access: { 
 				requiredLogin: true 
 			}
       	})
 		
-      	.when('/magazzino', {
-        	templateUrl: 'magazzino/magazzino.html',
-			controller: 'magazzinoController',
+      	.when('/stock', {
+        	templateUrl: 'stock/stock.html',
+			controller: 'stockController',
 			access: { 
 				requiredLogin: true 
 			}
@@ -27,14 +27,6 @@ myapp.config(function($locationProvider, $routeProvider) {
 			controller: 'carichiInController',
 			access: { 
 				requiredLogin: true 
-			}
-      	})
-	
-		.when('/login', {
-        	templateUrl: 'login/login.html',
-			controller:'loginController',
-			access: { 
-				requiredLogin: false 
 			}
       	})
 	

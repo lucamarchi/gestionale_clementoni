@@ -1,11 +1,19 @@
 var store = angular.module('store');
-store.controller('magazzinoController', function ($scope, productFactory) {
+store.controller('stockController', function ($scope, stockFactory) {
 	
-	$scope.products = productFactory.query();
+	stockFactory.getAll(
+		function (resp) {
+			console.log(resp.data);
+			$scope.products = resp.data;
+		},
+		function(err) {
+			console.log(err);
+		}
+	);
 	
-	$scope.deleteProduct = function (id) {
-		productFactory.remove({
-			product:id
+	$scope.deleteProduct = function (product) {
+		stockFactory.delete({
+			id:product._id
 		},
 		function(resp){
 			console.log(resp);
@@ -20,8 +28,8 @@ store.controller('magazzinoController', function ($scope, productFactory) {
 	}
 	
 	$scope.updateProduct = function (product) {
-		productFactory.update({
-			product:product._id
+		stockFactory.update({
+			id:product._id
 		},
 		product,
 		function(resp){

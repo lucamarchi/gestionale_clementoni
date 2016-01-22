@@ -1,33 +1,38 @@
 var store = angular.module('store');
 
 store.controller('carichiInController', function ($scope, orderFactory, productFactory) {
-
-	$scope.orders = orderFactory.query();
+	orderFactory.getAll(
+		function (resp) {
+			console.log(resp.data);
+			$scope.orders = resp.data;
+		},
+		function(err) {
+			console.log(resp);
+		}
+	);
+	
 	$scope.order = undefined;
 	$scope.productsOrder = [];
 	$scope.productsOrder2 = [];
 
-	$scope.openProductsOrder = function (order) {
-		$scope.order = order;
-		var productIds = order.productIds;
-		var products = [];
-		for (ids of productIds) {
-			productFactory.get({
-				product:ids
-				},
-				function(resp){
-					products.push(resp);
-					console.log(resp);
-				},
-				function(err){
-					console.log(err);
-				}
-			);
-		}
-		$scope.productsOrder = products;
-		$scope.productsOrder2 = [];
-	}
 	
+	$scope.openProductsOrder = function (order) {
+		$scope.productsOrder2 = [];
+		orderFactory.get(
+			{
+				id: order._id
+			},
+			function (resp) {
+				console.log(resp);
+				$scope.order = resp.order;
+				$scope.productsOrder = resp.products;
+			},
+			function (err) {
+				console.log (err);
+			}
+		);
+	}	
+
 	$scope.createOrder = function () {
 		$scope.order = undefined;
 		$scope.productsOrder = [];
@@ -37,22 +42,26 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	
 	$scope.openOrder = function (order){
 		$scope.order = order;
+		$scope.productsOrder2 = [];
+		
 	}
 	
 	$scope.createProduct = function () {
 		$scope.product = undefined;	
 	}
-	
+
 	$scope.addProduct = function () {
 		$scope.productsOrder.push($scope.product);
 		$scope.productsOrder2.push($scope.product);
 	}
 	
 	$scope.updateOrder = function (order) {
-		orderFactory.update({
-			order:order._id
+		var products = $scope.productsOrder2;
+		orderFactory.update(
+			{
+				id: order._id
 			},
-			order,
+			{order, products},
 			function(resp){
 				console.log(resp);
 			},
@@ -62,9 +71,10 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		);
 	}
 		
-	$scope.deleteOrder = function (id) {
-		orderFactory.delete({
-			order:id
+	$scope.deleteOrder = function (order) {
+		orderFactory.delete(
+			{
+				id:order._id
 			},
 			function(resp){
 				console.log(resp);
@@ -76,48 +86,16 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	}
 	
 	$scope.confirmOrder = function () {
-		var orderId;
-		if($scope.order._id == undefined) {
-			orderFactory.save({},
-				$scope.order,
-				function(resp){
-					orderId = resp.message;
-					console.log(resp);
-					for (product of $scope.productsOrder2){
-						productFactory.save({
-							product:orderId
-							},
-							product,
-							function(resp){
-								console.log(resp);
-							},
-							function(err){
-								console.log(err);
-							}
-						)
-					}
-				},
-				function(err){
-					console.log(err);
-				}
-			)
-		}
-		else {
-			orderId = $scope.order._id;
-			for (product of $scope.productsOrder2){
-				productFactory.save({
-					product:orderId
-					},
-					product,
-					function(resp){
-						console.log(resp);
-					},
-					function(err){
-						console.log(err);
-					}
-				)
+		var order = $scope.order;
+		var products = $scope.productsOrder2;
+		orderFactory.save({},
+			{order, products},
+			function(resp){
+				console.log(resp);
+			},
+			function (err){
+				console.log(err);
 			}
-		} 
+		);
 	}
-
 });

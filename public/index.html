@@ -26,24 +26,24 @@
 	<nav class="navbar navbar-inverse navbar-fixed">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Clementoni</a>
+				<a class="navbar-brand" href="#">COPAL</a>
 			</div>
 			<div>
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
           				<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href="">Magazzino<span class="caret"></span></a>
           						<ul class="dropdown-menu">
-            						<li><a href="#/magazzino">Magazzino Effettivo</a></li>
+            						<li><a href="#/stock">Magazzino Effettivo</a></li>
             						<li><a href="#">Magazzino Virtuale</a></li> 
           						</ul>
         			</li>
 					<li><a ng-if="isLogged" href="#/carichiIn">Carichi in entrata</a></li>
 					<li><a ng-if="isLogged" href="#/ordiniTaglio">Ordini di taglio</a></li>
-					<li><a ng-if="isLogged" href="#">Carichi in uscita</a></li>
+					<li><a ng-if="isLogged" href="">Logistica</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
         			<li class="active"><a ng-if="!isLogged" href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
-        			<li><a ng-if="isLogged" href="#/login" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+        			<li class="active"><a ng-if="isLogged" href="#/login" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
       			</ul>
 			</div>
 		</div>
@@ -57,7 +57,7 @@
 
 	<script src="app.js"></script>
 	<script src="components/services.js"></script>
-	<script src="magazzino/magazzino.controller.js"></script>
+	<script src="stock/stock.controller.js"></script>
 	<script src="carichi_in/carichi_in.controller.js"></script>
 	<script src="login/login.controller.js"></script>
 	<script src="ordini_taglio/ordini_taglio.controller.js"></script>

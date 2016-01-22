@@ -1,14 +1,14 @@
-<h2>CRONOLOGIA ORDINI IN ENTRATA</h2>
+<h2>CRONOLOGIA ORDINI IN ENTRATA
+<button type="button" class="btn btn-primary" data-toggle="modal" href="#neworder" ng-click="createOrder()">Aggiungi Ordine</button>
+</h2>
 <table class="table table-bordered table-hover">
 	<thead>
 	    <tr>
 			<th>Numero Ordine</th>
 			<th>DDT</th>
   			<th>Fornitore</th>
-			<th>Data</th>
-	      	<th>Costo Trasporto</th>
-	      	<th>Costo Ordine</th>
-	      	<th>Costo Totale</th>
+			<th>Data ddt</th>
+			<th>Data Arrivo</th>
 		</tr>
 	</thead>
   	<tbody>
@@ -16,23 +16,20 @@
 			<td><button type="button" class="btn btn-info btn-block" ng-click="openProductsOrder(order)" href="#orderproducts" data-toggle="modal">{{order.numOrdine}}</button></td>
 			<td>{{order.ddt}}</td>
   			<td>{{order.fornitore}}</td>
-			<td>{{order.date | date:'medium'}}</td>
-	      	<td>{{order.cTrasporto}}</td>
-	      	<td>{{order.cOrdine}}</td>
-	      	<td>{{order.cTotale}}</td>
+			<td>{{order.dataDdt | date:'medium'}}</td>
+			<td>{{order.dataArrivo | date:'medium'}}</td>
 			<td>
 				<div class="dropdown">
   					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
   					<ul class="dropdown-menu">
     					<li><button type="button" class="btn btn-warning btn-block" ng-click="openOrder(order)" href="#neworder" data-toggle="modal">Modifica</button></li>
-    					<li><button type="button" class="btn btn-danger btn-block" href="#" ng-click="deleteOrder(order._id)">Cancella</button></li>
+    					<li><button type="button" class="btn btn-danger btn-block" href="#" ng-click="deleteOrder(order)">Cancella</button></li>
   					</ul>
 				</div>
 			</td>
 		</tr>
 	</tbody>
 </table>
-<button type="button" class="btn btn-primary btn-block" data-toggle="modal" href="#neworder" ng-click="createOrder()">Aggiungi Ordine</button>
 
 <!-- Modal order_products.html-->
 <div id="orderproducts" class="modal container fade" style="display: none;">
@@ -46,7 +43,8 @@
 				<div ng-include src="'carichi_in/order_products.html'"></div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success" ng-click="confirmOrder()" data-dismiss="modal">Conferma</button>
+				<button type="button" class="btn btn-success" ng-if="order._id == undefined" ng-click="confirmOrder()" data-dismiss="modal">Conferma</button>
+				<button type="button" class="btn btn-warning" ng-if="order._id != undefined" ng-click="updateOrder(order)" data-dismiss="modal">Modifica</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 			</div>
 		</div>
@@ -86,8 +84,8 @@
 				<div ng-include src="'carichi_in/new_order.html'"></div>
 			</div>
 			<div class="modal-footer">
-				<button ng-if="orderForm.$valid && order._id == null" type="button" class="btn btn-success" data-toggle="modal" href="#orderproducts" data-dismiss="modal">Conferma</button>
-				<button ng-if="orderForm.$valid && order._id != null" type="button" class="btn btn-warning" ng-click="updateOrder(order)" data-dismiss="modal">Modifica</button>
+				<button ng-if="orderForm.$valid && order._id == undefined" type="button" class="btn btn-success" data-toggle="modal" href="#orderproducts" data-dismiss="modal">Conferma</button>
+				<button ng-if="orderForm.$valid && order._id != undefined" type="button" class="btn btn-warning" ng-click="updateOrder(order)" data-dismiss="modal">Modifica</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 			</div>
 		</div>

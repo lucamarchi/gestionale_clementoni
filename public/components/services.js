@@ -1,5 +1,29 @@
 var store = angular.module('store');
 
+store.factory('stockFactory', function ($resource) {
+    return $resource = $resource('http://localhost:8080/api/stocks/:id',
+		{
+			id: "@id"
+		}, 
+		{
+			update: {method:'PUT'},
+			getAll: {method:'GET', isArray: false}
+		}
+	);
+});
+
+store.factory('orderFactory', function ($resource) {
+    return $resource('http://localhost:8080/api/orders/:id',
+		{
+			id: "@id"
+		}, 
+		{
+			update: {method:'PUT'},
+			getAll: {method:'GET', isArray: false}
+		}
+	);
+});
+
 store.factory('productFactory', function ($resource) {
     var resource = $resource('http://localhost:8080/api/products/:product',{product: "@product"}, {
 		update:{method:'PUT'}
@@ -7,18 +31,18 @@ store.factory('productFactory', function ($resource) {
 	return resource;
 });
 
-store.factory('orderFactory', function ($resource) {
-    var resource = $resource('http://localhost:8080/api/orders/:order',{order: "@order"}, {
-		update:{method:'PUT'}
-  	});
-	return resource;
-});
 
-store.factory('orderCutFactory', function ($resource) {
-    var resource = $resource('http://localhost:8080/api/cuts/:cuts',{cut: "@cut"}, {
-		update:{method:'PUT'}
-  	});
-	return resource;
+
+store.factory('cutFactory', function ($resource) {
+    return $resource('http://localhost:8080/api/cuts/:id',
+		{
+			id: "@id"
+		}, 
+		{
+			update: {method:'PUT'},
+			getAll: {method:'GET', isArray: false}
+		}
+	);
 });
 
 store.factory('UserService', function ($resource) {
@@ -51,7 +75,7 @@ store.factory('TokenInterceptor', function ($q, $window, $location, $rootScope) 
   
         /* Revoke client authentication if 401 is received */
         responseError: function(rejection) {
-            if (rejection != null && rejection.status === 500 && rejection.status === 403 && ($window.sessionStorage.token || $rootScope.isLogged)) {
+            if (rejection != null && rejection.status === 500 && ($window.sessionStorage.token || $rootScope.isLogged)) {
                 delete $window.sessionStorage.token;
 				$rootScope.isLogged = false;
                 $location.path("/login");

@@ -21,28 +21,18 @@
     <div class="form-group">
 	   	<label for="fornitore" class="col-md-2 control-label">Fornitore: </label>
 		<div class="col-md-10">
-	   		<input type="text" ng-model="$parent.order.fornitore" class="form-control" required/>
+	   		<select ng-model="$parent.product.fornitore" class="form-control" required>
+				<option value="21">21</option>
+				<option value="5">5</option>
+				<option value="2">2</option>
+			</select>
 		</div>
     </div>
 
     <div class="form-group">
-	   	<label for="cTrasporto" class="col-md-2 control-label">Costo Trasporto:</label>
+	   	<label for="dataDdt" class="col-md-2 control-label">Data DDT: </label>
 		<div class="col-md-10">
-	   		<input type="number" ng-model="$parent.order.cTrasporto" class="form-control"/>
-		</div>
-    </div>
-
-    <div class="form-group">
-	   	<label for="cOrdine" class="col-md-2 control-label">Costo Ordine: </label>
-		<div class="col-md-10">
-	   		<input type="number" ng-model="$parent.order.cOrdine" class="form-control"/>
-		</div>
-    </div>
-
-    <div class="form-group">
-	   	<label for="cTotale" class="col-md-2 control-label">Costo Totale: </label>
-		<div class="col-md-10">
-	   		{{(order.cTrasporto+order.cOrdine)|currency}}
+	   		<input type="date" ng-model="$parent.order.dataDdt" class="form-control" required/>
 		</div>
     </div>
 </form>

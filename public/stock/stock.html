@@ -1,45 +1,51 @@
-<h2>MAGAZZINO</h2> 
+<h2>STOCK</h2> 
 <table class="table table-bordered table-hover">
 	<thead>
 	    <tr>
+			<th>Spessore</th>
+			<th>C.Larghezza</th>
 			<th>Matricola</th>
 			<th>Tipo</th>
 			<th>Materiale</th>
-  			<th>Qualita</th>
+			<th>Qualita</th>
+			<th>Scelta</th>
 			<th>Finitura</th>
-	      	<th>Colore</th>
-	      	<th>Ral</th>
-	      	<th>Peso Kg</th>
-	      	<th>Peso t</th>
-			<th>Lunghezza</th>
+			<th>Colore/Ral</th>
+			<th>Peso</th>
 			<th>Larghezza</th>
-			<th>Spessore</th>
-	      	<th>Prezzo</th>
-	      	<th>Note</th>
-	    </tr>
+			<th>Lunghezza</th>
+			<th>N.Fogli</th>
+			<th>Prezzo</th>
+			<th>Difetti</th>
+			<th>Stabilimento</th>
+			<th>Scarto</th>
+		</tr>
 	</thead>
   	<tbody>
-    	<tr ng-repeat="product in products">
-      		<td>{{product.matricola}}</td>
-      		<td>{{product.cop}}</td>
+    	<tr ng-repeat="product in products | orderBy:'spessore':false:'classeLarghezza'">
+      		<td>{{product.spessore}}</td>
+			<td>{{product.classeLarghezza}}</td>
+			<td>{{product.matricola}}</td>
+			<td>{{product.tipo}}</td>
 			<td>{{product.materiale}}</td>
 			<td>{{product.qualita}}</td>
+			<td>{{product.scelta}}</td>
 			<td>{{product.finitura}}</td>
-			<td>{{product.colore}}</td>
-      		<td>{{product.ral}}</td>
-			<td>{{product.lunghezza}}</td>
+			<td>{{product.coloreRal}}</td>
+			<td>{{product.peso}}</td>
 			<td>{{product.larghezza}}</td>
-			<td>{{product.spessore}}</td>
-      		<td>{{product.pesokg}}</td>
-			<td>{{(product.pesokg)/100}}</td>
+			<td>{{product.lunghezza}}</td>
+			<td>{{product.numFogli}}</td>
 			<td>{{product.prezzo}}</td>
-			<td>{{product.note}}</td>
+			<td>{{product.difetti}}</td>
+			<td>{{product.stabilimento}}</td>
+			<td>{{product.scarto}}</td>
 			<td>
 				<div class="dropdown">
   					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
   					<ul class="dropdown-menu">
     					<li><button type="button" class="btn btn-warning btn-block" href="#newproduct" data-toggle="modal" ng-click="openProduct(product)">Modifica</button></li>
-    					<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(product._id)" href="#">Cancella</button></li>
+    					<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(product)" href="#">Cancella</button></li>
   					</ul>
 				</div>
 			</td>
