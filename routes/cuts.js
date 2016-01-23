@@ -68,7 +68,6 @@ module.exports = function() {
 		})
 
 		.put(function(req,res) {
-			console.log(req.body.operator);
 			Cut.update({_id: req.params.cut_id},{$set: {"accepted": true, "operator": req.body.operator}}, function(err) {
 				if (err)
 					res.status(500).json({message: err, status: false});
