@@ -6,7 +6,7 @@ var Cut = require('./../app/models/cut');
 module.exports = function() {
 	var router = express.Router();
 
-	router.get('/cuts', function(req,res,timer) {
+	router.get('/update', function(req,res) {
 		var itemProducts = 0;
 		request({
 			url: URL_AGENTI,
@@ -25,17 +25,19 @@ module.exports = function() {
 					cut.note = body.data[i].Note;
 					var articoli = [];
 					for(var key in body.data[i].data) {
-						articoli[i].codArticolo = body.data[i].data[key].CodArticolo;
-						articoli[i].desArticolo = body.data[i].data[key].DesArticolo;
-						articoli[i].note = body.data[i].data[key].Note;
-						articoli[i].quantita = body.data[i].data[key].Quantita;
-						articoli[i].prezzo = body.data[i].data[key].Prezzo;
-						articoli[i].altezza = body.data[i].data[key].Altezza;
-						articoli[i].larghezza = body.data[i].data[key].Larghezza;
-						articoli[i].profondita = body.data[i].data[key].Profondita;
-						articoli[i].dataConsegna = body.data[i].data[key].DataConsegna;
-						cut.articoli = articoli;
+						articoli.push({
+							codArticolo: body.data[i].data[key].CodArticolo,
+							desArticolo: body.data[i].data[key].DesArticolo,
+							note: body.data[i].data[key].Note,
+							quantita: body.data[i].data[key].Quantita,
+							prezzo: body.data[i].data[key].Prezzo,
+							altezza: body.data[i].data[key].Altezza,
+							larghezza: body.data[i].data[key].Larghezza,
+							profondita: body.data[i].data[key].Profondita,
+							dataConsegna: body.data[i].data[key].DataConsegna
+						});
 					}
+					cut.articoli = articoli;
 					cut.save(function(err) {
 						if (err)
 							res.json({status: false, message: 'Cut non salvato'});
@@ -47,5 +49,46 @@ module.exports = function() {
 			}
 		});
 	});
+
+	router.get('/cuts', function(req,res) {
+		Cut.find({}, function(err,cuts) {
+			if (err)
+				res.status(500).json({message: err, status: false});
+			else res.json({data: cuts, status: true});
+		});	
+	});
+
+	router.route('/cuts/:cut_id')
+		.get(function(req,res) {
+			Cut.findById(req.params.cut_id, function(err,cut) {
+				if (err)
+					res.status(500).json({message: err, status: false});
+				else res.json({data: cut, status: true});
+			});	
+		})
+
+		.put(function(req,res) {
+			Cut.update({_id: req.params.cut_id},{$set: {"accepted": true, "operator": req.body.operator}}, function(err) {
+				if (err)
+					res.status(500).json({message: err, status: false});
+				else res.json({message: "Cut accettato", status: true});
+			});
+		});
+
+	router.put('')
+
 	return router;
+};
+
+var latestCuts = function() {
+	var year = new Date().getFullYear();
+	Cut.find({anno: year}).sort({codice: -1}).limit(1).exec(function(err, cut) {
+		if (err)
+			return -2;
+		else {
+			if (cut)
+				return cut.codice;
+			else return -1;
+		}
+	});
 };

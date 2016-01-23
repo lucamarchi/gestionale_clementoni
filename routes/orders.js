@@ -101,7 +101,7 @@ module.exports = function() {
 			Order.find({}, function(err,orders) {
 				if (err)
 					res.status(500).json({message: err, status: false});
-				res.json({data: orders, status: true});
+				else res.json({data: orders, status: true});
 			});	
 		});
 
@@ -124,8 +124,6 @@ module.exports = function() {
 			});
 		})
 		.put(function(req,res) {
-			/* prima update ordine, 
-			nel success se ci sono prodotti, salvo i prodotti e faccio il push*/
 			Order.update({_id: req.params.order_id},{$set: req.body.order}, function(err,order) {
 				if (err)
 					res.status(500).json({message: err, status: false});
