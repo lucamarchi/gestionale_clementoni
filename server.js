@@ -36,7 +36,7 @@ app.use(function(req,res,next) {
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err,decoded) {
 			if (err) {
-				return res.json({success: false, message: 'Failed to authenticate token'});
+				return res.status(401).json({success: false, message: 'Failed to authenticate token'});
 			} else {
 				req.decoded = decoded;
 				next();

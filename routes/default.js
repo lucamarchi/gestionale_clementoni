@@ -31,7 +31,7 @@ module.exports = function() {
 			if (err)
 				res.status(500).json({status: false, message: 'Errore: '+ err});
 			if (!user) {
-				res.status(500).json({status: false, message: 'Authentication failed, user not found'});
+				res.status(401).json({status: false, message: 'Authentication failed, user not found'});
 			} 	else if (user) {
 				user.comparePassword(req.body.password, function(err, isMatch) {
             		if (err) res.status(500).json({status: false, message: 'Errore: '+ err});
@@ -46,7 +46,7 @@ module.exports = function() {
 						});
 					} else {
 						console.log("User authenticated "+isMatch);
-            			res.status(500).json({status: false, message: 'Password not valid'});
+            			res.status(401).json({status: false, message: 'Password not valid'});
 					}
         		});
 			}
