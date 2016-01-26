@@ -38,9 +38,9 @@ myapp.config(function($locationProvider, $routeProvider) {
 			}
       	})
 	
-		.when('/ordiniTaglio', {
-        	templateUrl: 'ordini_taglio/ordini_taglio.html',
-			controller: 'ordiniTaglioController',
+		.when('/cut', {
+        	templateUrl: 'cut/cuts.html',
+			controller: 'cutController',
 			access: { 
 				requiredLogin: true
 			}

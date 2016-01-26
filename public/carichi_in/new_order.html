@@ -1,6 +1,6 @@
 <style>
-	.ng-invalid {border-color: #FA787E;}
-	.ng-valid {border-color: #78FA89;}
+	.form-control.ng-invalid {border-color: #FA787E;}
+	.form-control.ng-valid {border-color: #78FA89;}
 </style>
 
 <form name="$parent.orderForm" class="form-horizontal" novalidate>
@@ -21,7 +21,7 @@
     <div class="form-group">
 	   	<label for="fornitore" class="col-md-2 control-label">Fornitore: </label>
 		<div class="col-md-10">
-	   		<select ng-model="$parent.product.fornitore" class="form-control" required>
+	   		<select ng-model="$parent.order.fornitore" class="form-control" required>
 				<option value="21">21</option>
 				<option value="5">5</option>
 				<option value="2">2</option>
@@ -32,7 +32,7 @@
     <div class="form-group">
 	   	<label for="dataDdt" class="col-md-2 control-label">Data DDT: </label>
 		<div class="col-md-10">
-	   		<input type="date" ng-model="$parent.order.dataDdt" class="form-control" required/>
+	   		<input type="date" ng-model="$parent.order.dataDdt" class="form-control" required />
 		</div>
     </div>
 </form>

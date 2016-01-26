@@ -21,10 +21,7 @@ store.controller('loginController', function($scope, $rootScope, $location, $win
 	
 	
 	$rootScope.logout = function () {
-//		if($rootScope.isLogged) {
-			$rootScope.isLogged = false;
-			delete $window.sessionStorage.token;
-//			$location.path("/login");
-//		}
+		$rootScope.isLogged = false;
+		delete $window.sessionStorage.token;
 	}
 });

@@ -25,9 +25,14 @@ store.factory('orderFactory', function ($resource) {
 });
 
 store.factory('productFactory', function ($resource) {
-    var resource = $resource('http://localhost:8080/api/products/:product',{product: "@product"}, {
-		update:{method:'PUT'}
-  	});
+    var resource = $resource('http://localhost:8080/api/products/:id',
+		{
+			id: "@id"
+		}, 
+		{
+			update:{method:'PUT'}
+  		}
+	);
 	return resource;
 });
 

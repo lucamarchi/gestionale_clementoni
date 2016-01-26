@@ -1,6 +1,7 @@
 var store = angular.module('store');
 
 store.controller('carichiInController', function ($scope, orderFactory, productFactory) {
+	
 	orderFactory.getAll(
 		function (resp) {
 			console.log(resp.data);
@@ -75,6 +76,20 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		orderFactory.delete(
 			{
 				id:order._id
+			},
+			function(resp){
+				console.log(resp);
+			},
+			function(err){
+				console.log(err);
+			}
+		);
+	}
+	
+	$scope.deleteProduct = function (product) {
+		productFactory.delete(
+			{	
+				id:product._id
 			},
 			function(resp){
 				console.log(resp);

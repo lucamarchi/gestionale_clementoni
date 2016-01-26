@@ -1,6 +1,6 @@
 <style>
-	.ng-invalid {border-color: #FA787E;}
-	.ng-valid {border-color: #78FA89;}
+	.form-control.ng-invalid {border-color: #FA787E;}
+	.form-control.ng-valid {border-color: #78FA89;}
 </style>
 <form name="$parent.productForm" class="form-horizontal" novalidate>
 
@@ -175,10 +175,20 @@
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div class="form-group" ng-if="product.tipo != 'coil' && product.tipo != 'nastro'">
 		<label for="lunghezza" class="col-md-2 control-label">Lunghezza:</label>
 		<div class="col-md-10">
-			<input type="number" ng-model="$parent.product.lunghezza" class="form-control" required/>
+			<select ng-model="$parent.product.lunghezza" class="form-control" required>
+				<option value="2000">2000</option>
+				<option value="2500">2500</option>
+				<option value="3000">3000</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group" ng-if="product.tipo == 'coil' || product.tipo == 'nastro'">
+		<label for="lunghezza" class="col-md-2 control-label">Lunghezza:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="$parent.product.lunghezza" class="form-control" disabled/>
 		</div>
 	</div>
 	

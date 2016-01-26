@@ -31,14 +31,14 @@
 			<div>
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
-          				<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href="">Magazzino<span class="caret"></span></a>
+          				<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href="">Stock<span class="caret"></span></a>
           						<ul class="dropdown-menu">
-            						<li><a href="#/stock">Magazzino Effettivo</a></li>
-            						<li><a href="#">Magazzino Virtuale</a></li> 
+            						<li><a href="#/stock">Stock Effettivo</a></li>
+            						<li><a href="#">Stock Virtuale</a></li> 
           						</ul>
         			</li>
 					<li><a ng-if="isLogged" href="#/carichiIn">Carichi in entrata</a></li>
-					<li><a ng-if="isLogged" href="#/ordiniTaglio">Ordini di taglio</a></li>
+					<li><a ng-if="isLogged" href="#/cut">Ordini di taglio</a></li>
 					<li><a ng-if="isLogged" href="">Logistica</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -49,18 +49,14 @@
 		</div>
 	</nav>
 
-	<div class="container-fluid">
-		<div class="jumbotron">
-			<div ng-view></div>
-		</div>
-	</div>
-
+	<div class="container-fluid" ng-view></div>
+	
 	<script src="app.js"></script>
 	<script src="components/services.js"></script>
 	<script src="stock/stock.controller.js"></script>
 	<script src="carichi_in/carichi_in.controller.js"></script>
 	<script src="login/login.controller.js"></script>
-	<script src="ordini_taglio/ordini_taglio.controller.js"></script>
+	<script src="cut/cut.controller.js"></script>
 </body>
 
 </html>

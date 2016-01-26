@@ -1,0 +1,28 @@
+<table class="table table-bordered table-hover">
+	<thead>
+	    <tr>
+			<th>Cod.Articolo</th>
+			<th>Dest.Articolo</th>
+			<th>Note</th>
+			<th>Quantita</th>
+  			<th>Prezzo</th>
+			<th>Altezza</th>
+			<th>Larghezza</th>
+			<th>Profondita</th>
+			<th>Data Consegna</th>
+	    </tr>
+	</thead>
+  	<tbody>
+    	<tr ng-repeat="article in articlesCut">
+      		<td>{{article.codArticolo}}</td>
+      		<td>{{article.desArticolo}}</td>
+			<td>{{article.note}}</td>
+			<td>{{article.quantita}}</td>
+			<td>{{article.prezzo}}</td>
+			<td>{{article.altezza}}</td>
+			<td>{{article.larghezza}}</td>
+			<td>{{article.profondita}}</td>
+			<td>{{article.dataConsegna}}</td>
+      	</tr>
+    </tbody>
+</table>
