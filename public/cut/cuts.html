@@ -1,29 +1,64 @@
+<style>
+	.label-pill {
+		display: inline-block;
+		text-align: center;
+	}
+</style>
+
 <h2>ORDINI DI TAGLIO
 <button type="button" class="btn btn-primary" ng-click="">Refresh</button>
 </h2> 
-<table class="table table-bordered table-hover">
-	<thead>
-	    <tr>
-			<th>Codice</th>
-			<th>CodiceCliente</th>
-  			<th>Anno</th>
-			<th>Note</th>
-			<th>Accettato</th>
-			<th>Operatore</th>
-	    </tr>
-	</thead>
-  	<tbody>
-    	<tr ng-repeat="cut in cuts">
-      		<td><button type="button" class="btn btn-info btn-block" ng-click="openCut(cut)" href="#cutarticle" data-toggle="modal">{{cut.codice}}</button></td>
-			<td>{{cut.clienteCod}}</td>
-			<td>{{cut.anno}}</td>
-			<td>{{cut.note}}</td>
-			<td>{{cut.accepted}}</td>
-			<td>{{cut.operator}}</td>
-      	</tr>
-    </tbody>
-</table>
 
+<nav>
+	<ul class="pagination">
+		<li>
+			<a href="#" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			</a>
+		</li>
+		<li><a href="#">Gen16</a></li>
+		<li><a href="#">Feb16</a></li>
+		<li><a href="#">Mar16</a></li>
+		<li><a href="#">Apr16</a></li>
+		<li><a href="#">Mag16</a></li>
+		<li><a href="#">Giu16</a></li>
+		<li><a href="#">Lug16</a></li>
+		<li><a href="#">Ago16</a></li>
+		<li><a href="#">Set16</a></li>
+		<li><a href="#">Ott16</a></li>
+		<li><a href="#">Nov16</a></li>
+		<li><a href="#">Dic16</a></li>
+		<li>
+			<a href="#" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			</a>
+		</li>
+  	</ul>
+</nav>
+<div class="table-responsive">
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Codice</th>
+				<th>CodiceCliente</th>
+				<th>Anno</th>
+				<th>Note</th>
+				<th>Accettato</th>
+				<th>Operatore</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="cut in cuts">
+				<td><button type="button" class="btn btn-info btn-block" ng-click="openCut(cut)" href="#cutarticle" data-toggle="modal">{{cut.codice}}</button></td>
+				<td>{{cut.clienteCod}}</td>
+				<td>{{cut.anno}}</td>
+				<td>{{cut.note}}</td>
+				<td ng-if="cut.accepted == true"><span class="label label-pill label-success">{{cut.accepted}}</span></td><td ng-if="cut.accepted == false"><button type="button" class="btn btn-primary btn-block" ng-click="confirmCut(cut)" data-toggle="modal">Conferma</button></td>
+				<td>{{cut.operator}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
 <!-- Modal cut_products.html-->
 <div id="cutarticle" class="modal container fade" style="display: none;">

@@ -4,7 +4,7 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	
 	orderFactory.getAll(
 		function (resp) {
-			console.log(resp.data);
+			console.log("TUTTI GLI ORDINI" , resp.data);
 			$scope.orders = resp.data;
 		},
 		function(err) {
@@ -24,7 +24,7 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 				id: order._id
 			},
 			function (resp) {
-				console.log(resp);
+				console.log("ORDINE E PRODOTTI" , resp);
 				$scope.order = resp.order;
 				$scope.productsOrder = resp.products;
 			},
@@ -38,7 +38,6 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		$scope.order = undefined;
 		$scope.productsOrder = [];
 		$scope.productsOrder2 = [];
-		console.log($scope.order);
 	}
 	
 	$scope.openOrder = function (order){
@@ -52,6 +51,10 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	}
 
 	$scope.addProduct = function () {
+		if ($scope.product.lunghezza == undefined){
+			$scope.product.lunghezza = $scope.product.peso/$scope.product.larghezza/$scope.product.spessore/7,85;
+		}
+		if ($scope.product.tipo == 'pacco')
 		$scope.productsOrder.push($scope.product);
 		$scope.productsOrder2.push($scope.product);
 	}
@@ -64,7 +67,7 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 			},
 			{order, products},
 			function(resp){
-				console.log(resp);
+				console.log("ORDINE AGGIORNATO" , resp);
 			},
 			function(err){
 				console.log(err);
@@ -72,13 +75,14 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		);
 	}
 		
-	$scope.deleteOrder = function (order) {
+	$scope.deleteOrder = function (order, index) {
 		orderFactory.delete(
 			{
 				id:order._id
 			},
 			function(resp){
-				console.log(resp);
+				console.log("ORDINE CANCELLATO INDICE "+index , resp);
+				$scope.orders.splice(index,1);
 			},
 			function(err){
 				console.log(err);
@@ -86,13 +90,14 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		);
 	}
 	
-	$scope.deleteProduct = function (product) {
+	$scope.deleteProduct = function (product, index) {
 		productFactory.delete(
 			{	
 				id:product._id
 			},
 			function(resp){
-				console.log(resp);
+				console.log("PRODOTTO CANCELLATO INDICE "+index , resp);
+				$scope.productsOrder.splice(index,1);
 			},
 			function(err){
 				console.log(err);
@@ -106,7 +111,8 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		orderFactory.save({},
 			{order, products},
 			function(resp){
-				console.log(resp);
+				console.log("ORDINE CONFERMATO" , resp);
+				$scope.orders.push(order);
 			},
 			function (err){
 				console.log(err);

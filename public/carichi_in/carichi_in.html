@@ -8,6 +8,33 @@
 <h2>CRONOLOGIA ORDINI IN ENTRATA
 <button type="button" class="btn btn-primary" data-toggle="modal" href="#neworder" ng-click="createOrder()">Aggiungi Ordine</button>
 </h2>
+<nav>
+	<ul class="pagination">
+		<li>
+			<a href="" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			</a>
+		</li>
+		<li><a href="">Gen16</a></li>
+		<li><a href="">Feb16</a></li>
+		<li><a href="">Mar16</a></li>
+		<li><a href="">Apr16</a></li>
+		<li><a href="">Mag16</a></li>
+		<li><a href="">Giu16</a></li>
+		<li><a href="">Lug16</a></li>
+		<li><a href="">Ago16</a></li>
+		<li><a href="">Set16</a></li>
+		<li><a href="">Ott16</a></li>
+		<li><a href="">Nov16</a></li>
+		<li><a href="">Dic16</a></li>
+		<li>
+			<a href="" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			</a>
+		</li>
+  	</ul>
+</nav>
+
 <table class="table table-bordered table-hover">
 	<thead>
 	    <tr>
@@ -19,7 +46,7 @@
 		</tr>
 	</thead>
   	<tbody>
-    	<tr ng-repeat="order in orders | orderBy:'date':true">
+    	<tr ng-repeat="order in orders | orderBy:'date'">
 			<td><button type="button" class="btn btn-info btn-block" ng-click="openProductsOrder(order)" href="#orderproducts" data-toggle="modal">{{order.numOrdine}}</button></td>
 			<td>{{order.ddt}}</td>
   			<td>{{order.fornitore}}</td>
@@ -30,7 +57,7 @@
   					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
   					<ul class="dropdown-menu">
     					<li><button type="button" class="btn btn-warning btn-block" ng-click="openOrder(order)" href="#neworder" data-toggle="modal">Modifica</button></li>
-    					<li><button type="button" class="btn btn-danger btn-block" href="#" ng-click="deleteOrder(order)">Cancella</button></li>
+    					<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteOrder(order, $index)">Cancella</button></li>
   					</ul>
 				</div>
 			</td>

@@ -1,99 +1,216 @@
 <h2>STOCK</h2> 
-<table class="table table-bordered table-hover">
-	<thead>
-		<tr>
-			<th>
-				<select ng-model="search.spessore">
-					<option value=""></option>
-					<option value="0.25">0.25</option><option value="0.3">0.3</option><option value="0.35">0.35</option>
-					<option value="0.40">0.40</option><option value="0.45">0.45</option><option value="0.50">0.50</option>
-					<option value="0.60">0.60</option><option value="0.70">0.70</option><option value="0.80">0.80</option>
-					<option value="0.90">0.90</option><option value="1.00">1.00</option><option value="1.20">1.20</option>
-					<option value="1.50">1.50</option><option value="1.80">1.80</option><option value="2.00">2.00</option>
-					<option value="2.50">2.50</option><option value="3.00">3.00</option><option value="4.00">4.00</option>
-					<option value="5.00">5.00</option><option value="6.00">6.00</option><option value="8.00">8.00</option>
-					<option value="10.00">10.00</option>
-				</select>
-			</th>
-			<th>
-				<select ng-model="search.classeLarghezza">
-					<option value=""></option>
-					<option value="2000">2000</option><option value="2500">2500</option><option value="3000">3000</option>
-				</select>
-			</th>
-			<th>
-				<input type="text" ng-model="search.matricola">
-			</th>
-			<th>
-				<select ng-model="search.tipo">
-					<option value=""></option>
-					<option value="coil">Coil</option><option value="nastro">Nastro</option><option value="piana">Piana</option>
-					<option value="ondulata">Ondulata</option><option value="gregata">Gregata</option>
-					<option value="collaboranteh55">Collaborante h55</option><option value="collaboranteh55-s">Collaborante h55-S</option>
-					<option value="collaboranteh75">Collaborante h75</option><option value="collaboranteh75-s">Collaborante h75-S</option>
-				</select>
-			</th>
-			<th>
-				<select ng-model="search.materiale">
-					<option value=""></option>
-					<option value="zincato">Zincato</option><option value="decapato">Decapato</option><option value="laf">Laf</option>
-					<option value="preverniciato">Preverniciato</option><option value="caldo">Caldo</option>
-					<option value="aluzinc">Aluzinc</option><option value="alluminato">Alluminato</option>
-					<option value="elettrozincato">Elettrozincato</option>
-				</select>
-			</th>
-		</tr>
-	    <tr>
-			<th>Spessore</th>
-			<th>C.Larghezza</th>
-			<th>Matricola</th>
-			<th>Tipo</th>
-			<th>Materiale</th>
-			<th>Qualita</th>
-			<th>Scelta</th>
-			<th>Finitura</th>
-			<th>Colore/Ral</th>
-			<th>Peso</th>
-			<th>Larghezza</th>
-			<th>Lunghezza</th>
-			<th>N.Fogli</th>
-			<th>Prezzo</th>
-			<th>Difetti</th>
-			<th>Stabilimento</th>
-			<th>Scarto</th>
-		</tr>
-	</thead>
-  	<tbody>
-    	<tr ng-repeat="product in products | orderBy:['spessore','classeLarghezza'] | filter:search">
-      		<td>{{product.spessore}}</td>
-			<td>{{product.classeLarghezza}}</td>
-			<td>{{product.matricola}}</td>
-			<td>{{product.tipo}}</td>
-			<td>{{product.materiale}}</td>
-			<td>{{product.qualita}}</td>
-			<td>{{product.scelta}}</td>
-			<td>{{product.finitura}}</td>
-			<td>{{product.coloreRal}}</td>
-			<td>{{product.peso}}</td>
-			<td>{{product.larghezza}}</td>
-			<td>{{product.lunghezza}}</td>
-			<td>{{product.numFogli}}</td>
-			<td>{{product.prezzo}}</td>
-			<td>{{product.difetti}}</td>
-			<td>{{product.stabilimento}}</td>
-			<td>{{product.scarto}}</td>
-			<td>
-				<div class="dropdown">
-  					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-  					<ul class="dropdown-menu">
-    					<li><button type="button" class="btn btn-warning btn-block" href="#newproduct" data-toggle="modal" ng-click="openProduct(product)">Modifica</button></li>
-    					<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(product)" href="#">Cancella</button></li>
-  					</ul>
-				</div>
-			</td>
-      	</tr>
-    </tbody>
-</table>
+
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th> 
+					<span class="glyphicon glyphicon-filter"></span>
+					<select ng-model="search">
+						<option value=""></option>
+						<option value="0.25">0.25</option><option value="0.30">0.30</option><option value="0.35">0.35</option>
+						<option value="0.40">0.40</option><option value="0.45">0.45</option><option value="0.50">0.50</option>
+						<option value="0.60">0.60</option><option value="0.70">0.70</option><option value="0.80">0.80</option>
+						<option value="0.90">0.90</option><option value="1.00">1.00</option><option value="1.20">1.20</option>
+						<option value="1.50">1.50</option><option value="1.80">1.80</option><option value="2.00">2.00</option>
+						<option value="2.50">2.50</option><option value="3.00">3.00</option><option value="4.00">4.00</option>
+						<option value="5.00">5.00</option><option value="6.00">6.00</option><option value="8.00">8.00</option>
+						<option value="10.00">10.00</option>
+					</select>
+				</th>
+				<th>
+					<select ng-model="search5">
+						<option value=""></option>
+						<option value="1000">1000</option><option value="1250">1250</option><option value="1500">1500</option>
+					</select>
+				</th>
+				<th>
+					<input type="text" ng-model="search2">
+				</th>
+				<th>
+					<select ng-model="search.tipo">
+						<option value=""></option>
+						<option value="coil">Coil</option><option value="nastro">Nastro</option><option value="piana">Piana</option>
+						<option value="ondulata">Ondulata</option><option value="gregata">Gregata</option>
+						<option value="collaboranteh55">Collaborante h55</option><option value="collaboranteh55-s">Collaborante h55-S</option>
+						<option value="collaboranteh75">Collaborante h75</option><option value="collaboranteh75-s">Collaborante h75-S</option>
+					</select>
+				</th>
+				<th>
+					<select ng-model="search.materiale">
+						<option value=""></option>
+						<option value="zincato">Zincato</option><option value="decapato">Decapato</option><option value="laf">Laf</option>
+						<option value="preverniciato">Preverniciato</option><option value="caldo">Caldo</option>
+						<option value="aluzinc">Aluzinc</option><option value="alluminato">Alluminato</option>
+						<option value="elettrozincato">Elettrozincato</option>
+					</select>
+				</th>
+			</tr>
+			<tr>
+				<th>Spessore</th>
+				<th>C.Larghezza</th>
+				<th>Matricola</th>
+				<th>Tipo</th>
+				<th>Materiale</th>
+				<th>Qualita</th>
+				<th>Scelta</th>
+				<th>Finitura</th>
+				<th>Colore/Ral</th>
+				<th>Peso</th>
+				<th>Larghezza</th>
+				<th>Lunghezza</th>
+				<th>N.Fogli</th>
+				<th>Prezzo</th>
+				<th>Difetti</th>
+				<th>Stabilimento</th>
+	<!--			<th>Scarto</th>-->
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr ng-repeat-start="s2p in spessor2products | filter:{'key' : search}">
+				<td rowspan="{{s2p.lung}}">{{s2p.key}}</td>
+				<td rowspan="{{s2p.value[0].lung}}">{{s2p.value[0].key}}</td>
+				<td>{{s2p.value[0].value[0].matricola}}</td>
+				<td>{{s2p.value[0].value[0].tipo}}</td>
+				<td>{{s2p.value[0].value[0].materiale}}</td>
+				<td>{{s2p.value[0].value[0].qualita}}</td>
+				<td>{{s2p.value[0].value[0].scelta}}</td>
+				<td>{{s2p.value[0].value[0].finitura}}</td>
+				<td>{{s2p.value[0].value[0].coloreRal}}</td>
+				<td>{{s2p.value[0].value[0].peso}}</td>
+				<td>{{s2p.value[0].value[0].larghezza}}</td>
+				<td>{{s2p.value[0].value[0].lunghezza}}</td>
+				<td>{{s2p.value[0].value[0].numFogli}}</td>
+				<td>{{s2p.value[0].value[0].prezzo}}</td>
+				<td>{{s2p.value[0].value[0].difetti}}</td>
+				<td>{{s2p.value[0].value[0].stabilimento}}</td>
+	<!--			<td>{{$index}}</td>-->
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(s2p.value[0].value[0],spessor2products.indexOf(s2p),0,0)">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+
+			<tr ng-repeat="p in s2p.value[0].value.slice(1)">
+				<td>{{p.matricola}}</td>
+				<td>{{p.tipo}}</td>
+				<td>{{p.materiale}}</td>
+				<td>{{p.qualita}}</td>
+				<td>{{p.scelta}}</td>
+				<td>{{p.finitura}}</td>
+				<td>{{p.coloreRal}}</td>
+				<td>{{p.peso}}</td>
+				<td>{{p.larghezza}}</td>
+				<td>{{p.lunghezza}}</td>
+				<td>{{p.numFogli}}</td>
+				<td>{{p.prezzo}}</td>
+				<td>{{p.difetti}}</td>
+				<td>{{p.stabilimento}}</td>
+	<!--			<td>{{$index}}</td>-->
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p,spessor2products.indexOf(s2p),0,s2p.value[0].value.indexOf(p))">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+
+			<tr ng-repeat-start ="l2p in s2p.value.slice(1)">
+				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
+				<td>{{l2p.value[0].matricola}}</td>
+				<td>{{l2p.value[0].tipo}}</td>
+				<td>{{l2p.value[0].materiale}}</td>
+				<td>{{l2p.value[0].qualita}}</td>
+				<td>{{l2p.value[0].scelta}}</td>
+				<td>{{l2p.value[0].finitura}}</td>
+				<td>{{l2p.value[0].coloreRal}}</td>
+				<td>{{l2p.value[0].peso}}</td>
+				<td>{{l2p.value[0].larghezza}}</td>
+				<td>{{l2p.value[0].lunghezza}}</td>
+				<td>{{l2p.value[0].numFogli}}</td>
+				<td>{{l2p.value[0].prezzo}}</td>
+				<td>{{l2p.value[0].difetti}}</td>
+				<td>{{l2p.value[0].stabilimento}}</td>
+	<!--			<td>{{$index}}</td>-->
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],spessor2products.indexOf(s2p),s2p.value.indexOf(l2p),0)">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+
+			<tr ng-repeat-end ng-repeat="p2 in l2p.value.slice(1)">
+				<td>{{p2.matricola}}</td>
+				<td>{{p2.tipo}}</td>
+				<td>{{p2.materiale}}</td>
+				<td>{{p2.qualita}}</td>
+				<td>{{p2.scelta}}</td>
+				<td>{{p2.finitura}}</td>
+				<td>{{p2.coloreRal}}</td>
+				<td>{{p2.peso}}</td>
+				<td>{{p2.larghezza}}</td>
+				<td>{{p2.lunghezza}}</td>
+				<td>{{p2.numFogli}}</td>
+				<td>{{p2.prezzo}}</td>
+				<td>{{p2.difetti}}</td>
+				<td>{{p2.stabilimento}}</td>
+	<!--			<td>{{$index}}</td>-->
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,spessor2products.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p2))">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			 </tr>
+
+			<tr ng-repeat-end ng-hide="true"></tr>
+		</tbody>
+
+	<!--
+		<tbody>
+			<tr ng-repeat="product in products | orderBy:['spessore','classeLarghezza'] | filter:search">
+				<td>{{product.spessore}}</td>
+				<td>{{product.classeLarghezza}}</td>
+				<td>{{product.matricola}}</td>
+				<td>{{product.tipo}}</td>
+				<td>{{product.materiale}}</td>
+				<td>{{product.qualita}}</td>
+				<td>{{product.scelta}}</td>
+				<td>{{product.finitura}}</td>
+				<td>{{product.coloreRal}}</td>
+				<td>{{product.peso}}</td>
+				<td>{{product.larghezza}}</td>
+				<td>{{product.lunghezza}}</td>
+				<td>{{product.numFogli}}</td>
+				<td>{{product.prezzo}}</td>
+				<td>{{product.difetti}}</td>
+				<td>{{product.stabilimento}}</td>
+				<td>{{product.scarto}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-warning btn-block" href="#newproduct" data-toggle="modal" ng-click="openProduct(product)">Modifica</button></li>
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(product)" href="#">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	-->
+	</table>
+
 
 
 <!-- Modal new_product.html-->

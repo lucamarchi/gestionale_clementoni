@@ -9,6 +9,8 @@ store.controller('loginController', function($scope, $rootScope, $location, $win
 				{username, password},
 				function(resp){
 					$rootScope.isLogged = resp.status;
+					$window.sessionStorage.user = username;
+					console.log($window.sessionStorage.user);
 					$window.sessionStorage.token = resp.token;
 					$location.path("/");
 				},
@@ -22,6 +24,7 @@ store.controller('loginController', function($scope, $rootScope, $location, $win
 	
 	$rootScope.logout = function () {
 		$rootScope.isLogged = false;
+		delete $window.sessionStorage.user;
 		delete $window.sessionStorage.token;
 	}
 });

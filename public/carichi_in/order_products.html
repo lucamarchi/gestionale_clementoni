@@ -1,53 +1,54 @@
 <table class="table table-bordered">
-<thead>
-	<tr>
-		<th>Matricola</th>
-		<th>Tipo</th>
-		<th>Materiale</th>
-		<th>Qualita</th>
-		<th>Scelta</th>
-		<th>Finitura</th>
-		<th>Colore/Ral</th>
-		<th>Peso</th>
-		<th>Spessore</th>
-		<th>Larghezza</th>
-		<th>C.Larghezza</th>
-		<th>Lunghezza</th>
-		<th>N.Fogli</th>
-		<th>Prezzo</th>
-		<th>Difetti</th>
-		<th>Stabilimento</th>
-		<th>Scarto</th>
-	</tr>
-</thead>
-<tbody>
-	<tr ng-repeat="product in productsOrder">
-		<td>{{product.matricola}}</td>
-		<td>{{product.tipo}}</td>
-		<td>{{product.materiale}}</td>
-		<td>{{product.qualita}}</td>
-		<td>{{product.scelta}}</td>
-		<td>{{product.finitura}}</td>
-		<td>{{product.coloreRal}}</td>
-		<td>{{product.peso}}</td>
-		<td>{{product.spessore}}</td>
-		<td>{{product.larghezza}}</td>
-		<td>{{product.classeLarghezza}}</td>
-		<td>{{product.lunghezza}}</td>
-		<td>{{product.numFogli}}</td>
-		<td>{{product.prezzo}}</td>
-		<td>{{product.difetti}}</td>
-		<td>{{product.stabilimento}}</td>
-		<td>{{product.scarto}}</td>
-		<td>
-			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-				<ul class="dropdown-menu">
-					<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(product)">Cancella</button></li>
-				</ul>
-			</div>
-		</td>
-	</tr>
-</tbody>
+	<thead>
+		<tr>
+			<th>Matricola</th>
+			<th>Tipo</th>
+			<th>Materiale</th>
+			<th>Qualita</th>
+			<th>Scelta</th>
+			<th>Finitura</th>
+			<th>Colore/Ral</th>
+			<th>Peso</th>
+			<th>Spessore</th>
+			<th>Larghezza</th>
+			<th>C.Larghezza</th>
+			<th>Lunghezza</th>
+			<th>N.Fogli</th>
+			<th>Prezzo</th>
+			<th>Difetti</th>
+			<th>Stabilimento</th>
+			<th>Scarto</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="product in productsOrder">
+			<td>{{product.matricola}}</td>
+			<td>{{product.tipo}}</td>
+			<td>{{product.materiale}}</td>
+			<td>{{product.qualita}}</td>
+			<td>{{product.scelta}}</td>
+			<td>{{product.finitura}}</td>
+			<td>{{product.coloreRal}}</td>
+			<td>{{product.peso}}</td>
+			<td>{{product.spessore}}</td>
+			<td>{{product.larghezza}}</td>
+			<td>{{product.classeLarghezza}}</td>
+			<td>{{product.lunghezza}}</td>
+			<td>{{product.numFogli}}</td>
+			<td>{{product.prezzo}}</td>
+			<td>{{product.difetti}}</td>
+			<td>{{product.stabilimento}}</td>
+			<td>{{product.scarto}}</td>
+			<td>
+				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(product, $index)">Cancella</button></li>
+					</ul>
+				</div>
+			</td>
+		</tr>
+	</tbody>
 </table>
+
 <button type="button" class="btn btn-primary" data-toggle="modal" href="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>
