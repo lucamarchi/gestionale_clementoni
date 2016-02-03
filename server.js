@@ -9,7 +9,7 @@ var config = require('./config');
 var router = express.Router();
 var morgan = require('morgan');	
 
-mongoose.connect('mongodb://127.0.0.1:27017/db_clementoni');
+mongoose.connect(config.URIDB);
 mongoose.connection.on('error', function() {
 	console.log("Mongoose connection error");
 });
