@@ -11,6 +11,7 @@ module.exports = function() {
 		var itemProducts = 0;
 		var cod;
 		var url = URL_AGENTI;	
+		var data = [];
 		var date = new Date().getFullYear();
 		console.log("Codice: "+cod+ " condizione >0 "+cod>0);
 		Cut.find({anno: date}).sort({codice: -1}).limit(1).exec(function(err, cut) {
@@ -60,6 +61,7 @@ module.exports = function() {
 							});
 						}
 						cut.articoli = articoli;
+						data.push(cut);
 						cut.save(function(err) {
 							if (err) 
 								console.log(err);
@@ -67,7 +69,7 @@ module.exports = function() {
 					}
 					if (itemProducts==body.data.length) {
 						console.log("DIMENSIONE: "+ body.data.length)
-						res.json({status: true, message: 'Cuts salvati'});
+						res.json({status: true, message: 'Cuts salvati', data: data});
 					}
 				} else res.json({status: true, message: 'Nessun cut nuovo'});
 			});
