@@ -12,16 +12,16 @@ var CutSchema = new Schema({
 	operator: {type: String},
 	articoli: [{
 		codArticolo: {type: Number},
-		desArticolo: {type: String},
-		note: {type: String},
 		tipo: {type: String},
+		note: {type: String},
+		materiale: {type: String},
 		sottoTipo: {type: String},
 		quantita: {type: Number},
 		prezzo: {type: String},
 		spessore: {type: Number},
 		lunghezza: {type: Number},
 		larghezza: {type: Number},
-		peso: {type: String},
+		peso: {type: Number},
 		dataConsegna: {type: String},
 	}]
 });
