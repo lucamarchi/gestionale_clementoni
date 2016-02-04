@@ -30,6 +30,11 @@ module.exports = function() {
 						if (err)
 							res.status(500).json({message: err, status: false});
 					});
+					Order.update({productsId: req.params.product_id},{$pull: {productsId: req.params.product_id}}, 
+						function(err) {
+							if (err)
+								res.status(500).json({message: err, status: false});
+						});
 					product.remove(function(err) {
 						if (err)
 							res.status(500).json({message: err, status: false});
