@@ -23,6 +23,7 @@ var CutSchema = new Schema({
 		larghezza: {type: Number},
 		peso: {type: Number},
 		dataConsegna: {type: String},
+		stato: {type: String}
 	}]
 });
 

@@ -26,6 +26,19 @@ module.exports = function() {
 		})
 		/*
 		.put(function(req,res) {
+			if (!req.body.stock || req.body.stock==undefined || !req.body.figli || req.body.figli==undefined) {
+				res.status(500).json({message: 'Dati mancanti', status: false});
+			} else {
+				Stock.findById({_id: req.params.stock_id}, function(err,stock) {
+					if (err)
+						res.status(500).json({message: 'Errore', status: false});
+					else {
+						var figli = req.body.figli;
+						figli.forEach(function(f) {
+							stock.figli.push(f);
+						});
+					}
+				});
 			Stock.findById(req.params.stock_id, function(err,stock) {
 				if (err)
 					res.send(err)
@@ -67,8 +80,8 @@ module.exports = function() {
 					}
 				});
 			});
-		})*/
-
+		})
+	*/
 		.delete(function(req,res) {
 			Stock.findById(req.params.stock_id, function(err,stock) {
 				if (err)
