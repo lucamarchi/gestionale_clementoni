@@ -7,7 +7,7 @@ var Cut = require('./../app/models/cut');
 module.exports = function() {
 	var router = express.Router();
 	
-	router.get('/update', function(req,res) {
+	router.get('/cuts/update', function(req,res) {
 		var itemProducts = 0;
 		var cod;
 		var url = URL_AGENTI;	

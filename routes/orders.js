@@ -17,6 +17,7 @@ module.exports = function() {
 				var orderReq = req.body.order;
 				var itemProducts = 0;
 				var order = new Order();
+				var productsArray = [];
 				order.numOrdine = orderReq.numOrdine;
 				order.ddt = orderReq.ddt;
 				order.fornitore = orderReq.fornitore;
@@ -25,12 +26,11 @@ module.exports = function() {
 				order.save(function(err) {
 					if (err)
 						res.status(500).json({message: err, status: false});
-					else {
+					else if (products.length>0) {
 						console.log('Ordine salvato; con id '+order.id);
 						orderId = order.id;
 						products.forEach(function(p) {
 							console.log('ITERAZIONE PRODOTTO CON MATRICOLA '+p.matricola);
-							itemProducts++;
 							console.log('Item for each: '+itemProducts);
 							var stock = new Stock();
 							stock.matricola = p.matricola;
@@ -74,6 +74,7 @@ module.exports = function() {
 									product.difetti = p.difetti;
 									product.stabilimento = p.stabilimento;
 									product.stockId = stockId;
+									productsArray.push(product);
 									console.log("PRODUCT: matricola:"+p.matricola+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.peso+"\n stabilimento: "+p.stabilimento+"\n");
 									product.save(function(err) {
 										if (err)
@@ -82,17 +83,24 @@ module.exports = function() {
 											order.update({$push: {"productsId": product.id}}, function(err){
 												if (err)
 													res.status(500).json({message: err, status: false});
+												else{
+													itemProducts++;
+													if (itemProducts == products.length){
+														Order.findById(orderId, function(err,ord) {
+															if (err) res.status(500).json({message: err, status: false});
+															else res.json({message: 'Order, stocks e products salvati',
+															 status: true, order: ord});
+														});
+													}
+												}
 											});
 										}
 									});
 								}
 							});
 						});
-						if (itemProducts == products.length){
-							console.log('CONDIZIONE'+itemProducts==products.length);
-							res.json({message: 'Order, products e stocks', status: true});
-						}
-					}
+						
+					} else res.json({message: 'Order senza prodotti', status: true, order: order});
 				});
 			}
 		})
