@@ -1,5 +1,5 @@
 var store = angular.module('store');
-store.controller('cutController', function ($scope, cutFactory, $window) {
+store.controller('cutController', function ($scope, cutFactory, refreshFactory, $window) {
     
 	cutFactory.getAll(
 		function (resp) {
@@ -9,11 +9,25 @@ store.controller('cutController', function ($scope, cutFactory, $window) {
 			console.log(resp);
 		}
 	);
-
+	
+	$scope.refresh = function (){
+		refreshFactory.refresh(
+			function (resp) {
+				if (resp.data != undefined) {
+					$scope.cuts = $scope.cuts.concat(resp.data);
+				}
+			},
+			function(err) {
+				console.log(resp);
+			}
+		);
+	};
+	
 	$scope.openCut = function (cut){
 		$scope.cut = cut;
 		$scope.articlesCut = cut.articoli;
-	}
+		console.log("anno", cut.date);
+	};
 	
 	$scope.confirmCut = function (cut) {
 		var user = $window.sessionStorage.user;
@@ -23,6 +37,8 @@ store.controller('cutController', function ($scope, cutFactory, $window) {
 			{operator : user},
 			function(resp) {
 				console.log(resp);
+				cut.operator = user;
+				cut.accepted = true;
 			},
 			function(err) {
 				console.log(err);

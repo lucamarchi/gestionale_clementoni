@@ -7,26 +7,33 @@
 					<span class="glyphicon glyphicon-filter"></span>
 					<select ng-model="search">
 						<option value=""></option>
-						<option value="0.25">0.25</option><option value="0.30">0.30</option><option value="0.35">0.35</option>
-						<option value="0.40">0.40</option><option value="0.45">0.45</option><option value="0.50">0.50</option>
-						<option value="0.60">0.60</option><option value="0.70">0.70</option><option value="0.80">0.80</option>
-						<option value="0.90">0.90</option><option value="1.00">1.00</option><option value="1.20">1.20</option>
-						<option value="1.50">1.50</option><option value="1.80">1.80</option><option value="2.00">2.00</option>
-						<option value="2.50">2.50</option><option value="3.00">3.00</option><option value="4.00">4.00</option>
-						<option value="5.00">5.00</option><option value="6.00">6.00</option><option value="8.00">8.00</option>
-						<option value="10.00">10.00</option>
+						<option value=0.25>0.25</option><option value=0.30>0.30</option><option value=0.35>0.35</option>
+						<option value=0.40>0.40</option><option value=0.45>0.45</option><option value=0.50>0.50</option>
+						<option value=0.60>0.60</option><option value=0.70>0.70</option><option value=0.80>0.80</option>
+						<option value=0.90>0.90</option><option value=1.00>1.00</option><option value=1.20>1.20</option>
+						<option value=1.50>1.50</option><option value=1.80>1.80</option><option value=2.00>2.00</option>
+						<option value=2.50>2.50</option><option value=3.00>3.00</option><option value=4.00>4.00</option>
+						<option value=5.00>5.00</option><option value=6.00>6.00</option><option value=8.00>8.00</option>
+						<option value=10.00>10.00</option>
 					</select>
 				</th>
-				<th>
+				<th ng-if= 'search != undefined && search != ""'>
+					<span class="glyphicon glyphicon-filter"></span>
 					<select ng-model="search5">
 						<option value=""></option>
-						<option value="1000">1000</option><option value="1250">1250</option><option value="1500">1500</option>
+						<option value=1000>1000</option><option value=1250>1250</option><option value=1500>1500</option>
 					</select>
 				</th>
+<!--
 				<th>
-					<input type="text" ng-model="search2">
+					<span class="glyphicon glyphicon-filter"></span>
+					<input type="text" ng-model="search2"/>
 				</th>
+-->
+				
+<!--
 				<th>
+					<span class="glyphicon glyphicon-filter"></span>
 					<select ng-model="search.tipo">
 						<option value=""></option>
 						<option value="coil">Coil</option><option value="nastro">Nastro</option><option value="piana">Piana</option>
@@ -35,7 +42,10 @@
 						<option value="collaboranteh75">Collaborante h75</option><option value="collaboranteh75-s">Collaborante h75-S</option>
 					</select>
 				</th>
+-->
+<!--
 				<th>
+					<span class="glyphicon glyphicon-filter"></span>
 					<select ng-model="search.materiale">
 						<option value=""></option>
 						<option value="zincato">Zincato</option><option value="decapato">Decapato</option><option value="laf">Laf</option>
@@ -44,8 +54,12 @@
 						<option value="elettrozincato">Elettrozincato</option>
 					</select>
 				</th>
+-->
 			</tr>
-			<tr>
+		</thead>
+
+		<tbody>
+			<tr ng-repeat-start="s2p in spessor2products | filter:{'key' : search}">
 				<th>Spessore</th>
 				<th>C.Larghezza</th>
 				<th>Matricola</th>
@@ -55,20 +69,16 @@
 				<th>Scelta</th>
 				<th>Finitura</th>
 				<th>Colore/Ral</th>
-				<th>Peso</th>
+				<th>Peso(kg)</th>
 				<th>Larghezza</th>
 				<th>Lunghezza</th>
 				<th>N.Fogli</th>
 				<th>Prezzo</th>
 				<th>Difetti</th>
 				<th>Stabilimento</th>
-	<!--			<th>Scarto</th>-->
 			</tr>
-		</thead>
-
-		<tbody>
-			<tr ng-repeat-start="s2p in spessor2products | filter:{'key' : search}">
-				<td rowspan="{{s2p.lung}}">{{s2p.key}}</td>
+			<tr>
+				<td rowspan="{{s2p.lung+3}}">{{s2p.key}}</td>
 				<td rowspan="{{s2p.value[0].lung}}">{{s2p.value[0].key}}</td>
 				<td>{{s2p.value[0].value[0].matricola}}</td>
 				<td>{{s2p.value[0].value[0].tipo}}</td>
@@ -84,7 +94,6 @@
 				<td>{{s2p.value[0].value[0].prezzo}}</td>
 				<td>{{s2p.value[0].value[0].difetti}}</td>
 				<td>{{s2p.value[0].value[0].stabilimento}}</td>
-	<!--			<td>{{$index}}</td>-->
 				<td>
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
@@ -110,7 +119,6 @@
 				<td>{{p.prezzo}}</td>
 				<td>{{p.difetti}}</td>
 				<td>{{p.stabilimento}}</td>
-	<!--			<td>{{$index}}</td>-->
 				<td>
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
@@ -121,6 +129,10 @@
 				</td>
 			</tr>
 
+			<tr>
+				<td colspan="15"><b>TOTALE: </b>{{s2p.value[0].weight}} kg</td>
+			</tr>
+			
 			<tr ng-repeat-start ="l2p in s2p.value.slice(1)">
 				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
 				<td>{{l2p.value[0].matricola}}</td>
@@ -137,7 +149,6 @@
 				<td>{{l2p.value[0].prezzo}}</td>
 				<td>{{l2p.value[0].difetti}}</td>
 				<td>{{l2p.value[0].stabilimento}}</td>
-	<!--			<td>{{$index}}</td>-->
 				<td>
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
@@ -147,8 +158,8 @@
 					</div>
 				</td>
 			</tr>
-
-			<tr ng-repeat-end ng-repeat="p2 in l2p.value.slice(1)">
+			
+			<tr ng-repeat="p2 in l2p.value.slice(1)">
 				<td>{{p2.matricola}}</td>
 				<td>{{p2.tipo}}</td>
 				<td>{{p2.materiale}}</td>
@@ -163,7 +174,6 @@
 				<td>{{p2.prezzo}}</td>
 				<td>{{p2.difetti}}</td>
 				<td>{{p2.stabilimento}}</td>
-	<!--			<td>{{$index}}</td>-->
 				<td>
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
@@ -173,8 +183,14 @@
 					</div>
 				</td>
 			 </tr>
-
-			<tr ng-repeat-end ng-hide="true"></tr>
+			
+			<tr ng-repeat-end>
+				<td colspan="15"><b>TOTALE: </b>{{l2p.weight}} kg</td>
+			</tr>
+			
+			<tr ng-repeat-end>
+				<td colspan="16" style="text-align:center;"><b>TOTALE: </b>{{s2p.weight}} kg</td>
+			</tr>
 		</tbody>
 
 	<!--

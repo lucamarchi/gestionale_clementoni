@@ -45,6 +45,22 @@ myapp.config(function($locationProvider, $routeProvider) {
 				requiredLogin: true
 			}
       	})
+	
+		.when('/productionSort', {
+        	templateUrl: 'logistics/ordine_produzione.html',
+			controller: 'logisticsController',
+			access: { 
+				requiredLogin: true
+			}
+      	})
+	
+		.when('/productionState', {
+        	templateUrl: 'logistics/production_state.html',
+			controller: 'logisticsController',
+			access: { 
+				requiredLogin: true
+			}
+      	})
 		
 		.otherwise({
         	redirectTo: '/'

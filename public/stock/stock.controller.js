@@ -2,28 +2,116 @@ var store = angular.module('store');
 store.controller('stockController', function ($scope, stockFactory) {
 	
 	$scope.spessor2products = [
-		{key: 0.25, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 0.30, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 0.35, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 0.40, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 0.45, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 0.50, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 0.60, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 0.70, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 0.80, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 0.90, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 1.00, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 1.20, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 1.50, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 1.80, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 2.00, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 2.50, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 3.00, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 4.00, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 5.00, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 6.00, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key: 8.00, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]},
-		{key:10.00, lung: 0, value: [{key: 1000, lung: 0, value: []},{key: 1250, lung: 0, value: []},{key: 1500, lung: 0, value: []}]}
+		{key: 0.25, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 0.30, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 0.35, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 0.40, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 0.45, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 0.50, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 0.60, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 0.70, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 0.80, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 0.90, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 1.00, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 1.20, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 1.50, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 1.80, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 2.00, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 2.50, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 3.00, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 4.00, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 5.00, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 6.00, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key: 8.00, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
+		{key:10.00, lung: 0, weight: 0, value: [
+			{key: 1000, lung: 0, weight: 0, value: []},
+			{key: 1250, lung: 0, weight: 0, value: []},
+			{key: 1500, lung: 0, weight: 0, value: []}
+		]},
 	];	
 	
 	function sameSpessor(products) {
@@ -40,11 +128,15 @@ store.controller('stockController', function ($scope, stockFactory) {
 				if(temp.length != 0){
 					$scope.spessor2products[i].lung = $scope.spessor2products[i].lung + temp.length;
 					$scope.spessor2products[i].value[j].lung = temp.length;
+					for (t of temp) {
+						$scope.spessor2products[i].value[j].weight = $scope.spessor2products[i].value[j].weight + t.peso;
+					}
 				}
 				else {
 					$scope.spessor2products[i].lung = $scope.spessor2products[i].lung + 1;
 					$scope.spessor2products[i].value[j].lung = 1;
 				}
+				$scope.spessor2products[i].weight = $scope.spessor2products[i].weight + $scope.spessor2products[i].value[j].weight; 
 				j++
 			}
 			i++;

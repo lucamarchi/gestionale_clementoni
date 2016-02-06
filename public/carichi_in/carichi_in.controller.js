@@ -43,7 +43,6 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	$scope.openOrder = function (order){
 		$scope.order = order;
 		$scope.productsOrder2 = [];
-		
 	}
 	
 	$scope.createProduct = function () {
@@ -52,11 +51,10 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 
 	$scope.addProduct = function () {
 		if ($scope.product.lunghezza == undefined){
-			$scope.product.lunghezza = $scope.product.peso/$scope.product.larghezza/$scope.product.spessore/7,85;
+			$scope.product.lunghezza = $scope.product.peso/($scope.product.larghezza/1000)/$scope.product.spessore/7,85;
 		}
-		if ($scope.product.tipo == 'pacco')
-		$scope.productsOrder.push($scope.product);
-		$scope.productsOrder2.push($scope.product);
+			$scope.productsOrder.push($scope.product);
+			$scope.productsOrder2.push($scope.product);
 	}
 	
 	$scope.updateOrder = function (order) {
@@ -112,7 +110,7 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 			{order, products},
 			function(resp){
 				console.log("ORDINE CONFERMATO" , resp);
-				$scope.orders.push(order);
+				$scope.orders.push(resp.order);
 			},
 			function (err){
 				console.log(err);

@@ -25,7 +25,7 @@ store.factory('orderFactory', function ($resource) {
 });
 
 store.factory('productFactory', function ($resource) {
-    var resource = $resource('http://localhost:8080/api/products/:id',
+    return $resource('http://localhost:8080/api/products/:id',
 		{
 			id: "@id"
 		}, 
@@ -33,7 +33,6 @@ store.factory('productFactory', function ($resource) {
 			update:{method:'PUT'}
   		}
 	);
-	return resource;
 });
 
 
@@ -50,17 +49,32 @@ store.factory('cutFactory', function ($resource) {
 	);
 });
 
+store.factory('refreshFactory', function ($resource) {
+    return resource = $resource('http://localhost:8080/api/cuts/update', {},
+		{
+			refresh: {method:'GET', isArray: false}
+		}
+  	);
+});
+
+store.factory('logisticsFactory', function ($resource) {
+    return resource = $resource('http://localhost:8080/api/cuts/accepted', {},
+		{
+			getAll: {method:'GET', isArray: false}
+		}
+  	);
+});
+
+
 store.factory('UserService', function ($resource) {
-    var resource = $resource('http://localhost:8080/api/authenticate', {
+    return $resource('http://localhost:8080/api/authenticate', {
   	});
-	return resource;
 });
 
 
 store.factory('AuthenticationService', function ($resource) {
-    var resource = $resource('http://localhost:8080/api/verify', {
+    return $resource('http://localhost:8080/api/verify', {
   	});
-	return resource;
 });
 
 

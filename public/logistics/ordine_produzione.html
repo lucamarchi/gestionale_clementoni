@@ -1,6 +1,7 @@
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
+			<th>Data Consegna</th>
 			<th>Cod.Articolo</th>
 			<th>Tipo</th>
 			<th>Materiale</th>
@@ -10,11 +11,11 @@
 			<th>Larghezza</th>
 			<th>Lunghezza</th>
 			<th>Peso</th>
-			<th>Data Consegna</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="article in articlesCut">
+		<tr ng-repeat="article in articles">
+			<td>{{article.dataConsegna}}</td>
 			<td>{{article.codArticolo}}</td>
 			<td>{{article.tipo}}</td>
 			<td>{{article.materiale}}</td>
@@ -24,7 +25,7 @@
 			<td>{{article.larghezza}}</td>
 			<td>{{article.lunghezza}}</td>
 			<td>{{article.peso}}</td>
-			<td>{{article.dataConsegna}}</td>
+			<td><button type="button" class="btn btn-primary btn-circle" ng-click="addArticle(article, $index)"><span class="glyphicon glyphicon-plus"></span></button></td>
 		</tr>
 	</tbody>
 </table>

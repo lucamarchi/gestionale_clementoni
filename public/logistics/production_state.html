@@ -1,0 +1,70 @@
+<style>
+.modal-body {
+  overflow-x: auto;
+}
+</style>
+
+
+<h2>STATO PRODUZIONE
+<button type="button" class="btn btn-primary" data-toggle="modal" href="#newstate" ng-click="">Aggiungi</button>
+</h2>
+<nav>
+	<ul class="pagination">
+		<li>
+			<a href="" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			</a>
+		</li>
+		<li><a href="">Gen16</a></li>
+		<li><a href="">Feb16</a></li>
+		<li><a href="">Mar16</a></li>
+		<li><a href="">Apr16</a></li>
+		<li><a href="">Mag16</a></li>
+		<li><a href="">Giu16</a></li>
+		<li><a href="">Lug16</a></li>
+		<li><a href="">Ago16</a></li>
+		<li><a href="">Set16</a></li>
+		<li><a href="">Ott16</a></li>
+		<li><a href="">Nov16</a></li>
+		<li><a href="">Dic16</a></li>
+		<li>
+			<a href="" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			</a>
+		</li>
+  	</ul>
+</nav>
+
+<table class="table table-bordered table-hover">
+	<thead>
+	    <tr>
+			<th>Nome</th>
+			<th>Data</th>
+  			<th>Stato</th>
+		</tr>
+	</thead>
+  	<tbody>
+	</tbody>
+</table>
+
+<!-- Modal new_state.html-->
+<div id="newstate" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">NUOVO STATO PRODUZIONE</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'logistics/production_state_articles.html'"></div>
+				<hr>
+				<div ng-include src="'logistics/ordine_produzione.html'"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="">Conferma</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+			</div>
+		</div>
+	</div>
+</div>

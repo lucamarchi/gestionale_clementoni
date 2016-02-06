@@ -11,10 +11,11 @@
 			<th>Lunghezza</th>
 			<th>Peso</th>
 			<th>Data Consegna</th>
+			<th>INDICE</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="article in articlesCut">
+		<tr ng-repeat="article in articlesState">
 			<td>{{article.codArticolo}}</td>
 			<td>{{article.tipo}}</td>
 			<td>{{article.materiale}}</td>
@@ -25,6 +26,7 @@
 			<td>{{article.lunghezza}}</td>
 			<td>{{article.peso}}</td>
 			<td>{{article.dataConsegna}}</td>
+			<td>{{$index}}</td>
 		</tr>
 	</tbody>
 </table>

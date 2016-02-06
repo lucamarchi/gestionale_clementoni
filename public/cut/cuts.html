@@ -6,7 +6,7 @@
 </style>
 
 <h2>ORDINI DI TAGLIO
-<button type="button" class="btn btn-primary" ng-click="">Refresh</button>
+<button type="button" class="btn btn-primary" ng-click="refresh()">Refresh</button>
 </h2> 
 
 <nav>
@@ -41,17 +41,17 @@
 			<tr>
 				<th>Codice</th>
 				<th>CodiceCliente</th>
-				<th>Anno</th>
+				<th>Data</th>
 				<th>Note</th>
 				<th>Accettato</th>
 				<th>Operatore</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="cut in cuts">
+			<tr ng-repeat="cut in cuts | orderBy:'codice':true">
 				<td><button type="button" class="btn btn-info btn-block" ng-click="openCut(cut)" href="#cutarticle" data-toggle="modal">{{cut.codice}}</button></td>
 				<td>{{cut.clienteCod}}</td>
-				<td>{{cut.anno}}</td>
+				<td>{{cut.date}}</td>
 				<td>{{cut.note}}</td>
 				<td ng-if="cut.accepted == true"><span class="label label-pill label-success">{{cut.accepted}}</span></td><td ng-if="cut.accepted == false"><button type="button" class="btn btn-primary btn-block" ng-click="confirmCut(cut)" data-toggle="modal">Conferma</button></td>
 				<td>{{cut.operator}}</td>
@@ -71,7 +71,9 @@
 		<div class="modal-body">
 			<div ng-include src="'cut/cut_products.html'"></div>
 		</div>
+<!--
 		<div class="modal-footer">
 		</div>
+-->
 	</div>
 </div>
