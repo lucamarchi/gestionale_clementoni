@@ -1,11 +1,17 @@
 <style>
-.modal-body {
-  overflow-x: auto;
-}
+	.modal-xl .modal-dialog {
+		width: 90%;
+	}
+	.modal-xl .modal-body {
+  		overflow-y: auto;
+		overflow-x: auto;
+	}
 </style>
 
 
-<h2>CARICHI IN USCITA</h2>
+<h2>CARICHI IN USCITA
+<button type="button" class="btn btn-primary" data-toggle="modal" href="#stock" ng-click="">Lavorazione</button>
+</h2>
 <nav>
 	<ul class="pagination">
 		<li>
@@ -63,3 +69,26 @@
 -->
 	</tbody>
 </table>
+
+
+<!-- Modal stock.html-->
+<div id="stock" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">SELEZIONA COLLO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'stock/stock.html'"></div>
+			</div>
+<!--
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="">Conferma</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+			</div>
+-->
+		</div>
+	</div>
+</div>

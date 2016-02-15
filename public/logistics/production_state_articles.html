@@ -1,6 +1,7 @@
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
+			<th>Data Consegna</th>
 			<th>Cod.Articolo</th>
 			<th>Tipo</th>
 			<th>Materiale</th>
@@ -10,12 +11,12 @@
 			<th>Larghezza</th>
 			<th>Lunghezza</th>
 			<th>Peso</th>
-			<th>Data Consegna</th>
 			<th>INDICE</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="article in articlesState">
+			<td>{{article.dataConsegna}}</td>
 			<td>{{article.codArticolo}}</td>
 			<td>{{article.tipo}}</td>
 			<td>{{article.materiale}}</td>
@@ -25,8 +26,10 @@
 			<td>{{article.larghezza}}</td>
 			<td>{{article.lunghezza}}</td>
 			<td>{{article.peso}}</td>
-			<td>{{article.dataConsegna}}</td>
 			<td>{{$index}}</td>
+			<td>
+				<button type="button" class="btn btn-danger btn-circle" ng-click="deleteArticle(article, $index)"><span class="glyphicon glyphicon-trash"></span></button>
+			</td>
 		</tr>
 	</tbody>
 </table>

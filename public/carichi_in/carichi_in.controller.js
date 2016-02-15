@@ -4,7 +4,7 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	
 	orderFactory.getAll(
 		function (resp) {
-			console.log("TUTTI GLI ORDINI" , resp.data);
+			console.log("TUTTI I CARICHI IN ENTRATA" , resp.data);
 			$scope.orders = resp.data;
 		},
 		function(err) {
@@ -51,7 +51,11 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 
 	$scope.addProduct = function () {
 		if ($scope.product.lunghezza == undefined){
-			$scope.product.lunghezza = $scope.product.peso/($scope.product.larghezza/1000)/$scope.product.spessore/7,85;
+			$scope.product.lunghezza = $scope.product.peso/($scope.product.larghezza/1000)/$scope.product.spessore/7.85;
+		}
+		if ($scope.product.tipo.toLowerCase() == "piana" || 
+			$scope.product.tipo.toLowerCase() == "ondulata" || $scope.product.tipo.toLowerCase() == "grecata"){
+			$scope.product.numFogli = $scope.product.larghezza * $scope.product.lunghezza * $scope.product.spessore * 7.85;
 		}
 			$scope.productsOrder.push($scope.product);
 			$scope.productsOrder2.push($scope.product);

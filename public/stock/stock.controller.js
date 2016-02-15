@@ -1,177 +1,119 @@
 var store = angular.module('store');
-store.controller('stockController', function ($scope, stockFactory) {
+store.controller('stockController', function ($scope, $scope,stockFactory) {
 	
-	$scope.spessor2products = [
-		{key: 0.25, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 0.30, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 0.35, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 0.40, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 0.45, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 0.50, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 0.60, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 0.70, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 0.80, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 0.90, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 1.00, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 1.20, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 1.50, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 1.80, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 2.00, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 2.50, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 3.00, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 4.00, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 5.00, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 6.00, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key: 8.00, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-		{key:10.00, lung: 0, weight: 0, value: [
-			{key: 1000, lung: 0, weight: 0, value: []},
-			{key: 1250, lung: 0, weight: 0, value: []},
-			{key: 1500, lung: 0, weight: 0, value: []}
-		]},
-	];	
+	$scope.monster = [];
 	
-	function sameSpessor(products) {
-		var i, j, temp;
+	var materialArray = ['zincato', 'decapato', 'laf', 'preverniciato', 'caldo', 'aluzinc', 'alluminato', 'elettrozincato'];
+	
+	var typeArray = ['coil', 'nastro', 'piana', 'ondulata', 'grecata', 'collaboranteh55', 'collaboranteh55-s', 'collaboranteh75', 'collaboranteh75-s'];
+	
+	var spessorArray = [0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.60, 0.70, 0.80, 0.90, 1.00, 1.20, 1.50, 1.80, 2.00, 2.50, 3.00, 4.00, 5.00, 6.00, 8.00, 10.00];
+	
+	var largArray = [1000, 1250, 1500]; 
+	
+	function createMonster (products) {
+		var i, j, k,z, temp;
 		i=0;
-		for (s2p of $scope.spessor2products) {
-			j = 0;
-			for(l2p of s2p.value) {
-				temp = products.filter(function(el){
-					return (el.spessore === s2p.key) && (el.classeLarghezza === l2p.key);
-				});
-				
-				$scope.spessor2products[i].value[j].value = temp;
-				if(temp.length != 0){
-					$scope.spessor2products[i].lung = $scope.spessor2products[i].lung + temp.length;
-					$scope.spessor2products[i].value[j].lung = temp.length;
-					for (t of temp) {
-						$scope.spessor2products[i].value[j].weight = $scope.spessor2products[i].value[j].weight + t.peso;
+		for (mt of materialArray){
+			temp = products.filter(function(el){
+				return (el.materiale === mt);
+			});
+			if(temp.length != 0){
+				$scope.monster.push({key: mt, lung: 0, value: []}); //i per accedere
+				j=0;
+				for (tp of typeArray){
+					temp = products.filter(function(el){
+						return (el.materiale === mt) && (el.tipo === tp);
+					});
+					if(temp.length != 0){
+						$scope.monster[i].value.push({key: tp, lung: 0, value: []}) //j per accedere
+						k = 0;
+						for (sp of spessorArray) {
+							temp = products.filter(function(el){
+								return (el.materiale === mt) && (el.tipo === tp) && (el.spessore === sp);
+							});
+							if(temp.length != 0){
+								$scope.monster[i].value[j].value.push({key: sp, lung: 0, weight: 0, value: []}); //k per accedere 
+								z = 0;
+								for (lg of largArray) {
+									temp = products.filter(function(el){
+										return (el.materiale === mt) && (el.tipo === tp) && (el.spessore === sp) && (el.classeLarghezza === lg);
+									});
+									
+									if(temp.length != 0){
+										$scope.monster[i].value[j].value[k].value.push({key: lg, lung: 0, weight: 0, value: temp}); //z per accedere
+										console.log("i ", i, "	j ",j, "	k ",k,"		z ",z);
+										console.log("product", $scope.monster[i].value[j].value[k].value[z].value);
+										$scope.monster[i].value[j].value[k].value[z].lung = temp.length;
+										$scope.monster[i].value[j].value[k].lung = $scope.monster[i].value[j].value[k].lung + temp.length;
+										$scope.monster[i].value[j].lung = $scope.monster[i].value[j].lung + temp.length;
+										$scope.monster[i].lung = $scope.monster[i].lung + temp.length;
+										for (t of temp) {
+											$scope.monster[i].value[j].value[k].value[z].weight = $scope.monster[i].value[j].value[k].value[z].weight + t.peso;
+											$scope.monster[i].value[j].value[k].weight = $scope.monster[i].value[j].value[k].weight + t.peso; 
+										}
+										z++;
+									}
+								}
+								k++;
+							}
+						}
+						j++;
 					}
 				}
-				else {
-					$scope.spessor2products[i].lung = $scope.spessor2products[i].lung + 1;
-					$scope.spessor2products[i].value[j].lung = 1;
-				}
-				$scope.spessor2products[i].weight = $scope.spessor2products[i].weight + $scope.spessor2products[i].value[j].weight; 
-				j++
+				i++;
 			}
-			i++;
 		}
 	}
-		
 	
-	stockFactory.getAll(
-		function (resp) {
-			$scope.products = resp.data;
-			sameSpessor($scope.products);
-			console.log("MAP", $scope.spessor2products);
-		},
-		function(err) {
-			console.log(err);
-		}
-	);
+	$scope.getStock = function () {
+		stockFactory.getAll(
+			function (resp) {
+				var products = resp.data;
+				createMonster(products);
+				console.log("MAP", $scope.monster);
+				console.log("PRODUCTS", products);
+			},
+			function(err) {
+				console.log(err);
+			}
+		);
+	}
 	
-	$scope.deleteProduct = function (product, index1, index2,index3) {
-		console.log("index1" , index1, "  index2 ", index2, "  index3 ",index3);
-		console.log($scope.spessor2products[index1].value[index2].value[index3]);
-		console.log($scope.spessor2products[index1].value[index2].value);
-		console.log($scope.spessor2products[index1].lung);
-		console.log($scope.spessor2products[index1].value[index2].lung);
-		console.log(product);
-		
+	$scope.getStock();
+	
+	$scope.deleteProduct = function (product, index1, index2,index3, index4, index5) {
+		console.log("index1" , index1, "  index2 ", index2, "  index3 ",index3, "  index4 ", index4,  "  index5 ", index5);
 		stockFactory.delete({
 			id:product._id
 		},
 		function(resp){
-			console.log(resp);
-			$scope.spessor2products[index1].value[index2].value.splice(index3,1);
-			$scope.spessor2products[index1].lung = $scope.spessor2products[index1].lung-1;
-			$scope.spessor2products[index1].value[index2].lung = $scope.spessor2products[index1].value[index2].lung-1;
-			
+			console.log(resp);	
+			if($scope.monster[index1].lung == 1){
+				$scope.monster.splice(index1,1);
+			}
+			else if ($scope.monster[index1].value[index2].lung == 1){
+				$scope.monster[index1].value.splice(index2,1);
+				$scope.monster[index1].lung--;
+			}
+			else if ($scope.monster[index1].value[index2].value[index3].lung == 1){
+				$scope.monster[index1].value[index2].value.splice(index3,1);
+				$scope.monster[index1].value[index2].lung--;
+				$scope.monster[index1].lung--;
+			}
+			else if ($scope.monster[index1].value[index2].value[index3].value[index4].lung == 1){
+				$scope.monster[index1].value[index2].value[index3].value.splice(index4,1);
+				$scope.monster[index1].value[index2].value[index3].lung--;
+				$scope.monster[index1].value[index2].lung--;
+				$scope.monster[index1].lung--;
+			}
+			else{
+				$scope.monster[index1].value[index2].value[index3].value[index4].value.splice(index5,1);
+				$scope.monster[index1].value[index2].value[index3].value[index4].lung--;
+				$scope.monster[index1].value[index2].value[index3].lung--;
+				$scope.monster[index1].value[index2].lung--;
+				$scope.monster[index1].lung--;
+			}
 		},
 		function(err){
 			console.log(err);

@@ -2,149 +2,88 @@
 
 	<table class="table table-bordered table-hover">
 		<thead>
-			<tr>
-				<th> 
-					<span class="glyphicon glyphicon-filter"></span>
-					<select ng-model="search">
-						<option value=""></option>
-						<option value=0.25>0.25</option><option value=0.30>0.30</option><option value=0.35>0.35</option>
-						<option value=0.40>0.40</option><option value=0.45>0.45</option><option value=0.50>0.50</option>
-						<option value=0.60>0.60</option><option value=0.70>0.70</option><option value=0.80>0.80</option>
-						<option value=0.90>0.90</option><option value=1.00>1.00</option><option value=1.20>1.20</option>
-						<option value=1.50>1.50</option><option value=1.80>1.80</option><option value=2.00>2.00</option>
-						<option value=2.50>2.50</option><option value=3.00>3.00</option><option value=4.00>4.00</option>
-						<option value=5.00>5.00</option><option value=6.00>6.00</option><option value=8.00>8.00</option>
-						<option value=10.00>10.00</option>
-					</select>
-				</th>
-				<th ng-if= 'search != undefined && search != ""'>
-					<span class="glyphicon glyphicon-filter"></span>
-					<select ng-model="search5">
-						<option value=""></option>
-						<option value=1000>1000</option><option value=1250>1250</option><option value=1500>1500</option>
-					</select>
-				</th>
-<!--
-				<th>
-					<span class="glyphicon glyphicon-filter"></span>
-					<input type="text" ng-model="search2"/>
-				</th>
--->
-				
-<!--
-				<th>
-					<span class="glyphicon glyphicon-filter"></span>
-					<select ng-model="search.tipo">
-						<option value=""></option>
-						<option value="coil">Coil</option><option value="nastro">Nastro</option><option value="piana">Piana</option>
-						<option value="ondulata">Ondulata</option><option value="gregata">Gregata</option>
-						<option value="collaboranteh55">Collaborante h55</option><option value="collaboranteh55-s">Collaborante h55-S</option>
-						<option value="collaboranteh75">Collaborante h75</option><option value="collaboranteh75-s">Collaborante h75-S</option>
-					</select>
-				</th>
--->
-<!--
-				<th>
-					<span class="glyphicon glyphicon-filter"></span>
-					<select ng-model="search.materiale">
-						<option value=""></option>
-						<option value="zincato">Zincato</option><option value="decapato">Decapato</option><option value="laf">Laf</option>
-						<option value="preverniciato">Preverniciato</option><option value="caldo">Caldo</option>
-						<option value="aluzinc">Aluzinc</option><option value="alluminato">Alluminato</option>
-						<option value="elettrozincato">Elettrozincato</option>
-					</select>
-				</th>
--->
-			</tr>
+			<th>Materiale</th>
+			<th>Tipo</th>
+			<th>Spessore</th>
+			<th>C.Larghezza</th>
+			<th>Matricola</th>
+			<th>Qualita</th>
+			<th>Scelta</th>
+			<th>Finitura</th>
+			<th>Colore/Ral</th>
+			<th>Peso(kg)</th>
+			<th>Larghezza</th>
+			<th>Lunghezza</th>
+			<th>N.Fogli</th>
+			<th>Prezzo</th>
+			<th>Difetti</th>
+			<th>Stabilimento</th>
 		</thead>
-
 		<tbody>
-			<tr ng-repeat-start="s2p in spessor2products | filter:{'key' : search}">
-				<th>Spessore</th>
-				<th>C.Larghezza</th>
-				<th>Matricola</th>
-				<th>Tipo</th>
-				<th>Materiale</th>
-				<th>Qualita</th>
-				<th>Scelta</th>
-				<th>Finitura</th>
-				<th>Colore/Ral</th>
-				<th>Peso(kg)</th>
-				<th>Larghezza</th>
-				<th>Lunghezza</th>
-				<th>N.Fogli</th>
-				<th>Prezzo</th>
-				<th>Difetti</th>
-				<th>Stabilimento</th>
-			</tr>
-			<tr>
-				<td rowspan="{{s2p.lung+3}}">{{s2p.key}}</td>
-				<td rowspan="{{s2p.value[0].lung}}">{{s2p.value[0].key}}</td>
-				<td>{{s2p.value[0].value[0].matricola}}</td>
-				<td>{{s2p.value[0].value[0].tipo}}</td>
-				<td>{{s2p.value[0].value[0].materiale}}</td>
-				<td>{{s2p.value[0].value[0].qualita}}</td>
-				<td>{{s2p.value[0].value[0].scelta}}</td>
-				<td>{{s2p.value[0].value[0].finitura}}</td>
-				<td>{{s2p.value[0].value[0].coloreRal}}</td>
-				<td>{{s2p.value[0].value[0].peso}}</td>
-				<td>{{s2p.value[0].value[0].larghezza}}</td>
-				<td>{{s2p.value[0].value[0].lunghezza}}</td>
-				<td>{{s2p.value[0].value[0].numFogli}}</td>
-				<td>{{s2p.value[0].value[0].prezzo}}</td>
-				<td>{{s2p.value[0].value[0].difetti}}</td>
-				<td>{{s2p.value[0].value[0].stabilimento}}</td>
+			<!--  1   -->
+			<tr ng-repeat-start="m2p in monster">
+				<td rowspan="{{m2p.lung}}">{{m2p.key}}</td>
+				<td rowspan="{{m2p.value[0].lung}}">{{m2p.value[0].key}}</td>
+				<td rowspan="{{m2p.value[0].value[0].lung}}">{{m2p.value[0].value[0].key}}</td>
+				<td rowspan="{{m2p.value[0].value[0].value[0].lung}}">{{m2p.value[0].value[0].value[0].key}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].matricola}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].qualita}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].scelta}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].finitura}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].coloreRal}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].peso}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].larghezza}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].lunghezza|number:2}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].numFogli}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].prezzo}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].difetti}}</td>
+				<td>{{m2p.value[0].value[0].value[0].value[0].stabilimento}}</td>
 				<td>
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(s2p.value[0].value[0],spessor2products.indexOf(s2p),0,0)">Cancella</button></li>
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(m2p.value[0].value[0].value[0].value[0], monster.indexOf(m2p),0,0,0,0)">Cancella</button></li>
 						</ul>
 					</div>
 				</td>
 			</tr>
 
-			<tr ng-repeat="p in s2p.value[0].value.slice(1)">
+			<!--  2   -->
+			<tr ng-repeat="p in m2p.value[0].value[0].value[0].value.slice(1)">
 				<td>{{p.matricola}}</td>
-				<td>{{p.tipo}}</td>
-				<td>{{p.materiale}}</td>
 				<td>{{p.qualita}}</td>
 				<td>{{p.scelta}}</td>
 				<td>{{p.finitura}}</td>
 				<td>{{p.coloreRal}}</td>
 				<td>{{p.peso}}</td>
 				<td>{{p.larghezza}}</td>
-				<td>{{p.lunghezza}}</td>
+				<td>{{p.lunghezza|number:2}}</td>
 				<td>{{p.numFogli}}</td>
 				<td>{{p.prezzo}}</td>
 				<td>{{p.difetti}}</td>
 				<td>{{p.stabilimento}}</td>
-				<td>
+				<td style="border:0;">
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p,spessor2products.indexOf(s2p),0,s2p.value[0].value.indexOf(p))">Cancella</button></li>
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p,monster.indexOf(m2p),0,0,0,m2p.value[0].value[0].value[0].value.indexOf(p))">Cancella</button></li>
 						</ul>
 					</div>
 				</td>
 			</tr>
 
-			<tr>
-				<td colspan="15"><b>TOTALE: </b>{{s2p.value[0].weight}} kg</td>
-			</tr>
+			<!-- 3 --> 
 			
-			<tr ng-repeat-start ="l2p in s2p.value.slice(1)">
+			<tr ng-repeat-start ="l2p in m2p.value[0].value[0].value.slice(1)">
 				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
 				<td>{{l2p.value[0].matricola}}</td>
-				<td>{{l2p.value[0].tipo}}</td>
-				<td>{{l2p.value[0].materiale}}</td>
 				<td>{{l2p.value[0].qualita}}</td>
 				<td>{{l2p.value[0].scelta}}</td>
 				<td>{{l2p.value[0].finitura}}</td>
 				<td>{{l2p.value[0].coloreRal}}</td>
 				<td>{{l2p.value[0].peso}}</td>
 				<td>{{l2p.value[0].larghezza}}</td>
-				<td>{{l2p.value[0].lunghezza}}</td>
+				<td>{{l2p.value[0].lunghezza|number:2}}</td>
 				<td>{{l2p.value[0].numFogli}}</td>
 				<td>{{l2p.value[0].prezzo}}</td>
 				<td>{{l2p.value[0].difetti}}</td>
@@ -153,23 +92,22 @@
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],spessor2products.indexOf(s2p),s2p.value.indexOf(l2p),0)">Cancella</button></li>
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),0,0,m2p.value[0].value[0].value.indexOf(l2p),0)">Cancella</button></li>
 						</ul>
 					</div>
 				</td>
 			</tr>
 			
-			<tr ng-repeat="p2 in l2p.value.slice(1)">
+			<!-- 4 -->
+			<tr ng-repeat-end ng-repeat="p2 in l2p.value.slice(1)">
 				<td>{{p2.matricola}}</td>
-				<td>{{p2.tipo}}</td>
-				<td>{{p2.materiale}}</td>
 				<td>{{p2.qualita}}</td>
 				<td>{{p2.scelta}}</td>
 				<td>{{p2.finitura}}</td>
 				<td>{{p2.coloreRal}}</td>
 				<td>{{p2.peso}}</td>
 				<td>{{p2.larghezza}}</td>
-				<td>{{p2.lunghezza}}</td>
+				<td>{{p2.lunghezza|number:2}}</td>
 				<td>{{p2.numFogli}}</td>
 				<td>{{p2.prezzo}}</td>
 				<td>{{p2.difetti}}</td>
@@ -178,19 +116,318 @@
 					<div class="dropdown">
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,spessor2products.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p2))">Cancella</button></li>
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),0,0,m2p.value[0].value[0].value.indexOf(l2p),l2p.value.indexOf(p2))">Cancella</button></li>
 						</ul>
 					</div>
 				</td>
-			 </tr>
-			
-			<tr ng-repeat-end>
-				<td colspan="15"><b>TOTALE: </b>{{l2p.weight}} kg</td>
 			</tr>
 			
-			<tr ng-repeat-end>
-				<td colspan="16" style="text-align:center;"><b>TOTALE: </b>{{s2p.weight}} kg</td>
+			<!-- 5 -->
+			<tr ng-repeat-start="s2p in m2p.value[0].value.slice(1)">
+				<td rowspan="{{s2p.lung}}">{{s2p.key}}</td>
+				<td rowspan="{{s2p.value[0].lung}}">{{s2p.value[0].key}}</td>
+				<td>{{s2p.value[0].value[0].matricola}}</td>
+				<td>{{s2p.value[0].value[0].qualita}}</td>
+				<td>{{s2p.value[0].value[0].scelta}}</td>
+				<td>{{s2p.value[0].value[0].finitura}}</td>
+				<td>{{s2p.value[0].value[0].coloreRal}}</td>
+				<td>{{s2p.value[0].value[0].peso}}</td>
+				<td>{{s2p.value[0].value[0].larghezza}}</td>
+				<td>{{s2p.value[0].value[0].lunghezza|number:2}}</td>
+				<td>{{s2p.value[0].value[0].numFogli}}</td>
+				<td>{{s2p.value[0].value[0].prezzo}}</td>
+				<td>{{s2p.value[0].value[0].difetti}}</td>
+				<td>{{s2p.value[0].value[0].stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(s2p.value[0].value[0],monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),0,0)">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
 			</tr>
+			
+			<!-- 6 -->
+			<tr ng-repeat="p2 in s2p.value[0].value.slice(1)">
+				<td>{{p2.matricola}}</td>
+				<td>{{p2.qualita}}</td>
+				<td>{{p2.scelta}}</td>
+				<td>{{p2.finitura}}</td>
+				<td>{{p2.coloreRal}}</td>
+				<td>{{p2.peso}}</td>
+				<td>{{p2.larghezza}}</td>
+				<td>{{p2.lunghezza|number:2}}</td>
+				<td>{{p2.numFogli}}</td>
+				<td>{{p2.prezzo}}</td>
+				<td>{{p2.difetti}}</td>
+				<td>{{p2.stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),0,s2p.value[0].value.indexOf(p2))">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<!-- 7 -->
+			<tr ng-repeat-start="l2p in s2p.value.slice(1)">
+				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
+				<td>{{l2p.value[0].matricola}}</td>
+				<td>{{l2p.value[0].qualita}}</td>
+				<td>{{l2p.value[0].scelta}}</td>
+				<td>{{l2p.value[0].finitura}}</td>
+				<td>{{l2p.value[0].coloreRal}}</td>
+				<td>{{l2p.value[0].peso}}</td>
+				<td>{{l2p.value[0].larghezza}}</td>
+				<td>{{l2p.value[0].lunghezza|number:2}}</td>
+				<td>{{l2p.value[0].numFogli}}</td>
+				<td>{{l2p.value[0].prezzo}}</td>
+				<td>{{l2p.value[0].difetti}}</td>
+				<td>{{l2p.value[0].stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),s2p.value.indexOf(l2p),0)">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<!-- 8 -->
+			<tr ng-repeat-end ng-repeat="p3 in l2p.value.slice(1)">
+				<td>{{p3.matricola}}</td>
+				<td>{{p3.qualita}}</td>
+				<td>{{p3.scelta}}</td>
+				<td>{{p3.finitura}}</td>
+				<td>{{p3.coloreRal}}</td>
+				<td>{{p3.peso}}</td>
+				<td>{{p3.larghezza}}</td>
+				<td>{{p3.lunghezza|number:2}}</td>
+				<td>{{p3.numFogli}}</td>
+				<td>{{p3.prezzo}}</td>
+				<td>{{p3.difetti}}</td>
+				<td>{{p3.stabilimento}}</td>
+				<td style="border:0;">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p3,monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p3))">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<tr ng-repeat-end ng-hide="true"></tr>
+			
+			<!-- 9 -->
+			<tr ng-repeat-start="t2p in m2p.value.slice(1)">
+				<td rowspan="{{t2p.lung}}">{{t2p.key}}</td>
+				<td rowspan="{{t2p.value[0].lung}}">{{t2p.value[0].key}}</td>
+				<td rowspan="{{t2p.value[0].value[0].lung}}">{{t2p.value[0].value[0].key}}</td>
+				<td>{{t2p.value[0].value[0].value[0].matricola}}</td>
+				<td>{{t2p.value[0].value[0].value[0].qualita}}</td>
+				<td>{{t2p.value[0].value[0].value[0].scelta}}</td>
+				<td>{{t2p.value[0].value[0].value[0].finitura}}</td>
+				<td>{{t2p.value[0].value[0].value[0].coloreRal}}</td>
+				<td>{{t2p.value[0].value[0].value[0].peso}}</td>
+				<td>{{t2p.value[0].value[0].value[0].larghezza}}</td>
+				<td>{{t2p.value[0].value[0].value[0].lunghezza|number:2}}</td>
+				<td>{{t2p.value[0].value[0].value[0].numFogli}}</td>
+				<td>{{t2p.value[0].value[0].value[0].prezzo}}</td>
+				<td>{{t2p.value[0].value[0].value[0].difetti}}</td>
+				<td>{{t2p.value[0].value[0].value[0].stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(t2p.value[0].value[0].value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),0,0,0)">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<!-- 10 -->
+			<tr ng-repeat="p2 in t2p.value[0].value[0].value.slice(1)">
+				<td>{{p2.matricola}}</td>
+				<td>{{p2.qualita}}</td>
+				<td>{{p2.scelta}}</td>
+				<td>{{p2.finitura}}</td>
+				<td>{{p2.coloreRal}}</td>
+				<td>{{p2.peso}}</td>
+				<td>{{p2.larghezza}}</td>
+				<td>{{p2.lunghezza|number:2}}</td>
+				<td>{{p2.numFogli}}</td>
+				<td>{{p2.prezzo}}</td>
+				<td>{{p2.difetti}}</td>
+				<td>{{p2.stabilimento}}</td>
+				<td style="border:0;">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),m2p.value.indexOf(t2p),0,0,t2p.value[0].value[0].value.indexOf(p2))">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<!-- 11 -->
+			<tr ng-repeat-start="l2p in t2p.value[0].value.slice(1)">
+				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
+				<td>{{l2p.value[0].matricola}}</td>
+				<td>{{l2p.value[0].qualita}}</td>
+				<td>{{l2p.value[0].scelta}}</td>
+				<td>{{l2p.value[0].finitura}}</td>
+				<td>{{l2p.value[0].coloreRal}}</td>
+				<td>{{l2p.value[0].peso}}</td>
+				<td>{{l2p.value[0].larghezza}}</td>
+				<td>{{l2p.value[0].lunghezza|number:2}}</td>
+				<td>{{l2p.value[0].numFogli}}</td>
+				<td>{{l2p.value[0].prezzo}}</td>
+				<td>{{l2p.value[0].difetti}}</td>
+				<td>{{l2p.value[0].stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),0,t2p.value[0].value.indexOf(l2p),0)">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<!-- 12 -->
+			<tr ng-repeat-end ng-repeat="p3 in l2p.value.slice(1)">
+				<td>{{p3.matricola}}</td>
+				<td>{{p3.qualita}}</td>
+				<td>{{p3.scelta}}</td>
+				<td>{{p3.finitura}}</td>
+				<td>{{p3.coloreRal}}</td>
+				<td>{{p3.peso}}</td>
+				<td>{{p3.larghezza}}</td>
+				<td>{{p3.lunghezza|number:2}}</td>
+				<td>{{p3.numFogli}}</td>
+				<td>{{p3.prezzo}}</td>
+				<td>{{p3.difetti}}</td>
+				<td>{{p3.stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p3,monster.indexOf(m2p),m2p.value.indexOf(t2p),0,t2p.value[0].value.indexOf(l2p),l2p.value.indexOf(p3))">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			
+			
+			<!-- 13 -->
+			<tr ng-repeat-start="s2p in t2p.value.slice(1)">
+				<td rowspan="{{s2p.lung}}">{{s2p.key}}</td>
+				<td rowspan="{{s2p.value[0].lung}}">{{s2p.value[0].key}}</td>
+				<td>{{s2p.value[0].value[0].matricola}}</td>
+				<td>{{s2p.value[0].value[0].qualita}}</td>
+				<td>{{s2p.value[0].value[0].scelta}}</td>
+				<td>{{s2p.value[0].value[0].finitura}}</td>
+				<td>{{s2p.value[0].value[0].coloreRal}}</td>
+				<td>{{s2p.value[0].value[0].peso}}</td>
+				<td>{{s2p.value[0].value[0].larghezza}}</td>
+				<td>{{s2p.value[0].value[0].lunghezza|number:2}}</td>
+				<td>{{s2p.value[0].value[0].numFogli}}</td>
+				<td>{{s2p.value[0].value[0].prezzo}}</td>
+				<td>{{s2p.value[0].value[0].difetti}}</td>
+				<td>{{s2p.value[0].value[0].stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(s2p.value[0].value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),0,0)">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<!-- 14 -->
+			<tr ng-repeat="p2 in s2p.value[0].value.slice(1)">
+				<td>{{p2.matricola}}</td>
+				<td>{{p2.qualita}}</td>
+				<td>{{p2.scelta}}</td>
+				<td>{{p2.finitura}}</td>
+				<td>{{p2.coloreRal}}</td>
+				<td>{{p2.peso}}</td>
+				<td>{{p2.larghezza}}</td>
+				<td>{{p2.lunghezza|number:2}}</td>
+				<td>{{p2.numFogli}}</td>
+				<td>{{p2.prezzo}}</td>
+				<td>{{p2.difetti}}</td>
+				<td>{{p2.stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),0,s2p.value[0].value.indexOf(p2))">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<!-- 15 -->
+			<tr ng-repeat-start="l2p in s2p.value.slice(1)">
+				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
+				<td>{{l2p.value[0].matricola}}</td>
+				<td>{{l2p.value[0].qualita}}</td>
+				<td>{{l2p.value[0].scelta}}</td>
+				<td>{{l2p.value[0].finitura}}</td>
+				<td>{{l2p.value[0].coloreRal}}</td>
+				<td>{{l2p.value[0].peso}}</td>
+				<td>{{l2p.value[0].larghezza}}</td>
+				<td>{{l2p.value[0].lunghezza|number:2}}</td>
+				<td>{{l2p.value[0].numFogli}}</td>
+				<td>{{l2p.value[0].prezzo}}</td>
+				<td>{{l2p.value[0].difetti}}</td>
+				<td>{{l2p.value[0].stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),s2p.value.indexOf(l2p), 0)">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<!-- 16 -->
+			<tr ng-repeat-end ng-repeat="p3 in l2p.value.slice(1)">
+				<td>{{p3.matricola}}</td>
+				<td>{{p3.qualita}}</td>
+				<td>{{p3.scelta}}</td>
+				<td>{{p3.finitura}}</td>
+				<td>{{p3.coloreRal}}</td>
+				<td>{{p3.peso}}</td>
+				<td>{{p3.larghezza|number:2}}</td>
+				<td>{{p3.lunghezza}}</td>
+				<td>{{p3.numFogli}}</td>
+				<td>{{p3.prezzo}}</td>
+				<td>{{p3.difetti}}</td>
+				<td>{{p3.stabilimento}}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p3,monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p3))">Cancella</button></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			
+			<tr ng-repeat-end ng-hide="true"></tr>
+			<tr ng-repeat-end ng-hide="true"></tr>
+			<tr ng-repeat-end ng-hide="true"></tr>
+			
 		</tbody>
 
 	<!--

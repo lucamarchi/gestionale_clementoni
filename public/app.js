@@ -61,7 +61,15 @@ myapp.config(function($locationProvider, $routeProvider) {
 				requiredLogin: true
 			}
       	})
-		
+	
+		.when('/carichiOut', {
+        	templateUrl: 'logistics/carichi_out.html',
+			controller: 'logisticsController',
+			access: { 
+				requiredLogin: true
+			}
+      	})
+	
 		.otherwise({
         	redirectTo: '/'
       	});
@@ -70,11 +78,11 @@ myapp.config(function($locationProvider, $routeProvider) {
 
 myapp.run(function($rootScope, $location, AuthenticationService, $window) {
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-		console.log($rootScope.isLogged);
 		AuthenticationService.save({},{},
 			function(resp) {
 				console.log(resp.message);
 				$rootScope.isLogged = true;
+				console.log($rootScope.isLogged);
 			},
 			function(err) {
 				if (nextRoute.access && nextRoute.access.requiredLogin) {

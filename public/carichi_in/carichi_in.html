@@ -1,7 +1,11 @@
 <style>
-.modal-body {
-  overflow-x: auto;
-}
+	.modal-xl .modal-dialog {
+		width: 90%;
+	}
+	.modal-xl .modal-body {
+  		overflow-y: auto;
+		overflow-x: auto;
+	}
 </style>
 
 
@@ -66,7 +70,8 @@
 </table>
 
 <!-- Modal order_products.html-->
-<div id="orderproducts" class="modal container fade" style="display: none;">
+<div id="orderproducts" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
@@ -77,11 +82,12 @@
 				<div ng-include src="'carichi_in/order_products.html'"></div>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 				<button type="button" class="btn btn-success" ng-if="order._id == undefined" ng-click="confirmOrder()" data-dismiss="modal">Conferma</button>
 				<button type="button" class="btn btn-warning" ng-if="order._id != undefined" ng-click="updateOrder(order)" data-dismiss="modal">Modifica</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 			</div>
 		</div>
+	</div>
 </div>
 
 <!-- Modal new_product.html-->
@@ -97,8 +103,8 @@
 				<div ng-include src="'carichi_in/new_product.html'"></div>
 			</div>
 			<div class="modal-footer">
-				<button ng-if="productForm.$valid" type="button" class="btn btn-success" data-dismiss="modal" ng-click="addProduct()" >Conferma</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button ng-if="productForm.$valid" type="button" class="btn btn-success" data-dismiss="modal" ng-click="addProduct()" >Conferma</button>
 			</div>
 		</div>
 	</div>
@@ -118,9 +124,10 @@
 				<div ng-include src="'carichi_in/new_order.html'"></div>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 				<button ng-if="orderForm.$valid && order._id == undefined" type="button" class="btn btn-success" data-toggle="modal" href="#orderproducts" data-dismiss="modal">Conferma</button>
 				<button ng-if="orderForm.$valid && order._id != undefined" type="button" class="btn btn-warning" ng-click="updateOrder(order)" data-dismiss="modal">Modifica</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				
 			</div>
 		</div>
 	</div>

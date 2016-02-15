@@ -94,7 +94,7 @@ store.factory('TokenInterceptor', function ($q, $window, $location, $rootScope) 
   
         /* Revoke client authentication if 401 is received */
         responseError: function(rejection) {
-            if (rejection != null && rejection.status === 500 && ($window.sessionStorage.token || $rootScope.isLogged)) {
+            if (rejection != null && rejection.status === 401 && ($window.sessionStorage.token || $rootScope.isLogged)) {
                 delete $window.sessionStorage.user;	
 				delete $window.sessionStorage.token;
 				$rootScope.isLogged = false;

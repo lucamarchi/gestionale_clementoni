@@ -20,11 +20,10 @@ store.controller('loginController', function($scope, $rootScope, $location, $win
 			);
 		}
 	}
-	
-	
 	$rootScope.logout = function () {
 		$rootScope.isLogged = false;
 		delete $window.sessionStorage.user;
 		delete $window.sessionStorage.token;
+		console.log("CONTROLLO ",$window.sessionStorage.token);
 	}
 });

@@ -11,6 +11,7 @@
 			<th>Larghezza</th>
 			<th>Lunghezza</th>
 			<th>Peso</th>
+			<th>INDICE</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -25,7 +26,11 @@
 			<td>{{article.larghezza}}</td>
 			<td>{{article.lunghezza}}</td>
 			<td>{{article.peso}}</td>
-			<td><button type="button" class="btn btn-primary btn-circle" ng-click="addArticle(article, $index)"><span class="glyphicon glyphicon-plus"></span></button></td>
+			<th>{{$index}}</th>
+			<td>
+				<button type="button" class="btn btn-primary btn-circle" ng-click="addArticle(article, $index)"><span class="glyphicon glyphicon-plus"></span></button>
+			</td>
+				
 		</tr>
 	</tbody>
 </table>

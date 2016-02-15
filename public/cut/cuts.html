@@ -1,10 +1,3 @@
-<style>
-	.label-pill {
-		display: inline-block;
-		text-align: center;
-	}
-</style>
-
 <h2>ORDINI DI TAGLIO
 <button type="button" class="btn btn-primary" ng-click="refresh()">Refresh</button>
 </h2> 
@@ -35,30 +28,29 @@
 		</li>
   	</ul>
 </nav>
-<div class="table-responsive">
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>Codice</th>
-				<th>CodiceCliente</th>
-				<th>Data</th>
-				<th>Note</th>
-				<th>Accettato</th>
-				<th>Operatore</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="cut in cuts | orderBy:'codice':true">
-				<td><button type="button" class="btn btn-info btn-block" ng-click="openCut(cut)" href="#cutarticle" data-toggle="modal">{{cut.codice}}</button></td>
-				<td>{{cut.clienteCod}}</td>
-				<td>{{cut.date}}</td>
-				<td>{{cut.note}}</td>
-				<td ng-if="cut.accepted == true"><span class="label label-pill label-success">{{cut.accepted}}</span></td><td ng-if="cut.accepted == false"><button type="button" class="btn btn-primary btn-block" ng-click="confirmCut(cut)" data-toggle="modal">Conferma</button></td>
-				<td>{{cut.operator}}</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>Codice</th>
+			<th>CodiceCliente</th>
+			<th>Data</th>
+			<th>Note</th>
+			<th>Accettato</th>
+			<th>Operatore</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="cut in cuts | orderBy:'codice':true">
+			<td><button type="button" class="btn btn-info btn-block" ng-click="openCut(cut)" href="#cutarticle" data-toggle="modal">{{cut.codice}}</button></td>
+			<td>{{cut.clienteCod}}</td>
+			<td>{{cut.date}}</td>
+			<td>{{cut.note}}</td>
+			<td ng-if="cut.accepted == true"><span class="label label-pill label-success">{{cut.accepted}}</span></td><td ng-if="cut.accepted == false"><button type="button" class="btn btn-primary btn-block" ng-click="confirmCut(cut)" data-toggle="modal">Conferma</button></td>
+			<td>{{cut.operator}}</td>
+		</tr>
+	</tbody>
+</table>
+
 
 <!-- Modal cut_products.html-->
 <div id="cutarticle" class="modal container fade" style="display: none;">

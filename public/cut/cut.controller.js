@@ -26,7 +26,6 @@ store.controller('cutController', function ($scope, cutFactory, refreshFactory, 
 	$scope.openCut = function (cut){
 		$scope.cut = cut;
 		$scope.articlesCut = cut.articoli;
-		console.log("anno", cut.date);
 	};
 	
 	$scope.confirmCut = function (cut) {

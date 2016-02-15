@@ -2,7 +2,7 @@
 <html ng-app="store">
 
 <head>
-<title>Clementoni</title>
+<title>COPAL</title>
 
 <!-- jquery -->
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -42,12 +42,11 @@
 					<li class="dropdown">
 						<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href="">Logistica<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#/productionSort">Ordine produzione</a></li>
+							<li><a href="#/productionSort">Riepilogo</a></li>
 							<li><a href="#/productionState">Stato produzione</a></li>
-							<li><a href="">Carichi in uscita</a></li> 
+							<li><a href="#/carichiOut">Carichi in uscita</a></li> 
           				</ul>
 					</li>
-					
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
         			<li class="active"><a ng-if="!isLogged" href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
