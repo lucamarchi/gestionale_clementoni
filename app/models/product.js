@@ -21,8 +21,8 @@ var ProductSchema = new Schema({
 	difetti: {type: String},
 	stabilimento: {type: Number},
 	stockId: {type: Schema.ObjectId, ref: 'Stock'},
-	figli: [Stock],
-	scarto: {type: Number}
+	lavorazione: [{ type: Schema.ObjectId, ref: 'Process'}],
+	scarto: {type: Number, default: 0}
 });
 
 module.exports = mongoose.model('Product', ProductSchema);

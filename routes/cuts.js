@@ -3,6 +3,7 @@ var request = require('request');
 var URL_AGENTI = 'http://test.agenti.copal.it/api/ordini?anno=';
 var URL_COD = '&codice=';
 var Cut = require('./../app/models/cut');
+var Article = require('./../app/models/article')
 
 module.exports = function() {
 	var router = express.Router();
@@ -45,19 +46,30 @@ module.exports = function() {
 						cut.date = body.data[i].DataOrdine;
 						var articoli = [];
 						for(var key in body.data[i].data) {
-							articoli.push({
-								codArticolo: body.data[i].data[key].CodArticolo,
-								tipo: (body.data[i].data[key].DesArticolo).trim(),
-								note: body.data[i].data[key].Note,
-								materiale: body.data[i].data[key].TipoArticolo,
-								sottoTipo: (body.data[i].data[key].SottoTipoArticolo).trim(),
-								quantita: body.data[i].data[key].Quantita,
-								prezzo: body.data[i].data[key].Prezzo,
-								spessore: body.data[i].data[key].Spessore,
-								lunghezza: body.data[i].data[key].Lunghezza,
-								larghezza: body.data[i].data[key].Larghezza,
-								peso: (body.data[i].data[key].Peso).replace(",","."),
-								dataConsegna: body.data[i].data[key].DataConsegna
+							var ti = (body.data[i].data[key].DesArticolo).trim();
+							if (ti == 'NASTRI') {
+								ti = 'NASTRO'
+							} else if (ti == 'COILS') {
+								ti = 'COIL'
+							} else if (ti == 'LAMIERA PIANA') {
+								ti = 'PIANA'
+							}
+							var article = new Article();
+							article.codArticolo = body.data[i].data[key].CodArticolo;
+							article.note = body.data[i].data[key].Note;
+							article.tipo = ti;
+							article.materiale = body.data[i].data[key].TipoArticolo;
+							article.sottoTipo = (body.data[i].data[key].SottoTipoArticolo).trim();
+							article.quantita = body.data[i].data[key].Quantita;
+							article.prezzo = body.data[i].data[key].Prezzo;
+							article.spessore = body.data[i].data[key].Spessore;
+							article.lunghezza = body.data[i].data[key].Lunghezza;
+							article.larghezza = body.data[i].data[key].Larghezza;
+							article.peso = (body.data[i].data[key].Peso).replace(",",".");
+							article.dataConsegna = body.data[i].data[key].DataConsegna;
+							articoli.push(article);
+							article.save(function(err) {
+								if (err) res.status(500).json({message: err, status: false});
 							});
 						}
 						cut.articoli = articoli;
@@ -94,7 +106,10 @@ module.exports = function() {
 			else {
 				var articoli = [];
 				cuts.forEach(function(cut) {
-					articoli = articoli.concat(cut.articoli);
+					cut.articoli.forEach(function(art) {
+						if (art.stato == 'LIBERO')
+							articoli.push(art)
+					})
 				});
 				res.json({status: true, data: articoli});
 			}
@@ -111,10 +126,43 @@ module.exports = function() {
 		})
 
 		.put(function(req,res) {
-			Cut.update({_id: req.params.cut_id},{$set: {"accepted": true, "operator": req.body.operator}}, function(err) {
+			var itemProducts = 0;
+			Cut.findOne({_id: req.params.cut_id}, function(err,cut) {
 				if (err)
 					res.status(500).json({message: err, status: false});
-				else res.json({message: "Cut accettato", status: true});
+				else {
+					cut.accepted = true;
+					cut.operator = req.body.operator;
+					if(cut.articoli && cut.articoli.length>0) {
+						var articoli = cut.articoli;
+						articoli.forEach(function(a) {
+							Article.update({_id: a},{$set: {"stato": "libero"}}, function(err) {
+								if (err)
+									res.status(500).json({message: err, status: false});
+								else {
+									itemProducts++;
+									if (itemProducts==articoli.length) {
+										cut.save(function(err,cut) {
+											if (err)
+												res.status(500).json({message: err, status: false});
+											else {
+												res.json({message: "Cut accettato", status: true});
+											}
+										});
+									}
+								}
+							});
+						});
+					} else {
+						cut.save(function(err,cut) {
+							if (err)
+								res.status(500).json({message: err, status: false});
+							else {
+								res.json({message: "Cut accettato", status: true});
+							}
+						});
+					}
+				}
 			});
 		});
 

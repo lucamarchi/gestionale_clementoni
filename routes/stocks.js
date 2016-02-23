@@ -86,7 +86,7 @@ module.exports = function() {
 			Stock.findById(req.params.stock_id, function(err,stock) {
 				if (err)
 					res.status(500).json({message: err, status: false});
-				else if (stock.fatherId==undefined && stock.fatherId==undefined) {
+				else if (stock!==undefined && stock.fatherId==undefined && stock.fatherId==undefined) {
 					Product.update({"stockId": req.params.stock_id},{$unset: {"stockId": ""}}, function(err,product) {
 						if (err)
 							res.status(500).json({message: err, status: false});
