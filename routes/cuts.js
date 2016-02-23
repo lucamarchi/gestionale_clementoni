@@ -121,8 +121,16 @@ module.exports = function() {
 			Cut.findById(req.params.cut_id, function(err,cut) {
 				if (err)
 					res.status(500).json({message: err, status: false});
-				else res.json({data: cut, status: true});
-			});	
+				else if (cut.articoli && cut.articoli.length!=0) {
+					Article.find({_id: {$in: cut.articoli}}, function(err, articoli) {
+						if (err)
+							res.status(500).json({message: err, status: false});
+						else {
+							res.json({cut: cut, articoli: articoli, status: true});
+						}
+					});
+				} else res.json({cut: cut, articoli: [], status: true});
+			});
 		})
 
 		.put(function(req,res) {
