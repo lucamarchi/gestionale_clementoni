@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
+var Schema = mongoose.Schema,
+	ObjectId = Schema.ObjectId;
 
 var CutSchema = new Schema({
 	anno: {type: Number},
@@ -10,21 +11,7 @@ var CutSchema = new Schema({
 	date: {type: String},
 	accepted: {type: Boolean, default: false},
 	operator: {type: String},
-	articoli: [{
-		codArticolo: {type: Number},
-		tipo: {type: String},
-		note: {type: String},
-		materiale: {type: String},
-		sottoTipo: {type: String},
-		quantita: {type: Number},
-		prezzo: {type: String},
-		spessore: {type: Number},
-		lunghezza: {type: Number},
-		larghezza: {type: Number},
-		peso: {type: Number},
-		dataConsegna: {type: String},
-		stato: {type: String}
-	}]
+	articoli: [{ type: Schema.ObjectId, ref: 'Article'}]
 });
 
 module.exports = mongoose.model('Cut', CutSchema);

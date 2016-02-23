@@ -5,9 +5,9 @@ var Schema = mongoose.Schema,
 
 var ProdSchema = new Schema({
 	codice: {type: String},
-	stato: {type: String},
-	data: {type: Date, default: Date.now()},
-	articoliId: [{type: Schema.ObjectId}]
+	dataCreazione: {type: Date,default: Date.now()},
+	dataEvasione: {type: Date},
+	articoliId: [{type: Schema.ObjectId, ref: 'Article', unique: true}]
 });
 
 module.exports = mongoose.model('Prod', ProdSchema);
