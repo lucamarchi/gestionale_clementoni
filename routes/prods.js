@@ -69,6 +69,14 @@ module.exports = function() {
 					});
 				} else res.json({message: 'Prod modificato con 0 articoli', status: true, data: prod});
 			});
+	})
+
+	.get(function(req,res) {
+			Prod.findById(req.params.prod_id, function(err,prod) {
+				if (err)
+					res.status(500).json({message: err, status: false});
+				else res.json({data: prod, status: true});
+			});
 		});
 
 	return router;
