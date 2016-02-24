@@ -72,12 +72,20 @@ module.exports = function() {
 	})
 
 	.get(function(req,res) {
-			Prod.findById(req.params.prod_id, function(err,prod) {
-				if (err)
-					res.status(500).json({message: err, status: false});
-				else res.json({data: prod, status: true});
-			});
+		Prod.findById(req.params.prod_id, function(err,prod) {
+			if (err)
+				res.status(500).json({message: err, status: false});
+			else if (prod.articoliId && prod.articoliId.length!=0) {
+				Article.find({_id: {$in: prod.articoliId}}, function(err, articoli) {
+					if (err)
+						res.status(500).json({message: err, status: false});
+					else {
+						res.json({prod: prod, articoli: articoli, status: true});
+					}
+				});
+			} else res.json({prod: prod, articoli: [], status: true});
 		});
+	})
 
 	return router;
 };
