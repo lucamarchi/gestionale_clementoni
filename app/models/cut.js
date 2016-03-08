@@ -11,7 +11,7 @@ var CutSchema = new Schema({
 	date: {type: String},
 	accepted: {type: Boolean, default: false},
 	operator: {type: String},
-	articoli: [{ type: Schema.ObjectId, ref: 'Article'}]
+	articoli: [{ type: Schema.ObjectId, ref: 'Article'}],
 });
 
 module.exports = mongoose.model('Cut', CutSchema);

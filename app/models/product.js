@@ -21,7 +21,8 @@ var ProductSchema = new Schema({
 	difetti: {type: String},
 	stabilimento: {type: Number},
 	stockId: {type: Schema.ObjectId, ref: 'Stock'},
-	lavorazione: [{ type: Schema.ObjectId, ref: 'Process'}],
+	lavorazione: [{ type: Schema.ObjectId, ref: 'Process',unique: true}],
+	fatherId: {type: Schema.ObjectId, ref: 'Product'},
 	scarto: {type: Number, default: 0}
 });
 
