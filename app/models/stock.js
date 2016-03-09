@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var StockSchema = new Schema({
-	matricola: {type: String,required: true},
+	numeroCollo: {type: String},
+	matricola: {type: String},
 	tipo: {type: String, required: true},
 	materiale: {type: String},
 	qualita: {type: String},
@@ -19,7 +20,6 @@ var StockSchema = new Schema({
 	prezzo: {type: Number},
 	difetti: {type: String},
 	stabilimento: {type: Number},
-	fatherId: {type: Schema.ObjectId, ref: 'Product'},
 	scarto: {type: Number}
 });
 

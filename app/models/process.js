@@ -9,24 +9,7 @@ var ProcessSchema = new Schema({
 	operatore: {type: String},
 	scarto: {type: Number},
 	data: {type: Date, default: Date.now},
-	figli: [{
-		matricola: {type: String,required: true},
-		tipo: {type: String, required: true},
-		materiale: {type: String},
-		qualita: {type: String},
-		scelta: {type: String},
-		finitura: {type: String},
-		coloreRal: {type: String},
-		peso: {type: Number},
-		spessore: {type: Number},
-		larghezza: {type: Number},
-		classeLarghezza: {type: Number},
-		lunghezza: {type: Number},
-		numFogli: {type: Number},
-		prezzo: {type: Number},
-		difetti: {type: String},
-		stabilimento: {type: Number}
-	}]
+	figli: [{type: Schema.ObjectId, ref: 'Product'}]
 });
 
 module.exports = mongoose.model('Process', ProcessSchema);
