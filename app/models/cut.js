@@ -12,6 +12,7 @@ var CutSchema = new Schema({
 	accepted: {type: Boolean, default: false},
 	operator: {type: String},
 	articoli: [{ type: Schema.ObjectId, ref: 'Article'}],
+	customer: {type: Schema.ObjectId, ref: 'Customer'}
 });
 
 module.exports = mongoose.model('Cut', CutSchema);

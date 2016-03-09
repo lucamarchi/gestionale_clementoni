@@ -4,6 +4,7 @@ var Schema = mongoose.Schema,
 	ObjectId = Schema.ObjectId;
 
 var ProdSchema = new Schema({
+	numero: {type: Number},
 	codice: {type: String},
 	dataCreazione: {type: Date,default: Date.now()},
 	dataEvasione: {type: Date},

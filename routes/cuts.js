@@ -43,7 +43,7 @@ module.exports = function() {
 						cut.codice = body.data[i].Codice;
 						cut.clienteCod = body.data[i].ClienteCod;
 						cut.note = body.data[i].Note;
-						cut.date = body.data[i].DataOrdine;
+						cut.date = new Date(body.data[i].DataOrdine);
 						var articoli = [];
 						for(var key in body.data[i].data) {
 							var ti = (body.data[i].data[key].DesArticolo).trim();

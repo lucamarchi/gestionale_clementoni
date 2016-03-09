@@ -4,8 +4,7 @@ var Schema = mongoose.Schema,
 	ObjectId = Schema.ObjectId;
 
 var OrderSchema = new Schema({
-	numOrdine: {type: Number, require: true},
-	ddt: {type: Number},
+	ddt: {type: Number, require: true},
 	fornitore: {type: String},
 	dataDdt: {type: Date},
 	dataArrivo: {type: Date, default: Date.now },

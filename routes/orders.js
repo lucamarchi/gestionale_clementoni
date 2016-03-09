@@ -13,16 +13,47 @@ module.exports = function() {
 			if (!req.body.products || !req.body.order || req.body.products==undefined || req.body.order==undefined) {
 				res.status(500).json({message: 'Dati mancanti', status: false});
 			} else {
+				var year = new Date().getFullYear();
+				Product.findOne({anno: year}).sort({numeroCollo: -1}).limit(1).exec(function(err,prod) {
+					if (err)
+						res.status(500).json({message: err, status: false});
+					else {
+						if (!prod) {
+							var prefix = year.toString().slice(-2);
+							var matr = prefix + "001";
+							matr = parseInt(matr);
+							console.log("Nessun prodotto: "+matr);
+						} else {
+							var figlio = false;
+							var tmpMatr = prod.numeroCollo;
+							var j = 0;
+							for (var i in tmpMatr) {
+								if (tmpMatr[i] == "/") {
+									isFiglio = true;
+									j = i;
+								}
+							}
+							if (figlio) {
+								var matr = tmpMatr.substr(0,j);
+								matr = parseInt(matr)+1
+								console.log("NUMCollo prodotto figlio: "+matr)
+							} else {
+								var matr = parseInt(tmpMatr)+1;
+								console.log("NUMCollo prodotto non figlio: "+matr)
+							}
+						}
+
 				var products = req.body.products;
 				var orderReq = req.body.order;
 				var itemProducts = 0;
 				var order = new Order();
 				var productsArray = [];
-				order.numOrdine = orderReq.numOrdine;
+				var matrP = matr;
+				var matrS = matr;
 				order.ddt = orderReq.ddt;
 				order.fornitore = orderReq.fornitore;
 				order.dataDdt = orderReq.dataDdt;
-				console.log("ORDER: numOrdine:"+orderReq.numOrdine+"\n ddt: "+orderReq.ddt+"\n fornitore: "+orderReq.fornitore+"\n");			
+				console.log("ORDER: ddt: "+orderReq.ddt+"\n fornitore: "+orderReq.fornitore+"\n");			
 				order.save(function(err) {
 					if (err)
 						res.status(500).json({message: err, status: false});
@@ -30,9 +61,10 @@ module.exports = function() {
 						console.log('Ordine salvato; con id '+order.id);
 						orderId = order.id;
 						products.forEach(function(p) {
-							console.log('ITERAZIONE PRODOTTO CON MATRICOLA '+p.matricola);
+							console.log('ITERAZIONE PRODOTTO CON numCollo '+p.numeroCollo);
 							console.log('Item for each: '+itemProducts);
 							var stock = new Stock();
+							stock.numeroCollo = matrS.toString();
 							stock.matricola = p.matricola;
 							stock.tipo = p.tipo;
 							stock.materiale = p.materiale;
@@ -49,6 +81,7 @@ module.exports = function() {
 							stock.prezzo = p.prezzo;
 							stock.difetti = p.difetti;
 							stock.stabilimento = p.stabilimento;
+							matrS++;
 							console.log("STOCK: matricola:"+p.matricola+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.peso+"\n stabilimento: "+p.stabilimento+"\n");
 							stock.save(function(err) {
 								if (err)
@@ -57,6 +90,7 @@ module.exports = function() {
 									console.log('STOCK SALVATO CON ID: '+stock.id);
 									var stockId = stock.id;
 									var product = new Product();
+									product.numeroCollo = matrP.toString();
 									product.matricola = p.matricola;
 									product.tipo = p.tipo;
 									product.materiale = p.materiale;
@@ -74,8 +108,10 @@ module.exports = function() {
 									product.difetti = p.difetti;
 									product.stabilimento = p.stabilimento;
 									product.stockId = stockId;
+									product.anno = year.toString();
 									productsArray.push(product);
-									console.log("PRODUCT: matricola:"+p.matricola+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.peso+"\n stabilimento: "+p.stabilimento+"\n");
+									matrP++;
+									console.log("PRODUCT: numeroCollo:"+p.numeroCollo+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.peso+"\n stabilimento: "+p.stabilimento+"\n");
 									product.save(function(err) {
 										if (err)
 											res.status(500).json({message: err, status: false});
@@ -102,6 +138,8 @@ module.exports = function() {
 						
 					} else res.json({message: 'Order senza prodotti', status: true, order: order});
 				});
+			}
+		});
 			}
 		})
 
@@ -136,14 +174,32 @@ module.exports = function() {
 				if (err)
 					res.status(500).json({message: err, status: false});
 				else if (req.body.products && req.body.products.length>0) {
+					var year = new Date().getFullYear();
+					Product.findOne({anno: year}).sort({numeroCollo: -1}).limit(1).exec(function(err,prod) {
+					if (err)
+						res.status(500).json({message: err, status: false});
+					else {
+						var matr;
+						if (!prod) {
+							var prefix = year.toString().slice(-2);
+							matr = prefix + "001";
+							matr = parseInt(matr);
+							console.log("Nessun prodotto: "+matr);
+						} else {
+							matr = parseInt(prod.numeroCollo)+1;
+						}
+						var matrS = matr;
+						var matrP = matr;
 					console.log("Order con "+req.body.products.length+"prodotti\n");
 					var orderId = order.id;
 					var products = req.body.products;
 					var itemProducts = 0;
+					var year = new Date().getFullYear();
 					products.forEach(function(p) {
 						itemProducts++;
 						var stock = new Stock();
 						stock.matricola = p.matricola;
+						stock.numeroCollo = matrS.toString();
 						stock.tipo = p.tipo;
 						stock.materiale = p.materiale;
 						stock.qualita = p.qualita;
@@ -159,6 +215,7 @@ module.exports = function() {
 						stock.prezzo = p.prezzo;
 						stock.difetti = p.difetti;
 						stock.stabilimento = p.stabilimento;
+						matrS++;
 						stock.save(function(err,stock) {
 							if (err)
 								res.status(500).json({message: err, status: false});
@@ -166,6 +223,7 @@ module.exports = function() {
 								var stockId = stock.id;
 								var product = new Product();
 								product.matricola = p.matricola;
+								product.numeroCollo = matrP.toString();
 								product.tipo = p.tipo;
 								product.materiale = p.materiale;
 								product.qualita = p.qualita;
@@ -182,6 +240,8 @@ module.exports = function() {
 								product.difetti = p.difetti;
 								product.stabilimento = p.stabilimento;
 								product.stockId = stockId;
+								product.anno = year.toString();
+								matrP++;
 								product.save(function(err,product) {
 									if (err)
 										res.status(500).json({message: err, status: false});
@@ -199,6 +259,8 @@ module.exports = function() {
 					if (itemProducts == products.length){
 						res.json({message: 'Order, products e stocks', status: true});
 					}
+				}
+			});
 				} else {
 					console.log("Order con 0 prodotti\n");
 					res.json({order: order, status: true});

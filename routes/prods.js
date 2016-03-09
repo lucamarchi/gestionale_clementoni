@@ -13,8 +13,18 @@ module.exports = function() {
 			if (!req.body.prod || req.body.prod==undefined || !req.body.articoli || req.body.articoli==undefined) {
 				res.status(500).json({message: 'Dati mancanti', status: false});
 			} else {
+				Prod.findOne().sort({numero: -1}).limit(1).exec(function(err,prod) {
+					if (err)
+						res.status(500).json({message: err, status: false});
+					else {
+						if (!prod) {
+							var numero = 0;
+						} else {
+							var numero = prod.numero+1;
+						}
 				var prod = new Prod();
 				prod.codice = req.body.prod.codice;
+				prod.numero = numero;
 				req.body.articoli.forEach(function(art) {
 					prod.articoliId.push(art._id);
 					Article.update({_id: art._id}, {$set: {"stato": "definito"}}, function(err) {
@@ -27,6 +37,8 @@ module.exports = function() {
 						res.status(500).json({message: 'Errore', status: false});
 					else res.json({message: 'Prod salvato', status: true, data: pr});
 				});
+			}
+		});
 			}
 		})
 
