@@ -70,7 +70,7 @@ module.exports = function() {
 							article.lunghezza = body.data[i].data[key].Lunghezza;
 							article.larghezza = body.data[i].data[key].Larghezza;
 							article.peso = (body.data[i].data[key].Peso).replace(",",".");
-							article.dataConsegna = body.data[i].data[key].DataConsegna;
+							article.dataConsegna = new Date(body.data[i].data[key].DataConsegna);
 							articoli.push(article);
 							article.save(function(err) {
 								if (err) res.status(500).json({message: err, status: false});
