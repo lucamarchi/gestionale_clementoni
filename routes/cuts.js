@@ -93,6 +93,7 @@ module.exports = function() {
 		});
 	});
 
+
 	router.get('/cuts', function(req,res) {
 		Cut.find({}, function(err,cuts) {
 			if (err)
