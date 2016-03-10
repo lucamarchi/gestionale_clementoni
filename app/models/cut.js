@@ -8,7 +8,7 @@ var CutSchema = new Schema({
 	codice: {type: Number},
 	clienteCod: {type: Number},
 	note: {type: String},
-	date: {type: String},
+	date: {type: Date},
 	accepted: {type: Boolean, default: false},
 	operator: {type: String},
 	articoli: [{ type: Schema.ObjectId, ref: 'Article'}],
