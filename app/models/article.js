@@ -14,7 +14,7 @@ var ArticleSchema = new Schema({
 	lunghezza: {type: Number},
 	larghezza: {type: Number},
 	peso: {type: Number},
-	dataConsegna: {type: String},
+	dataConsegna: {type: Date},
 	lavorazione: [{ type: Schema.ObjectId, ref: 'Process'}],
 	scarto: {type: Number, default: 0},
 	stato: {type: String},
