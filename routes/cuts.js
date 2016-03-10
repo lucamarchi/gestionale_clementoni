@@ -53,6 +53,10 @@ module.exports = function() {
 								ti = 'COIL'
 							} else if (ti == 'LAMIERA PIANA') {
 								ti = 'PIANA'
+							} else if (ti == 'LAMIERA PRESSOPIEGATA “OMEGA”') {
+								ti = 'PRESSOPIEGATA OMEGA'
+							} else if (ti == 'LAMIERA PRESSOPIEGATA “U”') {
+								ti = 'PRESSOPIEGATA U'
 							}
 							var article = new Article();
 							article.codArticolo = body.data[i].data[key].CodArticolo;

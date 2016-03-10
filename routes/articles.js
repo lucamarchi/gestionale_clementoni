@@ -23,6 +23,28 @@ module.exports = function() {
 			});
 		});
 
+	router.route('/articles/stock/:article_id')
+		.put(function(req,res) {
+			Article.update({_id: req.params.article_id},{$set: {"stockId": req.body.stock._id}}, function(err,article) {
+				if (err)
+					res.status(500).json({message: err, status: false});
+				else {
+					res.json({data: article, status: true});
+				}
+			});
+		});
+
+	router.route('/articles/complete/:article_id')
+		.put(function(req,res) {
+			Article.update({id: req.params.article_id},{$set: {"stato": "completato"}},function(err) {
+				if (err)
+					res.status(500).json({message: err, status: false});
+				else {
+					res.json({message: "Article completato", status: true});
+				}
+			});
+		});
+
 		
 	return router;
 
