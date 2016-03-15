@@ -1,43 +1,6 @@
 <fieldset>
 	<legend>Seleziona Collo:</legend>
-	<table class="table" ng-if="stock">
-		<thead>
-			<th>Materiale</th>
-			<th>Tipo</th>
-			<th>Spessore(mm)</th>
-			<th>C.Larghezza(mm)</th>
-			<th>Matricola</th>
-			<th>Qualita</th>
-			<th>Scelta</th>
-			<th>Finitura</th>
-			<th>Colore/Ral</th>
-			<th>Peso(kg)</th>
-			<th>Larghezza(mm)</th>
-			<th>Lunghezza(ml)</th>
-			<th>N.Fogli</th>
-	<!--		<th>Prezzo</th>-->
-			<th>Difetti</th>
-			<th>Stabilimento</th>
-		</thead>
-		<tbody>
-			<td>{{stock.materiale}}</td>
-			<td>{{stock.tipo}}</td>
-			<td>{{stock.spessore}}</td>
-			<td>{{stock.classeLarghezza}}</td>
-			<td>{{stock.matricola}}</td>
-			<td>{{stock.qualita}}</td>
-			<td>{{stock.scelta}}</td>
-			<td>{{stock.finitura}}</td>
-			<td>{{stock.coloreRal}}</td>
-			<td>{{stock.peso}}</td>
-			<td>{{stock.larghezza}}</td>
-			<td>{{stock.lunghezza|number:2}}</td>
-			<td>{{stock.numFogli}}</td>
-	<!--			<td>{{p.prezzo}}</td>-->
-			<td>{{stock.difetti}}</td>
-			<td>{{stock.stabilimento}}</td>
-		</tbody>
-	</table>
+	<div ng-include src="'production/production_state/view_article_stock.html'"></div>
 	<button ng-if="!stock" type="button" class="btn btn-primary btn-block" ng-click="openListColli()" data-toggle="modal" data-target="#stock">Seleziona</button>
 	<button ng-if="stock" type="button" class="btn btn-primary" ng-click="openListColli()" data-toggle="modal" data-target="#stock">Modifica</button>
 </fieldset>

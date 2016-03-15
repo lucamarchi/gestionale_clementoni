@@ -16,8 +16,6 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		}
 	);
 	
-	
-	
 	$scope.order = undefined;
 	$scope.productsOrder = [];
 	$scope.productsOrder2 = [];

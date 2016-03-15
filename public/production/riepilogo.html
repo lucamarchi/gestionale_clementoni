@@ -33,7 +33,9 @@
 			<td>{{article.peso}}</td>
 			<td>{{article.quantita}}</td>
 			<td>{{article.prezzo}}</td>
-			<td>{{article.stockId}}</td>
+			<td>
+				<button ng-if="article.stockId != undefined" type="button" class="btn btn-info btn-block" ng-click="viewStock(article)" data-target="#viewstock" data-toggle="modal">Visualizza</button>
+			</td>
 			<td ng-if="article.stato == undefined">{{article.stato}}</td>
 			<td ng-if="article.stato == 'libero'"><span class="label label-default">{{article.stato}}</span></td>
 			<td ng-if="article.stato == 'definito'"><span class="label label-info">{{article.stato}}</span></td>
@@ -45,3 +47,19 @@
 		</tr>
 	</tbody>
 </table>
+
+<!-- Modal view_article_stock.html-->
+<div id="viewstock" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">STOCK SELEZIONATO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'production/production_state/view_article_stock.html'"></div>
+			</div>
+		</div>
+	</div>
+</div>

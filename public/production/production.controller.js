@@ -13,6 +13,19 @@ store.controller('productionController', function ($scope, articleFactory, stock
 			console.log(resp);
 		}
 	);
+	
+	$scope.viewStock = function (article) {
+		stockFactory.resource().get(
+			{id: article.stockId},
+			function (resp) {
+				console.log(resp);
+				$scope.stock = resp.data;
+			},
+			function(err) {
+				console.log(err);
+			}
+		);
+	}
 });
 
 	
