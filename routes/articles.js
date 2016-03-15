@@ -36,7 +36,7 @@ module.exports = function() {
 
 	router.route('/articles/complete/:article_id')
 		.put(function(req,res) {
-			Article.update({id: req.params.article_id},{$set: {"stato": "completato"}},function(err) {
+			Article.update({_id: req.params.article_id},{$set: {"stato": "completato"}},function(err) {
 				if (err)
 					res.status(500).json({message: err, status: false});
 				else {

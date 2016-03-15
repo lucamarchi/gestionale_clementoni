@@ -48,28 +48,30 @@ module.exports = function() {
 						for(var key in body.data[i].data) {
 							var ti = (body.data[i].data[key].DesArticolo).trim();
 							if (ti == 'NASTRI') {
-								ti = 'NASTRO'
+								ti = 'nastro'
 							} else if (ti == 'COILS') {
-								ti = 'COIL'
+								ti = 'coil'
 							} else if (ti == 'LAMIERA PIANA') {
-								ti = 'PIANA'
+								ti = 'piana'
 							} else if (ti == 'LAMIERA PRESSOPIEGATA “OMEGA”') {
-								ti = 'PRESSOPIEGATA OMEGA'
+								ti = 'pressopiegata omega'
 							} else if (ti == 'LAMIERA PRESSOPIEGATA “U”') {
-								ti = 'PRESSOPIEGATA U'
+								ti = 'pressopiegata u'
+							} else {
+								ti = ti.toLowerCase();
 							}
 							var article = new Article();
 							article.codArticolo = body.data[i].data[key].CodArticolo;
 							article.note = body.data[i].data[key].Note;
 							article.tipo = ti;
-							article.materiale = body.data[i].data[key].TipoArticolo;
+							article.materiale = (body.data[i].data[key].TipoArticolo).toLowerCase();
 							article.sottoTipo = (body.data[i].data[key].SottoTipoArticolo).trim();
 							article.quantita = body.data[i].data[key].Quantita;
 							article.prezzo = body.data[i].data[key].Prezzo;
 							article.spessore = body.data[i].data[key].Spessore;
 							article.lunghezza = body.data[i].data[key].Lunghezza;
 							article.larghezza = body.data[i].data[key].Larghezza;
-							article.peso = (body.data[i].data[key].Peso).replace(",",".");
+							article.peso = (body.data[i].data[key].Peso).replace(",",".")*1000;
 							article.dataConsegna = new Date(body.data[i].data[key].DataConsegna);
 							articoli.push(article);
 							article.save(function(err) {
