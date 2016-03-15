@@ -1,16 +1,5 @@
-<style>
-	.form-control.ng-invalid {border-color: #FA787E;}
-	.form-control.ng-valid {border-color: #78FA89;}
-</style>
-
 <form name="$parent.orderForm" class="form-horizontal" novalidate>
-    <div class="form-group">
-    	<label for="numOrdine" class="col-md-2 control-label">Numero Ordine: </label>
-		<div class="col-md-10">
-    		<input type="number" ng-model="$parent.order.numOrdine" class="form-control" required/>
-		</div>
-    </div>
-
+    
     <div class="form-group">
 	   	<label for="ddt" class="col-md-2 control-label">DDT: </label>
 		<div class="col-md-10">
@@ -22,9 +11,9 @@
 	   	<label for="fornitore" class="col-md-2 control-label">Fornitore: </label>
 		<div class="col-md-10">
 	   		<select ng-model="$parent.order.fornitore" class="form-control" required>
-				<option value="21">21</option>
-				<option value="5">5</option>
-				<option value="2">2</option>
+				<option value=21>21</option>
+				<option value=5>5</option>
+				<option value=2>2</option>
 			</select>
 		</div>
     </div>

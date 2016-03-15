@@ -6,10 +6,10 @@
 			<th>Materiale</th>
 			<th>Quantita</th>
 			<th>Prezzo</th>
-			<th>Spessore</th>
-			<th>Larghezza</th>
-			<th>Lunghezza</th>
-			<th>Peso</th>
+			<th>Spessore(mm)</th>
+			<th>Larghezza(mm)</th>
+			<th>Lunghezza(mm)</th>
+			<th>Peso(t)</th>
 			<th>Data Consegna</th>
 		</tr>
 	</thead>
@@ -24,7 +24,7 @@
 			<td>{{article.larghezza}}</td>
 			<td>{{article.lunghezza}}</td>
 			<td>{{article.peso}}</td>
-			<td>{{article.dataConsegna}}</td>
+			<td>{{article.dataConsegna| date:'medium'}}</td>
 		</tr>
 	</tbody>
 </table>

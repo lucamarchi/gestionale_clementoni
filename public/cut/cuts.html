@@ -1,33 +1,10 @@
-<h2>ORDINI DI TAGLIO
-<button type="button" class="btn btn-primary" ng-click="refresh()">Refresh</button>
+<h2>
+	ORDINI DI TAGLIO
+	<button type="button" class="btn btn-primary" ng-click="refresh()">Refresh</button>
 </h2> 
 
-<nav>
-	<ul class="pagination">
-		<li>
-			<a href="#" aria-label="Previous">
-				<span aria-hidden="true">&laquo;</span>
-			</a>
-		</li>
-		<li><a href="#">Gen16</a></li>
-		<li><a href="#">Feb16</a></li>
-		<li><a href="#">Mar16</a></li>
-		<li><a href="#">Apr16</a></li>
-		<li><a href="#">Mag16</a></li>
-		<li><a href="#">Giu16</a></li>
-		<li><a href="#">Lug16</a></li>
-		<li><a href="#">Ago16</a></li>
-		<li><a href="#">Set16</a></li>
-		<li><a href="#">Ott16</a></li>
-		<li><a href="#">Nov16</a></li>
-		<li><a href="#">Dic16</a></li>
-		<li>
-			<a href="#" aria-label="Next">
-				<span aria-hidden="true">&raquo;</span>
-			</a>
-		</li>
-  	</ul>
-</nav>
+<uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="entryLimit" max-size="maxSize" class="pagination" boundary-links="true" force-ellipses="true"></uib-pagination>
+
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
@@ -40,28 +17,31 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="cut in cuts | orderBy:'codice':true">
-			<td><button type="button" class="btn btn-info btn-block" ng-click="openCut(cut)" href="#cutarticle" data-toggle="modal">{{cut.codice}}</button></td>
+		<tr ng-repeat="cut in cuts | orderBy:['accepted','date']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+			<td><button type="button" class="btn btn-info btn-block" ng-click="openArticlesCut(cut)" data-target="#cutarticle" data-toggle="modal">{{cut.codice}}</button></td>
 			<td>{{cut.clienteCod}}</td>
-			<td>{{cut.date}}</td>
+			<td>{{cut.date | date:'medium'}}</td>
 			<td>{{cut.note}}</td>
-			<td ng-if="cut.accepted == true"><span class="label label-pill label-success">{{cut.accepted}}</span></td><td ng-if="cut.accepted == false"><button type="button" class="btn btn-primary btn-block" ng-click="confirmCut(cut)" data-toggle="modal">Conferma</button></td>
-			<td>{{cut.operator}}</td>
+			<td ng-if="cut.accepted == true"><span class="label label-success">{{cut.accepted}}</span></td>
+			<td ng-if="cut.accepted == false"><button type="button" class="btn btn-primary btn-block" ng-click="confirmCut(cut)">Conferma</button></td>
+			<td>{{cut.operator|uppercase}}</td>
 		</tr>
 	</tbody>
 </table>
 
 
 <!-- Modal cut_products.html-->
-<div id="cutarticle" class="modal container fade" style="display: none;">
-	<!-- Modal content-->
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4 class="modal-title">ARTICOLI COD. ORDINE {{cut.codice}}</h4>
-		</div>
-		<div class="modal-body">
-			<div ng-include src="'cut/cut_products.html'"></div>
+<div id="cutarticle" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">ARTICOLI COD. ORDINE {{cut.codice}}</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'cut/cut_products.html'"></div>
+			</div>
 		</div>
 <!--
 		<div class="modal-footer">

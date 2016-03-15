@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="store">
+<html lang="en" ng-app="store">
 
 <head>
 <title>COPAL</title>
@@ -7,50 +7,60 @@
 <!-- jquery -->
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-
+	
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-<!-- angular.js ng-resource ng-route -->
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>	
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.js"></script>
+<!--
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css"></script>
+<script src="../bower_components/bootstrap/dist/css/bootstrap.min.css"></script>	
+-->
 
+<link rel="stylesheet" type="text/css" href="mystyle.css">
 </head>
 
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed">
+	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#"><b>Plimco</b></a>
+				<a class="navbar-brand"><b>Plimco</b></a>
 			</div>
 			<div>
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
-          				<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href="">Stock<span class="caret"></span></a>
+          				<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Stock</b><span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="#/stock">Stock Effettivo</a></li>
-							<li><a href="#">Stock Virtuale</a></li> 
+							<li><a href="">Stock Virtuale</a></li> 
 						</ul>
         			</li>
-					<li><a ng-if="isLogged" href="#/carichiIn">Carichi in entrata</a></li>
-					<li><a ng-if="isLogged" href="#/cut">Ordini di taglio</a></li>
+					<li><a ng-if="isLogged" href="#/carichiIn"><b>Carichi in entrata</b></a></li>
+					<li><a ng-if="isLogged" href="#/cut"><b>Ordini in entrata</b></a></li>
 					<li class="dropdown">
-						<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href="">Logistica<span class="caret"></span></a>
+						<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Produzione</b><span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="#/productionSort">Riepilogo</a></li>
-							<li><a href="#/productionState">Stato produzione</a></li>
-							<li><a href="#/carichiOut">Carichi in uscita</a></li> 
+							<li><a href="#/productionState">Stato produzione</a></li> 
           				</ul>
 					</li>
 				</ul>
+				
+<!--
+				<form class="navbar-form navbar-left" role="search" ng-if="isLogged">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search">
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+      			</form>
+-->
+				
 				<ul class="nav navbar-nav navbar-right">
         			<li class="active"><a ng-if="!isLogged" href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
-        			<li class="active"><a ng-if="isLogged" href="#/login" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+        			<li class="active"><a href ng-if="isLogged" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
       			</ul>
 			</div>
 		</div>
@@ -58,13 +68,34 @@
 
 	<div class="container-fluid" ng-view></div>
 	
+	
+	<!-- angular.js-->
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>	
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+	<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.2.js"></script>
+<!--
+	<script src="../bower_components/angular/angular.min.js"></script>
+	<script src="../bower_components/angular-route/angular-route.min.js"></script>
+	<script src="../bower_components/angular-resource/angular-resource.min.js"</script>
+	<script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+	<script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+	<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+-->
+	
 	<script src="app.js"></script>
 	<script src="components/services.js"></script>
+	<script src="components/stock.service.js"></script>
 	<script src="stock/stock.controller.js"></script>
 	<script src="carichi_in/carichi_in.controller.js"></script>
 	<script src="login/login.controller.js"></script>
 	<script src="cut/cut.controller.js"></script>
-	<script src="logistics/logistics.controller.js"></script>
+	<script src="production/production.controller.js"></script>
+	<script src="production/production_state/production_state.controller.js"></script>
+	<script src="production/carichi_out/carichi_out.controller.js"></script>
+	
 </body>
 
 </html>

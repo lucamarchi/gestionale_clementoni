@@ -1,0 +1,514 @@
+<h2 ng-if="!workInProgress">STOCK</h2> 
+
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<td>
+				<div class="dropdown">
+					<button class="btn btn-block dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li><input type="checkbox" ng-click="includeMaterial('zincato')">Zincato</li>
+						<li><input type="checkbox" ng-click="includeMaterial('decapato')">Decapato</li>
+						<li><input type="checkbox" ng-click="includeMaterial('laf')">Laf</li>
+						<li><input type="checkbox" ng-click="includeMaterial('preverniciato')">Preverniciato</li>
+						<li><input type="checkbox" ng-click="includeMaterial('caldo')">Caldo</li>
+						<li><input type="checkbox" ng-click="includeMaterial('aluzinc')">Aluzinc</li>
+						<li><input type="checkbox" ng-click="includeMaterial('alluminato')">Alluminato</li>
+						<li><input type="checkbox" ng-click="includeMaterial('elettrozincato')">Elettrozincato</li>
+					</ul>
+				</div>
+			</td>
+			<td ng-if="materialIncludes.length != 0">
+				<div class="dropdown">
+					<button class="btn btn-block dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
+					<ul class="dropdown-menu">
+						<li><input type="checkbox" ng-click="includeType('coil')">Coil</li>
+						<li><input type="checkbox" ng-click="includeType('nastro')">Nastro</li>
+						<li><input type="checkbox" ng-click="includeType('piana')">Piana</li>
+						<li><input type="checkbox" ng-click="includeType('ondulata')">Ondulata</li>
+						<li><input type="checkbox" ng-click="includeType('grecata')">Grecata</li>
+						<li><input type="checkbox" ng-click="includeType('collaboranteh55')">Collaborante H55</li>
+						<li><input type="checkbox" ng-click="includeType('collaboranteh55-s')">Collaborante H55-S</li>
+						<li><input type="checkbox" ng-click="includeType('collaboranteh75')">Collaborante H75</li>
+						<li><input type="checkbox" ng-click="includeType('collaboranteh75-s')">Collaborante H75-S</li>
+					</ul>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>Materiale</th>
+			<th>Tipo</th>
+			<th>Spessore(mm)</th>
+			<th>C.Larghezza(mm)</th>
+			<th>Matricola</th>
+			<th>Numero Collo</th>
+			<th>Qualita</th>
+			<th>Scelta</th>
+			<th>Finitura</th>
+			<th>Colore/Ral</th>
+			<th>Peso(kg)</th>
+			<th>Larghezza(mm)</th>
+			<th>Lunghezza(ml)</th>
+			<th>N.Fogli</th>
+	<!--		<th>Prezzo</th>-->
+			<th>Difetti</th>
+			<th>Stabilimento</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!--  1   -->
+		<tr ng-repeat-start="m2p in monster | filter:materialFilter">
+			<td rowspan="{{m2p.lung}}">{{m2p.key}}</td>
+			<td rowspan="{{m2p.value[0].lung}}">{{m2p.value[0].key}}</td>
+			<td rowspan="{{m2p.value[0].value[0].lung}}">{{m2p.value[0].value[0].key}}</td>
+			<td rowspan="{{m2p.value[0].value[0].value[0].lung}}">{{m2p.value[0].value[0].value[0].key}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].matricola}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].numeroCollo}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].qualita}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].scelta}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].finitura}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].coloreRal}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].peso}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].larghezza}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].lunghezza|number:2}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].numFogli}}</td>
+<!--			<td>{{m2p.value[0].value[0].value[0].value[0].prezzo}}</td>-->
+			<td>{{m2p.value[0].value[0].value[0].value[0].difetti}}</td>
+			<td>{{m2p.value[0].value[0].value[0].value[0].stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(m2p.value[0].value[0].value[0].value[0], monster.indexOf(m2p),0,0,0,0)" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(m2p.value[0].value[0].value[0].value[0], monster.indexOf(m2p),0,0,0,0)">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>	
+			</td>
+		</tr>
+
+		<!--  2   -->
+		<tr ng-repeat="p in m2p.value[0].value[0].value[0].value.slice(1)">
+			<td>{{p.matricola}}</td>
+			<td>{{p.numeroCollo}}</td>
+			<td>{{p.qualita}}</td>
+			<td>{{p.scelta}}</td>
+			<td>{{p.finitura}}</td>
+			<td>{{p.coloreRal}}</td>
+			<td>{{p.peso}}</td>
+			<td>{{p.larghezza}}</td>
+			<td>{{p.lunghezza|number:2}}</td>
+			<td>{{p.numFogli}}</td>
+<!--			<td>{{p.prezzo}}</td>-->
+			<td>{{p.difetti}}</td>
+			<td>{{p.stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(p,monster.indexOf(m2p),0,0,0,m2p.value[0].value[0].value[0].value.indexOf(p))" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p,monster.indexOf(m2p),0,0,0,m2p.value[0].value[0].value[0].value.indexOf(p))">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 3 --> 
+		<tr ng-repeat-start ="l2p in m2p.value[0].value[0].value.slice(1)">
+			<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
+			<td>{{l2p.value[0].matricola}}</td>
+			<td>{{l2p.value[0].numeroCollo}}</td>
+			<td>{{l2p.value[0].qualita}}</td>
+			<td>{{l2p.value[0].scelta}}</td>
+			<td>{{l2p.value[0].finitura}}</td>
+			<td>{{l2p.value[0].coloreRal}}</td>
+			<td>{{l2p.value[0].peso}}</td>
+			<td>{{l2p.value[0].larghezza}}</td>
+			<td>{{l2p.value[0].lunghezza|number:2}}</td>
+			<td>{{l2p.value[0].numFogli}}</td>
+<!--			<td>{{l2p.value[0].prezzo}}</td>-->
+			<td>{{l2p.value[0].difetti}}</td>
+			<td>{{l2p.value[0].stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(l2p.value[0],monster.indexOf(m2p),0,0,m2p.value[0].value[0].value.indexOf(l2p),0)" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),0,0,m2p.value[0].value[0].value.indexOf(l2p),0)">				<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 4 -->
+		<tr ng-repeat-end ng-repeat="p2 in l2p.value.slice(1)">
+			<td>{{p2.matricola}}</td>
+			<td>{{p2.numeroCollo}}</td>
+			<td>{{p2.qualita}}</td>
+			<td>{{p2.scelta}}</td>
+			<td>{{p2.finitura}}</td>
+			<td>{{p2.coloreRal}}</td>
+			<td>{{p2.peso}}</td>
+			<td>{{p2.larghezza}}</td>
+			<td>{{p2.lunghezza|number:2}}</td>
+			<td>{{p2.numFogli}}</td>
+<!--			<td>{{p2.prezzo}}</td>-->
+			<td>{{p2.difetti}}</td>
+			<td>{{p2.stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(p2,monster.indexOf(m2p),0,0,m2p.value[0].value[0].value.indexOf(l2p),l2p.value.indexOf(p2))" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),0,0,m2p.value[0].value[0].value.indexOf(l2p),l2p.value.indexOf(p2))">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 5 -->
+		<tr ng-repeat-start="s2p in m2p.value[0].value.slice(1)">
+			<td rowspan="{{s2p.lung}}">{{s2p.key}}</td>
+			<td rowspan="{{s2p.value[0].lung}}">{{s2p.value[0].key}}</td>
+			<td>{{s2p.value[0].value[0].matricola}}</td>
+			<td>{{s2p.value[0].value[0].numeroCollo}}</td>
+			<td>{{s2p.value[0].value[0].qualita}}</td>
+			<td>{{s2p.value[0].value[0].scelta}}</td>
+			<td>{{s2p.value[0].value[0].finitura}}</td>
+			<td>{{s2p.value[0].value[0].coloreRal}}</td>
+			<td>{{s2p.value[0].value[0].peso}}</td>
+			<td>{{s2p.value[0].value[0].larghezza}}</td>
+			<td>{{s2p.value[0].value[0].lunghezza|number:2}}</td>
+			<td>{{s2p.value[0].value[0].numFogli}}</td>
+<!--			<td>{{s2p.value[0].value[0].prezzo}}</td>-->
+			<td>{{s2p.value[0].value[0].difetti}}</td>
+			<td>{{s2p.value[0].value[0].stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(s2p.value[0].value[0],monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),0,0)" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(s2p.value[0].value[0],monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),0,0)">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 6 -->
+		<tr ng-repeat="p2 in s2p.value[0].value.slice(1)">
+			<td>{{p2.matricola}}</td>
+			<td>{{p2.numeroCollo}}</td>
+			<td>{{p2.qualita}}</td>
+			<td>{{p2.scelta}}</td>
+			<td>{{p2.finitura}}</td>
+			<td>{{p2.coloreRal}}</td>
+			<td>{{p2.peso}}</td>
+			<td>{{p2.larghezza}}</td>
+			<td>{{p2.lunghezza|number:2}}</td>
+			<td>{{p2.numFogli}}</td>
+<!--			<td>{{p2.prezzo}}</td>-->
+			<td>{{p2.difetti}}</td>
+			<td>{{p2.stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(p2,monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),0,s2p.value[0].value.indexOf(p2))" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),0,s2p.value[0].value.indexOf(p2))">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 7 -->
+		<tr ng-repeat-start="l2p in s2p.value.slice(1)">
+			<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
+			<td>{{l2p.value[0].matricola}}</td>
+			<td>{{l2p.value[0].numeroCollo}}</td>
+			<td>{{l2p.value[0].qualita}}</td>
+			<td>{{l2p.value[0].scelta}}</td>
+			<td>{{l2p.value[0].finitura}}</td>
+			<td>{{l2p.value[0].coloreRal}}</td>
+			<td>{{l2p.value[0].peso}}</td>
+			<td>{{l2p.value[0].larghezza}}</td>
+			<td>{{l2p.value[0].lunghezza|number:2}}</td>
+			<td>{{l2p.value[0].numFogli}}</td>
+<!--			<td>{{l2p.value[0].prezzo}}</td>-->
+			<td>{{l2p.value[0].difetti}}</td>
+			<td>{{l2p.value[0].stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(l2p.value[0],monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),s2p.value.indexOf(l2p),0)" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),s2p.value.indexOf(l2p),0)">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 8 -->
+		<tr ng-repeat-end ng-repeat="p3 in l2p.value.slice(1)">
+			<td>{{p3.matricola}}</td>
+			<td>{{p3.numeroCollo}}</td>
+			<td>{{p3.qualita}}</td>
+			<td>{{p3.scelta}}</td>
+			<td>{{p3.finitura}}</td>
+			<td>{{p3.coloreRal}}</td>
+			<td>{{p3.peso}}</td>
+			<td>{{p3.larghezza}}</td>
+			<td>{{p3.lunghezza|number:2}}</td>
+			<td>{{p3.numFogli}}</td>
+<!--			<td>{{p3.prezzo}}</td>-->
+			<td>{{p3.difetti}}</td>
+			<td>{{p3.stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(p3,monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p3))" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p3,monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p3))">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<tr ng-repeat-end ng-hide="true"></tr>
+
+		<!-- 9 -->
+		<tr ng-repeat-start="t2p in m2p.value.slice(1)">
+			<td rowspan="{{t2p.lung}}">{{t2p.key}}</td>
+			<td rowspan="{{t2p.value[0].lung}}">{{t2p.value[0].key}}</td>
+			<td rowspan="{{t2p.value[0].value[0].lung}}">{{t2p.value[0].value[0].key}}</td>
+			<td>{{t2p.value[0].value[0].value[0].matricola}}</td>
+			<td>{{t2p.value[0].value[0].value[0].numeroCollo}}</td>
+			<td>{{t2p.value[0].value[0].value[0].qualita}}</td>
+			<td>{{t2p.value[0].value[0].value[0].scelta}}</td>
+			<td>{{t2p.value[0].value[0].value[0].finitura}}</td>
+			<td>{{t2p.value[0].value[0].value[0].coloreRal}}</td>
+			<td>{{t2p.value[0].value[0].value[0].peso}}</td>
+			<td>{{t2p.value[0].value[0].value[0].larghezza}}</td>
+			<td>{{t2p.value[0].value[0].value[0].lunghezza|number:2}}</td>
+			<td>{{t2p.value[0].value[0].value[0].numFogli}}</td>
+<!--			<td>{{t2p.value[0].value[0].value[0].prezzo}}</td>-->
+			<td>{{t2p.value[0].value[0].value[0].difetti}}</td>
+			<td>{{t2p.value[0].value[0].value[0].stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(t2p.value[0].value[0].value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),0,0,0)" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(t2p.value[0].value[0].value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),0,0,0)">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 10 -->
+		<tr ng-repeat="p2 in t2p.value[0].value[0].value.slice(1)">
+			<td>{{p2.matricola}}</td>
+			<td>{{p2.numeroCollo}}</td>
+			<td>{{p2.qualita}}</td>
+			<td>{{p2.scelta}}</td>
+			<td>{{p2.finitura}}</td>
+			<td>{{p2.coloreRal}}</td>
+			<td>{{p2.peso}}</td>
+			<td>{{p2.larghezza}}</td>
+			<td>{{p2.lunghezza|number:2}}</td>
+			<td>{{p2.numFogli}}</td>
+<!--			<td>{{p2.prezzo}}</td>-->
+			<td>{{p2.difetti}}</td>
+			<td>{{p2.stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(p2,monster.indexOf(m2p),m2p.value.indexOf(t2p),0,0,t2p.value[0].value[0].value.indexOf(p2))" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),m2p.value.indexOf(t2p),0,0,t2p.value[0].value[0].value.indexOf(p2))">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 11 -->
+		<tr ng-repeat-start="l2p in t2p.value[0].value.slice(1)">
+			<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
+			<td>{{l2p.value[0].matricola}}</td>
+			<td>{{l2p.value[0].numeroCollo}}</td>
+			<td>{{l2p.value[0].qualita}}</td>
+			<td>{{l2p.value[0].scelta}}</td>
+			<td>{{l2p.value[0].finitura}}</td>
+			<td>{{l2p.value[0].coloreRal}}</td>
+			<td>{{l2p.value[0].peso}}</td>
+			<td>{{l2p.value[0].larghezza}}</td>
+			<td>{{l2p.value[0].lunghezza|number:2}}</td>
+			<td>{{l2p.value[0].numFogli}}</td>
+<!--			<td>{{l2p.value[0].prezzo}}</td>-->
+			<td>{{l2p.value[0].difetti}}</td>
+			<td>{{l2p.value[0].stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(l2p.value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),0,t2p.value[0].value.indexOf(l2p),0)" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),0,t2p.value[0].value.indexOf(l2p),0)">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 12 -->
+		<tr ng-repeat-end ng-repeat="p3 in l2p.value.slice(1)">
+			<td>{{p3.matricola}}</td>
+			<td>{{p3.numeroCollo}}</td>
+			<td>{{p3.qualita}}</td>
+			<td>{{p3.scelta}}</td>
+			<td>{{p3.finitura}}</td>
+			<td>{{p3.coloreRal}}</td>
+			<td>{{p3.peso}}</td>
+			<td>{{p3.larghezza}}</td>
+			<td>{{p3.lunghezza|number:2}}</td>
+			<td>{{p3.numFogli}}</td>
+<!--			<td>{{p3.prezzo}}</td>-->
+			<td>{{p3.difetti}}</td>
+			<td>{{p3.stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(p3,monster.indexOf(m2p),m2p.value.indexOf(t2p),0,t2p.value[0].value.indexOf(l2p),l2p.value.indexOf(p3))" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p3,monster.indexOf(m2p),m2p.value.indexOf(t2p),0,t2p.value[0].value.indexOf(l2p),l2p.value.indexOf(p3))">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+
+
+		<!-- 13 -->
+		<tr ng-repeat-start="s2p in t2p.value.slice(1)">
+			<td rowspan="{{s2p.lung}}">{{s2p.key}}</td>
+			<td rowspan="{{s2p.value[0].lung}}">{{s2p.value[0].key}}</td>
+			<td>{{s2p.value[0].value[0].matricola}}</td>
+			<td>{{s2p.value[0].value[0].numeroCollo}}</td>
+			<td>{{s2p.value[0].value[0].qualita}}</td>
+			<td>{{s2p.value[0].value[0].scelta}}</td>
+			<td>{{s2p.value[0].value[0].finitura}}</td>
+			<td>{{s2p.value[0].value[0].coloreRal}}</td>
+			<td>{{s2p.value[0].value[0].peso}}</td>
+			<td>{{s2p.value[0].value[0].larghezza}}</td>
+			<td>{{s2p.value[0].value[0].lunghezza|number:2}}</td>
+			<td>{{s2p.value[0].value[0].numFogli}}</td>
+<!--			<td>{{s2p.value[0].value[0].prezzo}}</td>-->
+			<td>{{s2p.value[0].value[0].difetti}}</td>
+			<td>{{s2p.value[0].value[0].stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(s2p.value[0].value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),0,0)" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(s2p.value[0].value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),0,0)">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 14 -->
+		<tr ng-repeat="p2 in s2p.value[0].value.slice(1)">
+			<td>{{p2.matricola}}</td>
+			<td>{{p2.numeroCollo}}</td>
+			<td>{{p2.qualita}}</td>
+			<td>{{p2.scelta}}</td>
+			<td>{{p2.finitura}}</td>
+			<td>{{p2.coloreRal}}</td>
+			<td>{{p2.peso}}</td>
+			<td>{{p2.larghezza}}</td>
+			<td>{{p2.lunghezza|number:2}}</td>
+			<td>{{p2.numFogli}}</td>
+<!--			<td>{{p2.prezzo}}</td>-->
+			<td>{{p2.difetti}}</td>
+			<td>{{p2.stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(p2,monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),0,s2p.value[0].value.indexOf(p2))" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),0,s2p.value[0].value.indexOf(p2))">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 15 -->
+		<tr ng-repeat-start="l2p in s2p.value.slice(1)">
+			<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
+			<td>{{l2p.value[0].matricola}}</td>
+			<td>{{l2p.value[0].numeroCollo}}</td>
+			<td>{{l2p.value[0].qualita}}</td>
+			<td>{{l2p.value[0].scelta}}</td>
+			<td>{{l2p.value[0].finitura}}</td>
+			<td>{{l2p.value[0].coloreRal}}</td>
+			<td>{{l2p.value[0].peso}}</td>
+			<td>{{l2p.value[0].larghezza}}</td>
+			<td>{{l2p.value[0].lunghezza|number:2}}</td>
+			<td>{{l2p.value[0].numFogli}}</td>
+<!--			<td>{{l2p.value[0].prezzo}}</td>-->
+			<td>{{l2p.value[0].difetti}}</td>
+			<td>{{l2p.value[0].stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(l2p.value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),s2p.value.indexOf(l2p), 0)" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),s2p.value.indexOf(l2p), 0)">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<!-- 16 -->
+		<tr ng-repeat-end ng-repeat="p3 in l2p.value.slice(1)">
+			<td>{{p3.matricola}}</td>
+			<td>{{p3.numeroCollo}}</td>
+			<td>{{p3.qualita}}</td>
+			<td>{{p3.scelta}}</td>
+			<td>{{p3.finitura}}</td>
+			<td>{{p3.coloreRal}}</td>
+			<td>{{p3.peso}}</td>
+			<td>{{p3.larghezza|number:2}}</td>
+			<td>{{p3.lunghezza}}</td>
+			<td>{{p3.numFogli}}</td>
+<!--			<td>{{p3.prezzo}}</td>-->
+			<td>{{p3.difetti}}</td>
+			<td>{{p3.stabilimento}}</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(p3,monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p3))" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+			<td ng-if="!workInProgress">
+				<button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p3,monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p3))">
+					<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</td>
+		</tr>
+
+		<tr ng-repeat-end ng-hide="true"></tr>
+		<tr ng-repeat-end ng-hide="true"></tr>
+		<tr ng-repeat-end ng-hide="true"></tr>
+
+	</tbody>
+</table>

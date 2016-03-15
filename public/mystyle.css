@@ -1,0 +1,19 @@
+.form-control.ng-invalid {
+	border-color: #FA787E;
+}
+.form-control.ng-valid {
+	border-color: #78FA89;
+}
+
+.modal-xl .modal-dialog {
+	width: 90%;
+}
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+}
+
+.modal-dialog .modal-body {
+	overflow-y: auto;
+	overflow-x: auto;
+}

@@ -1,4 +1,4 @@
-var myapp = angular.module('store', ["ngRoute", "ngResource"]);
+var myapp = angular.module('store', ["ngRoute", "ngResource","ngAnimate", "ui.bootstrap"]);
 
 myapp.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
@@ -21,6 +21,14 @@ myapp.config(function($locationProvider, $routeProvider) {
 				requiredLogin: true 
 			}
       	})
+	
+//		.when('/stock2', {
+//        	templateUrl: 'stock/stock2.html',
+//			controller: 'stock2Controller',
+//			access: { 
+//				requiredLogin: true 
+//			}
+//      	})
 	
 		.when('/carichiIn', {
         	templateUrl: 'carichi_in/carichi_in.html',
@@ -47,24 +55,24 @@ myapp.config(function($locationProvider, $routeProvider) {
       	})
 	
 		.when('/productionSort', {
-        	templateUrl: 'logistics/ordine_produzione.html',
-			controller: 'logisticsController',
+        	templateUrl: 'production/riepilogo.html',
+			controller: 'productionController',
 			access: { 
 				requiredLogin: true
 			}
       	})
 	
 		.when('/productionState', {
-        	templateUrl: 'logistics/production_state.html',
-			controller: 'logisticsController',
+        	templateUrl: 'production/production_state/production_state.html',
+			controller: 'productionStateController',
 			access: { 
 				requiredLogin: true
 			}
       	})
 	
 		.when('/carichiOut', {
-        	templateUrl: 'logistics/carichi_out.html',
-			controller: 'logisticsController',
+        	templateUrl: 'production/carichi_out/carichi_out.html',
+			controller: 'carichiOutController',
 			access: { 
 				requiredLogin: true
 			}
@@ -76,13 +84,40 @@ myapp.config(function($locationProvider, $routeProvider) {
 		
 });
 
+myapp.directive('convertToNumber', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      ngModel.$parsers.push(function(val) {
+        return val ? parseInt(val, 10) : undefined;
+      });
+      ngModel.$formatters.push(function(val) {
+        return val ? '' + val : undefined;
+      });
+    }
+  };
+});
+
+myapp.directive('convertToFloat', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      ngModel.$parsers.push(function(val) {
+        return val ? parseFloat(val) : undefined;
+      });
+      ngModel.$formatters.push(function(val) {
+        return val ? '' + val : undefined;
+      });
+    }
+  };
+});
+
 myapp.run(function($rootScope, $location, AuthenticationService, $window) {
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
 		AuthenticationService.save({},{},
 			function(resp) {
 				console.log(resp.message);
 				$rootScope.isLogged = true;
-				console.log($rootScope.isLogged);
 			},
 			function(err) {
 				if (nextRoute.access && nextRoute.access.requiredLogin) {
@@ -93,4 +128,11 @@ myapp.run(function($rootScope, $location, AuthenticationService, $window) {
 			}
 		);
 	});
+	
+	$rootScope.logout = function () {
+		$rootScope.isLogged = false;
+		delete $window.sessionStorage.user;
+		delete $window.sessionStorage.token;
+		$location.path("/login");
+	}
 });

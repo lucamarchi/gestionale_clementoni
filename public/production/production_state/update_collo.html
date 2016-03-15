@@ -1,0 +1,202 @@
+<form name="$parent.stockForm" class="form-horizontal" novalidate>
+	
+	<div class="form-group">
+		<label for="matricola" class="col-md-2 control-label">Matricola:</label> 
+		<div class="col-md-10">
+			<input type="text" ng-model="$parent.stock.matricola" class="form-control" required disabled/>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="tipo" class="col-md-2 control-label">Tipo:</label>  
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.tipo" class="form-control" required>
+				<option value="coil">Coil</option>
+				<option value="nastro">Nastro</option>
+				<option value="piana">Piana</option>
+				<option value="ondulata">Ondulata</option>
+				<option value="grecata">Grecata</option>
+				<option value="collaboranteh55">Collaborante h55</option>
+				<option value="collaboranteh55-s">Collaborante h55-S</option>
+				<option value="collaboranteh75">Collaborante h75</option>
+				<option value="collaboranteh75-s">Collaborante h75-S</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="materiale" class="col-md-2 control-label">Materiale:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.materiale" class="form-control" required>
+				<option value="zincato">Zincato</option>
+				<option value="decapato">Decapato</option>
+				<option value="laf">Laf</option>
+				<option value="preverniciato">Preverniciato</option>
+				<option value="caldo">Caldo</option>
+				<option value="aluzinc">Aluzinc</option>
+				<option value="alluminato">Alluminato</option>
+				<option value="elettrozincato">Elettrozincato</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group" ng-if = "$parent.stock.materiale == 'zincato'">
+		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.qualita" class="form-control" required>
+				<option value="dx51d">dx51d</option>
+				<option value="dx52d">dx52d</option>
+				<option value="dx53d">dx53d</option>
+				<option value="dx54d">dx54d</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group" ng-if = "$parent.stock.materiale == 'decapato'">
+		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
+		<div class="col-md-10">		
+			<select ng-model="$parent.stock.qualita" class="form-control" required>
+				<option value="dd11">dd11</option>
+				<option value="dd12">dd12</option>
+				<option value="dd13">dd13</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group" ng-if = "$parent.stock.materiale == 'laf'">
+		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.qualita" class="form-control" required>
+				<option value="dc01">dc01</option>
+				<option value="dc02">dc02</option>
+				<option value="dc03">dc03</option>
+				<option value="dc04">dc04</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group" ng-if = "$parent.stock.materiale == 'caldo'">
+		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.qualita" class="form-control" required>
+				<option value="s235jr">s235jr</option>
+				<option value="s275jr">s275jr</option>
+				<option value="s355jr">s355jr</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="scelta" class="col-md-2 control-label">Scelta:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.scelta" class="form-control" required>
+				<option value="A">A</option>
+				<option value="B">B</option>
+				<option value="C">C</option>
+				<option value="0">0</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group" ng-if = "$parent.stock.materiale == 'preverniciato' || $parent.stock.materiale == 'zincato'">
+		<label for="finitura" class="col-md-2 control-label">Finitura:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.finitura" class="form-control" required>
+				<option value="z100">z100</option>
+				<option value="z140">z140</option>
+				<option value="z200">z200</option>
+				<option value="z275">z275</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group" ng-if = "$parent.stock.materiale != 'preverniciato' && $parent.stock.materiale != 'zincato'">
+		<label for="finitura" class="col-md-2 control-label">Finitura:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="$parent.stock.finitura" class="form-control" disabled/>
+		</div>
+	</div>
+
+	<div class="form-group" ng-if = "$parent.stock.materiale == 'preverniciato'">
+		<label for="coloreRal" class="col-md-2 control-label">Colore/Ral:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.coloreRal" class="form-control" required>
+				<option value="v">Verde(v)</option>
+				<option value="bg">Bianco Grigio(bg)</option>
+				<option value="tdm">Testa di Moro(tdm)</option>
+				<option value="rs">Rosso Siena(rs)</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group" ng-if = "$parent.stock.materiale != 'preverniciato'">
+		<label for="coloreRal" class="col-md-2 control-label">Colore:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="$parent.stock.coloreRal" class="form-control" disabled/>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="peso" class="col-md-2 control-label">Peso(kg):</label>
+		<div class="col-md-10">
+			<input type="number" ng-model="$parent.stock.peso" class="form-control" required/>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="spessore" class="col-md-2 control-label">Spessore:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.spessore" class="form-control" convert-to-number required>
+				<option value="0.25">0.25</option><option value="0.3">0.30</option><option value="0.35">0.35</option>
+				<option value="0.4">0.40</option><option value="0.45">0.45</option><option value="0.5">0.50</option>
+				<option value="0.6">0.60</option><option value="0.7">0.70</option><option value="0.8">0.80</option>
+				<option value="0.9">0.90</option><option value="1">1.00</option><option value="1.2">1.20</option>
+				<option value="1.5">1.50</option><option value="1.8">1.80</option><option value="2">2.00</option>
+				<option value="2.5">2.50</option><option value="3">3.00</option><option value="4">4.00</option>
+				<option value="5">5.00</option><option value="6">6.00</option><option value="8">8.00</option>
+				<option value="10">10.00</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="cLarghezza" class="col-md-2 control-label">C.Larghezza:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.classeLarghezza" class="form-control" convert-to-number required>
+				<option value="1000">1000</option>
+				<option value="1250">1250</option>
+				<option value="1500">1500</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="larghezza" class="col-md-2 control-label">Larghezza:</label>
+		<div class="col-md-10">
+			<input type="number" ng-model="$parent.stock.larghezza" class="form-control" required/>
+		</div>
+	</div>
+
+	<div class="form-group" ng-if="$parent.stock.tipo != 'coil' && $parent.stock.tipo != 'nastro'">
+		<label for="lunghezza" class="col-md-2 control-label">Lunghezza:</label>
+		<div class="col-md-10">
+			<input type="number" ng-model="$parent.stock.lunghezza" class="form-control" required/>
+		</div>
+	</div>
+	<div class="form-group" ng-if="$parent.stock.tipo == 'coil' || $parent.stock.tipo == 'nastro'">
+		<label for="lunghezza" class="col-md-2 control-label">Lunghezza:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="$parent.stock.lunghezza" class="form-control" disabled/>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="note" class="col-md-2 control-label">Difetti:</label>
+		<div class="col-md-10">
+			<textarea name="textArea" ng-model="$parent.stock.difetti" class="form-control"></textarea>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="stabilimento" class="col-md-2 control-label">Stabilimento:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.stock.stabilimento" class="form-control" convert-to-number required>
+				<option value="1">1</option><option value="2">2</option>
+			</select>
+		</div>
+	</div>
+</form>

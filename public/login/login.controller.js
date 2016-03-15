@@ -1,17 +1,16 @@
 var store = angular.module('store');
 
-store.controller('loginController', function($scope, $rootScope, $location, $window, UserService) {
+store.controller('loginController', function($scope, $rootScope, $location, UserService) {
 	//Admin User Controller (login, logout)
 
 	$scope.logIn = function (username, password) {
 		if (username !== undefined && password !== undefined) {
-			UserService.save({},
+			UserService.resource().save({},
 				{username, password},
 				function(resp){
 					$rootScope.isLogged = resp.status;
-					$window.sessionStorage.user = username;
-					console.log($window.sessionStorage.user);
-					$window.sessionStorage.token = resp.token;
+					UserService.setUser(username);
+					UserService.setToken(resp.token);
 					$location.path("/");
 				},
 				function(err){
@@ -19,11 +18,5 @@ store.controller('loginController', function($scope, $rootScope, $location, $win
 				}
 			);
 		}
-	}
-	$rootScope.logout = function () {
-		$rootScope.isLogged = false;
-		delete $window.sessionStorage.user;
-		delete $window.sessionStorage.token;
-		console.log("CONTROLLO ",$window.sessionStorage.token);
 	}
 });

@@ -1,0 +1,77 @@
+<!--
+<form name="$parent.machineryForm" class="form-horizontal" novalidate>
+	<select ng-model="$parent.machinery" class="form-control" required>
+		<option value="a">Slitter (a)</option>
+		<option value="b">Spianatrice (b)</option>
+		<option value="c">Pressopiegatrice (c)</option>
+		<option value="d">Grandini (d)</option>
+		<option value="e">Ondulatorie (e)</option>
+		<option value="f">Grecatrice (f)</option>
+	</select>	
+</form>
+-->
+
+<table class="table table-bordered table-hover">
+	<thead>
+	    <tr>
+			<th>MACCHINA</th>
+			<th>SIGLA</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Slitter</td>
+			<td>A</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectMachinery({name:'slitter',sigle:'a'})" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+		</tr>
+		<tr>
+			<td>Spianatrice</td>
+			<td>B</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectMachinery({name:'spianatrice',sigle:'b'})" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+		</tr>
+		<tr>
+			<td>Pressopiegatrice</td>
+			<td>C</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectMachinery({name:'pressopiegatrice', sigle:'c'})" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+		</tr>
+		<tr>
+			<td>Grandini</td>
+			<td>D</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectMachinery({name:'grandini',sigle:'d'})" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+		</tr>
+		<tr>
+			<td>Ondulatorie</td>
+			<td>E</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectMachinery({name:'ondulatorie',sigle:'e'})" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+		</tr>
+		<tr>
+			<td>Grecatrice</td>
+			<td>F</td>
+			<td ng-if="workInProgress == true">
+				<button type="button" class="btn btn-warning btn-circle" ng-click="selectMachinery({name:'grecatrice',sigle:'f'})" data-dismiss="modal">
+					<span class="glyphicon glyphicon-wrench"></span>
+				</button>	
+			</td>
+		</tr>
+	</tbody>
+</table>

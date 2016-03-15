@@ -1,486 +1,179 @@
-<h2>STOCK</h2> 
+<h1 ng-if="!workInProgress">STOCK</h1> 
 
-	<table class="table table-bordered table-hover">
-		<thead>
-			<th>Materiale</th>
-			<th>Tipo</th>
-			<th>Spessore</th>
-			<th>C.Larghezza</th>
-			<th>Matricola</th>
-			<th>Qualita</th>
-			<th>Scelta</th>
-			<th>Finitura</th>
-			<th>Colore/Ral</th>
-			<th>Peso(kg)</th>
-			<th>Larghezza</th>
-			<th>Lunghezza</th>
-			<th>N.Fogli</th>
-			<th>Prezzo</th>
-			<th>Difetti</th>
-			<th>Stabilimento</th>
-		</thead>
-		<tbody>
-			<!--  1   -->
-			<tr ng-repeat-start="m2p in monster">
-				<td rowspan="{{m2p.lung}}">{{m2p.key}}</td>
-				<td rowspan="{{m2p.value[0].lung}}">{{m2p.value[0].key}}</td>
-				<td rowspan="{{m2p.value[0].value[0].lung}}">{{m2p.value[0].value[0].key}}</td>
-				<td rowspan="{{m2p.value[0].value[0].value[0].lung}}">{{m2p.value[0].value[0].value[0].key}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].matricola}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].qualita}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].scelta}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].finitura}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].coloreRal}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].peso}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].larghezza}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].lunghezza|number:2}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].numFogli}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].prezzo}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].difetti}}</td>
-				<td>{{m2p.value[0].value[0].value[0].value[0].stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(m2p.value[0].value[0].value[0].value[0], monster.indexOf(m2p),0,0,0,0)">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
+<table class="table">
+	<thead>
+		<th><span class="glyphicon glyphicon-filter" aria-hidden="true"></span>Materiale</th>
+		<th><span class="glyphicon glyphicon-filter" aria-hidden="true"></span>Tipo</th>
+		<th><span class="glyphicon glyphicon-filter" aria-hidden="true"></span>Spessore</th>
+		<th><span class="glyphicon glyphicon-filter" aria-hidden="true"></span>C.Larghezza</th>
+	</thead>
+	<tbody>
+	<td>
+		<ul>
+			<div>
+				<input type="checkbox" ng-click="includeMaterial('zincato')">Zincato&nbsp&nbsp
+				<input type="checkbox" ng-click="includeMaterial('decapato')">Decapato&nbsp&nbsp
+			</div>
+			<div><input type="checkbox" ng-click="includeMaterial('laf')">Laf&nbsp&nbsp
+				<input type="checkbox" ng-click="includeMaterial('preverniciato')">Preverniciato&nbsp&nbsp
+			</div>
+			<div>
+				<input type="checkbox" ng-click="includeMaterial('caldo')">Caldo&nbsp&nbsp
+				<input type="checkbox" ng-click="includeMaterial('aluzinc')">Aluzinc&nbsp&nbsp
+			</div>
+			<div>
+				<input type="checkbox" ng-click="includeMaterial('alluminato')">Alluminato&nbsp&nbsp
+				<input type="checkbox" ng-click="includeMaterial('elettrozincato')">Elettrozincato&nbsp&nbsp
+			</div>
+		</ul>
+	</td>
+	<td>
+		<ul>
+			<div>
+				<input type="checkbox" ng-click="includeType('coil')">Coil&nbsp&nbsp
+				<input type="checkbox" ng-click="includeType('nastro')">Nastro&nbsp&nbsp
+			</div>
+			<div>
+				<input type="checkbox" ng-click="includeType('piana')">Piana&nbsp&nbsp
+				<input type="checkbox" ng-click="includeType('ondulata')">Ondulata&nbsp&nbsp
+				<input type="checkbox" ng-click="includeType('grecata')">Grecata&nbsp&nbsp
+			</div>
+			<div>
+				<input type="checkbox" ng-click="includeType('collaboranteh55')">Collaborante H55&nbsp&nbsp
+				<input type="checkbox" ng-click="includeType('collaboranteh55-s')">Collaborante H55-S&nbsp&nbsp
+			</div>
+			<div>
+				<input type="checkbox" ng-click="includeType('collaboranteh75')">Collaborante H75&nbsp&nbsp
+				<input type="checkbox" ng-click="includeType('collaboranteh75-s')">Collaborante H75-S&nbsp&nbsp
+			</div>
+		</ul>
+	</td>
+	<td>
+		<ul>
+			<div>
+				<input type="checkbox" ng-click="includeSpessor(0.25)">0.25&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(0.3)">0.30&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(0.35)">0.35&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(0.4)">0.40&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(0.45)">0.45&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(0.5)">0.50&nbsp&nbsp
+			</div>	
+			<div>
+				<input type="checkbox" ng-click="includeSpessor(0.6)">0.60&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(0.7)">0.70&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(0.8)">0.80&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(0.9)">0.90&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(1)">1.00&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(1.2)">1.20&nbsp&nbsp
+			</div>
+			<div>	
+				<input type="checkbox" ng-click="includeSpessor(1.5)">1.50&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(1.8)">1.80&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(2)">2.00&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(2.5)">2.50&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(3)">3.00&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(4)">4.00&nbsp&nbsp
+				
+			</div>
+			<div>
+				<input type="checkbox" ng-click="includeSpessor(5)">5.00&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(6)">6.00&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(8)">8.00&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(10)">10.00&nbsp&nbsp
+			</div>
+		</ul>
+	</td>
+	<td>
+		<ul>
+			<div><input type="checkbox" ng-click="includeLarg(1000)">1000</div>
+			<div><input type="checkbox" ng-click="includeLarg(1250)">1250</div>
+			<div><input type="checkbox" ng-click="includeLarg(1500)">1500</div>
+		</ul>
+	</td>
+	</tbody>
+</table>
 
-			<!--  2   -->
-			<tr ng-repeat="p in m2p.value[0].value[0].value[0].value.slice(1)">
-				<td>{{p.matricola}}</td>
-				<td>{{p.qualita}}</td>
-				<td>{{p.scelta}}</td>
-				<td>{{p.finitura}}</td>
-				<td>{{p.coloreRal}}</td>
-				<td>{{p.peso}}</td>
-				<td>{{p.larghezza}}</td>
-				<td>{{p.lunghezza|number:2}}</td>
-				<td>{{p.numFogli}}</td>
-				<td>{{p.prezzo}}</td>
-				<td>{{p.difetti}}</td>
-				<td>{{p.stabilimento}}</td>
-				<td style="border:0;">
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p,monster.indexOf(m2p),0,0,0,m2p.value[0].value[0].value[0].value.indexOf(p))">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-
-			<!-- 3 --> 
-			
-			<tr ng-repeat-start ="l2p in m2p.value[0].value[0].value.slice(1)">
-				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
-				<td>{{l2p.value[0].matricola}}</td>
-				<td>{{l2p.value[0].qualita}}</td>
-				<td>{{l2p.value[0].scelta}}</td>
-				<td>{{l2p.value[0].finitura}}</td>
-				<td>{{l2p.value[0].coloreRal}}</td>
-				<td>{{l2p.value[0].peso}}</td>
-				<td>{{l2p.value[0].larghezza}}</td>
-				<td>{{l2p.value[0].lunghezza|number:2}}</td>
-				<td>{{l2p.value[0].numFogli}}</td>
-				<td>{{l2p.value[0].prezzo}}</td>
-				<td>{{l2p.value[0].difetti}}</td>
-				<td>{{l2p.value[0].stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),0,0,m2p.value[0].value[0].value.indexOf(l2p),0)">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 4 -->
-			<tr ng-repeat-end ng-repeat="p2 in l2p.value.slice(1)">
-				<td>{{p2.matricola}}</td>
-				<td>{{p2.qualita}}</td>
-				<td>{{p2.scelta}}</td>
-				<td>{{p2.finitura}}</td>
-				<td>{{p2.coloreRal}}</td>
-				<td>{{p2.peso}}</td>
-				<td>{{p2.larghezza}}</td>
-				<td>{{p2.lunghezza|number:2}}</td>
-				<td>{{p2.numFogli}}</td>
-				<td>{{p2.prezzo}}</td>
-				<td>{{p2.difetti}}</td>
-				<td>{{p2.stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),0,0,m2p.value[0].value[0].value.indexOf(l2p),l2p.value.indexOf(p2))">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 5 -->
-			<tr ng-repeat-start="s2p in m2p.value[0].value.slice(1)">
-				<td rowspan="{{s2p.lung}}">{{s2p.key}}</td>
-				<td rowspan="{{s2p.value[0].lung}}">{{s2p.value[0].key}}</td>
-				<td>{{s2p.value[0].value[0].matricola}}</td>
-				<td>{{s2p.value[0].value[0].qualita}}</td>
-				<td>{{s2p.value[0].value[0].scelta}}</td>
-				<td>{{s2p.value[0].value[0].finitura}}</td>
-				<td>{{s2p.value[0].value[0].coloreRal}}</td>
-				<td>{{s2p.value[0].value[0].peso}}</td>
-				<td>{{s2p.value[0].value[0].larghezza}}</td>
-				<td>{{s2p.value[0].value[0].lunghezza|number:2}}</td>
-				<td>{{s2p.value[0].value[0].numFogli}}</td>
-				<td>{{s2p.value[0].value[0].prezzo}}</td>
-				<td>{{s2p.value[0].value[0].difetti}}</td>
-				<td>{{s2p.value[0].value[0].stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(s2p.value[0].value[0],monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),0,0)">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 6 -->
-			<tr ng-repeat="p2 in s2p.value[0].value.slice(1)">
-				<td>{{p2.matricola}}</td>
-				<td>{{p2.qualita}}</td>
-				<td>{{p2.scelta}}</td>
-				<td>{{p2.finitura}}</td>
-				<td>{{p2.coloreRal}}</td>
-				<td>{{p2.peso}}</td>
-				<td>{{p2.larghezza}}</td>
-				<td>{{p2.lunghezza|number:2}}</td>
-				<td>{{p2.numFogli}}</td>
-				<td>{{p2.prezzo}}</td>
-				<td>{{p2.difetti}}</td>
-				<td>{{p2.stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),0,s2p.value[0].value.indexOf(p2))">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 7 -->
-			<tr ng-repeat-start="l2p in s2p.value.slice(1)">
-				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
-				<td>{{l2p.value[0].matricola}}</td>
-				<td>{{l2p.value[0].qualita}}</td>
-				<td>{{l2p.value[0].scelta}}</td>
-				<td>{{l2p.value[0].finitura}}</td>
-				<td>{{l2p.value[0].coloreRal}}</td>
-				<td>{{l2p.value[0].peso}}</td>
-				<td>{{l2p.value[0].larghezza}}</td>
-				<td>{{l2p.value[0].lunghezza|number:2}}</td>
-				<td>{{l2p.value[0].numFogli}}</td>
-				<td>{{l2p.value[0].prezzo}}</td>
-				<td>{{l2p.value[0].difetti}}</td>
-				<td>{{l2p.value[0].stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),s2p.value.indexOf(l2p),0)">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 8 -->
-			<tr ng-repeat-end ng-repeat="p3 in l2p.value.slice(1)">
-				<td>{{p3.matricola}}</td>
-				<td>{{p3.qualita}}</td>
-				<td>{{p3.scelta}}</td>
-				<td>{{p3.finitura}}</td>
-				<td>{{p3.coloreRal}}</td>
-				<td>{{p3.peso}}</td>
-				<td>{{p3.larghezza}}</td>
-				<td>{{p3.lunghezza|number:2}}</td>
-				<td>{{p3.numFogli}}</td>
-				<td>{{p3.prezzo}}</td>
-				<td>{{p3.difetti}}</td>
-				<td>{{p3.stabilimento}}</td>
-				<td style="border:0;">
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p3,monster.indexOf(m2p),0,m2p.value[0].value.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p3))">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<tr ng-repeat-end ng-hide="true"></tr>
-			
-			<!-- 9 -->
-			<tr ng-repeat-start="t2p in m2p.value.slice(1)">
-				<td rowspan="{{t2p.lung}}">{{t2p.key}}</td>
-				<td rowspan="{{t2p.value[0].lung}}">{{t2p.value[0].key}}</td>
-				<td rowspan="{{t2p.value[0].value[0].lung}}">{{t2p.value[0].value[0].key}}</td>
-				<td>{{t2p.value[0].value[0].value[0].matricola}}</td>
-				<td>{{t2p.value[0].value[0].value[0].qualita}}</td>
-				<td>{{t2p.value[0].value[0].value[0].scelta}}</td>
-				<td>{{t2p.value[0].value[0].value[0].finitura}}</td>
-				<td>{{t2p.value[0].value[0].value[0].coloreRal}}</td>
-				<td>{{t2p.value[0].value[0].value[0].peso}}</td>
-				<td>{{t2p.value[0].value[0].value[0].larghezza}}</td>
-				<td>{{t2p.value[0].value[0].value[0].lunghezza|number:2}}</td>
-				<td>{{t2p.value[0].value[0].value[0].numFogli}}</td>
-				<td>{{t2p.value[0].value[0].value[0].prezzo}}</td>
-				<td>{{t2p.value[0].value[0].value[0].difetti}}</td>
-				<td>{{t2p.value[0].value[0].value[0].stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(t2p.value[0].value[0].value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),0,0,0)">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 10 -->
-			<tr ng-repeat="p2 in t2p.value[0].value[0].value.slice(1)">
-				<td>{{p2.matricola}}</td>
-				<td>{{p2.qualita}}</td>
-				<td>{{p2.scelta}}</td>
-				<td>{{p2.finitura}}</td>
-				<td>{{p2.coloreRal}}</td>
-				<td>{{p2.peso}}</td>
-				<td>{{p2.larghezza}}</td>
-				<td>{{p2.lunghezza|number:2}}</td>
-				<td>{{p2.numFogli}}</td>
-				<td>{{p2.prezzo}}</td>
-				<td>{{p2.difetti}}</td>
-				<td>{{p2.stabilimento}}</td>
-				<td style="border:0;">
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),m2p.value.indexOf(t2p),0,0,t2p.value[0].value[0].value.indexOf(p2))">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 11 -->
-			<tr ng-repeat-start="l2p in t2p.value[0].value.slice(1)">
-				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
-				<td>{{l2p.value[0].matricola}}</td>
-				<td>{{l2p.value[0].qualita}}</td>
-				<td>{{l2p.value[0].scelta}}</td>
-				<td>{{l2p.value[0].finitura}}</td>
-				<td>{{l2p.value[0].coloreRal}}</td>
-				<td>{{l2p.value[0].peso}}</td>
-				<td>{{l2p.value[0].larghezza}}</td>
-				<td>{{l2p.value[0].lunghezza|number:2}}</td>
-				<td>{{l2p.value[0].numFogli}}</td>
-				<td>{{l2p.value[0].prezzo}}</td>
-				<td>{{l2p.value[0].difetti}}</td>
-				<td>{{l2p.value[0].stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),0,t2p.value[0].value.indexOf(l2p),0)">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 12 -->
-			<tr ng-repeat-end ng-repeat="p3 in l2p.value.slice(1)">
-				<td>{{p3.matricola}}</td>
-				<td>{{p3.qualita}}</td>
-				<td>{{p3.scelta}}</td>
-				<td>{{p3.finitura}}</td>
-				<td>{{p3.coloreRal}}</td>
-				<td>{{p3.peso}}</td>
-				<td>{{p3.larghezza}}</td>
-				<td>{{p3.lunghezza|number:2}}</td>
-				<td>{{p3.numFogli}}</td>
-				<td>{{p3.prezzo}}</td>
-				<td>{{p3.difetti}}</td>
-				<td>{{p3.stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p3,monster.indexOf(m2p),m2p.value.indexOf(t2p),0,t2p.value[0].value.indexOf(l2p),l2p.value.indexOf(p3))">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			
-			
-			<!-- 13 -->
-			<tr ng-repeat-start="s2p in t2p.value.slice(1)">
-				<td rowspan="{{s2p.lung}}">{{s2p.key}}</td>
-				<td rowspan="{{s2p.value[0].lung}}">{{s2p.value[0].key}}</td>
-				<td>{{s2p.value[0].value[0].matricola}}</td>
-				<td>{{s2p.value[0].value[0].qualita}}</td>
-				<td>{{s2p.value[0].value[0].scelta}}</td>
-				<td>{{s2p.value[0].value[0].finitura}}</td>
-				<td>{{s2p.value[0].value[0].coloreRal}}</td>
-				<td>{{s2p.value[0].value[0].peso}}</td>
-				<td>{{s2p.value[0].value[0].larghezza}}</td>
-				<td>{{s2p.value[0].value[0].lunghezza|number:2}}</td>
-				<td>{{s2p.value[0].value[0].numFogli}}</td>
-				<td>{{s2p.value[0].value[0].prezzo}}</td>
-				<td>{{s2p.value[0].value[0].difetti}}</td>
-				<td>{{s2p.value[0].value[0].stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(s2p.value[0].value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),0,0)">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 14 -->
-			<tr ng-repeat="p2 in s2p.value[0].value.slice(1)">
-				<td>{{p2.matricola}}</td>
-				<td>{{p2.qualita}}</td>
-				<td>{{p2.scelta}}</td>
-				<td>{{p2.finitura}}</td>
-				<td>{{p2.coloreRal}}</td>
-				<td>{{p2.peso}}</td>
-				<td>{{p2.larghezza}}</td>
-				<td>{{p2.lunghezza|number:2}}</td>
-				<td>{{p2.numFogli}}</td>
-				<td>{{p2.prezzo}}</td>
-				<td>{{p2.difetti}}</td>
-				<td>{{p2.stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p2,monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),0,s2p.value[0].value.indexOf(p2))">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 15 -->
-			<tr ng-repeat-start="l2p in s2p.value.slice(1)">
-				<td rowspan="{{l2p.lung}}">{{l2p.key}}</td>
-				<td>{{l2p.value[0].matricola}}</td>
-				<td>{{l2p.value[0].qualita}}</td>
-				<td>{{l2p.value[0].scelta}}</td>
-				<td>{{l2p.value[0].finitura}}</td>
-				<td>{{l2p.value[0].coloreRal}}</td>
-				<td>{{l2p.value[0].peso}}</td>
-				<td>{{l2p.value[0].larghezza}}</td>
-				<td>{{l2p.value[0].lunghezza|number:2}}</td>
-				<td>{{l2p.value[0].numFogli}}</td>
-				<td>{{l2p.value[0].prezzo}}</td>
-				<td>{{l2p.value[0].difetti}}</td>
-				<td>{{l2p.value[0].stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(l2p.value[0],monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),s2p.value.indexOf(l2p), 0)">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<!-- 16 -->
-			<tr ng-repeat-end ng-repeat="p3 in l2p.value.slice(1)">
-				<td>{{p3.matricola}}</td>
-				<td>{{p3.qualita}}</td>
-				<td>{{p3.scelta}}</td>
-				<td>{{p3.finitura}}</td>
-				<td>{{p3.coloreRal}}</td>
-				<td>{{p3.peso}}</td>
-				<td>{{p3.larghezza|number:2}}</td>
-				<td>{{p3.lunghezza}}</td>
-				<td>{{p3.numFogli}}</td>
-				<td>{{p3.prezzo}}</td>
-				<td>{{p3.difetti}}</td>
-				<td>{{p3.stabilimento}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(p3,monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p3))">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-			
-			<tr ng-repeat-end ng-hide="true"></tr>
-			<tr ng-repeat-end ng-hide="true"></tr>
-			<tr ng-repeat-end ng-hide="true"></tr>
-			
-		</tbody>
-
-	<!--
-		<tbody>
-			<tr ng-repeat="product in products | orderBy:['spessore','classeLarghezza'] | filter:search">
-				<td>{{product.spessore}}</td>
-				<td>{{product.classeLarghezza}}</td>
-				<td>{{product.matricola}}</td>
-				<td>{{product.tipo}}</td>
-				<td>{{product.materiale}}</td>
-				<td>{{product.qualita}}</td>
-				<td>{{product.scelta}}</td>
-				<td>{{product.finitura}}</td>
-				<td>{{product.coloreRal}}</td>
-				<td>{{product.peso}}</td>
-				<td>{{product.larghezza}}</td>
-				<td>{{product.lunghezza}}</td>
-				<td>{{product.numFogli}}</td>
-				<td>{{product.prezzo}}</td>
-				<td>{{product.difetti}}</td>
-				<td>{{product.stabilimento}}</td>
-				<td>{{product.scarto}}</td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span></button>
-						<ul class="dropdown-menu">
-							<li><button type="button" class="btn btn-warning btn-block" href="#newproduct" data-toggle="modal" ng-click="openProduct(product)">Modifica</button></li>
-							<li><button type="button" class="btn btn-danger btn-block" ng-click="deleteProduct(product)" href="#">Cancella</button></li>
-						</ul>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	-->
-	</table>
+<fieldset ng-repeat-start="m2p in monster | filter:materialFilter">
+	<h3 align="center"><b>Materiale: {{m2p.key}}</b> {{m2p.weight}} kg</h3>
+	<div ng-repeat-start="t2p in m2p.value |filter:typeFilter">
+		<legend><b>Tipo: {{t2p.key}}</b> {{t2p.weight}} kg</legend>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Spessore(mm)</th>
+					<th>C.Larghezza(mm)</th>
+					<th>Matricola</th>
+					<th>Numero Collo</th>
+					<th>Qualita</th>
+					<th>Scelta</th>
+					<th>Finitura</th>
+					<th>Colore/Ral</th>
+					<th>Peso(kg)</th>
+					<th>Larghezza(mm)</th>
+					<th>Lunghezza(ml)</th>
+					<th>N.Fogli</th>
+					<th>Prezzo(&euro;/t)</th>
+					<th>Difetti</th>
+					<th>Stabilimento</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat-start="s2p in t2p.value|filter:spessorFilter"></tr>
+				<tr ng-repeat-start="l2p in s2p.value|filter:largFilter"></tr>
+				<tr ng-repeat="p in l2p.value">
+					<td>{{s2p.key}}</td>
+					<td>{{l2p.key}}</td>
+					<td>{{p.matricola}}</td>
+					<td>{{p.numeroCollo}}</td>
+					<td>{{p.qualita}}</td>
+					<td>{{p.scelta}}</td>
+					<td>{{p.finitura}}</td>
+					<td>{{p.coloreRal}}</td>
+					<td>
+						<span ng-if="p.peso>=5000" style="color:green">{{p.peso}}</span>
+						<span ng-if="p.peso<5000" style="color:orange">{{p.peso}}</span>
+					</td>
+					<td>{{p.larghezza}}</td>
+					<td>{{p.lunghezza|number:2}}</td>
+					<td>{{p.numFogli}}</td>
+					<td>{{p.prezzo}}</td>
+					<td>{{p.difetti}}</td>
+					<td>{{p.stabilimento}}</td>
+					<td>
+						<button type="button" class="btn btn-danger btn-block" ng-click="prepareDeleteStock(p,monster.indexOf(m2p),m2p.value.indexOf(t2p),t2p.value.indexOf(s2p),s2p.value.indexOf(l2p),l2p.value.indexOf(p))" data-target="#deletestock" data-toggle="modal">
+							<div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</td>
+					
+				</tr>
+				<tr ng-repeat-end>
+					<td colspan="15"><div align="right"><b>Totale:</b> {{l2p.weight}} kg</div></td>
+				</tr>
+				<tr ng-repeat-end ng-hide="true"></tr>
+			</tbody>
+		</table>
+	</div>
+	<div ng-repeat-end ng-hide="true"></div>
+</fieldset>
+<fieldset ng-repeat-end ng-hide="true"></fieldset>
 
 
 
-<!-- Modal new_product.html-->
-<div id="newproduct" class="modal fade" role="dialog" data-focus-on="input:first" >
+<!-- Modal deletestock-->
+<div id="deletestock" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Modifica Prodotto {{product.matricola}}</h4>
+				<h3 class="modal-title" align="center">Elimina Stock</h3>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'carichi_in/new_product.html'"></div>
+				<div>Verrà eliminato definitivamente il prodotto all'interno dello stock</div>
 			</div>
 			<div class="modal-footer">
-				<button ng-if="productForm.$valid" type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateProduct(product)" >Conferma</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button type="button" class="btn btn-success" ng-click="deleteProduct(p,index1,index2,index3,index4,index5)" data-dismiss="modal">Conferma</button>
 			</div>
 		</div>
 	</div>

@@ -1,9 +1,13 @@
 var store = angular.module('store');
-store.controller('cutController', function ($scope, cutFactory, refreshFactory, $window) {
+store.controller('cutController', function ($scope, cutFactory, refreshFactory, UserService) {
     
 	cutFactory.getAll(
 		function (resp) {
 			$scope.cuts = resp.data;
+			$scope.totalItems = $scope.cuts.length;
+			$scope.entryLimit = 50;
+			$scope.currentPage = 1;
+			$scope.maxSize = Math.ceil($scope.totalItems / $scope.entryLimit);
 		},
 		function(err) {
 			console.log(resp);
@@ -23,13 +27,24 @@ store.controller('cutController', function ($scope, cutFactory, refreshFactory, 
 		);
 	};
 	
-	$scope.openCut = function (cut){
-		$scope.cut = cut;
-		$scope.articlesCut = cut.articoli;
+	$scope.openArticlesCut = function (cut){
+		cutFactory.get(
+			{
+				id: cut._id
+			},
+			function (resp) {
+				console.log("TAGLIO E ARTICOLI" , resp);
+				$scope.cut = resp.cut;
+				$scope.articlesCut = resp.articoli;
+			},
+			function (err) {
+				console.log (err);
+			}
+		);
 	};
 	
 	$scope.confirmCut = function (cut) {
-		var user = $window.sessionStorage.user;
+		var user = UserService.getUser();
 		console.log(user);
 		cutFactory.update( 
 			{id : cut._id},
