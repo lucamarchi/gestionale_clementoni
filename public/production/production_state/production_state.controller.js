@@ -208,7 +208,7 @@ store.controller('productionStateController', function ($scope, articleFactory, 
 		}
 		if (child.tipo.toLowerCase() == "piana" || 
 			child.tipo.toLowerCase() == "ondulata" || child.tipo.toLowerCase() == "grecata"){
-			child.numFogli = Math.round(($scope.child.peso*1000)/((child.larghezza/1000) * child.lunghezza * child.spessore * 7.85));
+			child.numFogli = Math.round(child.peso/((child.larghezza * child.lunghezza * child.spessore * 7.85)/1000000));
 		}
 		else {
 			child.numFogli = 0;

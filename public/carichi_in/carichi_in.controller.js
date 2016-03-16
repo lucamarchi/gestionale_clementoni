@@ -61,7 +61,7 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		}
 		if ($scope.product.tipo.toLowerCase() == "piana" || 
 			$scope.product.tipo.toLowerCase() == "ondulata" || $scope.product.tipo.toLowerCase() == "grecata"){
-			$scope.product.numFogli = Math.round($scope.product.peso/(($scope.product.larghezza/1000) * $scope.product.lunghezza * $scope.product.spessore * 7.85));
+			$scope.product.numFogli = Math.round($scope.product.peso/(($scope.product.larghezza * $scope.product.lunghezza * $scope.product.spessore * 7.85)/1000000));
 		}
 			$scope.productsOrder.push($scope.product);
 			$scope.productsOrder2.push($scope.product);

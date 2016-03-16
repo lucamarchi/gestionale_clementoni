@@ -34,7 +34,7 @@
 			<td>{{article.quantita}}</td>
 			<td>{{article.prezzo}}</td>
 			<td>
-				<button ng-if="article.stockId != undefined" type="button" class="btn btn-info btn-block" ng-click="viewStock(article)" data-target="#viewstock" data-toggle="modal">Visualizza</button>
+				<button ng-if="article.stockId != undefined" type="button" class="btn btn-info btn-block" ng-click="viewStock(article)" data-target="#viewstock2" data-toggle="modal">Visualizza</button>
 			</td>
 			<td ng-if="article.stato == undefined">{{article.stato}}</td>
 			<td ng-if="article.stato == 'libero'"><span class="label label-default">{{article.stato}}</span></td>
@@ -49,7 +49,7 @@
 </table>
 
 <!-- Modal view_article_stock.html-->
-<div id="viewstock" class="modal modal-xl fade" role="dialog">
+<div id="viewstock2" class="modal modal-xl fade" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
