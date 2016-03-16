@@ -7,7 +7,7 @@ myapp.config(function ($httpProvider) {
 myapp.config(function($locationProvider, $routeProvider) {
     $routeProvider
 		.when('/', {
-        	templateUrl: 'stock/stock.html',
+        	templateUrl: 'public/stock/stock.html',
 			controller: 'stockController',
 			access: { 
 				requiredLogin: true 
@@ -15,7 +15,7 @@ myapp.config(function($locationProvider, $routeProvider) {
       	})
 		
       	.when('/stock', {
-        	templateUrl: 'stock/stock.html',
+        	templateUrl: 'public/stock/stock.html',
 			controller: 'stockController',
 			access: { 
 				requiredLogin: true 
@@ -31,7 +31,7 @@ myapp.config(function($locationProvider, $routeProvider) {
 //      	})
 	
 		.when('/carichiIn', {
-        	templateUrl: 'carichi_in/carichi_in.html',
+        	templateUrl: 'public/carichi_in/carichi_in.html',
 			controller: 'carichiInController',
 			access: { 
 				requiredLogin: true 
@@ -39,7 +39,7 @@ myapp.config(function($locationProvider, $routeProvider) {
       	})
 	
 		.when('/login', {
-        	templateUrl: 'login/login.html',
+        	templateUrl: 'public/login/login.html',
 			controller:'loginController',
 			access: { 
 				requiredLogin: false 
@@ -47,7 +47,7 @@ myapp.config(function($locationProvider, $routeProvider) {
       	})
 	
 		.when('/cut', {
-        	templateUrl: 'cut/cuts.html',
+        	templateUrl: 'public/cut/cuts.html',
 			controller: 'cutController',
 			access: { 
 				requiredLogin: true
@@ -55,7 +55,7 @@ myapp.config(function($locationProvider, $routeProvider) {
       	})
 	
 		.when('/productionSort', {
-        	templateUrl: 'production/riepilogo.html',
+        	templateUrl: 'public/production/riepilogo.html',
 			controller: 'productionController',
 			access: { 
 				requiredLogin: true
@@ -63,7 +63,7 @@ myapp.config(function($locationProvider, $routeProvider) {
       	})
 	
 		.when('/productionState', {
-        	templateUrl: 'production/production_state/production_state.html',
+        	templateUrl: 'public/production/production_state/production_state.html',
 			controller: 'productionStateController',
 			access: { 
 				requiredLogin: true
@@ -71,7 +71,7 @@ myapp.config(function($locationProvider, $routeProvider) {
       	})
 	
 		.when('/carichiOut', {
-        	templateUrl: 'production/carichi_out/carichi_out.html',
+        	templateUrl: 'public/production/carichi_out/carichi_out.html',
 			controller: 'carichiOutController',
 			access: { 
 				requiredLogin: true

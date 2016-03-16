@@ -42,10 +42,6 @@ store.controller('productionStateController', function ($scope, articleFactory, 
 		stockFactory.resource().getAll(
 			function (resp) {
 				$scope.products = resp.data;
-//				var products = resp.data;
-//				$scope.monster = stockFactory.createMapProducts(products);
-//				console.log("MAP", $scope.monster);
-//				console.log("PRODUCTS", products);
 			},
 			function(err) {
 				console.log(err);
@@ -59,7 +55,8 @@ store.controller('productionStateController', function ($scope, articleFactory, 
 			{id: article._id},
 			{stock},
 			function (resp) {
-				console.log(resp)
+				console.log(resp);
+				article.stockId = stock._id;
 			},
 			function(err) {
 				console.log(err);
@@ -136,8 +133,8 @@ store.controller('productionStateController', function ($scope, articleFactory, 
 				{id: article.stockId},
 				function (resp) {
 					console.log(resp);
-					$scope.stock = resp.data;
-					$scope.stockOld = resp.data;
+					$scope.stock = Object.assign({},resp.data);
+					$scope.stockOld = Object.assign({},resp.data);
 				},
 				function(err) {
 					console.log(err);
@@ -160,10 +157,6 @@ store.controller('productionStateController', function ($scope, articleFactory, 
 		stockFactory.resource().getAll(
 			function (resp) {
 				$scope.products = resp.data;
-//				var products = resp.data;
-//				$scope.monster = stockFactory.createMapProducts(products);
-//				console.log("MAP", $scope.monster);
-//				console.log("PRODUCTS", products);
 			},
 			function(err) {
 				console.log(err);
@@ -232,7 +225,7 @@ store.controller('productionStateController', function ($scope, articleFactory, 
 		process.operatore = UserService.getUser();
 		console.log("process", process);
 		processFactory.save({},
-			{process},
+			process,
 			function(resp){
 				console.log(resp)
 			},

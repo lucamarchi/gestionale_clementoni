@@ -1,6 +1,6 @@
 <fieldset>
 	<legend>Seleziona Collo:</legend>
-	<div ng-include src="'production/production_state/view_article_stock.html'"></div>
+	<div ng-include src="'public/production/production_state/view_article_stock.html'"></div>
 	<button ng-if="!stock" type="button" class="btn btn-primary btn-block" ng-click="openListColli()" data-toggle="modal" data-target="#stock">Seleziona</button>
 	<button ng-if="stock" type="button" class="btn btn-primary" ng-click="openListColli()" data-toggle="modal" data-target="#stock">Modifica</button>
 </fieldset>

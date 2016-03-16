@@ -33,7 +33,7 @@
 				<h4 class="modal-title">STATO PRODUZIONE N. {{state.numero}}</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'production/production_state/production_state_articles.html'"></div>
+				<div ng-include src="'public/production/production_state/production_state_articles.html'"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
@@ -53,9 +53,9 @@
 				<h4 class="modal-title">NUOVO STATO PRODUZIONE</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'production/production_state/production_state_articles.html'"></div>
+				<div ng-include src="'public/production/production_state/production_state_articles.html'"></div>
 				<hr>
-				<div ng-include src="'production/riepilogo.html'"></div>
+				<div ng-include src="'public/production/riepilogo.html'"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
@@ -75,7 +75,7 @@
 				<h4 class="modal-title" align="center">LAVORAZIONE PARTE 1</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'production/production_state/new_process.html'"></div>
+				<div ng-include src="'public/production/production_state/new_process.html'"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
@@ -95,8 +95,7 @@
 				<h4 class="modal-title">SELEZIONA COLLO</h4>
 			</div>
 			<div class="modal-body">
-<!--				<div ng-include src="'stock/stock.html'"></div>-->
-				<div ng-include src="'production/production_state/select_stock.html'"></div>
+				<div ng-include src="'public/production/production_state/select_stock.html'"></div>
 			</div>
 		</div>
 	</div>
@@ -112,7 +111,7 @@
 				<h4 class="modal-title">SELEZIONA MACCHINARIO</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'production/production_state/select_machinery.html'"></div>
+				<div ng-include src="'public/production/production_state/select_machinery.html'"></div>
 			</div>
 		</div>
 	</div>
@@ -129,7 +128,7 @@
 				<h4 class="modal-title" align="center">LAVORAZIONE PARTE 2</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'production/production_state/new_process2.html'"></div>
+				<div ng-include src="'public/production/production_state/new_process2.html'"></div>
 					
 			</div>
 			<div class="modal-footer">
@@ -151,7 +150,7 @@
 				<h4 class="modal-title">INSERISCI LAVORATO</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'production/production_state/new_children.html'"></div>
+				<div ng-include src="'public/production/production_state/new_children.html'"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
@@ -171,7 +170,7 @@
 				<h4 class="modal-title">AGGIORNA COLLO IN MAGAZZINO</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'production/production_state/update_collo.html'"></div>
+				<div ng-include src="'public/production/production_state/update_collo.html'"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
@@ -191,7 +190,7 @@
 				<h4 class="modal-title">STOCK SELEZIONATO</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'production/production_state/view_article_stock.html'"></div>
+				<div ng-include src="'public/production/production_state/view_article_stock.html'"></div>
 			</div>
 		</div>
 	</div>
