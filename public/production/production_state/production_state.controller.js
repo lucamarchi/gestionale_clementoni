@@ -1,4 +1,4 @@
-store.controller('productionStateController', function ($scope, articleFactory, stockFactory, productionStateFactory, processFactory, UserService) {
+store.controller('productionStateController', ['$scope', 'articleFactory', 'stockFactory', 'productionStateFactory', 'processFactory', 'UserService', function ($scope, articleFactory, stockFactory, productionStateFactory, processFactory, UserService) {
 	$scope.state = {};
 	$scope.article = {};
 	var process = {};
@@ -196,16 +196,7 @@ store.controller('productionStateController', function ($scope, articleFactory, 
 	
 	$scope.addChild = function (child) {
 		child.peso = child.peso - $scope.bancale;
-		if (child.tipo == "coil" || child.tipo == "nastro"){
-			child.lunghezza = (child.peso/(child.larghezza/1000)/child.spessore/7.85).toFixed(2);
-		}
-		if (child.tipo.toLowerCase() == "piana" || 
-			child.tipo.toLowerCase() == "ondulata" || child.tipo.toLowerCase() == "grecata"){
-			child.numFogli = Math.round(child.peso/((child.larghezza * child.lunghezza * child.spessore * 7.85)/1000000));
-		}
-		else {
-			child.numFogli = 0;
-		}
+		valuesProduct(child);
 		$scope.children.push(child);
 		console.log("Realizzato", child);
 	}
@@ -217,11 +208,12 @@ store.controller('productionStateController', function ($scope, articleFactory, 
 	}
 	
 	$scope.confirmWork = function(){
+		var stockOld = $scope.stockOld;
 		process.article = $scope.article;
 		process.stock = $scope.stock;
 		process.macchina = $scope.machinery.sigle;
 		process.figli = $scope.children;
-		process.scarto = calculateScarto(process);
+		process.scarto = calculateScarto(stockOld, process.stock, process.figli);
 		process.operatore = UserService.getUser();
 		console.log("process", process);
 		processFactory.save({},
@@ -251,21 +243,6 @@ store.controller('productionStateController', function ($scope, articleFactory, 
 			}
 		);
 	}
-	
-	function calculateScarto (process){
-		var stockOld = $scope.stockOld;
-		var stock = process.stock;
-		var children = process.figli;
-		var pesoChildren = 0;
-		var scarto = 0;
-		for (c of children){
-			pesoChildren = pesoChildren+c.peso;
-		}
-		var scarto = stockOld.peso - stock.peso - pesoChildren;
-		return scarto;
-		
-	}
-	
-});
+}]);
 
 	

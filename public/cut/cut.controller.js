@@ -1,5 +1,5 @@
 var store = angular.module('store');
-store.controller('cutController', function ($scope, cutFactory, refreshFactory, UserService) {
+store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'UserService', function ($scope, cutFactory, refreshFactory, UserService) {
     
 	cutFactory.getAll(
 		function (resp) {
@@ -59,6 +59,6 @@ store.controller('cutController', function ($scope, cutFactory, refreshFactory, 
 			}
 		);
 	}
-});
+}]);
 
 	

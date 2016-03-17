@@ -4,7 +4,7 @@ myapp.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 });
 
-myapp.config(function($locationProvider, $routeProvider) {
+myapp.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
     $routeProvider
 		.when('/', {
         	templateUrl: 'public/stock/stock.html',
@@ -82,7 +82,7 @@ myapp.config(function($locationProvider, $routeProvider) {
         	redirectTo: '/'
       	});
 		
-});
+}]);
 
 myapp.directive('convertToNumber', function() {
   return {
@@ -112,7 +112,7 @@ myapp.directive('convertToFloat', function() {
   };
 });
 
-myapp.run(function($rootScope, $location, AuthenticationService, $window) {
+myapp.run(['$rootScope', '$location', 'AuthenticationService', '$window',function($rootScope, $location, AuthenticationService, $window) {
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
 		AuthenticationService.save({},{},
 			function(resp) {
@@ -135,4 +135,4 @@ myapp.run(function($rootScope, $location, AuthenticationService, $window) {
 		delete $window.sessionStorage.token;
 		$location.path("/login");
 	}
-});
+}]);

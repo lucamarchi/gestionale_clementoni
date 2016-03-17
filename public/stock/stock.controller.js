@@ -1,5 +1,5 @@
 var store = angular.module('store');
-store.controller('stockController', function ($scope, stockFactory) {
+store.controller('stockController', ['$scope', 'stockFactory', function ($scope, stockFactory) {
 	
 	$scope.monster = [];
 	
@@ -165,4 +165,4 @@ store.controller('stockController', function ($scope, stockFactory) {
 		$scope.index4 = index4;
 		$scope.index5 = index5;
 	}
-});
+}]);

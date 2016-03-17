@@ -1,6 +1,6 @@
 var store = angular.module('store');
 
-store.controller('carichiInController', function ($scope, orderFactory, productFactory) {
+store.controller('carichiInController', ['$scope', 'orderFactory', 'productFactory', function ($scope, orderFactory, productFactory) {
 	
 	orderFactory.getAll(
 		function (resp) {
@@ -56,13 +56,7 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 	}
 
 	$scope.addProduct = function () {
-		if ($scope.product.lunghezza == undefined){
-			$scope.product.lunghezza = ($scope.product.peso/($scope.product.larghezza/1000)/$scope.product.spessore/7.85).toFixed(2);
-		}
-		if ($scope.product.tipo.toLowerCase() == "piana" || 
-			$scope.product.tipo.toLowerCase() == "ondulata" || $scope.product.tipo.toLowerCase() == "grecata"){
-			$scope.product.numFogli = Math.round($scope.product.peso/(($scope.product.larghezza * $scope.product.lunghezza * $scope.product.spessore * 7.85)/1000000));
-		}
+			valuesProduct($scope.product);
 			$scope.productsOrder.push($scope.product);
 			$scope.productsOrder2.push($scope.product);
 	}
@@ -143,4 +137,4 @@ store.controller('carichiInController', function ($scope, orderFactory, productF
 		$scope.order = order;
 		$scope.index = index;
 	}
-});
+}]);

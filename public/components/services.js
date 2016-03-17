@@ -1,6 +1,6 @@
 var store = angular.module('store');
 
-store.factory('orderFactory', function ($resource) {
+store.factory('orderFactory', ['$resource', function ($resource) {
     return $resource('http://localhost:8080/api/orders/:id',
 		{
 			id: "@id"
@@ -10,9 +10,9 @@ store.factory('orderFactory', function ($resource) {
 			getAll: {method:'GET', isArray: false}
 		}
 	);
-});
+}]);
 
-store.factory('productFactory', function ($resource) {
+store.factory('productFactory',  ['$resource', function ($resource) {
     return $resource('http://localhost:8080/api/products/:id',
 		{
 			id: "@id"
@@ -21,7 +21,7 @@ store.factory('productFactory', function ($resource) {
 			update:{method:'PUT'}
   		}
 	);
-});
+}]);
 
 store.filter('startFrom', function () {
 	return function (input, start) {
@@ -35,7 +35,7 @@ store.filter('startFrom', function () {
 
 
 /*-----------------------> ORDINI DI TAGLIO <--------------------------------------------*/
-store.factory('cutFactory', function ($resource) {
+store.factory('cutFactory', ['$resource', function ($resource) {
     return $resource('http://localhost:8080/api/cuts/:id',
 		{
 			id: "@id"
@@ -45,19 +45,19 @@ store.factory('cutFactory', function ($resource) {
 			getAll: {method:'GET', isArray: false}
 		}
 	);
-});
+}]);
 
-store.factory('refreshFactory', function ($resource) {
+store.factory('refreshFactory', ['$resource', function ($resource) {
     return resource = $resource('http://localhost:8080/api/cuts/update', {},
 		{
 			refresh: {method:'GET', isArray: false}
 		}
   	);
-});
+}]);
 
 
 /*--------------------------> LOGISTICA <----------------------------------------------------*/
-store.factory('articleFactory', function ($resource) {
+store.factory('articleFactory', ['$resource', function ($resource) {
     return { 
 		resourceState: function () {
 			return $resource('http://localhost:8080/api/articles/:state', 
@@ -90,9 +90,9 @@ store.factory('articleFactory', function ($resource) {
 			);
 		}
 	}
-});
+}]);
 
-store.factory('productionStateFactory', function ($resource) {
+store.factory('productionStateFactory', ['$resource', function ($resource) {
     return resource = $resource('http://localhost:8080/api/prods/:id', 
 		{
 			id: "@id"
@@ -101,18 +101,18 @@ store.factory('productionStateFactory', function ($resource) {
 			getAll: {method:'GET', isArray: false},
 		}
   	);
-});
+}]);
 
 /*--------------------------------> PROCESS<-------------------------------------*/
-store.factory('processFactory', function ($resource) {
+store.factory('processFactory', ['$resource', function ($resource) {
     return $resource('http://localhost:8080/api/processes', {});
-});
+}]);
 
 
 
 
 /*--------------------------------> LOGIN/LOGOUT <-------------------------------------*/
-store.factory('UserService', function ($resource, $window) {
+store.factory('UserService', ['$resource','$window', function ($resource, $window) {
     return{ 
 		resource: function(){
 			return $resource('http://localhost:8080/api/authenticate', {});
@@ -130,15 +130,15 @@ store.factory('UserService', function ($resource, $window) {
 			$window.sessionStorage.user = user;
 		}
 	};
-});
+}]);
 
 
-store.factory('AuthenticationService', function ($resource) {
+store.factory('AuthenticationService', ['$resource', function ($resource) {
     return $resource('http://localhost:8080/api/verify', {
   	});
-});
+}]);
 
-store.factory('TokenInterceptor', function ($q, $window, $location, $rootScope) {
+store.factory('TokenInterceptor', ['$q', '$window', '$location', '$rootScope', function ($q, $window, $location, $rootScope) {
     return {
         request: function (config) {
             config.headers = config.headers || {};
@@ -163,4 +163,4 @@ store.factory('TokenInterceptor', function ($q, $window, $location, $rootScope) 
  			return $q.reject(rejection);
         }
     };
-});
+}]);

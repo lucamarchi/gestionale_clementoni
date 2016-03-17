@@ -1,4 +1,4 @@
-store.controller('productionController', function ($scope, articleFactory, stockFactory) {
+store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory', function ($scope, articleFactory, stockFactory) {
 	
 	articleFactory.resourceState().getAll(
 		function (resp) {
@@ -26,6 +26,6 @@ store.controller('productionController', function ($scope, articleFactory, stock
 			}
 		);
 	}
-});
+}]);
 
 	

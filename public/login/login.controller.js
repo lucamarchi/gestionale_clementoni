@@ -1,6 +1,6 @@
 var store = angular.module('store');
 
-store.controller('loginController', function($scope, $rootScope, $location, UserService) {
+store.controller('loginController', ['$scope', '$rootScope', '$location', 'UserService', function($scope, $rootScope, $location, UserService) {
 	//Admin User Controller (login, logout)
 
 	$scope.logIn = function (username, password) {
@@ -19,4 +19,4 @@ store.controller('loginController', function($scope, $rootScope, $location, User
 			);
 		}
 	}
-});
+}]);
