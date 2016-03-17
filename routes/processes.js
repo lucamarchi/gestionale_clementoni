@@ -12,6 +12,8 @@ module.exports = function() {
 		.post(function(req,res) {
 			var isFiglio = false;
 			var matricola = req.body.stock.numeroCollo;
+			console.log("STOCK ORIGINALE: " +req.body.stock);
+			console.log("NUMEROCOLLO STOCK ORIGINALE: "+req.body.stock.numeroCollo);
 			var originalStock = req.body.stock;
 			for (var i in matricola) {
 				if (matricola[i] == "/") {
