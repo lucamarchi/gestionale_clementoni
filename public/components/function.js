@@ -1,6 +1,6 @@
 function valuesProduct (product){
 	if (product.tipo.toLowerCase() == "coil" || product.tipo.toLowerCase() == "nastro"){
-		product.lunghezza = (product.peso/(product.larghezza/1000)/product.spessore/7.85).toFixed(2);
+		product.lunghezza = (product.peso/((product.larghezza * product.spessore * 7.85)/1000)).toFixed(2);
 		console.log("lunghezza = ", product.lunghezza);
 	}
 	if (product.tipo.toLowerCase() == "piana" || 

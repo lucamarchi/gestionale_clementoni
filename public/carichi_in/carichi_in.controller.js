@@ -1,7 +1,6 @@
 var store = angular.module('store');
 
 store.controller('carichiInController', ['$scope', 'orderFactory', 'productFactory', function ($scope, orderFactory, productFactory) {
-	
 	orderFactory.getAll(
 		function (resp) {
 			console.log("TUTTI I CARICHI IN ENTRATA" , resp.data);

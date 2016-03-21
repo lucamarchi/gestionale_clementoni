@@ -1,4 +1,4 @@
-var myapp = angular.module('store', ["ngRoute", "ngResource","ngAnimate", "ui.bootstrap"]);
+var myapp = angular.module('store', ["ngRoute", "ngResource", "ngTouch", "ngAnimate", "ui.bootstrap"]);
 
 myapp.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
