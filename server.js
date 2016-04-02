@@ -2,84 +2,64 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var Product = require('./app/models/product');
+var jwt = require('jsonwebtoken');
+var cors = require('cors');
+var path = require('path');
+var config = require('./config');
+var router = express.Router();
+var morgan = require('morgan');	
 
-mongoose.connect('mongodb://127.0.0.1:27017/my_database');
+mongoose.connect(config.URIDB);
+mongoose.connection.on('error', function() {
+	console.log("Mongoose connection error");
+});
+mongoose.connection.on('open', function(){
+	console.log("Mongoose connected to the database");
+});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cors());
+app.use(require('morgan')("dev"));
+app.set('superSecret', config.secret);
 
 var port = process.env.PORT || 8080;
 
-var router = express.Router();
-
 router.use(function(req,res,next) {
-	console.log('Something is happening.');
 	next();
-})
-
-router.get('/', function(req,res) {
-	res.json({message: 'Welcome to my API!'});
 });
 
-// AGGIUNTA DI UN PRODOTTO POST /api/products ED VISUALIZZAZIONE PRODOTTI GET /api/products
+app.use('/api', require(path.join(__dirname, "routes", "default.js"))());
 
-router.route('/products')
-	.post(function(req,res) {
-		var product = new Product();
-		product.name = req.body.name;
-
-		product.save(function(err) {
-			if (err)
-				res.send(err);
-			
-			res.json({message: 'Product created!'});
-		});
-	})
-	.get(function(req,res) {
-		Product.find(function(err,products) {
-			if (err)
-				res.send(err);
-			res.json(products);
+app.use(function(req,res,next) {
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	if (token) {
+		jwt.verify(token, app.get('superSecret'), function(err,decoded) {
+			if (err) {
+				return res.status(401).json({success: false, message: 'Failed to authenticate token'});
+			} else {
+				req.decoded = decoded;
+				next();
+			}
 		});	
-	});
-
-// MODIFICA DI UN PRODOTTO PUT /api/products/:product_id, RIMOZIONE DI UN PRODOTTO DELETE /api/products/:product_id E VISUALIZZAZIONE PRODOTTO GET /api/products/:product_id
-
-router.route('/products/:product_id')
-	.get(function(req,res) {
-		Product.findById(req.params.product_id, function(err,product) {
-			if (err)
-				res.send(err);
-			res.json(product)
+	} else {
+		return res.status(403).json({
+			success: false,
+			message: 'No token'
 		});
-	})
-	.put(function(req,res) {
-		Product.findById(req.params.product_id, function(err,product) {
-			if (err)
-				res.send(err)
+	}
+});
 
-			product.name = req.body.name;
+app.use('/api', require(path.join(__dirname, "routes", "products.js"))());
+app.use('/api', require(path.join(__dirname, "routes", "orders.js"))());
+app.use('/api', require(path.join(__dirname, "routes", "stocks.js"))());
+app.use('/api', require(path.join(__dirname, "routes", "cuts.js"))());
+app.use('/api', require(path.join(__dirname, "routes", "prods.js"))());
+app.use('/api', require(path.join(__dirname, "routes", "articles.js"))());
+app.use('/api', require(path.join(__dirname, "routes", "processes.js"))());
 
-			product.save(function(err) {
-				if (err)
-					res.send(err);
-				res.json({message: 'Product updated!'});
-			});
-		});
-	})
-	.delete(function(req,res) {
-		Product.remove({
-			_id: req.params.product_id
-		}, function(err,product) {
-			if (err)
-				res.send(err);
-			res.json({message: 'Product removed!'});
-		});
-	});
 
 app.use('/api', router);
 
 app.listen(port);
-console.log('Magic happens on port ' + port);
-
+console.log("Starting server on localhost:" + port + '\n');

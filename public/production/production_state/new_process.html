@@ -1,0 +1,22 @@
+<fieldset>
+	<legend>Seleziona Collo:</legend>
+	<div ng-include src="'public/production/production_state/view_article_stock.html'"></div>
+	<button ng-if="!stock" type="button" class="btn btn-primary btn-block" ng-click="openListColli()" data-toggle="modal" data-target="#stock">Seleziona</button>
+	<button ng-if="stock" type="button" class="btn btn-primary" ng-click="openListColli()" data-toggle="modal" data-target="#stock">Modifica</button>
+</fieldset>
+<hr>
+<fieldset>
+	<legend>Seleziona Macchina: </legend>
+	<table class="table" ng-if="machinery">
+		<thead>
+			<th>Nome</th>
+			<th>Sigla</th>
+		</thead>
+		<tbody>
+			<td>{{machinery.name |uppercase}}</td>
+			<td>{{machinery.sigle | uppercase}}</td>
+		</tbody>
+	</table>
+	<button ng-if="!machinery" type="button" class="btn btn-primary btn-block" ng-click="" data-toggle="modal" data-target="#process">Seleziona</button>
+	<button ng-if="machinery" type="button" class="btn btn-primary" ng-click="" data-toggle="modal" data-target="#process">Modifica</button>
+</fieldset>

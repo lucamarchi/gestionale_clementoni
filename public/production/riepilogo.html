@@ -1,0 +1,65 @@
+<h2 ng-if="!isEnabled">RIEPILOGO</h2>
+
+<div ng-show="!isEnabled">
+	<uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="entryLimit" max-size="maxSize" class="pagination" boundary-links="true" force-ellipses="true"></uib-pagination>
+</div>
+
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>Data Consegna</th>
+			<th>Cod.Articolo</th>
+			<th>Materiale</th>
+			<th>Tipo</th>
+			<th>Spessore(mm)</th>
+			<th>Larghezza(mm)</th>
+			<th>Lunghezza(mm)</th>
+			<th>Peso(t)</th>
+			<th>Quantita</th>
+			<th>Prezzo(&euro;/t)</th>
+			<th>Stock</th>
+			<th>Stato</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="article in articles | orderBy:'dataConsegna'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+			<td>{{article.dataConsegna | date:'medium'}}</td>
+			<td>{{article.codArticolo}}</td>
+			<td>{{article.materiale}}</td>
+			<td>{{article.tipo}}</td>
+			<td>{{article.spessore}}</td>
+			<td>{{article.larghezza}}</td>
+			<td>{{article.lunghezza}}</td>
+			<td>{{article.peso}}</td>
+			<td>{{article.quantita}}</td>
+			<td>{{article.prezzo}}</td>
+			<td>
+				<button ng-if="article.stockId != undefined" type="button" class="btn btn-info btn-block" ng-click="viewStock(article)" data-target="#viewstock2" data-toggle="modal">Visualizza</button>
+			</td>
+			<td ng-if="article.stato == undefined">{{article.stato}}</td>
+			<td ng-if="article.stato == 'libero'"><span class="label label-default">{{article.stato}}</span></td>
+			<td ng-if="article.stato == 'definito'"><span class="label label-info">{{article.stato}}</span></td>
+			<td ng-if="article.stato == 'lavorazione'"><span class="label label-warning">{{article.stato}}</span></td>
+			<td ng-if="article.stato == 'completato'"><span class="label label-success">{{article.stato}}</span></td>
+			<td ng-if="isEnabled">
+				<button type="button" class="btn btn-primary btn-circle" ng-click="addArticle(article, articles.indexOf(article))"><span class="glyphicon glyphicon-plus"></span></button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<!-- Modal view_article_stock.html-->
+<div id="viewstock2" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">STOCK SELEZIONATO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/view_article_stock.html'"></div>
+			</div>
+		</div>
+	</div>
+</div>

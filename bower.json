@@ -1,0 +1,29 @@
+{
+  "name": "clementoni_copal",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "FrancescoAmf <dcrfnc@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/lucamarchi/gestionale_clementoni",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "*",
+    "jquery": "*",
+    "bootstrap": "*",
+    "angular-resource": "*",
+    "angular-route": "*",
+    "angular-bootstrap": "*",
+    "jquery-migrate": "*",
+    "angular-touch": "*",
+    "angular-animate": "*"
+  }
+}

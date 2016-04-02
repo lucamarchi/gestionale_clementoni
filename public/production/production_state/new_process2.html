@@ -1,0 +1,83 @@
+<fieldset>
+	<legend>Realizzati:</legend>
+	<table ng-if="children.length != 0" class="table">
+		<thead>
+			<th>Materiale</th>
+			<th>Tipo</th>
+			<th>Spessore(mm)</th>
+			<th>C.Larghezza</th>
+			<th>Qualita</th>
+			<th>Scelta</th>
+			<th>Finitura</th>
+			<th>Colore/Ral</th>
+			<th>Peso(kg)</th>
+			<th>Larghezza(mm)</th>
+			<th>Lunghezza(ml)</th>
+			<th>N.Fogli</th>
+			<th>Difetti</th>
+			<th>Stabilimento</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="child in children">
+				<td>{{child.materiale}}</td>
+				<td>{{child.tipo}}</td>
+				<td>{{child.spessore}}</td>
+				<td>{{child.classeLarghezza}}</td>
+				<td>{{child.qualita}}</td>
+				<td>{{child.scelta}}</td>
+				<td>{{child.finitura}}</td>
+				<td>{{child.coloreRal}}</td>
+				<td>{{child.peso}}</td>
+				<td>{{child.larghezza}}</td>
+				<td>{{child.lunghezza|number:2}}</td>
+				<td>{{child.numFogli}}</td>
+				<td>{{child.difetti}}</td>
+				<td>{{child.stabilimento}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<button type="button" class="btn btn-primary btn-block" ng-click="createChildren()" data-target="#newchildren" data-toggle="modal">Inserisci</button>
+</fieldset>
+<hr>
+<fieldset>
+	<legend>Aggiorna collo:</legend>
+	<table class="table" ng-if="stock">
+		<thead>
+			<th>Materiale</th>
+			<th>Tipo</th>
+			<th>Spessore(mm)</th>
+			<th>C.Larghezza(mm)</th>
+			<th>Matricola</th>
+			<th>Qualita</th>
+			<th>Scelta</th>
+			<th>Finitura</th>
+			<th>Colore/Ral</th>
+			<th>Peso(kg)</th>
+			<th>Larghezza(mm)</th>
+			<th>Lunghezza(ml)</th>
+			<th>N.Fogli</th>
+	<!--		<th>Prezzo</th>-->
+			<th>Difetti</th>
+			<th>Stabilimento</th>
+		</thead>
+		<tbody>
+			<td>{{stock.materiale}}</td>
+			<td>{{stock.tipo}}</td>
+			<td>{{stock.spessore}}</td>
+			<td>{{stock.classeLarghezza}}</td>
+			<td>{{stock.matricola}}</td>
+			<td>{{stock.qualita}}</td>
+			<td>{{stock.scelta}}</td>
+			<td>{{stock.finitura}}</td>
+			<td>{{stock.coloreRal}}</td>
+			<td>{{stock.peso}}</td>
+			<td>{{stock.larghezza}}</td>
+			<td>{{stock.lunghezza|number:2}}</td>
+			<td>{{stock.numFogli}}</td>
+	<!--			<td>{{p.prezzo}}</td>-->
+			<td>{{stock.difetti}}</td>
+			<td>{{stock.stabilimento}}</td>
+		</tbody>
+	</table>
+	<button type="button" class="btn btn-primary btn-block" ng-click="" data-target="#updatecollo" data-toggle="modal">Modifica</button>
+</fieldset>

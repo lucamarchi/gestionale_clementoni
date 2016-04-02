@@ -1,0 +1,217 @@
+<h2>
+	STATO PRODUZIONE
+	<button type="button" class="btn btn-primary" data-toggle="modal" href="#newState" ng-click="newProductionState()">Aggiungi</button>
+</h2>
+
+<uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="entryLimit" max-size="maxSize" class="pagination" boundary-links="true" force-ellipses="true"></uib-pagination>
+
+<table class="table table-bordered table-hover">
+	<thead>
+	    <tr>
+			<th>Numero</th>
+			<th>Data Creazione</th>
+			<th>Data Evasione</th>
+		</tr>
+	</thead>
+  	<tbody>
+    	<tr ng-repeat="state in states | orderBy:'dataCreazione':true">
+			<td><button type="button" class="btn btn-info btn-block" ng-click="openProductionState(state)" data-target="#productionStateArticles" data-toggle="modal">{{state.numero}}</button></td>
+			<td>{{state.dataCreazione | date:'medium'}}</td>
+			<td>{{state.dataEvasione | date:'medium'}}</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<!-- Modal production_state_articles.html-->
+<div id="productionStateArticles" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">STATO PRODUZIONE N. {{state.numero}}</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/production_state_articles.html'"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button type="button" class="btn btn-success" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal new_state-->
+<div id="newState" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">NUOVO STATO PRODUZIONE</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/production_state_articles.html'"></div>
+				<hr>
+				<div ng-include src="'public/production/riepilogo.html'"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="confirmProductionState()">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal new_process.html-->
+<div id="newprocess" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" align="center">LAVORAZIONE PARTE 1</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/new_process.html'"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button ng-if="machinery && stock" type="button" class="btn btn-success" data-target="#newprocess2" data-toggle="modal" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal select_stock.html-->
+<div id="stock" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+<!--		 Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">SELEZIONA COLLO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/select_stock.html'"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal select_machinery.html-->
+<div id="process" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">SELEZIONA MACCHINARIO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/select_machinery.html'"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal new_process2.html-->
+<div id="newprocess2" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" align="center">LAVORAZIONE PARTE 2</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/new_process2.html'"></div>
+					
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-target="#newprocess" data-toggle="modal" data-dismiss="modal">Indietro</button>
+				<button type="button" class="btn btn-success" ng-click="confirmWork()" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal new_children.html-->
+<div id="newchildren" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">INSERISCI LAVORATO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/new_children.html'"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button ng-if="childForm.$valid" type="button" class="btn btn-success" ng-click="addChild(child)" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal update_collo.html-->
+<div id="updatecollo" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">AGGIORNA COLLO IN MAGAZZINO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/update_collo.html'"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button ng-if="stockForm.$valid" type="button" class="btn btn-success" ng-click="updateCollo(stock)" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal view_article_stock.html-->
+<div id="viewstock" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">STOCK SELEZIONATO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/view_article_stock.html'"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal completeArticle-->
+<div id="completearticle" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 class="modal-title" align="center">COMPLETARE ARTICOLO</h3>
+			</div>
+			<div class="modal-body">
+				<div>Non sarà possibile effettuare altre lavorazioni sull'articolo</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button type="button" class="btn btn-success" ng-click="completeArticle()" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
