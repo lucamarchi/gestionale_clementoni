@@ -1,7 +1,8 @@
 var store = angular.module('store');
 
-store.factory('orderFactory', ['$resource', function ($resource) {
-    return $resource('http://localhost:8080/api/orders/:id',
+store.factory('orderFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
+//    return $resource(myConfig.url+'/api/orders/:id',
+	return $resource(myConfig.url+'/api/orders/:id',
 		{
 			id: "@id"
 		}, 
@@ -12,8 +13,8 @@ store.factory('orderFactory', ['$resource', function ($resource) {
 	);
 }]);
 
-store.factory('productFactory',  ['$resource', function ($resource) {
-    return $resource('http://localhost:8080/api/products/:id',
+store.factory('productFactory',  ['$resource', 'myConfig', function ($resource, myConfig) {
+    return $resource(myConfig.url+'/api/products/:id',
 		{
 			id: "@id"
 		}, 
@@ -35,8 +36,8 @@ store.filter('startFrom', function () {
 
 
 /*-----------------------> ORDINI DI TAGLIO <--------------------------------------------*/
-store.factory('cutFactory', ['$resource', function ($resource) {
-    return $resource('http://localhost:8080/api/cuts/:id',
+store.factory('cutFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
+    return $resource(myConfig.url+'/api/cuts/:id',
 		{
 			id: "@id"
 		}, 
@@ -47,8 +48,8 @@ store.factory('cutFactory', ['$resource', function ($resource) {
 	);
 }]);
 
-store.factory('refreshFactory', ['$resource', function ($resource) {
-    return resource = $resource('http://localhost:8080/api/cuts/update', {},
+store.factory('refreshFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
+    return resource = $resource(myConfig.url+'/api/cuts/update', {},
 		{
 			refresh: {method:'GET', isArray: false}
 		}
@@ -56,11 +57,11 @@ store.factory('refreshFactory', ['$resource', function ($resource) {
 }]);
 
 
-/*--------------------------> LOGISTICA <----------------------------------------------------*/
-store.factory('articleFactory', ['$resource', function ($resource) {
+/*--------------------------> PRODUZIONE <----------------------------------------------------*/
+store.factory('articleFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
     return { 
 		resourceState: function () {
-			return $resource('http://localhost:8080/api/articles/:state', 
+			return $resource(myConfig.url+'/api/articles/:state', 
 				{
 					state: "@state"
 				},
@@ -70,7 +71,7 @@ store.factory('articleFactory', ['$resource', function ($resource) {
 			);
 		},
 		resourceStock: function () {
-			return $resource('http://localhost:8080/api/articles/stock/:id', 
+			return $resource(myConfig.url+'/api/articles/stock/:id', 
 				{
 					id: "@id"
 				},
@@ -80,7 +81,7 @@ store.factory('articleFactory', ['$resource', function ($resource) {
 			);
 		},
 		resourceComplete: function () {
-			return $resource('http://localhost:8080/api/articles/complete/:id', 
+			return $resource(myConfig.url+'/api/articles/complete/:id', 
 				{
 					id: "@id"
 				},
@@ -92,8 +93,8 @@ store.factory('articleFactory', ['$resource', function ($resource) {
 	}
 }]);
 
-store.factory('productionStateFactory', ['$resource', function ($resource) {
-    return resource = $resource('http://localhost:8080/api/prods/:id', 
+store.factory('productionStateFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
+    return resource = $resource(myConfig.url+'/api/prods/:id', 
 		{
 			id: "@id"
 		},
@@ -104,18 +105,18 @@ store.factory('productionStateFactory', ['$resource', function ($resource) {
 }]);
 
 /*--------------------------------> PROCESS<-------------------------------------*/
-store.factory('processFactory', ['$resource', function ($resource) {
-    return $resource('http://localhost:8080/api/processes', {});
+store.factory('processFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
+    return $resource(myConfig.url+'/api/processes', {});
 }]);
 
 
 
 
 /*--------------------------------> LOGIN/LOGOUT <-------------------------------------*/
-store.factory('UserService', ['$resource','$window', function ($resource, $window) {
+store.factory('UserService', ['$resource','$window', 'myConfig', function ($resource, $window, myConfig) {
     return{ 
 		resource: function(){
-			return $resource('http://localhost:8080/api/authenticate', {});
+			return $resource(myConfig.url+'/api/authenticate', {});
 		},
 		getUser: function(){
 			return $window.sessionStorage.user;
@@ -128,17 +129,21 @@ store.factory('UserService', ['$resource','$window', function ($resource, $windo
 		},
 		setUser: function(user) {
 			$window.sessionStorage.user = user;
+		},
+		emptySession: function() {
+			delete $window.sessionStorage.user;	
+			delete $window.sessionStorage.token;
 		}
 	};
 }]);
 
 
-store.factory('AuthenticationService', ['$resource', function ($resource) {
-    return $resource('http://localhost:8080/api/verify', {
+store.factory('AuthenticationService', ['$resource', 'myConfig', function ($resource, myConfig) {
+    return $resource(myConfig.url+'/api/verify', {
   	});
 }]);
 
-store.factory('TokenInterceptor', ['$q', '$window', '$location', '$rootScope', function ($q, $window, $location, $rootScope) {
+store.factory('TokenInterceptor', ['$q', '$window', '$location', '$rootScope', 'myConfig', function ($q, $window, $location, $rootScope, myConfig) {
     return {
         request: function (config) {
             config.headers = config.headers || {};

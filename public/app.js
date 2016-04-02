@@ -1,10 +1,15 @@
-var myapp = angular.module('store', ["ngRoute", "ngResource", "ngTouch", "ngAnimate", "ui.bootstrap"]);
+var store = angular.module('store', ['ngRoute', 'ngResource', 'ngTouch', 'ngAnimate', 'ui.bootstrap']);
 
-myapp.config(function ($httpProvider) {
+store.constant("myConfig", {
+	"url": "http://localhost:8080",
+//	"url": "http://plimco-gianclementoni.rhcloud.com"
+})
+
+store.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 });
 
-myapp.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+store.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
     $routeProvider
 		.when('/', {
         	templateUrl: 'public/stock/stock.html',
@@ -84,35 +89,8 @@ myapp.config(['$locationProvider', '$routeProvider', function($locationProvider,
 		
 }]);
 
-myapp.directive('convertToNumber', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, element, attrs, ngModel) {
-      ngModel.$parsers.push(function(val) {
-        return val ? parseInt(val, 10) : undefined;
-      });
-      ngModel.$formatters.push(function(val) {
-        return val ? '' + val : undefined;
-      });
-    }
-  };
-});
 
-myapp.directive('convertToFloat', function() {
-  return {
-    require: 'ngModel',
-    link: function(scope, element, attrs, ngModel) {
-      ngModel.$parsers.push(function(val) {
-        return val ? parseFloat(val) : undefined;
-      });
-      ngModel.$formatters.push(function(val) {
-        return val ? '' + val : undefined;
-      });
-    }
-  };
-});
-
-myapp.run(['$rootScope', '$location', 'AuthenticationService', '$window',function($rootScope, $location, AuthenticationService, $window) {
+store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', function($rootScope, $location, AuthenticationService, UserService) {
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
 		AuthenticationService.save({},{},
 			function(resp) {
@@ -131,8 +109,7 @@ myapp.run(['$rootScope', '$location', 'AuthenticationService', '$window',functio
 	
 	$rootScope.logout = function () {
 		$rootScope.isLogged = false;
-		delete $window.sessionStorage.user;
-		delete $window.sessionStorage.token;
+		UserService.emptySession();
 		$location.path("/login");
 	}
 }]);

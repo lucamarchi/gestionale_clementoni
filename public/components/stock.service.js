@@ -1,9 +1,9 @@
 var store = angular.module('store');
 
-store.factory('stockFactory', function ($resource) {
+store.factory('stockFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
     return {
 		resource: function (){
-			return $resource('http://localhost:8080/api/stocks/:id',
+			return $resource(myConfig.url+'/api/stocks/:id',
 				{
 					id: "@id"
 				}, 
@@ -79,40 +79,4 @@ store.factory('stockFactory', function ($resource) {
 			return monster;
 		}
 	}
-});	
-
-
-store.filter('material', function() {
-	return function(input, materiale) {
-//		console.log("INPUT ", input);
-//		console.log("MATERIALE ",materiale);
-		var output = input.slice();
-		if (materiale != undefined && materiale != "") {
-			for (var i = output.length -1; i>=0; i--){
-				if (output[i].key != materiale){	
-					output.splice(i,1);
-				}
-			}
-		}
-		return output;
-	}
-});
-
-store.filter('type', function(stockFactory) {
-	return function(input, tipo) {
-//		console.log("INPUT ", input);
-//		console.log("TIPO ", tipo);
-		var output = input.slice();
-		if(tipo != undefined && tipo != ""){
-			for (var i = output.length -1; i>=0; i--){
-				for (var j = output[i].value.length -1; j>=0; j--){
-					if (output[i].value[j].key != tipo){	
-						output[i].value.splice(j,1);
-						output[i].lung--;
-					}
-				}
-			}
-		}
-		return output;
-	}
-});
+}]);	
