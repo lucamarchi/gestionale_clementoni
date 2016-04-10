@@ -23,7 +23,7 @@ store.controller('stockController', ['$scope', 'stockFactory', function ($scope,
 		console.log("index1" , index1, "  index2 ", index2, "  index3 ",index3, "  index4 ", index4,  "  index5 ", index5);
 			stockFactory.resource().delete(
 				{
-				id:product._id
+					id:product._id
 				},
 				function(resp){
 					console.log(resp);
@@ -89,7 +89,6 @@ store.controller('stockController', ['$scope', 'stockFactory', function ($scope,
     }
     
     $scope.materialFilter = function(m2p) {
-		console.log("filtro1");
         if ($scope.materialIncludes.length > 0) {
             if ($.inArray(m2p.key, $scope.materialIncludes) < 0)
                 return;
@@ -109,7 +108,6 @@ store.controller('stockController', ['$scope', 'stockFactory', function ($scope,
     }
     
     $scope.typeFilter = function(t2p) {
-		console.log("filtro2");
         if ($scope.typeIncludes.length > 0) {
             if ($.inArray(t2p.key, $scope.typeIncludes) < 0)
                 return;
@@ -129,7 +127,6 @@ store.controller('stockController', ['$scope', 'stockFactory', function ($scope,
     }
     
     $scope.spessorFilter = function(s2p) {
-		console.log("filtro3");
         if ($scope.spessorIncludes.length > 0) {
             if ($.inArray(s2p.key, $scope.spessorIncludes) < 0)
                 return;
@@ -149,7 +146,6 @@ store.controller('stockController', ['$scope', 'stockFactory', function ($scope,
     }
     
     $scope.largFilter = function(l2p) {
-		console.log("filtro4");
         if ($scope.largIncludes.length > 0) {
             if ($.inArray(l2p.key, $scope.largIncludes) < 0)
                 return;
