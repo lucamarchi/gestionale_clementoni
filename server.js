@@ -7,14 +7,30 @@ var cors = require('cors');
 var path = require('path');
 var config = require('./config');
 var router = express.Router();
-var morgan = require('morgan');	
+var morgan = require('morgan');
 
-mongoose.connect(config.URIDB);
-mongoose.connection.on('error', function() {
-	console.log("Mongoose connection error");
+var db_name = "plimco";
+var mongodb_connection_string = 'mongodb://127.0.0.1:27017/' + db_name;
+
+//take advantage of openshift env vars when available:
+if(process.env.OPENSHIFT_MONGODB_DB_URL) {
+    console.log('mongo cè');
+    mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + db_name;
+}
+mongoose.connect(mongodb_connection_string );
+
+mongoose.connection.on('error', function(error) {
+	console.log("Mongoose connection error", error);
 });
 mongoose.connection.on('open', function(){
 	console.log("Mongoose connected to the database");
+});
+
+app.get('/', function(req, res, next) {
+    var options = {
+        root: __dirname
+    };
+    res.sendFile('index.html', options, function(err){});
 });
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -22,16 +38,16 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(require('morgan')("dev"));
 app.set('superSecret', config.secret);
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 
-var port = process.env.PORT || 8080;
-
-router.use(function(req,res,next) {
+app.use(function(req,res,next) {
 	next();
 });
 
 app.use('/api', require(path.join(__dirname, "routes", "default.js"))());
 
-app.use(function(req,res,next) {
+app.use('/api', function(req,res,next) {
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err,decoded) {
@@ -61,5 +77,11 @@ app.use('/api', require(path.join(__dirname, "routes", "processes.js"))());
 
 app.use('/api', router);
 
-app.listen(port);
-console.log("Starting server on localhost:" + port + '\n');
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
+app.listen(server_port, server_ip_address, function () {
+	console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
+});
+
+console.log("Starting server on localhost:" + server_port + '\n');

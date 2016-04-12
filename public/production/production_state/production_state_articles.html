@@ -41,8 +41,8 @@
 			<td ng-if="article.stato == 'definito'"><span class="label label-info">{{article.stato}}</span></td>
 			<td ng-if="article.stato == 'lavorazione'"><span class="label label-warning">{{article.stato}}</span></td>
 			<td ng-if="article.stato == 'completato'"><span class="label label-success">{{article.stato}}</span></td>
-			<td>
-				<div ng-if="article.stato == 'definito' || article.stato == 'lavorazione'">
+			<td ng-if="article.stato == 'definito' || article.stato == 'lavorazione'">
+				<div>
 					<button type="button" class="btn btn-warning btn-block" ng-click="startWork(article)" data-toggle="modal" href="#newprocess">Lavora<span class="glyphicon glyphicon-wrench"></span></button>
 					<button type="button" class="btn btn-success btn-block" ng-click="prepareCompleteArticle(article)" data-toggle="modal" href="#completearticle">Completo<span class="glyphicon glyphicon-ok"></span></button>
 				</div>
