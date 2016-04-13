@@ -4,6 +4,7 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
 	cutFactory.getAll(
 		function (resp) {
 			$scope.cuts = resp.data;
+			console.log(resp);
 			$scope.totalItems = $scope.cuts.length;
 			$scope.entryLimit = 50;
 			$scope.currentPage = 1;
