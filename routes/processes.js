@@ -109,7 +109,7 @@ module.exports = function() {
 																	if (err)
 																		res.status(500).json({message: err, status: false});
 																	else {
-																		Product.update({_id: fatherProdId},{$inc: {"lavorazione": 1}}, function(err) {
+																		Product.update({_id: sonProdId},{$inc: {"lavorazione": 1}}, function(err) {
 																			if (err)
 																				res.status(500).json({message: err, status: false});
 																			else {
