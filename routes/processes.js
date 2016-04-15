@@ -26,7 +26,7 @@ module.exports = function() {
 					if (err)
 						res.status(500).json({message: err, status: false});
 					else {
-						var matr = sonProd.numeroCollo + (sonProd.lavorazione.length) + req.body.macchina;
+						var matr = sonProd.numeroCollo + sonProd.lavorazione + req.body.macchina;
 						var numFgl = [];
 						for (var i = 0; i<req.body.figli.length; i++) {
 							numFgl.push(i+1);
@@ -47,6 +47,10 @@ module.exports = function() {
 								process.scarto = req.body.scarto;
 								process.operatore = req.body.operatore;
 								process.macchina = req.body.macchina;
+								process.product = fatherProdId;
+								if (req.body.article) {
+									process.article = req.body.article._id;
+								}
 								figli.forEach(function(p) {
 									var stock = new Stock();
 									var el = numFgl.pop();
@@ -105,15 +109,11 @@ module.exports = function() {
 																	if (err)
 																		res.status(500).json({message: err, status: false});
 																	else {
-																		Product.update({_id: sonProdId},{$push:{"lavorazione": process.id}}, function(err) {
+																		Product.update({_id: fatherProdId},{$inc: {"lavorazione": 1}}, function(err) {
 																			if (err)
 																				res.status(500).json({message: err, status: false});
 																			else {
 																				if (req.body.article) {
-																				Article.update({_id: req.body.article._id}, {$push: {"lavorazione": process.id}}, function(err) {
-																					if (err)
-																						res.status(500).json({message: err, status: false});
-																					else {
 																						Article.update({_id: req.body.article._id},{$set: {"stato": "lavorazione"}}, function(err) {
 																							if (err)
 																								res.status(500).json({message: err, status: false});
@@ -133,8 +133,7 @@ module.exports = function() {
 																								});
 																							}
 																						});
-																					}
-																				});
+																				
 																				} else {
 																					Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
 																					if (err)
@@ -144,8 +143,8 @@ module.exports = function() {
 																					}
 																				});
 																				}
-																			}
-																		});
+																	}
+																	});
 																	}
 																});
 															}
@@ -168,7 +167,7 @@ module.exports = function() {
 					if (err)
 						res.status(500).json({message: err, status: false});
 					else {
-						var matr = fatherProd.numeroCollo + '/' + fatherProd.lavorazione.length + req.body.macchina;
+						var matr = fatherProd.numeroCollo + '/' + fatherProd.lavorazione + req.body.macchina;
 						var numFgl = [];
 						for (var i = 0; i<req.body.figli.length; i++) {
 							numFgl.push(i+1);
@@ -183,6 +182,11 @@ module.exports = function() {
 						process.scarto = req.body.scarto;
 						process.operatore = req.body.operatore;
 						process.macchina = req.body.macchina;
+						process.macchina = req.body.macchina;
+						process.product = fatherProdId;
+						if (req.body.article) {
+							process.article = req.body.article._id;
+						}
 								figli.forEach(function(p) {
 									var stock = new Stock();
 									var el = numFgl.pop();
@@ -241,16 +245,12 @@ module.exports = function() {
 																	if (err)
 																		res.status(500).json({message: err, status: false});
 																	else {
-																		Product.update({_id: fatherProdId},{$push:{"lavorazione": process.id}}, function(err) {
+																		Product.update({_id: fatherProdId},{$inc: {"lavorazione": 1}}, function(err) {
 																			if (err)
 																				res.status(500).json({message: err, status: false});
 																			else {
-																				if (req.body.article) {
-																				Article.update({_id: req.body.article._id}, {$push: {"lavorazione": process.id}}, function(err) {
-																					if (err)
-																						res.status(500).json({message: err, status: false});
-																					else {
-																						Article.update({_id: req.body.article._id},{$set: {"stato": "lavorazione"}}, function(err) {
+																		if (req.body.article) {
+																				Article.update({_id: req.body.article._id},{$set: {"stato": "lavorazione"}}, function(err) {
 																							if (err)
 																								res.status(500).json({message: err, status: false});
 																							else {
@@ -269,8 +269,7 @@ module.exports = function() {
 																								});
 																							}
 																						});
-																					}
-																				});
+																				
 																				} else {
 																					Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
 																						if (err)
@@ -280,7 +279,7 @@ module.exports = function() {
 																						}
 																					});
 																				}
-																			}
+																		}
 																		});
 																	}
 																});

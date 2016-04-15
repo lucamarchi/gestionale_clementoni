@@ -9,7 +9,9 @@ var ProcessSchema = new Schema({
 	operatore: {type: String},
 	scarto: {type: Number},
 	data: {type: Date, default: Date.now},
-	figli: [{type: Schema.ObjectId, ref: 'Product'}]
+	figli: [{type: Schema.ObjectId, ref: 'Product'}],
+	article: {type: Schema.ObjectId, ref: 'Article'},
+	product: {type: Schema.ObjectId, ref: 'Product'}
 });
 
 module.exports = mongoose.model('Process', ProcessSchema);
