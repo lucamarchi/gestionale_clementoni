@@ -4,6 +4,7 @@ var Schema = mongoose.Schema,
 	ObjectId = Schema.ObjectId;
 
 var CustomerSchema = new Schema({
+	ident: {type: Number},
 	agente: {type: Number},
 	bancaAbi: {type: Number},
 	bancaCab: {type: Number},

@@ -8,21 +8,14 @@ var path = require('path');
 var config = require('./config');
 var router = express.Router();
 var morgan = require('morgan');
-var dbConfig = require('./config');
-var db_name = dbConfig.dbName || 'plimco' 
 
-
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-
+var db_name = "plimco";
 var mongodb_connection_string = 'mongodb://127.0.0.1:27017/' + db_name;
-
 //take advantage of openshift env vars when available:
 if(process.env.OPENSHIFT_MONGODB_DB_URL) {
     console.log('mongo cè');
     mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + db_name;
 }
-
 mongoose.connect(mongodb_connection_string);
 
 mongoose.connection.on('error', function(error) {
@@ -55,11 +48,13 @@ app.use('/api', require(path.join(__dirname, "routes", "default.js"))());
 
 app.use('/api', function(req,res,next) {
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	console.log("Token is: "+token);
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function(err,decoded) {
 			if (err) {
 				return res.status(401).json({success: false, message: 'Failed to authenticate token'});
 			} else {
+				console.log("Token verify")
 				req.decoded = decoded;
 				next();
 			}
@@ -83,6 +78,11 @@ app.use('/api', require(path.join(__dirname, "routes", "processes.js"))());
 
 app.use('/api', router);
 
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
 app.listen(server_port, server_ip_address, function () {
-	console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
+	console.log( "Listening on " + server_ip_address + ", server_port " + server_port)
 });
+
+console.log("Starting server on localhost:" + server_port + '\n');
