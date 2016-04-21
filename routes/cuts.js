@@ -45,7 +45,10 @@ module.exports = function() {
 						cut.codice = body.data[i].Codice;
 						cut.clienteCod = body.data[i].ClienteCod;
 						cut.note = body.data[i].Note;
-						cut.date = new Date(body.data[i].DataOrdine);
+						var s = (body.data[i].DataOrdine).split(' ');
+						var y = s[0].split('/');
+						var d = new Date(y[2],y[1]-1,y[0]);
+						cut.date = d;
 						var articoli = [];
 						for(var key in body.data[i].data) {
 							var ti = (body.data[i].data[key].DesArticolo).trim();
