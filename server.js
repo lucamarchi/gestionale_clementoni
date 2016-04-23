@@ -74,7 +74,7 @@ app.use('/api', require(path.join(__dirname, "routes", "cuts.js"))());
 app.use('/api', require(path.join(__dirname, "routes", "prods.js"))());
 app.use('/api', require(path.join(__dirname, "routes", "articles.js"))());
 app.use('/api', require(path.join(__dirname, "routes", "processes.js"))());
-
+app.use('/api', require(path.join(__dirname, "routes", "customers.js"))());
 
 app.use('/api', router);
 

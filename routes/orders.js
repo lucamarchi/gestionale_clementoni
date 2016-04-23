@@ -111,6 +111,9 @@ module.exports = function() {
 									product.stabilimento = p.stabilimento;
 									product.stockId = stockId;
 									product.anno = year.toString();
+									if (!p.stato) {
+										product.stato = "sospeso";
+									} else product.stato = p.stato
 									productsArray.push(product);
 									matrP++;
 									console.log("PRODUCT: numeroCollo:"+p.numeroCollo+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.pesoLordo+"\n stabilimento: "+p.stabilimento+"\n");
@@ -244,6 +247,9 @@ module.exports = function() {
 								product.difetti = p.difetti;
 								product.stabilimento = p.stabilimento;
 								product.stockId = stockId;
+								if (!p.stato) {
+										product.stato = "sospeso";
+									} else product.stato = p.stato
 								product.anno = year.toString();
 								matrP++;
 								product.save(function(err,product) {

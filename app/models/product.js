@@ -6,7 +6,7 @@ var Stock = require('./stock');
 var ProductSchema = new Schema({
 	numeroCollo: {type: String, require: true},
 	matricola: {type: String},
-	tipo: {type: String, required: true},
+	tipo: {type: String},
 	materiale: {type: String},
 	qualita: {type: String},
 	scelta: {type: String},
@@ -22,6 +22,7 @@ var ProductSchema = new Schema({
 	prezzo: {type: Number},
 	difetti: {type: String},
 	stabilimento: {type: Number},
+	stato: {type: String},
 	stockId: {type: Schema.ObjectId, ref: 'Stock'},
 	fatherId: {type: Schema.ObjectId, ref: 'Product'},
 	scarto: {type: Number, default: 0},

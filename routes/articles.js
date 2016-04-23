@@ -4,6 +4,7 @@ module.exports = function() {
 
 	var router = express.Router();
 	var Article = require('./../app/models/article');
+	var Customer = require('./../app/models/customer');
 		
 	router.route('/articles')
 		.get(function(req,res) {
@@ -45,6 +46,20 @@ module.exports = function() {
 			});
 		});
 
+	router.route('/articles/customer/:id_customer')
+		.get(function(req,res) {
+			Customer.findOne({ident: id_customer}, function(err,customer) {
+				if (err) {
+					res.status(500).json({message: err, status: false});
+				} else {
+					if(!customer) {
+						res.json({message: "Customer non trovato problema interno", status: false});
+					} else {
+						res.json({data: customer, status: true});
+					}
+				}
+			});
+		});
 		
 	return router;
 

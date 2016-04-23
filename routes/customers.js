@@ -22,7 +22,21 @@ module.exports = function() {
 				else res.json({data: customer, status: true});
 			});
 		});
+
+	router.route('/customer/articles/:customer')
+		.get(function(req,res) {
+			Customer.findOne({ident: req.params.customer}, function(err,customer) {
+				if (err) {
+					res.status(500).json({message: err, status: false});
+				} else {
+					if(!customer) {
+						res.json({message: "Customer non trovato problema interno", status: false});
+					} else {
+						res.json({data: customer, status: true});
+					}
+				}
+			});
+		});
 		
 	return router;
-
 };

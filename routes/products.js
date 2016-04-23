@@ -88,6 +88,7 @@ module.exports = function() {
 									product.numFogli = req.body.product.numFogli;
 									product.prezzo = req.body.product.prezzo;
 									product.difetti = req.body.product.difetti;
+									product.stato = req.body.product.stato;
 									product.stabilimento = req.body.product.stabilimento;
 									product.save(function(err) {
 										if (err)

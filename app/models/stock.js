@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var StockSchema = new Schema({
 	numeroCollo: {type: String},
 	matricola: {type: String},
-	tipo: {type: String, required: true},
+	tipo: {type: String},
 	materiale: {type: String},
 	qualita: {type: String},
 	scelta: {type: String},
