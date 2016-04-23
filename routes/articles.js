@@ -8,7 +8,7 @@ module.exports = function() {
 		
 	router.route('/articles')
 		.get(function(req,res) {
-			Article.find({}, function(err,articles) {
+			Article.find({stato: {$exists: true}}, function(err,articles) {
 				if (err)
 					res.status(500).json({message: err, status: false});
 				res.json({data: articles, status: true});
@@ -42,21 +42,6 @@ module.exports = function() {
 					res.status(500).json({message: err, status: false});
 				else {
 					res.json({message: "Article completato", status: true});
-				}
-			});
-		});
-
-	router.route('/articles/customer/:id_customer')
-		.get(function(req,res) {
-			Customer.findOne({ident: id_customer}, function(err,customer) {
-				if (err) {
-					res.status(500).json({message: err, status: false});
-				} else {
-					if(!customer) {
-						res.json({message: "Customer non trovato problema interno", status: false});
-					} else {
-						res.json({data: customer, status: true});
-					}
 				}
 			});
 		});
