@@ -89,6 +89,13 @@ store.factory('articleFactory', ['$resource', 'myConfig', function ($resource, m
 					update: {method:'PUT'},
 				}
 			);
+		},
+		resourceCustomer: function () {
+			return $resource(myConfig.url+'/api/customer/articles/:id', 
+				{
+					id: "@id"
+				}
+			)
 		}
 	}
 }]);
@@ -106,7 +113,18 @@ store.factory('productionStateFactory', ['$resource', 'myConfig', function ($res
 
 /*--------------------------------> PROCESS<-------------------------------------*/
 store.factory('processFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return $resource(myConfig.url+'/api/processes', {});
+    return {
+		resource: function() {
+			return $resource(myConfig.url+'/api/processes', {});
+		},
+		resourceArticle: function() {
+			return $resource(myConfig.url+'/api/processes/articles/:id',
+				{
+					id:"@id"
+				}
+			);
+		}
+	} 
 }]);
 
 

@@ -6,6 +6,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	$scope.articlesState = [];
 	$scope.articlesState2 = [];
 	$scope.isEnabled = false;
+	$scope.isUpdate = false;
 	$scope.workInProgress = false;
 	$scope.monster = [];
 	
@@ -68,12 +69,42 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		stockFactory.resource().get(
 			{id: article.stockId},
 			function (resp) {
-				console.log(resp);
+				console.log("COLLO SELEZIONATO", resp.data);
 				$scope.stock = resp.data;
 			},
 			function(err) {
 				console.log(err);
 			}
+		);
+	}
+	
+	$scope.viewArticleProcesses = function (article) {
+		processFactory.resourceArticle().get(
+			{
+				id:article._id	
+			},
+			function (resp) {
+				$scope.articleProcesses = resp.data;
+				console.log("TUTTE LE LAVORAZIONI", resp.data);
+			},
+			function (err) {
+				console.log(resp);
+			}
+		);
+	}
+	
+	$scope.viewArticleCustomer = function (article) {
+		articleFactory.resourceCustomer().get(
+			{
+				id:article.clienteCod
+			},
+			function (resp) {
+				$scope.customer = resp.data;
+				console.log("CLIENTE ARTICOLO", resp.data);
+			},
+			function (err) {
+				console.log(resp);
+			} 
 		);
 	}
 	
@@ -99,13 +130,13 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		$scope.articlesState.push(article);
 //		$scope.articlesState2.push(article);
 		$scope.articles.splice(index,1);
-		console.log("index push ", index);
+//		console.log("index push ", index);
 	}
 
 	$scope.deleteArticle = function (article, index){
 		$scope.articles.push(article);
 		$scope.articlesState.splice(index,1);
-		console.log("index pop ", index);
+//		console.log("index pop ", index);
 	}
 	
 	$scope.confirmProductionState = function () {
@@ -124,7 +155,6 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		);
 	}
 	
-	//1
 	$scope.startWork = function(article){
 		process = {};
 		$scope.article = article;
@@ -132,7 +162,6 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 			stockFactory.resource().get(
 				{id: article.stockId},
 				function (resp) {
-					console.log(resp);
 					$scope.stock = Object.assign({},resp.data);
 					$scope.stockOld = Object.assign({},resp.data);
 				},
@@ -151,6 +180,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		$scope.bancale = undefined;
 		$scope.scarto = 0;
 		$scope.workInProgress = true;
+		$scope.isUpdate = false;
 	}
 	
 	$scope.openListColli = function(){
@@ -172,7 +202,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	
 	$scope.selectMachinery = function (machinery) {
 		$scope.machinery = machinery;
-		console.log("macchina", machinery);
+		console.log("Macchina selezionata", machinery);
 	}
 	
 	$scope.createChildren = function () {
@@ -184,8 +214,13 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		$scope.child.finitura = $scope.stock.finitura;
 		$scope.child.colore = $scope.stock.colore;
 		$scope.child.spessore = $scope.stock.spessore;
-		$scope.child.larghezza = $scope.article.larghezza;
-		$scope.child.lunghezza = $scope.article.lunghezza;
+		if($scope.article) {
+			$scope.child.larghezza = $scope.article.larghezza 
+			$scope.child.lunghezza = $scope.article.lunghezza;
+		}
+		else {
+			$scope.child.larghezza = $scope.stock.larghezza;	
+		}
 		if ($scope.machinery != "f") {
 			$scope.child.stabilimento = 1;
 		}
@@ -195,17 +230,22 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	}
 	
 	$scope.addChild = function (child) {
-		child.peso = child.peso - $scope.bancale;
+		child.pesoNetto = child.pesoLordo - $scope.bancale;
 		valuesProduct(child);
 		$scope.children.push(child);
-		console.log("Realizzato", child);
+	}
+	
+	$scope.editCollo = function () {
+		$scope.bancale = undefined;	
 	}
 	
 	$scope.updateCollo = function (stock) {
 		$scope.stock = stock;
-		console.log("stock aggiornato", stock);
-		console.log("stock iniziale", $scope.stockOld);
+		$scope.stock.pesoNetto = $scope.stock.pesoLordo - $scope.bancale;
+		valuesProduct($scope.stock);
+		$scope.isUpdate = true;
 	}
+	
 	
 	$scope.confirmWork = function(){
 		var stockOld = $scope.stockOld;
@@ -216,14 +256,25 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		process.scarto = calculateScarto(stockOld, process.stock, process.figli);
 		process.operatore = UserService.getUser();
 		console.log("process", process);
-		processFactory.save({},
+		processFactory.resource().save({},
 			process,
 			function(resp){
-				console.log(resp)
+				console.log("CONFERMATA LAVORAZIONE", resp)
 			},
 			function (err){
 				console.log(err);
 			})
+	}
+	
+	
+	$scope.furtherWork = function() {
+		process = {};
+		$scope.article = undefined;
+		$scope.child = undefined;
+		$scope.children = [];
+		$scope.bancale = undefined;
+		$scope.scarto = 0;
+		$scope.isUpdate = false;
 	}
 	
 	$scope.prepareCompleteArticle = function (article) {
@@ -235,7 +286,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		articleFactory.resourceComplete().update(
 			{id: article._id},
 			function (resp) {
-				console.log(resp)
+				console.log("ARTICOLO COMPLETATO", resp)
 				article.stato = "completato"
 			},
 			function(err) {

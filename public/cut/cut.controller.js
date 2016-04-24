@@ -4,7 +4,7 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
 	cutFactory.getAll(
 		function (resp) {
 			$scope.cuts = resp.data;
-			console.log(resp);
+			console.log("TUTTI GLI ORDINI DI TAGLIO ",resp.data);
 			$scope.totalItems = $scope.cuts.length;
 			$scope.entryLimit = 50;
 			$scope.currentPage = 1;
@@ -37,6 +37,7 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
 				console.log("TAGLIO E ARTICOLI" , resp);
 				$scope.cut = resp.cut;
 				$scope.articlesCut = resp.articoli;
+				$scope.customer = resp.customer;
 			},
 			function (err) {
 				console.log (err);

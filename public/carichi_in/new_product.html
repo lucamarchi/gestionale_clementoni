@@ -8,9 +8,19 @@
 	</div>
 
 	<div class="form-group">
+		<label for="stabilimento" class="col-md-2 control-label">Stabilimento:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.product.stabilimento" class="form-control" required>
+				<option value="1">1</option>
+				<option value="2">2</option>
+			</select>
+		</div>
+	</div>
+	
+	<div class="form-group">
 		<label for="tipo" class="col-md-2 control-label">Tipo:</label>  
 		<div class="col-md-10">
-			<select ng-model="$parent.product.tipo" class="form-control" required>
+			<select ng-model="$parent.product.tipo" class="form-control">
 				<option value="coil">Coil</option>
 				<option value="nastro">Nastro</option>
 				<option value="piana">Piana</option>
@@ -27,7 +37,7 @@
 	<div class="form-group">
 		<label for="materiale" class="col-md-2 control-label">Materiale:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.materiale" class="form-control" required>
+			<select ng-model="$parent.product.materiale" class="form-control">
 				<option value="zincato">Zincato</option>
 				<option value="decapato">Decapato</option>
 				<option value="laf">Laf</option>
@@ -42,7 +52,7 @@
 	<div class="form-group" ng-if = "product.materiale == 'zincato'">
 		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.qualita" class="form-control" required>
+			<select ng-model="$parent.product.qualita" class="form-control">
 				<option value="dx51d">dx51d</option>
 				<option value="dx52d">dx52d</option>
 				<option value="dx53d">dx53d</option>
@@ -53,7 +63,7 @@
 	<div class="form-group" ng-if = "product.materiale == 'decapato'">
 		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
 		<div class="col-md-10">		
-			<select ng-model="$parent.product.qualita" class="form-control" required>
+			<select ng-model="$parent.product.qualita" class="form-control">
 				<option value="dd11">dd11</option>
 				<option value="dd12">dd12</option>
 				<option value="dd13">dd13</option>
@@ -63,7 +73,7 @@
 	<div class="form-group" ng-if = "product.materiale == 'laf'">
 		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.qualita" class="form-control" required>
+			<select ng-model="$parent.product.qualita" class="form-control">
 				<option value="dc01">dc01</option>
 				<option value="dc02">dc02</option>
 				<option value="dc03">dc03</option>
@@ -74,7 +84,7 @@
 	<div class="form-group" ng-if = "product.materiale == 'caldo'">
 		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.qualita" class="form-control" required>
+			<select ng-model="$parent.product.qualita" class="form-control">
 				<option value="s235jr">s235jr</option>
 				<option value="s275jr">s275jr</option>
 				<option value="s355jr">s355jr</option>
@@ -85,7 +95,7 @@
 	<div class="form-group">
 		<label for="scelta" class="col-md-2 control-label">Scelta:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.scelta" class="form-control" required>
+			<select ng-model="$parent.product.scelta" class="form-control">
 				<option value="A">A</option>
 				<option value="B">B</option>
 				<option value="C">C</option>
@@ -97,7 +107,7 @@
 	<div class="form-group" ng-if = "product.materiale == 'preverniciato' || product.materiale == 'zincato'">
 		<label for="finitura" class="col-md-2 control-label">Finitura:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.finitura" class="form-control" required>
+			<select ng-model="$parent.product.finitura" class="form-control">
 				<option value="z100">z100</option>
 				<option value="z140">z140</option>
 				<option value="z200">z200</option>
@@ -115,7 +125,7 @@
 	<div class="form-group" ng-if = "product.materiale == 'preverniciato'">
 		<label for="coloreRal" class="col-md-2 control-label">Colore/Ral:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.coloreRal" class="form-control" required>
+			<select ng-model="$parent.product.coloreRal" class="form-control">
 				<option value="v">Verde(v)</option>
 				<option value="bg">Bianco Grigio(bg)</option>
 				<option value="tdm">Testa di Moro(tdm)</option>
@@ -133,14 +143,14 @@
 	<div class="form-group">
 		<label for="peso" class="col-md-2 control-label">Peso(kg):</label>
 		<div class="col-md-10">
-			<input type="number" ng-model="$parent.product.peso" class="form-control" required/>
+			<input type="number" ng-model="$parent.product.pesoNetto" class="form-control"/>
 		</div>
 	</div>
 	
 	<div class="form-group">
 		<label for="spessore" class="col-md-2 control-label">Spessore:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.spessore" class="form-control" required>
+			<select ng-model="$parent.product.spessore" class="form-control">
 				<option value="0.25">0.25</option><option value="0.3">0.30</option><option value="0.35">0.35</option>
 				<option value="0.4">0.40</option><option value="0.45">0.45</option><option value="0.5">0.50</option>
 				<option value="0.6">0.60</option><option value="0.7">0.70</option><option value="0.8">0.80</option>
@@ -153,28 +163,30 @@
 		</div>
 	</div>
 	
+<!--
 	<div class="form-group">
 		<label for="cLarghezza" class="col-md-2 control-label">C.Larghezza:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.classeLarghezza" class="form-control" required>
+			<select ng-model="$parent.product.classeLarghezza" class="form-control">
 				<option value="1000">1000</option>
 				<option value="1250">1250</option>
 				<option value="1500">1500</option>
 			</select>
 		</div>
 	</div>
+-->
 	
 	<div class="form-group">
 		<label for="larghezza" class="col-md-2 control-label">Larghezza:</label>
 		<div class="col-md-10">
-			<input type="number" ng-model="$parent.product.larghezza" class="form-control" required/>
+			<input type="number" ng-model="$parent.product.larghezza" class="form-control"/>
 		</div>
 	</div>
 	
 	<div class="form-group" ng-if="product.tipo != 'coil' && product.tipo != 'nastro'">
 		<label for="lunghezza" class="col-md-2 control-label">Lunghezza:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.lunghezza" class="form-control" required>
+			<select ng-model="$parent.product.lunghezza" class="form-control">
 				<option value="2000">2000</option>
 				<option value="2500">2500</option>
 				<option value="3000">3000</option>
@@ -191,7 +203,14 @@
 	<div class="form-group">
 		<label for="prezzo" class="col-md-2 control-label">Prezzo:</label>
 		<div class="col-md-10">
-			<input type="number" ng-model="$parent.product.prezzo" class="form-control" required/>
+			<input type="number" ng-model="$parent.product.prezzo" class="form-control"/>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="prezzo" class="col-md-2 control-label">Stato:</label>
+		<div class="col-md-10">
+			<input type="text" ng-model="$parent.product.stato" class="form-control"/>
 		</div>
 	</div>
 
@@ -202,15 +221,6 @@
 		</div>
 	</div>
 	
-	<div class="form-group">
-		<label for="stabilimento" class="col-md-2 control-label">Stabilimento:</label>
-		<div class="col-md-10">
-			<select ng-model="$parent.product.stabilimento" class="form-control" required>
-				<option value="1">1</option>
-				<option value="2">2</option>
-			</select>
-		</div>
-	</div>
 </form>
 
 <!--<pre>Prodotto= {{product | json}}</pre>-->

@@ -59,10 +59,10 @@ store.factory('stockFactory', ['$resource', 'myConfig', function ($resource, myC
 											monster[i].value[j].lung = monster[i].value[j].lung + temp.length;
 											monster[i].lung = monster[i].lung + temp.length;
 											for (t of temp) {
-												monster[i].value[j].value[k].value[z].weight = monster[i].value[j].value[k].value[z].weight + t.peso;
-												monster[i].value[j].value[k].weight = monster[i].value[j].value[k].weight + t.peso; 
-												monster[i].value[j].weight = monster[i].value[j].weight + t.peso;
-												monster[i].weight = monster[i].weight + t.peso;
+												monster[i].value[j].value[k].value[z].weight = monster[i].value[j].value[k].value[z].weight + t.pesoNetto;
+												monster[i].value[j].value[k].weight = monster[i].value[j].value[k].weight + t.pesoNetto; 
+												monster[i].value[j].weight = monster[i].value[j].weight + t.pesoNetto;
+												monster[i].weight = monster[i].weight + t.pesoNetto;
 											}
 											z++;
 										}

@@ -8,17 +8,18 @@
 			<th>Qualita</th>
 			<th>Scelta</th>
 			<th>Finitura</th>
-			<th>Colore/Ral</th>
-			<th>Peso</th>
-			<th>Spessore</th>
-			<th>Larghezza</th>
-			<th>C.Larghezza</th>
-			<th>Lunghezza</th>
+			<th>Colore Ral</th>
+			<th>Peso (kg)</th>
+			<th>Spess</th>
+			<th>Largh Nom.</th>
+			<th>Largh Eff.</th>
+			<th>Lungh</th>
 			<th>N.Fogli</th>
-			<th>Prezzo(&euro;/t)</th>
+			<th>Prezzo (&euro;/t)</th>
 			<th>Difetti</th>
-			<th>Stabilimento</th>
+			<th>Stab</th>
 			<th>Scarto</th>
+			<th>Stato</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -31,18 +32,24 @@
 			<td>{{product.scelta}}</td>
 			<td>{{product.finitura}}</td>
 			<td>{{product.coloreRal}}</td>
-			<td>{{product.peso}}</td>
+			<td>{{product.pesoNetto}}</td>
 			<td>{{product.spessore}}</td>
-			<td>{{product.larghezza}}</td>
 			<td>{{product.classeLarghezza}}</td>
+			<td>{{product.larghezza}}</td>
 			<td>{{product.lunghezza|number:2}}</td>
 			<td>{{product.numFogli}}</td>
 			<td>{{product.prezzo}}</td>
 			<td>{{product.difetti}}</td>
 			<td>{{product.stabilimento}}</td>
 			<td>{{product.scarto}}</td>
+			<td>{{product.stato}}</td>
 			<td>
-				<button type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteProduct(product, productsOrder.indexOf(product))" data-target="#deleteproduct" data-toggle="modal">Cancella <span class="glyphicon glyphicon-trash"></button>
+				<div>
+				<button type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteProduct(product, productsOrder.indexOf(product))" data-target="#deleteproduct" data-toggle="modal">Cancella<span class="glyphicon glyphicon-trash"></button>
+				</div>
+				<div>
+				<button type="button" class="btn btn-warning btn-circle" ng-click="openProduct(product, productsOrder.indexOf(product))" data-target="#newproduct" data-toggle="modal">Modifica<span class="glyphicon glyphicon-cog"></button>
+				</div>
 			</td>
 		</tr>
 	</tbody>
