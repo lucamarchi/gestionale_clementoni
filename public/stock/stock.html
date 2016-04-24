@@ -100,21 +100,22 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th>Spessore(mm)</th>
-					<th>C.Larghezza(mm)</th>
+					<th>Spessore</th>
+					<th>Largh Nominale</th>
+					<th>Num Collo</th>
 					<th>Matricola</th>
-					<th>Numero Collo</th>
 					<th>Qualita</th>
 					<th>Scelta</th>
 					<th>Finitura</th>
 					<th>Colore/Ral</th>
-					<th>Peso(kg)</th>
-					<th>Larghezza(mm)</th>
-					<th>Lunghezza(ml)</th>
-					<th>N.Fogli</th>
-					<th>Prezzo(&euro;/t)</th>
+					<th>Peso Netto(kg)</th>
+					<th>Peso Lordo(kg)</th>
+					<th>Largh Effettiva</th>
+					<th>Lungh</th>
+					<th>Num. Fogli</th>
+					<th>Prezzo (&euro;/t)</th>
 					<th>Difetti</th>
-					<th>Stabilimento</th>
+					<th>Stab</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -123,16 +124,17 @@
 				<tr ng-repeat="p in l2p.value">
 					<td>{{s2p.key}}</td>
 					<td>{{l2p.key}}</td>
+					<td>{{p.numeroCollo|uppercase}}</td>
 					<td>{{p.matricola}}</td>
-					<td>{{p.numeroCollo}}</td>
-					<td>{{p.qualita}}</td>
+					<td>{{p.qualita|uppercase}}</td>
 					<td>{{p.scelta}}</td>
 					<td>{{p.finitura}}</td>
 					<td>{{p.coloreRal}}</td>
 					<td>
-						<span ng-if="p.peso>=5000" style="color:green">{{p.peso}}</span>
-						<span ng-if="p.peso<5000" style="color:orange">{{p.peso}}</span>
+						<span ng-if="p.pesoNetto>=5000" style="color:green">{{p.pesoNetto}}</span>
+						<span ng-if="p.pesoNetto<5000" style="color:orange">{{p.pesoNetto}}</span>
 					</td>
+					<td>{{p.pesoLordo}}</td>
 					<td>{{p.larghezza}}</td>
 					<td>{{p.lunghezza|number:2}}</td>
 					<td>{{p.numFogli}}</td>
@@ -147,7 +149,7 @@
 					
 				</tr>
 				<tr ng-repeat-end>
-					<td colspan="15"><div align="right"><b>Totale:</b> {{l2p.weight}} kg</div></td>
+					<td colspan="16"><div align="right"><b>Totale:</b> {{l2p.weight}} kg</div></td>
 				</tr>
 				<tr ng-repeat-end ng-hide="true"></tr>
 			</tbody>
@@ -173,7 +175,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-				<button type="button" class="btn btn-success" ng-click="deleteProduct(p,index1,index2,index3,index4,index5)" data-dismiss="modal">Conferma</button>
+				<button type="button" class="btn btn-success" ng-click="deleteProduct(product,index1,index2,index3,index4,index5)" data-dismiss="modal">Conferma</button>
 			</div>
 		</div>
 	</div>

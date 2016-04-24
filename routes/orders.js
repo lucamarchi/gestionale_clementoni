@@ -72,7 +72,8 @@ module.exports = function() {
 							stock.scelta = p.scelta;
 							stock.finitura = p.finitura;
 							stock.coloreRal = p.coloreRal;
-							stock.peso = p.peso;
+							stock.pesoLordo = p.pesoLordo;
+							stock.pesoNetto = p.pesoNetto;
 							stock.spessore = p.spessore;
 							stock.larghezza = p.larghezza;
 							stock.classeLarghezza = p.classeLarghezza;
@@ -82,7 +83,7 @@ module.exports = function() {
 							stock.difetti = p.difetti;
 							stock.stabilimento = p.stabilimento;
 							matrS++;
-							console.log("STOCK: matricola:"+p.matricola+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.peso+"\n stabilimento: "+p.stabilimento+"\n");
+							console.log("STOCK: matricola:"+p.matricola+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.pesoLordo+"\n stabilimento: "+p.stabilimento+"\n");
 							stock.save(function(err) {
 								if (err)
 									res.status(500).json({message: err, status: false});
@@ -98,7 +99,8 @@ module.exports = function() {
 									product.scelta = p.scelta;
 									product.finitura = p.finitura;
 									product.coloreRal = p.coloreRal;
-									product.peso = p.peso;
+									product.pesoLordo = p.pesoLordo;
+									product.pesoNetto = p.pesoNetto;
 									product.spessore = p.spessore;
 									product.larghezza = p.larghezza;
 									product.classeLarghezza = p.classeLarghezza;
@@ -109,9 +111,12 @@ module.exports = function() {
 									product.stabilimento = p.stabilimento;
 									product.stockId = stockId;
 									product.anno = year.toString();
+									if (!p.stato) {
+										product.stato = "sospeso";
+									} else product.stato = p.stato
 									productsArray.push(product);
 									matrP++;
-									console.log("PRODUCT: numeroCollo:"+p.numeroCollo+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.peso+"\n stabilimento: "+p.stabilimento+"\n");
+									console.log("PRODUCT: numeroCollo:"+p.numeroCollo+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.pesoLordo+"\n stabilimento: "+p.stabilimento+"\n");
 									product.save(function(err) {
 										if (err)
 											res.status(500).json({message: err, status: false});
@@ -206,7 +211,8 @@ module.exports = function() {
 						stock.scelta = p.scelta;
 						stock.finitura = p.finitura;
 						stock.coloreRal = p.coloreRal;
-						stock.peso = p.peso;
+						stock.pesoLordo = p.pesoLordo;
+						stock.pesoNetto = p.pesoNetto;
 						stock.spessore = p.spessore;
 						stock.larghezza = p.larghezza;
 						stock.classeLarghezza = p.classeLarghezza;
@@ -230,7 +236,8 @@ module.exports = function() {
 								product.scelta = p.scelta;
 								product.finitura = p.finitura;
 								product.coloreRal = p.coloreRal;
-								product.peso = p.peso;
+								product.pesoLordo = p.pesoLordo;
+								product.pesoNetto = p.pesoNetto;
 								product.spessore = p.spessore;
 								product.larghezza = p.larghezza;
 								product.classeLarghezza = p.classeLarghezza;
@@ -240,6 +247,9 @@ module.exports = function() {
 								product.difetti = p.difetti;
 								product.stabilimento = p.stabilimento;
 								product.stockId = stockId;
+								if (!p.stato) {
+										product.stato = "sospeso";
+									} else product.stato = p.stato
 								product.anno = year.toString();
 								matrP++;
 								product.save(function(err,product) {

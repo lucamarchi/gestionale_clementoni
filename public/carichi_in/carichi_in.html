@@ -21,7 +21,7 @@
 			<td>{{order.dataArrivo | date:'medium'}}</td>
 			<td>
 				<button type="button" class="btn btn-warning btn-circle" ng-click="openOrder(order)" data-target="#neworder" data-toggle="modal">Modifica <span class="glyphicon glyphicon-cog"></button>
-				<button type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteOrder(order, orders.indexOf(order))" data-target="#deleteproduct" data-toggle="modal">Cancella <span class="glyphicon glyphicon-trash"></span></button>
+				<button type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteOrder(order, orders.indexOf(order))" data-target="#deleteproduct" data-toggle="modal">Cancella <span class="glyphicon glyphicon-trash"></span></button>	
 			</td>
 		</tr>
 	</tbody>
@@ -62,7 +62,8 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-				<button ng-if="productForm.$valid" type="button" class="btn btn-success" ng-click="addProduct()" data-dismiss="modal">Conferma</button>
+				<button ng-if="productForm.$valid && !product._id" type="button" class="btn btn-success" ng-click="addProduct()" data-dismiss="modal">Conferma</button>
+				<button ng-if="productForm.$valid && product._id" type="button" class="btn btn-success" ng-click="updateProduct()" data-dismiss="modal">Conferma</button>
 			</div>
 		</div>
 	</div>
@@ -101,7 +102,7 @@
 				<h3 ng-if="order" class="modal-title" align="center">Elimina Ordine</h3>
 			</div>
 			<div class="modal-body">
-				<div ng-if="product">Verrà eliminato anche il rispettivo prodotto all'interno dello stock</div>
+				<div ng-if="product._id">Verrà eliminato anche il rispettivo prodotto all'interno dello stock</div>
 				<div ng-if="order">Verranno eliminati anche tutti i prodotti ed i corrispondenti all'interno dello stock</div>
 			</div>
 			<div class="modal-footer">

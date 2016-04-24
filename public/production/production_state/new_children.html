@@ -136,16 +136,16 @@
 		</div>
 
 		<div class="form-group">
-			<label for="peso" class="col-md-2 control-label">Peso(kg):</label>
+			<label for="peso" class="col-md-2 control-label">PesoLordo(kg):</label>
 			<div class="col-md-10">
-				<input type="number" ng-model="$parent.child.peso" class="form-control" required/>
+				<input type="number" ng-model="$parent.child.pesoLordo" class="form-control" required/>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="spessore" class="col-md-2 control-label">Spessore:</label>
 			<div class="col-md-10">
-				<select ng-model="$parent.child.spessore" class="form-control" convert-to-number required>
+				<select ng-model="$parent.child.spessore" class="form-control" convert-to-float required>
 					<option value="0.25">0.25</option><option value="0.3">0.30</option><option value="0.35">0.35</option>
 					<option value="0.4">0.40</option><option value="0.45">0.45</option><option value="0.5">0.50</option>
 					<option value="0.6">0.60</option><option value="0.7">0.70</option><option value="0.8">0.80</option>
@@ -158,6 +158,7 @@
 			</div>
 		</div>
 
+<!--
 		<div class="form-group">
 			<label for="cLarghezza" class="col-md-2 control-label">C.Larghezza:</label>
 			<div class="col-md-10">
@@ -168,6 +169,7 @@
 				</select>
 			</div>
 		</div>
+-->
 
 		<div class="form-group">
 			<label for="larghezza" class="col-md-2 control-label">Larghezza:</label>
@@ -179,7 +181,7 @@
 		<div class="form-group" ng-if="$parent.child.tipo != 'coil' && $parent.child.tipo != 'nastro'">
 			<label for="lunghezza" class="col-md-2 control-label">Lunghezza:</label>
 			<div class="col-md-10">
-				<input type="text" ng-model="$parent.child.lunghezza" class="form-control">
+				<input type="text" ng-model="$parent.child.lunghezza" class="form-control" required/>
 			</div>
 		</div>
 		<div class="form-group" ng-if="$parent.child.tipo == 'coil' || $parent.child.tipo == 'nastro'">

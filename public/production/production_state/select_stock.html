@@ -17,7 +17,6 @@
 
 			<td>
 				<select ng-model="search.tipo">
-					<option></option>
 					<option value="coil">Coil</option>
 					<option value="nastro">Nastro</option>
 					<option value="piana">Piana</option>
@@ -32,7 +31,6 @@
 
 			<td>
 				<select ng-model="search.spessore" convert-to-float>
-					<option></option>
 					<option value="0.25">0.25</option><option value="0.3">0.30</option><option value="0.35">0.35</option>
 					<option value="0.4">0.40</option><option value="0.45">0.45</option><option value="0.5">0.50</option>
 					<option value="0.6">0.60</option><option value="0.7">0.70</option><option value="0.8">0.80</option>
@@ -45,7 +43,6 @@
 			</td>
 			<td>
 				<select ng-model="search.classeLarghezza" convert-to-number>
-					<option></option>
 					<option value="1000">1000</option>
 					<option value="1250">1250</option>
 					<option value="1500">1500</option>
@@ -55,19 +52,20 @@
 		<tr>
 			<th>Materiale</th>
 			<th>Tipo</th>
-			<th>Spessore(mm)</th>
-			<th>C.Larghezza(mm)</th>
-			<th>N.Collo</th>
+			<th>Spess</th>
+			<th>Largh Nom</th>
+			<th>Num. Collo</th>
 			<th>Qualita</th>
 			<th>Scelta</th>
 			<th>Finitura</th>
-			<th>Colore/Ral</th>
-			<th>Peso(kg)</th>
-			<th>Larghezza(mm)</th>
-			<th>Lunghezza(ml)</th>
-			<th>N.Fogli</th>
+			<th>Colore Ral</th>
+			<th>Peso Lordo</th>
+			<th>Peso Netto</th>
+			<th>Largh</th>
+			<th>Lungh</th>
+			<th>Num. Fogli</th>
 			<th>Difetti</th>
-			<th>Stabilimento</th>
+			<th>Stab</th>
 		</tr>
 	</thead>
     <tbody>
@@ -81,7 +79,8 @@
 			<td>{{product.scelta}}</td>
 			<td>{{product.finitura}}</td>
 			<td>{{product.coloreRal}}</td>
-			<td>{{product.peso}}</td>
+			<td>{{product.pesoLordo}}</td>
+			<td>{{product.pesoNetto}}</td>
 			<td>{{product.larghezza}}</td>
 			<td>{{product.lunghezza|number:2}}</td>
 			<td>{{product.numFogli}}</td>

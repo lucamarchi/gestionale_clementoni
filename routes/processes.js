@@ -26,7 +26,7 @@ module.exports = function() {
 					if (err)
 						res.status(500).json({message: err, status: false});
 					else {
-						var matr = sonProd.numeroCollo + (sonProd.lavorazione.length) + req.body.macchina;
+						var matr = sonProd.numeroCollo + sonProd.lavorazione + req.body.macchina;
 						var numFgl = [];
 						for (var i = 0; i<req.body.figli.length; i++) {
 							numFgl.push(i+1);
@@ -47,17 +47,22 @@ module.exports = function() {
 								process.scarto = req.body.scarto;
 								process.operatore = req.body.operatore;
 								process.macchina = req.body.macchina;
+								process.product = fatherProdId;
+								if (req.body.article) {
+									process.article = req.body.article._id;
+								}
 								figli.forEach(function(p) {
 									var stock = new Stock();
 									var el = numFgl.pop();
-									stock.numeroCollo = matr + el;
+									stock.numeroCollo = matr + el + '/';
 									stock.tipo = p.tipo;
 									stock.materiale = p.materiale;
 									stock.qualita = p.qualita;
 									stock.scelta = p.scelta;
 									stock.finitura = p.finitura;
 									stock.coloreRal = p.coloreRal;
-									stock.peso = p.peso;
+									stock.pesoLordo = p.pesoLordo;
+									stock.pesoNetto = p.pesoNetto;
 									stock.spessore = p.spessore;
 									stock.larghezza = p.larghezza;
 									stock.classeLarghezza = p.classeLarghezza;
@@ -67,14 +72,15 @@ module.exports = function() {
 									stock.difetti = p.difetti;
 									stock.stabilimento = p.stabilimento;
 									var product = new Product();
-									product.numeroCollo = matr + el;
+									product.numeroCollo = matr + el + '/';
 									product.tipo = p.tipo;
 									product.materiale = p.materiale;
 									product.qualita = p.qualita;
 									product.scelta = p.scelta;
 									product.finitura = p.finitura;
 									product.coloreRal = p.coloreRal;
-									product.peso = p.peso;
+									product.pesoLordo = p.pesoLordo;
+									product.pesoNetto = p.pesoNetto;
 									product.spessore = p.spessore;
 									product.larghezza = p.larghezza;
 									product.classeLarghezza = p.classeLarghezza;
@@ -105,14 +111,11 @@ module.exports = function() {
 																	if (err)
 																		res.status(500).json({message: err, status: false});
 																	else {
-																		Product.update({_id: sonProdId},{$push:{"lavorazione": process.id}}, function(err) {
+																		Product.update({_id: sonProdId},{$inc: {"lavorazione": 1}}, function(err) {
 																			if (err)
 																				res.status(500).json({message: err, status: false});
 																			else {
-																				Article.update({_id: req.body.article._id}, {$push: {"lavorazione": process.id}}, function(err) {
-																					if (err)
-																						res.status(500).json({message: err, status: false});
-																					else {
+																				if (req.body.article) {
 																						Article.update({_id: req.body.article._id},{$set: {"stato": "lavorazione"}}, function(err) {
 																							if (err)
 																								res.status(500).json({message: err, status: false});
@@ -125,17 +128,29 @@ module.exports = function() {
 																											if (err)
 																												res.status(500).json({message: err, status: false});
 																											else {
-																												res.json({message: 'Lavorazione corretta', status: true, data: process});
+																												Article.update({_id: req.body.article._id},{$unset: {stockId: ""}}, function(err) {
+																													if (err)
+																														res.status(500).json({message: err, status: false});
+																													else res.json({message: 'Lavorazione corretta', status: true, data: process});
+																												})
 																											}
 																										});
 																									}
 																								});
 																							}
 																						});
+																				
+																				} else {
+																					Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
+																					if (err)
+																						res.status(500).json({message: err, status: false});
+																					else {
+																						res.json({message: 'Lavorazione corretta', status: true, data: process});
 																					}
 																				});
-																			}
-																		});
+																				}
+																	}
+																	});
 																	}
 																});
 															}
@@ -158,7 +173,7 @@ module.exports = function() {
 					if (err)
 						res.status(500).json({message: err, status: false});
 					else {
-						var matr = fatherProd.numeroCollo + '/' + fatherProd.lavorazione.length + req.body.macchina;
+						var matr = fatherProd.numeroCollo + '/' + fatherProd.lavorazione + req.body.macchina;
 						var numFgl = [];
 						for (var i = 0; i<req.body.figli.length; i++) {
 							numFgl.push(i+1);
@@ -173,17 +188,23 @@ module.exports = function() {
 						process.scarto = req.body.scarto;
 						process.operatore = req.body.operatore;
 						process.macchina = req.body.macchina;
+						process.macchina = req.body.macchina;
+						process.product = fatherProdId;
+						if (req.body.article) {
+							process.article = req.body.article._id;
+						}
 								figli.forEach(function(p) {
 									var stock = new Stock();
 									var el = numFgl.pop();
-									stock.numeroCollo = matr + el;
+									stock.numeroCollo = matr + el + '/';
 									stock.tipo = p.tipo;
 									stock.materiale = p.materiale;
 									stock.qualita = p.qualita;
 									stock.scelta = p.scelta;
 									stock.finitura = p.finitura;
 									stock.coloreRal = p.coloreRal;
-									stock.peso = p.peso;
+									stock.pesoLordo = p.pesoLordo;
+									stock.pesoNetto = p.pesoNetto;
 									stock.spessore = p.spessore;
 									stock.larghezza = p.larghezza;
 									stock.classeLarghezza = p.classeLarghezza;
@@ -193,14 +214,15 @@ module.exports = function() {
 									stock.difetti = p.difetti;
 									stock.stabilimento = p.stabilimento;
 									var product = new Product();
-									product.numeroCollo = matr + el;
+									product.numeroCollo = matr + el + '/';
 									product.tipo = p.tipo;
 									product.materiale = p.materiale;
 									product.qualita = p.qualita;
 									product.scelta = p.scelta;
 									product.finitura = p.finitura;
 									product.coloreRal = p.coloreRal;
-									product.peso = p.peso;
+									product.pesoLordo = p.pesoLordo;
+									product.pesoNetto = p.pesoNetto;
 									product.spessore = p.spessore;
 									product.larghezza = p.larghezza;
 									product.classeLarghezza = p.classeLarghezza;
@@ -231,15 +253,12 @@ module.exports = function() {
 																	if (err)
 																		res.status(500).json({message: err, status: false});
 																	else {
-																		Product.update({_id: fatherProdId},{$push:{"lavorazione": process.id}}, function(err) {
+																		Product.update({_id: fatherProdId},{$inc: {"lavorazione": 1}}, function(err) {
 																			if (err)
 																				res.status(500).json({message: err, status: false});
 																			else {
-																				Article.update({_id: req.body.article._id}, {$push: {"lavorazione": process.id}}, function(err) {
-																					if (err)
-																						res.status(500).json({message: err, status: false});
-																					else {
-																						Article.update({_id: req.body.article._id},{$set: {"stato": "lavorazione"}}, function(err) {
+																		if (req.body.article) {
+																				Article.update({_id: req.body.article._id},{$set: {"stato": "lavorazione"}}, function(err) {
 																							if (err)
 																								res.status(500).json({message: err, status: false});
 																							else {
@@ -251,16 +270,28 @@ module.exports = function() {
 																											if (err)
 																												res.status(500).json({message: err, status: false});
 																											else {
-																												res.json({message: 'Lavorazione corretta', status: true, data: process});
+																												Article.update({_id: req.body.article._id},{$unset: {stockId: ""}}, function(err) {
+																													if (err)
+																														res.status(500).json({message: err, status: false});
+																													else res.json({message: 'Lavorazione corretta', status: true, data: process});
+																												})
 																											}
 																										});
 																									}
 																								});
 																							}
 																						});
-																					}
-																				});
-																			}
+																				
+																				} else {
+																					Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
+																						if (err)
+																							res.status(500).json({message: err, status: false});
+																						else {
+																							res.json({message: 'Lavorazione corretta', status: true, data: process});
+																						}
+																					});
+																				}
+																		}
 																		});
 																	}
 																});
@@ -275,7 +306,18 @@ module.exports = function() {
 					}
 				});
 			}
-		})
+		});
+
+	router.route('/processes/articles/:article_id')
+		.get(function(req,res) {
+			Process.find({article: req.params.article_id},function(err,processes) {
+				if (err)
+					res.status(500).json({message: err, status: false});
+				else {
+					res.json({data: processes, status: true});
+				}
+			});
+		});
 			
 	return router;
 };

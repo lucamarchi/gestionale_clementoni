@@ -35,10 +35,6 @@
 			<div class="modal-body">
 				<div ng-include src="'public/production/production_state/production_state_articles.html'"></div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-				<button type="button" class="btn btn-success" data-dismiss="modal">Conferma</button>
-			</div>
 		</div>
 	</div>
 </div>
@@ -133,7 +129,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-target="#newprocess" data-toggle="modal" data-dismiss="modal">Indietro</button>
-				<button type="button" class="btn btn-success" ng-click="confirmWork()" data-dismiss="modal">Conferma</button>
+				<button ng-if="isUpdate" type="button" class="btn btn-success" data-toggle="modal" data-target="#completework" data-dismiss="modal">Conferma</button>
 			</div>
 		</div>
 	</div>
@@ -196,6 +192,38 @@
 	</div>
 </div>
 
+<!-- Modal view_article_processes.html-->
+<div id="viewprocesses" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">ELENCO LAVORAZIONI</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/view_article_processes.html'"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal view_article_customer.html-->
+<div id="viewarticlecustomer" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">CLIENTE</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/view_article_customer.html'"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- Modal completeArticle-->
 <div id="completearticle" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -211,6 +239,46 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 				<button type="button" class="btn btn-success" ng-click="completeArticle()" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal completeWork-->
+<div id="completework" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 class="modal-title" align="center">CONFERMARE LAVORAZIONE</h3>
+			</div>
+			<div class="modal-body">
+				<div>L'operazione è irreversibile non sarà possibile ritornare allo stato precedente</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#newprocess2" data-dismiss="modal">Annulla</button>
+				<button type="button" class="btn btn-success"  data-toggle="modal" data-target="#furtherwork" ng-click="confirmWork()" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal completeWork-->
+<div id="furtherwork" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3 class="modal-title" align="center">ALTRE LAVORAZIONI</h3>
+			</div>
+			<div class="modal-body">
+				<div>Eseguire altre lavorazioni sul collo?</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+				<button type="button" class="btn btn-success" data-toggle="modal" ng-click="furtherWork()" data-target="#newprocess2" data-dismiss="modal">Si</button>
 			</div>
 		</div>
 	</div>

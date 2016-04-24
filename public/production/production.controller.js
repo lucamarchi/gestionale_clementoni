@@ -1,4 +1,4 @@
-store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory', function ($scope, articleFactory, stockFactory) {
+store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory', function ($scope, articleFactory, stockFactory, processFactory) {
 	
 	articleFactory.resourceState().getAll(
 		function (resp) {
@@ -24,6 +24,36 @@ store.controller('productionController', ['$scope', 'articleFactory', 'stockFact
 			function(err) {
 				console.log(err);
 			}
+		);
+	}
+	
+	$scope.viewArticleProcesses = function (article) {
+		processFactory.resourceArticle().get(
+			{
+				id:article._id	
+			},
+			function (resp) {
+				$scope.articleProcesses = resp.data;
+				console.log("TUTTE LE LAVORAZIONI", resp.data);
+			},
+			function (err) {
+				console.log(resp);
+			}
+		);
+	}
+	
+	$scope.viewArticleCustomer = function (article) {
+		articleFactory.resourceCustomer().get(
+			{
+				id:article.clienteCod
+			},
+			function (resp) {
+				$scope.customer = resp.data;
+				console.log("CLIENTE ARTICOLO", resp.data);
+			},
+			function (err) {
+				console.log(resp);
+			} 
 		);
 	}
 }]);

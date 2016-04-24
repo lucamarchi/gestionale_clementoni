@@ -6,16 +6,11 @@ module.exports = function() {
 	var jwt = require('jsonwebtoken');
 	var config = require('./../config');
 
-	router.get('/', function(req,res) {
-		res.json({message: 'Gestionale Clementoni API!'});
-	});
-
 	router.post('/setup', function(req,res) {
-		var user = new User({
-			username: req.body.username,
-			password: req.body.password,
-			role: 'user'
-		});
+		var user = new User()
+		user.username = req.body.username;
+		user.password = user.generateHash(req.body.password)
+		user.role = 'user'
 		user.save(function(err) {
 			if (err)
 				res.status(500).json({status: false, message: 'Errore: ' + err});
@@ -31,25 +26,23 @@ module.exports = function() {
 			if (err)
 				res.status(500).json({status: false, message: 'Errore: '+ err});
 			if (!user) {
+				console.log("User not found")
 				res.status(401).json({status: false, message: 'Authentication failed, user not found'});
-			} 	else if (user) {
-				user.comparePassword(req.body.password, function(err, isMatch) {
-            		if (err) res.status(500).json({status: false, message: 'Errore: '+ err});
-            		if (isMatch) {
-            			console.log("User authenticated "+isMatch);
-            			var token = jwt.sign({user: user}, config.secret, {expiresIn: '24h'});
-            			console.log('Token ok: '+token);
-						res.json({
-							status: true,
-							token: token,
-							message: 'Token generated'
-						});
-					} else {
-						console.log("User authenticated "+isMatch);
-            			res.status(401).json({status: false, message: 'Password not valid'});
-					}
-        		});
-			}
+			} else if (user) {
+				if (user.comparePassword(req.body.password)) {
+            		console.log("User authenticated: "+ user.comparePassword(req.body.password));
+            		var token = jwt.sign({user: user}, config.secret, {expiresIn: '24h'});
+            		console.log('Token ok: '+token);
+					res.json({
+						status: true,
+						token: token,
+						message: 'Token generated'
+					});
+				} else {
+					console.log("User not authenticated ");
+            		res.status(401).json({status: false, message: 'Password not valid'});
+				}
+        	}
 		});
 	});
 

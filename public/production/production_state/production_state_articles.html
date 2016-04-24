@@ -2,23 +2,28 @@
 	<thead>
 		<tr>
 			<th>Data Consegna</th>
-			<th>Cod.Articolo</th>
+			<th>Cod. Articolo</th>
+			<th>Num. Ordine</th>
+			<th>Cod. Cliente</th>
 			<th>Materiale</th>
 			<th>Tipo</th>
-			<th>Spessore</th>
-			<th>Larghezza</th>
-			<th>Lunghezza</th>
+			<th>Spess</th>
+			<th>Largh</th>
+			<th>Lungh</th>
 			<th>Peso</th>
-			<th>Quantita</th>
+			<th>Qta</th>
 			<th>Prezzo</th>
 			<th>Stock</th>
 			<th>Stato</th>
+			<th>Operaz.</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="article in articlesState | orderBy:['materiale','tipo','spessore','larghezza']">
 			<td>{{article.dataConsegna| date:'medium'}}</td>
-			<td>{{article.codArticolo}}</td>
+			<td><button ng-if="article.clienteCod" type="button" class="btn btn-info btn-block" ng-click="viewArticleCustomer(article)" data-target="#viewarticlecustomer" data-toggle="modal">{{article.codArticolo}}</button></td>
+			<td>{{article.ordineCod}}</td>
+			<td>{{article.clienteCod}}</td>
 			<td>{{article.materiale}}</td>
 			<td>{{article.tipo}}</td>
 			<td>{{article.spessore}}</td>
@@ -29,22 +34,29 @@
 			<td>{{article.prezzo}}</td>
 			<td>
 				<div ng-if="article.stato == 'definito' || article.stato == 'lavorazione'">
-					<button ng-if="!article.stockId" type="button" class="btn btn-primary btn-block" ng-click="openListStocks(article)" data-target="#stock" data-toggle="modal">Seleziona</button>
+					<div>
+						<button ng-if="!article.stockId" type="button" class="btn btn-primary btn-block" ng-click="openListStocks(article)" data-target="#stock" data-toggle="modal">Seleziona</button>
+					</div>
 					<div>
 						<button ng-if="article.stockId != undefined" type="button" class="btn btn-info btn-block" ng-click="viewStock(article)" data-target="#viewstock" data-toggle="modal">Visualizza</button>
 						<button ng-if="article.stockId != undefined" type="button" class="btn btn-primary btn-block" ng-click="openListStocks(article)" data-target="#stock" data-toggle="modal">Modifica</button>
 					</div>
 				</div>
 			</td>
-			<td ng-if="article.stato == undefined">{{article.stato}}</td>
-			<td ng-if="article.stato == 'libero'"><span class="label label-default">{{article.stato}}</span></td>
-			<td ng-if="article.stato == 'definito'"><span class="label label-info">{{article.stato}}</span></td>
-			<td ng-if="article.stato == 'lavorazione'"><span class="label label-warning">{{article.stato}}</span></td>
-			<td ng-if="article.stato == 'completato'"><span class="label label-success">{{article.stato}}</span></td>
 			<td>
-				<div ng-if="article.stato == 'definito' || article.stato == 'lavorazione'">
+				<div ng-if="article.stato == undefined" align="center">{{article.stato}}</div>
+				<div ng-if="article.stato == 'libero'" align="center"><span class="label label-default">{{article.stato}}</span></div>
+				<div ng-if="article.stato == 'definito'" align="center"><span class="label label-info">{{article.stato}}</span></div>
+				<div ng-if="article.stato == 'lavorazione'" align="center"><span class="label label-warning">{{article.stato}}</span></div>
+				<div ng-if="article.stato == 'completato'" align="center"><span class="label label-success">{{article.stato}}</span></div>
+				<div>
+					<button ng-if="article.stato == 'lavorazione'" type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses">Riepilogo</button>
+				</div>
+			</td>
+			<td ng-if="article.stato == 'definito' || article.stato == 'lavorazione'">
+				<div>
 					<button type="button" class="btn btn-warning btn-block" ng-click="startWork(article)" data-toggle="modal" href="#newprocess">Lavora<span class="glyphicon glyphicon-wrench"></span></button>
-					<button type="button" class="btn btn-success btn-block" ng-click="prepareCompleteArticle(article)" data-toggle="modal" href="#completearticle">Completo<span class="glyphicon glyphicon-ok"></span></button>
+					<button type="button" class="btn btn-success btn-block" ng-click="prepareCompleteArticle(article)" data-toggle="modal" data-target="#completearticle">Completo<span class="glyphicon glyphicon-ok"></span></button>
 				</div>
 			</td>
 			<td ng-if="isEnabled">

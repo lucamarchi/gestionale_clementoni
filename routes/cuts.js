@@ -2,8 +2,10 @@ var express = require('express');
 var request = require('request');
 var URL_AGENTI = 'http://test.agenti.copal.it/api/ordini?anno=';
 var URL_COD = '&codice=';
+var URL_CUSTOMER = 'http://test.agenti.copal.it/api/clienti'
 var Cut = require('./../app/models/cut');
 var Article = require('./../app/models/article')
+var Customer = require('./../app/models/customer')
 
 module.exports = function() {
 	var router = express.Router();
@@ -43,7 +45,10 @@ module.exports = function() {
 						cut.codice = body.data[i].Codice;
 						cut.clienteCod = body.data[i].ClienteCod;
 						cut.note = body.data[i].Note;
-						cut.date = new Date(body.data[i].DataOrdine);
+						var s = (body.data[i].DataOrdine).split(' ');
+						var y = s[0].split('/');
+						var d = new Date(y[2],y[1]-1,y[0]);
+						cut.date = d;
 						var articoli = [];
 						for(var key in body.data[i].data) {
 							var ti = (body.data[i].data[key].DesArticolo).trim();
@@ -72,7 +77,12 @@ module.exports = function() {
 							article.lunghezza = body.data[i].data[key].Lunghezza;
 							article.larghezza = body.data[i].data[key].Larghezza;
 							article.peso = (body.data[i].data[key].Peso).replace(",",".")*1000;
-							article.dataConsegna = new Date(body.data[i].data[key].DataConsegna);
+							var s = (body.data[i].data[key].DataConsegna).split(' ');
+							var y = s[0].split('/');
+							var d = new Date(y[2],y[1]-1,y[0]);
+							article.ordineCod = cut.codice;
+							article.clienteCod = cut.clienteCod;
+							article.dataConsegna = d;
 							articoli.push(article);
 							article.save(function(err) {
 								if (err) res.status(500).json({message: err, status: false});
@@ -80,10 +90,12 @@ module.exports = function() {
 						}
 						cut.articoli = articoli;
 						data.push(cut);
-						cut.save(function(err) {
-							if (err) 
-								console.log(err);
-						});		
+						if (cut.articoli.length>0) {
+							cut.save(function(err) {
+								if (err) 
+									console.log(err);
+							});
+						}		
 					}
 					if (itemProducts==body.data.length) {
 						console.log("DIMENSIONE: "+ body.data.length)
@@ -133,7 +145,61 @@ module.exports = function() {
 						if (err)
 							res.status(500).json({message: err, status: false});
 						else {
-							res.json({cut: cut, articoli: articoli, status: true});
+							if (!cut.customer) {
+								console.log("Condizione if: "+ !cut.customer && cut.customer!=undefined)
+								request({
+									url: URL_CUSTOMER,
+									json: true,	
+								}, function(error, response, body) {
+									if (error) {
+										res.json({status: false, message: 'Agenti unreachable'});
+									}
+									else if (!error && response.statusCode==200 && body.data.length>0) {
+										for (var i in body.data) {
+											if (body.data[i].Id==cut.clienteCod) {
+												var customer = new Customer();
+												customer.ident = body.data[i].Id;
+												customer.agente = body.data[i].Agente;
+												customer.bancaAbi = body.data[i].BancaAbi;
+												customer.bancaCab = body.data[i].BancaCab;
+												customer.codFiscale = body.data[i].CodFiscale;
+												customer.fax = body.data[i].Fax;
+												customer.indirizzo = body.data[i].Indirizzo;
+												customer.localita = body.data[i].Localita;
+												customer.nome = body.data[i].Nome;
+												customer.pagamento = body.data[i].Pagamento;
+												customer.partitaIva = body.data[i].PartitaIva;
+												customer.provincia = body.data[i].Provincia;
+												customer.regione = body.data[i].Regione;
+												customer.telefono = body.data[i].Telefono;
+												customer.email = body.data[i].eMail;
+												console.log("CUSTOMER FIND : "+ customer)
+												customer.save(function(err) {
+													if (err) 
+														res.status(500).json({message: err, status: false});
+													else {
+														Cut.update({_id: req.params.cut_id},{$set: {"customer": customer.id}},function(err) {
+															if (err) 
+																res.status(500).json({message: err, status: false});
+															else {
+																res.json({cut: cut, articoli: articoli, customer: customer, status: true});
+															}	
+														});
+													}
+												});
+											}
+										}
+									}
+								});
+							} else {
+								Customer.findById(cut.customer, function(err,customer) {
+									if (err)
+										res.status(500).json({message: err, status: false});
+									else {
+										res.json({cut: cut, articoli: articoli, customer: customer, status: true});
+									}
+								});
+							}
 						}
 					});
 				} else res.json({cut: cut, articoli: [], status: true});
@@ -157,13 +223,62 @@ module.exports = function() {
 								else {
 									itemProducts++;
 									if (itemProducts==articoli.length) {
-										cut.save(function(err,cut) {
-											if (err)
-												res.status(500).json({message: err, status: false});
-											else {
-												res.json({message: "Cut accettato", status: true});
-											}
-										});
+										if (!cut.customer) {
+											console.log("Condizione if: "+ !cut.customer)
+											request({
+												url: URL_CUSTOMER,
+												json: true,	
+											}, function(error, response, body) {
+												if (error) {
+													res.json({status: false, message: 'Agenti unreachable'});
+												}
+												else if (!error && response.statusCode==200 && body.data.length>0) {
+													for (var i in body.data) {
+														if (body.data[i].Id==cut.clienteCod) {
+															var customer = new Customer();
+															customer.ident = body.data[i].Id;
+															customer.agente = body.data[i].Agente;
+															customer.bancaAbi = body.data[i].BancaAbi;
+															customer.bancaCab = body.data[i].BancaCab;
+															customer.codFiscale = body.data[i].CodFiscale;
+															customer.fax = body.data[i].Fax;
+															customer.indirizzo = body.data[i].Indirizzo;
+															customer.localita = body.data[i].Localita;
+															customer.nome = body.data[i].Nome;
+															customer.pagamento = body.data[i].Pagamento;
+															customer.partitaIva = body.data[i].PartitaIva;
+															customer.provincia = body.data[i].Provincia;
+															customer.regione = body.data[i].Regione;
+															customer.telefono = body.data[i].Telefono;
+															customer.email = body.data[i].eMail;
+															cut.customer = customer.id
+															console.log("CUSTOMER FIND : "+ customer)
+															customer.save(function(err) {
+																if (err) 
+																	res.status(500).json({message: err, status: false});
+																else {
+																	cut.save(function(err,cut) {
+																		if (err)
+																			res.status(500).json({message: err, status: false});
+																		else {
+																			res.json({message: "Cut accettato", status: true});
+																		}
+																	});
+																}
+															});
+														}
+													}
+												}
+											});
+										} else {
+											cut.save(function(err,cut) {
+												if (err)
+													res.status(500).json({message: err, status: false});
+												else {
+													res.json({message: "Cut accettato", status: true});
+												}
+											});
+										}
 									}
 								}
 							});

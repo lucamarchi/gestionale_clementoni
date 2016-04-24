@@ -1,0 +1,16 @@
+<table class="table">
+    <thead>		
+		<tr>
+			<th>Data</th>
+			<th>Macchina</th>
+			<th>Operatore</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="process in articleProcesses | orderBy:'data'">
+			<td>{{process.data | date:'medium'}}</td>
+			<td>{{process.macchina}}</td>
+			<td>{{process.operatore}}</td>
+		</tr>
+    </tbody>
+</table>

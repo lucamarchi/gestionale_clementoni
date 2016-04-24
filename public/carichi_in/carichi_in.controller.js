@@ -55,9 +55,10 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	}
 
 	$scope.addProduct = function () {
-			valuesProduct($scope.product);
-			$scope.productsOrder.push($scope.product);
-			$scope.productsOrder2.push($scope.product);
+		$scope.product.pesoLordo = $scope.product.pesoNetto;
+		valuesProduct($scope.product);
+		$scope.productsOrder.push($scope.product);
+		$scope.productsOrder2.push($scope.product);
 	}
 	
 	$scope.updateOrder = function (order) {
@@ -93,20 +94,52 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	}
 	
 	$scope.deleteProduct = function (product, index) {
-		productFactory.delete(
-			{	
-				id:product._id
-			},
-			function(resp){
-				console.log("prodotto", product);
-				console.log("PRODOTTO CANCELLATO INDICE ", index);
-				console.log(resp)
-				$scope.productsOrder.splice(index,1);
-			},
-			function(err){
-				console.log(err);
-			}
-		);
+		if (product._id) {
+			productFactory.delete(
+				{	
+					id:product._id
+				},
+				function(resp){
+					console.log("prodotto", product);
+					console.log("PRODOTTO CANCELLATO INDICE ", index);
+					console.log(resp)
+					$scope.productsOrder.splice(index,1);
+				},
+				function(err){
+					console.log(err);
+				}
+			);
+		}
+		else {
+			$scope.productsOrder.splice(index,1);
+			$scope.productsOrder2.splice(index,1);
+			
+		}
+	}
+	
+	$scope.openProduct = function (product) {
+		$scope.product = product;
+	}
+	
+	$scope.updateProduct = function () {
+		$scope.product.pesoLordo = $scope.product.pesoNetto;
+		valuesProduct($scope.product);
+		var product = $scope.product;
+		if (product._id){
+			productFactory.update(
+				{
+					id: product._id
+				},
+				{product},
+				function(resp){
+					console.log("PRODOTTO AGGIORNATO" , resp);
+
+				},
+				function(err){
+					console.log(err);
+				}
+			);
+		}
 	}
 	
 	$scope.confirmOrder = function () {

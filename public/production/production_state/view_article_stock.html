@@ -1,35 +1,37 @@
 <table class="table">
     <thead>		
 		<tr>
+			<th>Num. Collo</th>
 			<th>Materiale</th>
 			<th>Tipo</th>
-			<th>Spessore(mm)</th>
-			<th>C.Larghezza(mm)</th>
-			<th>N.Collo</th>
+			<th>Spess</th>
+			<th>Largh Nom</th>
 			<th>Qualita</th>
 			<th>Scelta</th>
 			<th>Finitura</th>
-			<th>Colore/Ral</th>
-			<th>Peso(kg)</th>
-			<th>Larghezza(mm)</th>
-			<th>Lunghezza(ml)</th>
-			<th>N.Fogli</th>
+			<th>Colore Ral</th>
+			<th>Peso Netto</th>
+			<th>Peso Lordo</th>
+			<th>Largh</th>
+			<th>Lungh</th>
+			<th>Num. Fogli</th>
 			<th>Difetti</th>
-			<th>Stabilimento</th>
+			<th>Stab</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
+			<td><span style="color:blue">{{stock.numeroCollo}}</span></td>
 			<td>{{stock.materiale}}</td>
 			<td>{{stock.tipo}}</td>
 			<td>{{stock.spessore}}</td>
 			<td>{{stock.classeLarghezza}}</td>
-			<td>{{stock.numeroCollo}}</td>
 			<td>{{stock.qualita}}</td>
 			<td>{{stock.scelta}}</td>
 			<td>{{stock.finitura}}</td>
 			<td>{{stock.coloreRal}}</td>
-			<td>{{stock.peso}}</td>
+			<td>{{stock.pesoNetto}}</td>
+			<td>{{stock.pesoLordo}}</td>
 			<td>{{stock.larghezza}}</td>
 			<td>{{stock.lunghezza|number:2}}</td>
 			<td>{{stock.numFogli}}</td>
