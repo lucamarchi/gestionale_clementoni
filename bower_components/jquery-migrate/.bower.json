@@ -1,15 +1,15 @@
 {
   "name": "jquery-migrate",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "jquery-migrate.js",
   "homepage": "https://github.com/appleboy/jquery-migrate",
-  "_release": "1.3.0",
+  "_release": "1.4.0",
   "_resolution": {
     "type": "version",
-    "tag": "1.3.0",
-    "commit": "67812f6a44ea0f3d9daf997e29f8f6a36de1e48f"
+    "tag": "1.4.0",
+    "commit": "d70e5a532864fdc2263f0d15030ef84671fc5807"
   },
-  "_source": "git://github.com/appleboy/jquery-migrate.git",
+  "_source": "https://github.com/appleboy/jquery-migrate.git",
   "_target": "*",
   "_originalSource": "jquery-migrate"
 }

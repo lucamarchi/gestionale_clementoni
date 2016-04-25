@@ -28,11 +28,11 @@
     "cors": "^2.7.1",
     "express": "^4.13.4",
     "jsonwebtoken": "^5.7.0",
-    "mongoose": "^4.4.12",
+    "mongoose": "^4.4.13",
     "morgan": "^1.7.0",
     "node-gyp": "^3.3.1",
     "q": "^2.0.3",
-    "request": "^2.71.0"
+    "request": "^2.72.0"
   },
   "devDependencies": {},
   "bundleDependencies": [],
