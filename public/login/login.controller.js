@@ -14,7 +14,7 @@ store.controller('loginController', ['$scope', '$rootScope', '$location', 'UserS
 					$location.path("/");
 				},
 				function(err){
-					console.log(err.data.message);
+					console.log(err.message);
 				}
 			);
 		}
