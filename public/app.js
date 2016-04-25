@@ -1,8 +1,8 @@
 var store = angular.module('store', ['ngRoute', 'ngResource'/*, 'ngTouch', 'ngAnimate'*/, 'ui.bootstrap']);
 
 store.constant("myConfig", {
-	"url": "http://localhost:8080",
-//	"url": "http://plimco-gianclementoni.rhcloud.com"
+	// "url": "http://localhost:8080",
+	"url": "http://clements-clementoni.rhcloud.com"
 })
 
 store.config(function ($httpProvider) {
