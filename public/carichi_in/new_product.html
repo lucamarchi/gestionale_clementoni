@@ -210,7 +210,10 @@
 	<div class="form-group">
 		<label for="prezzo" class="col-md-2 control-label">Stato:</label>
 		<div class="col-md-10">
-			<input type="text" ng-model="$parent.product.stato" class="form-control"/>
+			<select ng-model="$parent.product.stato" class="form-control">
+				<option value="approvato">Approvato</option>
+				<option value="respinto">Respinto</option>
+			</select>
 		</div>
 	</div>
 
