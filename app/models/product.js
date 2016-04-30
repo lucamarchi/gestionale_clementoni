@@ -27,7 +27,7 @@ var ProductSchema = new Schema({
 	fatherId: {type: Schema.ObjectId, ref: 'Product'},
 	scarto: {type: Number, default: 0},
 	anno: {type: String},
-	lavorazione: {type: Number, default: 0}
+	lavorazione: {type: Number, default: 1}
 });
 
 
