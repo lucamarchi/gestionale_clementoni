@@ -200,7 +200,7 @@
 		</div>
 	</div>
 	
-	<div class="form-group">
+	<div ng-if="userRole == 'logistica' || userRole == 'admin'" class="form-group">
 		<label for="prezzo" class="col-md-2 control-label">Prezzo:</label>
 		<div class="col-md-10">
 			<input type="number" ng-model="$parent.product.prezzo" class="form-control"/>
@@ -208,7 +208,7 @@
 	</div>
 	
 	<div class="form-group">
-		<label for="prezzo" class="col-md-2 control-label">Stato:</label>
+		<label for="stato" class="col-md-2 control-label">Stato:</label>
 		<div class="col-md-10">
 			<select ng-model="$parent.product.stato" class="form-control">
 				<option value="approvato">Approvato</option>

@@ -1,4 +1,6 @@
 store.controller('productionStateController', ['$scope', 'articleFactory', 'stockFactory', 'productionStateFactory', 'processFactory', 'UserService', function ($scope, articleFactory, stockFactory, productionStateFactory, processFactory, UserService) {
+	$scope.userRole = UserService.getUser().role;
+	
 	$scope.state = {};
 	$scope.article = {};
 	var process = {};
@@ -254,7 +256,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		process.macchina = $scope.machinery.sigle;
 		process.figli = $scope.children;
 		process.scarto = calculateScarto(stockOld, process.stock, process.figli);
-		process.operatore = UserService.getUser();
+		process.operatore = UserService.getUser().username;	
 		console.log("process", process);
 		processFactory.resource().save({},
 			process,

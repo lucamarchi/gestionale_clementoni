@@ -94,7 +94,6 @@ store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', fu
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
 		AuthenticationService.save({},{},
 			function(resp) {
-				console.log(resp.message);
 				$rootScope.isLogged = true;
 			},
 			function(err) {

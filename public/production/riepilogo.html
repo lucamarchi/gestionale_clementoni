@@ -18,7 +18,7 @@
 			<th>Lungh</th>
 			<th>Peso</th>
 			<th>Quant</th>
-			<th>Prezzo (&euro;/t)</th>
+			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
 			<th>Riepilogo</th>
 			<th>Stato</th>
 		</tr>
@@ -36,7 +36,7 @@
 			<td>{{article.lunghezza}}</td>
 			<td>{{article.peso}}</td>
 			<td>{{article.quantita}}</td>
-			<td>{{article.prezzo}}</td>
+			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{article.prezzo}}</td>
 			<td>
 				<button ng-if="article.stockId != undefined" type="button" class="btn btn-info btn-block" ng-click="viewStock(article)" data-target="#viewstock2" data-toggle="modal">Stock</button>
 				<button ng-if="article.stato == 'lavorazione'" type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses2">Riepilogo</button>

@@ -49,7 +49,7 @@
 				<th>Tipo</th>
 				<th>Materiale</th>
 				<th>Quantita</th>
-				<th>Prezzo</th>
+				<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo</th>
 				<th>Spess</th>
 				<th>Largh</th>
 				<th>Lungh</th>
@@ -63,7 +63,7 @@
 				<td>{{article.tipo}}</td>
 				<td>{{article.materiale}}</td>
 				<td>{{article.quantita}}</td>
-				<td>{{article.prezzo}}</td>
+				<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{article.prezzo}}</td>
 				<td>{{article.spessore}}</td>
 				<td>{{article.larghezza}}</td>
 				<td>{{article.lunghezza}}</td>

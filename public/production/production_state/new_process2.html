@@ -59,7 +59,7 @@
 			<th>Largh</th>
 			<th>Lungh</th>
 			<th>Num. Fogli</th>
-	<!--		<th>Prezzo</th>-->
+			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo</th>
 			<th>Difetti</th>
 			<th>Stab</th>
 		</thead>
@@ -78,7 +78,7 @@
 			<td>{{stock.larghezza}}</td>
 			<td>{{stock.lunghezza|number:2}}</td>
 			<td>{{stock.numFogli}}</td>
-	<!--			<td>{{p.prezzo}}</td>-->
+			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{p.prezzo}}</td>
 			<td>{{stock.difetti}}</td>
 			<td>{{stock.stabilimento}}</td>
 		</tbody>

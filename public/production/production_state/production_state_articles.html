@@ -12,7 +12,7 @@
 			<th>Lungh</th>
 			<th>Peso</th>
 			<th>Qta</th>
-			<th>Prezzo</th>
+			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo</th>
 			<th>Stock</th>
 			<th>Stato</th>
 			<th>Operaz.</th>
@@ -31,7 +31,7 @@
 			<td>{{article.lunghezza}}</td>
 			<td>{{article.peso}}</td>
 			<td>{{article.quantita}}</td>
-			<td>{{article.prezzo}}</td>
+			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{article.prezzo}}</td>
 			<td>
 				<div ng-if="article.stato == 'definito' || article.stato == 'lavorazione'">
 					<div>

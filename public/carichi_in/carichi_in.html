@@ -1,5 +1,6 @@
-<h2>CRONOLOGIA ORDINI IN ENTRATA
-<button type="button" class="btn btn-primary" data-toggle="modal" href="#neworder" ng-click="createOrder()">Aggiungi Ordine</button>
+<h2>
+	CRONOLOGIA ORDINI IN ENTRATA
+	<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" href="#neworder" ng-click="createOrder()">Aggiungi Ordine</button>
 </h2>
 
 <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="entryLimit" max-size="maxSize" class="pagination" boundary-links="true" force-ellipses="true"></uib-pagination>
