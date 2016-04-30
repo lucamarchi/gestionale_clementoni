@@ -20,7 +20,7 @@ module.exports = function() {
 					else {
 						if (!prod) {
 							var prefix = year.toString().slice(-2);
-							var matr = prefix + "001";
+							var matr = prefix + "0640";
 							matr = parseInt(matr);
 							console.log("Nessun prodotto: "+matr);
 						} else {
