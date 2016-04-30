@@ -15,7 +15,7 @@
 			<th>Largh Eff.</th>
 			<th>Lungh</th>
 			<th>N.Fogli</th>
-			<th>Prezzo (&euro;/t)</th>
+			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
 			<th>Difetti</th>
 			<th>Stab</th>
 			<th>Scarto</th>
@@ -25,7 +25,7 @@
 	<tbody>
 		<tr ng-repeat="product in productsOrder">
 			<td>{{product.matricola}}</td>
-			<td>{{product.numeroCollo}}</td>
+			<td><span style="color:blue">{{product.numeroCollo}}</span></td>
 			<td>{{product.tipo}}</td>
 			<td>{{product.materiale}}</td>
 			<td>{{product.qualita}}</td>
@@ -38,7 +38,7 @@
 			<td>{{product.larghezza}}</td>
 			<td>{{product.lunghezza|number:2}}</td>
 			<td>{{product.numFogli}}</td>
-			<td>{{product.prezzo}}</td>
+			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{product.prezzo}}</td>
 			<td>{{product.difetti}}</td>
 			<td>{{product.stabilimento}}</td>
 			<td>{{product.scarto}}</td>

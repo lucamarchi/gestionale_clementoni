@@ -1,4 +1,6 @@
-store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory', function ($scope, articleFactory, stockFactory, processFactory) {
+store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory','UserService', function ($scope, articleFactory, stockFactory, processFactory, UserService) {
+	
+	$scope.userRole = UserService.getUser().role;
 	
 	articleFactory.resourceState().getAll(
 		function (resp) {

@@ -113,7 +113,7 @@
 					<th>Largh Effettiva</th>
 					<th>Lungh</th>
 					<th>Num. Fogli</th>
-					<th>Prezzo (&euro;/t)</th>
+					<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
 					<th>Difetti</th>
 					<th>Stab</th>
 				</tr>
@@ -124,7 +124,9 @@
 				<tr ng-repeat="p in l2p.value">
 					<td>{{s2p.key}}</td>
 					<td>{{l2p.key}}</td>
-					<td>{{p.numeroCollo|uppercase}}</td>
+					<td>
+						<span style="color:blue">{{p.numeroCollo|uppercase}}</span>
+					</td>
 					<td>{{p.matricola}}</td>
 					<td>{{p.qualita|uppercase}}</td>
 					<td>{{p.scelta}}</td>
@@ -138,7 +140,7 @@
 					<td>{{p.larghezza}}</td>
 					<td>{{p.lunghezza|number:2}}</td>
 					<td>{{p.numFogli}}</td>
-					<td>{{p.prezzo}}</td>
+					<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{p.prezzo}}</td>
 					<td>{{p.difetti}}</td>
 					<td>{{p.stabilimento}}</td>
 					<td>

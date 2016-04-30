@@ -1,6 +1,9 @@
 var store = angular.module('store');
 store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'UserService', function ($scope, cutFactory, refreshFactory, UserService) {
     
+	$scope.userRole = UserService.getUser().role;
+	console.log($scope.userRole);
+	
 	cutFactory.getAll(
 		function (resp) {
 			$scope.cuts = resp.data;
@@ -46,7 +49,7 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
 	};
 	
 	$scope.confirmCut = function (cut) {
-		var user = UserService.getUser();
+		var user = UserService.getUser().username;
 		console.log(user);
 		cutFactory.update( 
 			{id : cut._id},

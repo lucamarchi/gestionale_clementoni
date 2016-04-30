@@ -36,7 +36,9 @@ module.exports = function() {
 					res.json({
 						status: true,
 						token: token,
-						message: 'Token generated'
+						message: 'Token generated',
+						username: user.username,
+						role: user.role
 					});
 				} else {
 					console.log("User not authenticated ");

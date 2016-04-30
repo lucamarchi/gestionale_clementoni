@@ -1,6 +1,6 @@
 <h2>
 	STATO PRODUZIONE
-	<button type="button" class="btn btn-primary" data-toggle="modal" href="#newState" ng-click="newProductionState()">Aggiungi</button>
+	<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" href="#newState" ng-click="newProductionState()">Aggiungi</button>
 </h2>
 
 <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="entryLimit" max-size="maxSize" class="pagination" boundary-links="true" force-ellipses="true"></uib-pagination>

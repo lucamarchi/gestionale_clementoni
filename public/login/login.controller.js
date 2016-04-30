@@ -8,8 +8,10 @@ store.controller('loginController', ['$scope', '$rootScope', '$location', 'UserS
 			UserService.resource().save({},
 				{username, password},
 				function(resp){
+					console.log(resp);
 					$rootScope.isLogged = resp.status;
-					UserService.setUser(username);
+					UserService.setUser(resp.username, resp.role);
+					console.log(UserService.getUser());
 					UserService.setToken(resp.token);
 					$location.path("/");
 				},

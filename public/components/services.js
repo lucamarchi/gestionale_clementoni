@@ -137,16 +137,18 @@ store.factory('UserService', ['$resource','$window', 'myConfig', function ($reso
 			return $resource(myConfig.url+'/api/authenticate', {});
 		},
 		getUser: function(){
-			return $window.sessionStorage.user;
+			return {username : $window.sessionStorage.user, role: $window.sessionStorage.role};
+		},
+		setUser: function(user, role) {
+			$window.sessionStorage.user = user;
+			$window.sessionStorage.role = role;
+			
 		},
 		getToken: function(){
-			return $window.sessionStorage.user;
+			return $window.sessionStorage.token;
 		},
 		setToken: function(token){
 			$window.sessionStorage.token = token;
-		},
-		setUser: function(user) {
-			$window.sessionStorage.user = user;
 		},
 		emptySession: function() {
 			delete $window.sessionStorage.user;	
