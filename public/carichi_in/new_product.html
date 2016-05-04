@@ -67,6 +67,7 @@
 				<option value="dd11">dd11</option>
 				<option value="dd12">dd12</option>
 				<option value="dd13">dd13</option>
+				<option value="dd13">dd14</option>
 			</select>
 		</div>
 	</div>
@@ -88,10 +89,38 @@
 				<option value="s235jr">s235jr</option>
 				<option value="s275jr">s275jr</option>
 				<option value="s355jr">s355jr</option>
+				<option value="s355jr">s235jo</option>
+				<option value="s355jr">s275jo</option>
+				<option value="s355jr">s355jo</option>
+				<option value="s355jr">s235j2</option>
+				<option value="s355jr">s275j2</option>
+				<option value="s355jr">s355j2</option>
 			</select>
 		</div>
 	</div>
-
+	<div class="form-group" ng-if = "product.materiale == 'preverniciato'">
+		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.product.qualita" class="form-control">
+				<option value="dx51d">dx51d</option>
+				<option value="dx52d">dx52d</option>
+				<option value="dx53d">dx53d</option>
+				<option value="dx54d">dx54d</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group" ng-if = "product.materiale == 'elettrozincato'">
+		<label for="qualita" class="col-md-2 control-label">Qualita:</label>
+		<div class="col-md-10">
+			<select ng-model="$parent.product.qualita" class="form-control">
+				<option value="dc01">dc01</option>
+				<option value="dc02">dc02</option>
+				<option value="dc03">dc03</option>
+				<option value="dc04">dc04</option>
+			</select>
+		</div>
+	</div>
+	
 	<div class="form-group">
 		<label for="scelta" class="col-md-2 control-label">Scelta:</label>
 		<div class="col-md-10">
