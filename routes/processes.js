@@ -23,8 +23,9 @@ module.exports = function() {
 			if (isFiglio) {
 				console.log("isFiglio: "+isFiglio)
 				Product.findOne({stockId: originalStock._id}, function(err,sonProd) {
-					if (err)
-						res.status(500).json({message: err, status: false});
+					if (err) {
+						res.status(500).json({message: err, status: false, msg: "1"});
+					}
 					else {
 						var matr = sonProd.numeroCollo + sonProd.lavorazione + req.body.macchina;
 						var numFgl = [];
@@ -35,7 +36,7 @@ module.exports = function() {
 						console.log(sonProdId);
 						Product.findOne({_id: sonProd.fatherId}, function(err,fatherProd) {
 							if (err)
-								res.status(500).json({message: err, status: false});
+								res.status(500).json({message: err, status: false, msg: "2"});
 							else {
 								var fatherProdId = fatherProd._id;
 								console.log(fatherProdId);
@@ -94,43 +95,43 @@ module.exports = function() {
 									f.push(product);
 									stock.save(function(err) {
 										if (err)
-											res.status(500).json({message: err, status: false});
+											res.status(500).json({message: err, status: false, msg: "3"});
 										else {
 											product.save(function(err) {
 												if (err)
-													res.status(500).json({message: err, status: false});
+													res.status(500).json({message: err, status: false, msg: "4"});
 												else {
 													itemStocks++;
 													if (itemStocks == figli.length && numFgl.length==0) {
 														process.figli = f;
 														process.save(function(err) {
 															if (err)
-																res.status(500).json({message: err, status: false});
+																res.status(500).json({message: err, status: false, msg: "5"});
 															else {
 																Product.update({_id: fatherProdId},{$inc: {"scarto": req.body.scarto}}, function(err) {
 																	if (err)
-																		res.status(500).json({message: err, status: false});
+																		res.status(500).json({message: err, status: false, msg: "6"});
 																	else {
 																		Product.update({_id: sonProdId},{$inc: {"lavorazione": 1}}, function(err) {
 																			if (err)
-																				res.status(500).json({message: err, status: false});
+																				res.status(500).json({message: err, status: false, msg: "7"});
 																			else {
 																				if (req.body.article) {
 																						Article.update({_id: req.body.article._id},{$set: {"stato": "lavorazione"}}, function(err) {
 																							if (err)
-																								res.status(500).json({message: err, status: false});
+																								res.status(500).json({message: err, status: false, msg: "8"});
 																							else {
 																								Article.update({_id: req.body.article._id},{$inc: {"scarto": req.body.scarto}}, function(err) {
 																									if (err)
-																										res.status(500).json({message: err, status: false});
+																										res.status(500).json({message: err, status: false, msg: "9"});
 																									else {
 																										Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
 																											if (err)
-																												res.status(500).json({message: err, status: false});
+																												res.status(500).json({message: err, status: false, msg: "10"});
 																											else {
 																												Article.update({_id: req.body.article._id},{$unset: {stockId: ""}}, function(err) {
 																													if (err)
-																														res.status(500).json({message: err, status: false});
+																														res.status(500).json({message: err, status: false, msg: "11"});
 																													else res.json({message: 'Lavorazione corretta', status: true, data: process});
 																												})
 																											}
@@ -143,13 +144,13 @@ module.exports = function() {
 																				} else {
 																					Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
 																					if (err)
-																						res.status(500).json({message: err, status: false});
+																						res.status(500).json({message: err, status: false, msg: "12"});
 																					else {
 																						res.json({message: 'Lavorazione corretta', status: true, data: process});
 																					}
 																				});
 																				}
-																	}
+																			}
 																	});
 																	}
 																});
@@ -171,7 +172,7 @@ module.exports = function() {
 
 				Product.findOne({stockId: originalStock._id}, function(err,fatherProd) {
 					if (err)
-						res.status(500).json({message: err, status: false});
+						res.status(500).json({message: err, status: false, msg: "13"});
 					else {
 						var matr = fatherProd.numeroCollo + '/' + fatherProd.lavorazione + req.body.macchina;
 						var numFgl = [];
@@ -236,43 +237,43 @@ module.exports = function() {
 									f.push(product);
 									stock.save(function(err) {
 										if (err)
-											res.status(500).json({message: err, status: false});
+											res.status(500).json({message: err, status: false, msg: "14"});
 										else {
 											product.save(function(err) {
 												if (err)
-													res.status(500).json({message: err, status: false});
+													res.status(500).json({message: err, status: false, msg: "15"});
 												else {
 													itemStocks++;
 													if (itemStocks == figli.length && numFgl.length==0) {
 														process.figli = f;
 														process.save(function(err) {
 															if (err)
-																res.status(500).json({message: err, status: false});
+																res.status(500).json({message: err, status: false, msg: "16"});
 															else {
 																Product.update({_id: fatherProdId},{$inc: {"scarto": req.body.scarto}}, function(err) {
 																	if (err)
-																		res.status(500).json({message: err, status: false});
+																		res.status(500).json({message: err, status: false, msg: "17"});
 																	else {
 																		Product.update({_id: fatherProdId},{$inc: {"lavorazione": 1}}, function(err) {
 																			if (err)
-																				res.status(500).json({message: err, status: false});
+																				res.status(500).json({message: err, status: false, msg: "18"});
 																			else {
 																		if (req.body.article) {
 																				Article.update({_id: req.body.article._id},{$set: {"stato": "lavorazione"}}, function(err) {
 																							if (err)
-																								res.status(500).json({message: err, status: false});
+																								res.status(500).json({message: err, status: false, msg: "19"});
 																							else {
 																								Article.update({_id: req.body.article._id},{$inc: {"scarto": req.body.scarto}}, function(err) {
 																									if (err)
-																										res.status(500).json({message: err, status: false});
+																										res.status(500).json({message: err, status: false, msg: "20"});
 																									else {
 																										Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
 																											if (err)
-																												res.status(500).json({message: err, status: false});
+																												res.status(500).json({message: err, status: false, msg: "21"});
 																											else {
 																												Article.update({_id: req.body.article._id},{$unset: {stockId: ""}}, function(err) {
 																													if (err)
-																														res.status(500).json({message: err, status: false});
+																														res.status(500).json({message: err, status: false, msg: "22"});
 																													else res.json({message: 'Lavorazione corretta', status: true, data: process});
 																												})
 																											}
@@ -285,7 +286,7 @@ module.exports = function() {
 																				} else {
 																					Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
 																						if (err)
-																							res.status(500).json({message: err, status: false});
+																							res.status(500).json({message: err, status: false, msg: "23"});
 																						else {
 																							res.json({message: 'Lavorazione corretta', status: true, data: process});
 																						}
