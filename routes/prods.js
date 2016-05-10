@@ -62,13 +62,13 @@ module.exports = function() {
 					var articoli = req.body.articoli;
 					var itemProducts = 0;
 					articoli.forEach(function(art) {
-						itemProducts++;	
 						Prod.update({_id: req.params.prod_id},{$addToSet: {"articoliId": art._id}}, function(err) {
 							if (err) res.status(500).json({message: 'Errore', status: false});
 						});
-						Article.update({_id: art.id},{$set: {"stato": "definito"}}, function(err) {
+						Article.update({_id: art._id},{$set: {"stato": "definito"}}, function(err) {
 							if (err) res.status(500).json({message: 'Errore', status: false});
 							else {
+								itemProducts++;
 								if (itemProducts==articoli.length) {
 									Prod.update({_id: req.params.prod_id},{$set: req.body.prod}, function(err,prod) {
 										if (err)

@@ -72,6 +72,7 @@ module.exports = function() {
 									stock.prezzo = p.prezzo;
 									stock.difetti = p.difetti;
 									stock.stabilimento = p.stabilimento;
+									stock.superficie = p.superficie;
 									var product = new Product();
 									product.numeroCollo = matr + el + '/';
 									product.tipo = p.tipo;
@@ -90,6 +91,7 @@ module.exports = function() {
 									product.prezzo = p.prezzo;
 									product.difetti = p.difetti;
 									product.stabilimento = p.stabilimento;
+									product.superficie = p.superficie;
 									product.stockId = stock.id;
 									product.fatherId = fatherProdId;
 									f.push(product);
@@ -214,6 +216,7 @@ module.exports = function() {
 									stock.prezzo = p.prezzo;
 									stock.difetti = p.difetti;
 									stock.stabilimento = p.stabilimento;
+									stock.superficie = p.superficie;
 									var product = new Product();
 									product.numeroCollo = matr + el + '/';
 									product.tipo = p.tipo;
@@ -232,6 +235,7 @@ module.exports = function() {
 									product.prezzo = p.prezzo;
 									product.difetti = p.difetti;
 									product.stabilimento = p.stabilimento;
+									product.superficie = p.superficie;
 									product.stockId = stock.id;
 									product.fatherId = fatherProdId;
 									f.push(product);
@@ -311,11 +315,19 @@ module.exports = function() {
 
 	router.route('/processes/articles/:article_id')
 		.get(function(req,res) {
-			Process.find({article: req.params.article_id},function(err,processes) {
+			Process.findOne({article: req.params.article_id},function(err,processes) {
 				if (err)
 					res.status(500).json({message: err, status: false});
 				else {
-					res.json({data: processes, status: true});
+					if (processes) {
+						if (processes.figli.length>0) {
+							Product.find({_id: {$in: processes.figli}}, function(err, products) {
+								if (err)
+									res.status(500).json({message: err, status: false})
+								else res.json({processes: processes, figli: products, status: true});
+							});
+						} else res.status(500).json({processes: processes, figli: [], status: false})
+					} else res.status(500).json({message: err, status: false})
 				}
 			});
 		});

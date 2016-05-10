@@ -21,7 +21,8 @@ var StockSchema = new Schema({
 	prezzo: {type: Number},
 	difetti: {type: String},
 	stabilimento: {type: Number},
-	scarto: {type: Number}
+	scarto: {type: Number},
+	superficie: {type: String}
 });
 
 module.exports = mongoose.model('Stock', StockSchema);

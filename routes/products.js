@@ -65,6 +65,7 @@ module.exports = function() {
 					stock.prezzo = req.body.product.prezzo;
 					stock.difetti = req.body.product.difetti;
 					stock.stabilimento = req.body.product.stabilimento;
+					stock.superficie = req.body.product.superficie;
 					stock.save(function(err) {
 						if (err) {
 							res.status(500).json({message: err, status: false});
@@ -90,6 +91,7 @@ module.exports = function() {
 									product.difetti = req.body.product.difetti;
 									product.stato = req.body.product.stato;
 									product.stabilimento = req.body.product.stabilimento;
+									product.superficie = req.body.product.superficie;
 									product.save(function(err) {
 										if (err)
 											res.status(500).json({message: err, status: false});
