@@ -315,22 +315,32 @@ module.exports = function() {
 
 	router.route('/processes/articles/:article_id')
 		.get(function(req,res) {
-			Process.findOne({article: req.params.article_id},function(err,processes) {
+			Process.find({article: {$in: req.params.article_id}},function(err,processes) {
 				if (err)
 					res.status(500).json({message: err, status: false});
 				else {
-					if (processes) {
-						if (processes.figli.length>0) {
-							Product.find({_id: {$in: processes.figli}}, function(err, products) {
+					var products = []
+					var itemProcesses = 0
+					processes.forEach(function(p) {
+						if (p.figli.length>0) {
+							itemProcesses++
+							Product.find({_id: {$in: p.figli}},function(err,figli) {
 								if (err)
 									res.status(500).json({message: err, status: false})
-								else res.json({processes: processes, figli: products, status: true});
+								else {
+									console.log(figli)
+									products.push.apply(figli);
+									console.log(products)
+									if (itemProcesses==processes.length) {
+										res.json({processes: processes, figli: products, status: true});
+									}
+								}
 							});
-						} else res.status(500).json({processes: processes, figli: [], status: false})
-					} else res.status(500).json({message: err, status: false})
+						}
+					});
 				}
 			});
 		});
 			
-	return router;
+		return router;
 };
