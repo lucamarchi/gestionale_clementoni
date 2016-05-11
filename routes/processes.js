@@ -319,28 +319,30 @@ module.exports = function() {
 				if (err)
 					res.status(500).json({message: err, status: false});
 				else {
-					var products = []
-					var itemProcesses = 0
-					processes.forEach(function(p) {
-						if (p.figli.length>0) {
-							itemProcesses++
-							Product.find({_id: {$in: p.figli}},function(err,figli) {
-								if (err)
-									res.status(500).json({message: err, status: false})
-								else {
-									console.log(figli)
-									products.push.apply(figli);
-									console.log(products)
-									if (itemProcesses==processes.length) {
-										res.json({processes: processes, figli: products, status: true});
-									}
-								}
-							});
-						}
-					});
+					res.json({processes: processes, status: true})
 				}
 			});
 		});
+
+	router.route('/processes/figli/:process_id')
+		.get(function(req,res) {
+			Process.findById(req.params.process_id, function(err,process) {
+				if (err)
+					res.status(500).json({message: err, status: false});
+				else {
+					if (process.figli && process.figli.length>0) {
+						Product.find({_id: {$in: process.figli}}, function(err,figli) {
+							if (err)
+								res.status(500).json({message: err, status: false});
+							else {
+								res.json({process: process, figli: figli, status: true})
+							}
+						});
+					}
+				}
+			});
+		});
+					
 			
 		return router;
 };
