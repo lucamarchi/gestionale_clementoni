@@ -1,6 +1,6 @@
 store.controller('productionStateController', ['$scope', 'articleFactory', 'stockFactory', 'productionStateFactory', 'processFactory', 'UserService', function ($scope, articleFactory, stockFactory, productionStateFactory, processFactory, UserService) {
-	$scope.userRole = UserService.getUser().role;
-	
+//	$scope.userRole = UserService.getUser().role;
+	$scope.riepilogo = false;
 	$scope.state = {};
 	$scope.article = {};
 	var process = {};
@@ -41,6 +41,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	}	
 	
 	$scope.openListStocks = function(article){
+		$scope.workInProgress = false;
 		$scope.article = article;
 		stockFactory.resource().getAll(
 			function (resp) {
@@ -86,13 +87,29 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 				id:article._id	
 			},
 			function (resp) {
-				$scope.articleProcesses = resp.data;
-				console.log("TUTTE LE LAVORAZIONI", resp.data);
+				$scope.articleProcesses = resp.processes;
+				console.log("TUTTE LE LAVORAZIONI", resp);
 			},
 			function (err) {
 				console.log(resp);
 			}
 		);
+	}
+	
+	$scope.viewChildrenProcess = function (process) {
+		processFactory.resourceChildren().get(
+			{
+				id:process._id
+			},
+			function (resp) {
+				$scope.children = resp.figli;
+				console.log("TUTTI I FIGLI DELLA LAVORAZIONE", resp);
+			},
+			function (err) {
+				console.log(resp);
+			}
+		)
+		
 	}
 	
 	$scope.viewArticleCustomer = function (article) {
@@ -111,8 +128,29 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	}
 	
 	$scope.newProductionState = function () {
+		$scope.state = {};
 		$scope.articlesState = [];
-//		$scope.articlesState2 = [];
+		$scope.articlesState2 = [];
+		$scope.isEnabled = true;
+		articleFactory.resourceState().get (
+			{
+				state: "libero"
+			},
+			function (resp) {
+				console.log("TUTTI GLI ARTICOLI LIBERI" , resp.data);
+				$scope.articles = resp.data;
+			},
+			function(err) {
+				console.log(resp);
+			}
+		);
+	}
+	
+	$scope.editProductionState = function (state, articles) {
+		console.log("state ", state, " articles ",articles);
+		$scope.state = state;
+		$scope.articlesState = articles;
+		$scope.articlesState2 = [];
 		$scope.isEnabled = true;
 		articleFactory.resourceState().get (
 			{
@@ -130,7 +168,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	
 	$scope.addArticle = function (article, index) {
 		$scope.articlesState.push(article);
-//		$scope.articlesState2.push(article);
+		$scope.articlesState2.push(article);
 		$scope.articles.splice(index,1);
 //		console.log("index push ", index);
 	}
@@ -138,23 +176,39 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	$scope.deleteArticle = function (article, index){
 		$scope.articles.push(article);
 		$scope.articlesState.splice(index,1);
+		$scope.articlesState2.splice(index,1);
 //		console.log("index pop ", index);
 	}
 	
 	$scope.confirmProductionState = function () {
-		var prod = {};
-		var articoli = $scope.articlesState;
+		var prod = $scope.state;
+		var articoli = $scope.articlesState2;
 		console.log("State ",prod, "	Article ",articoli);
-		productionStateFactory.save({},
-			{prod, articoli},
-			function(resp){
-				console.log("STATO PRODUZIONE CONFERMATO" , resp);
-				$scope.states.push(resp.data);
-			},
-			function (err){
-				console.log(err);
-			}
-		);
+		if (prod == {} || prod._id == undefined) {
+			productionStateFactory.save({},
+				{prod, articoli},
+				function(resp){
+					console.log("STATO PRODUZIONE CONFERMATO" , resp);
+					$scope.states.push(resp.data);
+				},
+				function (err){
+					console.log(err);
+				}
+			);
+		} else {
+			productionStateFactory.update(
+				{
+					id: prod._id
+				},
+				{prod, articoli},
+				function(resp){
+					console.log("STATO PRODUZIONE AGGIORNATO" , resp);
+				},
+				function (err){
+					console.log(err);
+				}
+			);
+		}
 	}
 	
 	$scope.startWork = function(article){
@@ -180,12 +234,12 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		$scope.children = [];
 		$scope.machinery = undefined;
 		$scope.bancale = undefined;
-		$scope.scarto = 0;
 		$scope.workInProgress = true;
 		$scope.isUpdate = false;
+		$scope.scartoTot = [];
 	}
 	
-	$scope.openListColli = function(){
+	$scope.openListStock2 = function(){
 		stockFactory.resource().getAll(
 			function (resp) {
 				$scope.products = resp.data;
@@ -196,7 +250,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		);
 	}
 	
-	$scope.selectCollo = function (stock) {
+	$scope.selectStock2 = function (stock) {
 		$scope.stock = Object.assign({}, stock);
 		$scope.stockOld = Object.assign({}, stock);
 		console.log("Stock selezionato", stock);
@@ -210,20 +264,19 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	$scope.createChildren = function () {
 		$scope.child = {};
 		$scope.bancale = undefined;
+		$scope.scarto = 0;
 		$scope.child.materiale = $scope.stock.materiale;
 		$scope.child.qualita = $scope.stock.qualita;
 		$scope.child.scelta = $scope.stock.scelta;
 		$scope.child.finitura = $scope.stock.finitura;
 		$scope.child.colore = $scope.stock.colore;
+		$scope.child.superficie = $scope.stock.superficie;
 		$scope.child.spessore = $scope.stock.spessore;
 		if($scope.article) {
 			$scope.child.larghezza = $scope.article.larghezza 
 			$scope.child.lunghezza = $scope.article.lunghezza;
 		}
-		else {
-			$scope.child.larghezza = $scope.stock.larghezza;	
-		}
-		if ($scope.machinery != "f") {
+		if ($scope.machinery.sigle != "f") {
 			$scope.child.stabilimento = 1;
 		}
 		else {
@@ -231,19 +284,26 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		}
 	}
 	
-	$scope.addChild = function (child) {
+	$scope.addChild = function (child, scarto) {
 		child.pesoNetto = child.pesoLordo - $scope.bancale;
 		valuesProduct(child);
 		$scope.children.push(child);
+		if ($scope.machinery.sigle != "a") {
+			$scope.scartoTot.push($scope.scarto);
+			console.log($scope.scartoTot);
+		}
+		console.log("figli ", $scope.children, "scarti ", $scope.scartoTot);
 	}
 	
-	$scope.editCollo = function () {
-		$scope.bancale = undefined;	
+	$scope.deleteChild = function (child, index) {
+		$scope.children.splice(index,1);
+		$scope.scartoTot.splice(index,1);
+		console.log("figli ", $scope.children, "scarti ", $scope.scartoTot);
 	}
 	
-	$scope.updateCollo = function (stock) {
+	$scope.updateStock = function (stock) {
 		$scope.stock = stock;
-		$scope.stock.pesoNetto = $scope.stock.pesoLordo - $scope.bancale;
+		$scope.stock.pesoNetto = $scope.stock.pesoLordo;
 		valuesProduct($scope.stock);
 		$scope.isUpdate = true;
 	}
@@ -255,7 +315,14 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		process.stock = $scope.stock;
 		process.macchina = $scope.machinery.sigle;
 		process.figli = $scope.children;
-		process.scarto = calculateScarto(stockOld, process.stock, process.figli);
+		if (process.macchina == "a") {
+			process.scarto = calculateScarto(stockOld, process.stock, process.figli);	
+		}
+		else {
+			process.scarto = $scope.scartoTot.reduce(function(previousValue, currentValue, currentIndex, array) {
+  				return previousValue + currentValue;
+			});
+		}
 		process.operatore = UserService.getUser().username;	
 		console.log("process", process);
 		processFactory.resource().save({},
@@ -275,7 +342,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		$scope.child = undefined;
 		$scope.children = [];
 		$scope.bancale = undefined;
-		$scope.scarto = 0;
+		$scope.scartoTot = [];
 		$scope.isUpdate = false;
 	}
 	

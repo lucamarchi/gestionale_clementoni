@@ -39,7 +39,7 @@
 			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{article.prezzo}}</td>
 			<td>
 				<button ng-if="article.stockId != undefined" type="button" class="btn btn-info btn-block" ng-click="viewStock(article)" data-target="#viewstock2" data-toggle="modal">Stock</button>
-				<button ng-if="article.stato == 'lavorazione'" type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses2">Riepilogo</button>
+				<button ng-if="article.stato == 'lavorazione'" type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses2">Lavorazioni</button>
 			</td>
 			<td ng-if="article.stato == undefined">{{article.stato}}</td>
 			<td ng-if="article.stato == 'libero'"><span class="label label-default">{{article.stato}}</span></td>
@@ -80,6 +80,22 @@
 			</div>
 			<div class="modal-body">
 				<div ng-include src="'public/production/production_state/view_article_processes.html'"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal view_process_children.html-->
+<div id="viewprocesschildren2" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">COLLI REALIZZATI</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/production/production_state/view_process_children.html'"></div>
 			</div>
 		</div>
 	</div>

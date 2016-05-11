@@ -49,17 +49,18 @@
 				<div ng-if="article.stato == 'definito'" align="center"><span class="label label-info">{{article.stato}}</span></div>
 				<div ng-if="article.stato == 'lavorazione'" align="center"><span class="label label-warning">{{article.stato}}</span></div>
 				<div ng-if="article.stato == 'completato'" align="center"><span class="label label-success">{{article.stato}}</span></div>
+				<br>
 				<div>
-					<button ng-if="article.stato == 'lavorazione'" type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses">Riepilogo</button>
+					<button ng-if="article.stato == 'lavorazione' || article.stato == 'completato'" type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses">Riepilogo</button>
 				</div>
 			</td>
 			<td ng-if="article.stato == 'definito' || article.stato == 'lavorazione'">
 				<div>
-					<button type="button" class="btn btn-warning btn-block" ng-click="startWork(article)" data-toggle="modal" href="#newprocess">Lavora<span class="glyphicon glyphicon-wrench"></span></button>
+					<button type="button" class="btn btn-warning btn-block" ng-click="startWork(article)" data-toggle="modal" data-target="#newprocess">Lavora<span class="glyphicon glyphicon-wrench"></span></button>
 					<button type="button" class="btn btn-success btn-block" ng-click="prepareCompleteArticle(article)" data-toggle="modal" data-target="#completearticle">Completo<span class="glyphicon glyphicon-ok"></span></button>
 				</div>
 			</td>
-			<td ng-if="isEnabled">
+			<td ng-if="isEnabled && article.stato == 'libero'">
 				<button type="button" class="btn btn-danger btn-circle" ng-click="deleteArticle(article, articlesState.indexOf(article))"><span class="glyphicon glyphicon-trash"></span></button>
 			</td>
 		</tr>

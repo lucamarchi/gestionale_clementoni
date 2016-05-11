@@ -1,6 +1,7 @@
 store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory','UserService', function ($scope, articleFactory, stockFactory, processFactory, UserService) {
 	
-	$scope.userRole = UserService.getUser().role;
+//	$scope.userRole = UserService.getUser().role;
+	$scope.riepilogo = true;
 	
 	articleFactory.resourceState().getAll(
 		function (resp) {
@@ -35,13 +36,29 @@ store.controller('productionController', ['$scope', 'articleFactory', 'stockFact
 				id:article._id	
 			},
 			function (resp) {
-				$scope.articleProcesses = resp.data;
-				console.log("TUTTE LE LAVORAZIONI", resp.data);
+				$scope.articleProcesses = resp.processes;
+				console.log("TUTTE LE LAVORAZIONI", resp.processes);
 			},
 			function (err) {
 				console.log(resp);
 			}
 		);
+	}
+	
+	$scope.viewChildrenProcess = function (process) {
+		processFactory.resourceChildren().get(
+			{
+				id:process._id
+			},
+			function (resp) {
+				$scope.children = resp.figli;
+				console.log("TUTTI I FIGLI DELLA LAVORAZIONE", resp);
+			},
+			function (err) {
+				console.log(resp);
+			}
+		)
+		
 	}
 	
 	$scope.viewArticleCustomer = function (article) {
@@ -51,7 +68,7 @@ store.controller('productionController', ['$scope', 'articleFactory', 'stockFact
 			},
 			function (resp) {
 				$scope.customer = resp.data;
-				console.log("CLIENTE ARTICOLO", resp.data);
+				console.log("CLIENTE ARTICOLO", resp);
 			},
 			function (err) {
 				console.log(resp);

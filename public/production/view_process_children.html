@@ -1,4 +1,3 @@
-<legend>Colli Realizzati:</legend>
 <table ng-if="children.length != 0" class="table">
 	<thead>
 		<th>Materiale</th>
@@ -11,13 +10,12 @@
 		<th>Colore/Ral</th>
 		<th>Superficie</th>
 		<th>Larghezza</th>
-		<th>Lunghezza(ml)</th>
+		<th>Lunghezza</th>
 		<th>N.Fogli</th>
 		<th>PesoNetto</th>
 		<th>PesoLordo</th>
 		<th>Difetti</th>
 		<th>Stabilimento</th>
-		<th>Scarto</th>
 	</thead>
 	<tbody>
 		<tr ng-repeat="child in children">
@@ -31,17 +29,12 @@
 			<td>{{child.coloreRal}}</td>
 			<td>{{child.superficie}}</td>
 			<td>{{child.larghezza}}</td>
-			<td>{{child.lunghezza|number:2}}</td>
+			<td>{{child.lunghezza}}</td>
 			<td>{{child.numFogli}}</td>
 			<td>{{child.pesoNetto}}</td>
 			<td>{{child.pesoLordo}}</td>
 			<td>{{child.difetti}}</td>
 			<td>{{child.stabilimento}}</td>
-			<td>{{scartoTot[children.indexOf(child)]}}</td>
-			<td>
-				<button type="button" class="btn btn-danger btn-circle" ng-click="deleteChild(child, children.indexOf(child))"><span class="glyphicon glyphicon-trash"></span></button>
-			</td>
 		</tr>
 	</tbody>
 </table>
-<button type="button" class="btn btn-primary btn-block" ng-click="createChildren()" data-target="#newchildren" data-toggle="modal">Inserisci</button>

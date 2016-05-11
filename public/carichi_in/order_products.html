@@ -1,20 +1,21 @@
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th>Matricola</th>
 			<th>Numero Collo</th>
-			<th>Tipo</th>
+			<th>Matricola</th>
 			<th>Materiale</th>
+			<th>Tipo</th>
+			<th>Spess</th>
+			<th>Largh Nom.</th>
 			<th>Qualita</th>
 			<th>Scelta</th>
 			<th>Finitura</th>
 			<th>Colore Ral</th>
-			<th>Peso (kg)</th>
-			<th>Spess</th>
-			<th>Largh Nom.</th>
+			<th>Superficie</th>
 			<th>Largh Eff.</th>
 			<th>Lungh</th>
 			<th>N.Fogli</th>
+			<th>Peso</th>
 			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
 			<th>Difetti</th>
 			<th>Stab</th>
@@ -24,20 +25,21 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="product in productsOrder">
-			<td>{{product.matricola}}</td>
 			<td><span style="color:blue">{{product.numeroCollo}}</span></td>
-			<td>{{product.tipo}}</td>
+			<td>{{product.matricola}}</td>
 			<td>{{product.materiale}}</td>
+			<td>{{product.tipo}}</td>
+			<td>{{product.spessore}}</td>
+			<td>{{product.classeLarghezza}}</td>
 			<td>{{product.qualita}}</td>
 			<td>{{product.scelta}}</td>
 			<td>{{product.finitura}}</td>
 			<td>{{product.coloreRal}}</td>
-			<td>{{product.pesoNetto}}</td>
-			<td>{{product.spessore}}</td>
-			<td>{{product.classeLarghezza}}</td>
+			<td>{{product.superficie}}</td>
 			<td>{{product.larghezza}}</td>
-			<td>{{product.lunghezza|number:2}}</td>
+			<td>{{product.lunghezza}}</td>
 			<td>{{product.numFogli}}</td>
+			<td>{{product.pesoNetto}}</td>
 			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{product.prezzo}}</td>
 			<td>{{product.difetti}}</td>
 			<td>{{product.stabilimento}}</td>
@@ -55,4 +57,4 @@
 	</tbody>
 </table>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" href="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>
+<!--<button type="button" class="btn btn-primary" data-toggle="modal" href="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>-->

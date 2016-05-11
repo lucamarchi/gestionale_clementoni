@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table" ng-if="userRole == 'logistica' || userRole == 'admin'">
 	<thead>
 		<tr>
 			<th>Nome</th>
@@ -38,3 +38,5 @@
 		</tr>
 	</tbody>
 </table>
+
+<h1 ng-if="userRole != 'logistica' && userRole != 'admin'">{{customer.nome}}</h1>

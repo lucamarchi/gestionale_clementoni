@@ -2,7 +2,7 @@ var store = angular.module('store');
 
 store.controller('carichiInController', ['$scope', 'orderFactory', 'productFactory','UserService', function ($scope, orderFactory, productFactory, UserService) {
 	
-	$scope.userRole = UserService.getUser().role;
+//	$scope.userRole = UserService.getUser().role;
 	
 	orderFactory.getAll(
 		function (resp) {
