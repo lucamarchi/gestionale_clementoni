@@ -1,7 +1,6 @@
 var store = angular.module('store');
 
 store.factory('orderFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-//    return $resource(myConfig.url+'/api/orders/:id',
 	return $resource(myConfig.url+'/api/orders/:id',
 		{
 			id: "@id"
@@ -106,7 +105,8 @@ store.factory('productionStateFactory', ['$resource', 'myConfig', function ($res
 			id: "@id"
 		},
 		{
-			getAll: {method:'GET', isArray: false},
+			update: {method:'PUT'},
+			getAll: {method:'GET', isArray: false}
 		}
   	);
 }]);
@@ -119,6 +119,13 @@ store.factory('processFactory', ['$resource', 'myConfig', function ($resource, m
 		},
 		resourceArticle: function() {
 			return $resource(myConfig.url+'/api/processes/articles/:id',
+				{
+					id:"@id"
+				}
+			);
+		},
+		resourceChildren: function() {
+			return $resource(myConfig.url+'/api/processes/figli/:id',
 				{
 					id:"@id"
 				}
@@ -142,7 +149,6 @@ store.factory('UserService', ['$resource','$window', 'myConfig', function ($reso
 		setUser: function(user, role) {
 			$window.sessionStorage.user = user;
 			$window.sessionStorage.role = role;
-			
 		},
 		getToken: function(){
 			return $window.sessionStorage.token;
@@ -152,6 +158,7 @@ store.factory('UserService', ['$resource','$window', 'myConfig', function ($reso
 		},
 		emptySession: function() {
 			delete $window.sessionStorage.user;	
+			delete $window.sessionStorage.role;
 			delete $window.sessionStorage.token;
 		}
 	};

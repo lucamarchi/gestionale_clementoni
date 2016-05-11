@@ -1,20 +1,23 @@
 <table class="table">
     <thead>		
 		<tr>
-			<th>Num. Collo</th>
+			<th>Num Collo</th>
+			<th>Matricola</th>
 			<th>Materiale</th>
 			<th>Tipo</th>
-			<th>Spess</th>
-			<th>Largh Nom</th>
+			<th>Spessore</th>
+			<th>Largh Nominale</th>
 			<th>Qualita</th>
 			<th>Scelta</th>
 			<th>Finitura</th>
-			<th>Colore Ral</th>
-			<th>Peso Netto</th>
-			<th>Peso Lordo</th>
-			<th>Largh</th>
+			<th>Colore/Ral</th>
+			<th>Superficie</th>
+			<th>Largh Effettiva</th>
 			<th>Lungh</th>
 			<th>Num. Fogli</th>
+			<th>Peso Netto(kg)</th>
+			<th>Peso Lordo(kg)</th>
+			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
 			<th>Difetti</th>
 			<th>Stab</th>
 		</tr>
@@ -22,6 +25,7 @@
 	<tbody>
 		<tr>
 			<td><span style="color:blue">{{stock.numeroCollo}}</span></td>
+			<td>{{stock.matricola}}</td>
 			<td>{{stock.materiale}}</td>
 			<td>{{stock.tipo}}</td>
 			<td>{{stock.spessore}}</td>
@@ -30,11 +34,13 @@
 			<td>{{stock.scelta}}</td>
 			<td>{{stock.finitura}}</td>
 			<td>{{stock.coloreRal}}</td>
+			<td>{{stock.superficie}}</td>
+			<td>{{stock.larghezza}}</td>
+			<td>{{stock.lunghezza}}</td>
+			<td>{{stock.numFogli}}</td>
 			<td>{{stock.pesoNetto}}</td>
 			<td>{{stock.pesoLordo}}</td>
-			<td>{{stock.larghezza}}</td>
-			<td>{{stock.lunghezza|number:2}}</td>
-			<td>{{stock.numFogli}}</td>
+			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{stock.prezzo}}</td>
 			<td>{{stock.difetti}}</td>
 			<td>{{stock.stabilimento}}</td>
 		</tr>

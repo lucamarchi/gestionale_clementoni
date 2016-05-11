@@ -82,6 +82,7 @@ module.exports = function() {
 							stock.prezzo = p.prezzo;
 							stock.difetti = p.difetti;
 							stock.stabilimento = p.stabilimento;
+							stock.superficie = p.superficie;
 							matrS++;
 							console.log("STOCK: matricola:"+p.matricola+"\n tipo: "+p.tipo+"\n materiale: "+p.materiale+"\n scelta: "+p.scelta+" \n peso: "+p.pesoLordo+"\n stabilimento: "+p.stabilimento+"\n");
 							stock.save(function(err) {
@@ -110,6 +111,7 @@ module.exports = function() {
 									product.difetti = p.difetti;
 									product.stabilimento = p.stabilimento;
 									product.stockId = stockId;
+									product.superficie = p.superficie;
 									product.anno = year.toString();
 									if (!p.stato) {
 										product.stato = "sospeso";
@@ -221,6 +223,7 @@ module.exports = function() {
 						stock.prezzo = p.prezzo;
 						stock.difetti = p.difetti;
 						stock.stabilimento = p.stabilimento;
+						stock.superficie = p.superficie;
 						matrS++;
 						stock.save(function(err,stock) {
 							if (err)
@@ -246,6 +249,7 @@ module.exports = function() {
 								product.prezzo = p.prezzo;
 								product.difetti = p.difetti;
 								product.stabilimento = p.stabilimento;
+								product.superficie = p.superficie;
 								product.stockId = stockId;
 								if (!p.stato) {
 										product.stato = "sospeso";

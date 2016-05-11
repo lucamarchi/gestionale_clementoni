@@ -2,7 +2,7 @@ var store = angular.module('store');
 store.controller('stockController', ['$scope', 'stockFactory', 'UserService', function ($scope, stockFactory, UserService) {
 	
 	
-	$scope.userRole = UserService.getUser().role;
+//	$scope.userRole = UserService.getUser().role;
 		
 	$scope.monster = [];
 	

@@ -1,0 +1,45 @@
+<legend>Aggiorna coil:</legend>
+<table class="table" ng-if="stock">
+	<thead>
+		<th>Materiale</th>
+		<th>Tipo</th>
+		<th>Spessore</th>
+		<th>Larghezza Nominale</th>
+		<th>Matricola</th>
+		<th>Qualita</th>
+		<th>Scelta</th>
+		<th>Finitura</th>
+		<th>Colore Ral</th>
+		<th>Superficie</th>
+		<th>Largh</th>
+		<th>Lungh</th>
+		<th>Num. Fogli</th>
+		<th>Peso Netto</th>
+		<th>Peso Lordo</th>
+		<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo</th>
+		<th>Difetti</th>
+		<th>Stab</th>
+	</thead>
+	<tbody>
+		<td>{{stock.materiale}}</td>
+		<td>{{stock.tipo}}</td>
+		<td>{{stock.spessore}}</td>
+		<td>{{stock.classeLarghezza}}</td>
+		<td>{{stock.matricola}}</td>
+		<td>{{stock.qualita}}</td>
+		<td>{{stock.scelta}}</td>
+		<td>{{stock.finitura}}</td>
+		<td>{{stock.coloreRal}}</td>
+		<td>{{stock.superficie}}</td>
+		<td>{{stock.larghezza}}</td>
+		<td>{{stock.lunghezza}}</td>
+		<td>{{stock.numFogli}}</td>
+		<td>{{stock.pesoNetto}}</td>
+		<td>{{stock.pesoLordo}}</td>
+		<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{stock.prezzo}}</td>
+		<td>{{stock.difetti}}</td>
+		<td>{{stock.stabilimento}}</td>
+	</tbody>
+</table>
+<button ng-if="!isUpdate" type="button" class="btn btn-primary btn-block" data-target="#updatestock" data-toggle="modal">Modifica</button>
+<button ng-if="isUpdate" type="button" class="btn btn-primary" data-target="#updatestock" data-toggle="modal">Modifica</button>

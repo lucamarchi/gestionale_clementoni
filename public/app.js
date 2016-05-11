@@ -95,6 +95,8 @@ store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', fu
 		AuthenticationService.save({},{},
 			function(resp) {
 				$rootScope.isLogged = true;
+				$rootScope.userRole = UserService.getUser().role;
+//				$rootScope.userRole = 'admin';
 			},
 			function(err) {
 				if (nextRoute.access && nextRoute.access.requiredLogin) {

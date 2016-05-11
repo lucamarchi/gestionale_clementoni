@@ -50,44 +50,48 @@
 			</td>
 		</tr>
 		<tr>
+			<th>Numero Collo</th>
+			<th>Matricola</th>
 			<th>Materiale</th>
 			<th>Tipo</th>
 			<th>Spess</th>
-			<th>Largh Nom</th>
-			<th>Num. Collo</th>
+			<th>Largh Nom.</th>
 			<th>Qualita</th>
 			<th>Scelta</th>
 			<th>Finitura</th>
 			<th>Colore Ral</th>
-			<th>Peso Lordo</th>
-			<th>Peso Netto</th>
-			<th>Largh</th>
+			<th>Superficie</th>
+			<th>Largh Eff.</th>
 			<th>Lungh</th>
-			<th>Num. Fogli</th>
+			<th>N.Fogli</th>
+			<th>Peso</th>
+			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
 			<th>Difetti</th>
 			<th>Stab</th>
 		</tr>
 	</thead>
     <tbody>
 		<tr ng-repeat="product in products |orderBy:['materiale','tipo','spessore','classeLarghezza']| filter:search">
+			<td><span style="color:blue">{{product.numeroCollo}}</span></td>
+			<td>{{product.matricola}}</td>
 			<td>{{product.materiale}}</td>
 			<td>{{product.tipo}}</td>
 			<td>{{product.spessore}}</td>
 			<td>{{product.classeLarghezza}}</td>
-			<td>{{product.numeroCollo}}</td>
 			<td>{{product.qualita}}</td>
 			<td>{{product.scelta}}</td>
 			<td>{{product.finitura}}</td>
 			<td>{{product.coloreRal}}</td>
-			<td>{{product.pesoLordo}}</td>
-			<td>{{product.pesoNetto}}</td>
+			<td>{{product.superficie}}</td>
 			<td>{{product.larghezza}}</td>
-			<td>{{product.lunghezza|number:2}}</td>
+			<td>{{product.lunghezza}}</td>
 			<td>{{product.numFogli}}</td>
+			<td>{{product.pesoNetto}}</td>
+			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{product.prezzo}}</td>
 			<td>{{product.difetti}}</td>
 			<td>{{product.stabilimento}}</td>
 			<td>
-				<button ng-if="workInProgress == true" type="button" class="btn btn-warning btn-circle" ng-click="selectCollo(product)" data-dismiss="modal">
+				<button ng-if="workInProgress == true" type="button" class="btn btn-warning btn-circle" ng-click="selectStock2(product)" data-dismiss="modal">
 					<span class="glyphicon glyphicon-wrench"></span>
 				</button>
 				<button ng-if="!workInProgress" type="button" class="btn btn-success btn-circle" ng-click="selectStock(product)" data-dismiss="modal">

@@ -18,7 +18,7 @@ module.exports = function() {
 						res.status(500).json({message: err, status: false});
 					else {
 						if (!prod) {
-							var numero = 0;
+							var numero = 1;
 						} else {
 							var numero = prod.numero+1;
 						}
@@ -62,13 +62,13 @@ module.exports = function() {
 					var articoli = req.body.articoli;
 					var itemProducts = 0;
 					articoli.forEach(function(art) {
-						itemProducts++;	
 						Prod.update({_id: req.params.prod_id},{$addToSet: {"articoliId": art._id}}, function(err) {
 							if (err) res.status(500).json({message: 'Errore', status: false});
 						});
-						Article.update({_id: art.id},{$set: {"stato": "definito"}}, function(err) {
+						Article.update({_id: art._id},{$set: {"stato": "definito"}}, function(err) {
 							if (err) res.status(500).json({message: 'Errore', status: false});
 							else {
+								itemProducts++;
 								if (itemProducts==articoli.length) {
 									Prod.update({_id: req.params.prod_id},{$set: req.body.prod}, function(err,prod) {
 										if (err)
@@ -96,6 +96,40 @@ module.exports = function() {
 					}
 				});
 			} else res.json({prod: prod, articoli: [], status: true});
+		});
+	})
+
+	.delete(function(req,res) {
+		Prod.findById(req.params.prod_id, function(err,prod) {
+			if (err)
+				res.status(500).json({message: err, status: false});
+			else if (prod.articoliId && prod.articoliId.length!=0) {
+				var itemProducts = 0;
+				prod.articoliId.forEach(function(art) {
+					Article.update({_id: art},{$set: {"stato": "libero"}},function(err) {
+						if (err)
+							res.status(500).json({message: err, status: false});
+						else {
+							itemProducts++;
+							if (itemProducts==prod.articoliId.length) {
+								prod.remove(function(err) {
+									if (err)
+										res.status(500).json({message: err, status: false});
+									else {
+										res.json({message: "Prod rimosso", status: true});
+									}
+								})
+							}
+						}
+					});
+				});
+			} else prod.remove(function(err) {
+				if (err)
+					res.status(500).json({message: err, status: false});
+				else {
+					res.json({message: "Prod rimosso", status: true});
+				}
+			})
 		});
 	})
 
