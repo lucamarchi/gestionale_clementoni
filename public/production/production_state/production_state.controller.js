@@ -1,5 +1,4 @@
 store.controller('productionStateController', ['$scope', 'articleFactory', 'stockFactory', 'productionStateFactory', 'processFactory', 'UserService', function ($scope, articleFactory, stockFactory, productionStateFactory, processFactory, UserService) {
-//	$scope.userRole = UserService.getUser().role;
 	$scope.riepilogo = false;
 	$scope.state = {};
 	$scope.article = {};

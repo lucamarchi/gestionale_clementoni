@@ -59,7 +59,7 @@
 			</div>
 			<div class="modal-footer">
 				<div align="left">
-					<button type="button" class="btn btn-primary" data-toggle="modal" href="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>
 				</div>
 				<div>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
@@ -85,8 +85,26 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-				<button ng-if="productForm.$valid && !product._id" type="button" class="btn btn-success" ng-click="addProduct()" data-dismiss="modal">Conferma</button>
-				<button ng-if="productForm.$valid && product._id" type="button" class="btn btn-success" ng-click="updateProduct()" data-dismiss="modal">Conferma</button>
+				<button ng-if="productForm.$valid" type="button" class="btn btn-success" ng-click="addProduct()" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="updateproduct" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">MODIFICA PRODOTTO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/carichi_in/new_product.html'"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button ng-if="productForm.$valid" type="button" class="btn btn-success" ng-click="updateProduct()" data-dismiss="modal">Conferma</button>
 			</div>
 		</div>
 	</div>

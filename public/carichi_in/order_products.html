@@ -46,11 +46,14 @@
 			<td>{{product.scarto}}</td>
 			<td>{{product.stato}}</td>
 			<td>
-				<div>
-				<button type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteProduct(product, productsOrder.indexOf(product))" data-target="#deleteproduct" data-toggle="modal">Cancella<span class="glyphicon glyphicon-trash"></button>
+				<div ng-if="product._id">
+					<button type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteProduct(product, productsOrder.indexOf(product))" data-target="#delete" data-toggle="modal">Cancella<span class="glyphicon glyphicon-trash"></button>
+				</div>
+				<div ng-if="!product._id">
+					<button type="button" class="btn btn-danger btn-circle" ng-click="deleteProduct(product, productsOrder.indexOf(product))">Cancella<span class="glyphicon glyphicon-trash"></button>
 				</div>
 				<div>
-				<button type="button" class="btn btn-warning btn-circle" ng-click="openProduct(product, productsOrder.indexOf(product))" data-target="#newproduct" data-toggle="modal">Modifica<span class="glyphicon glyphicon-cog"></button>
+					<button type="button" class="btn btn-warning btn-circle" ng-click="openProduct(product, productsOrder.indexOf(product))" data-target="#updateproduct" data-toggle="modal">Modifica<span class="glyphicon glyphicon-cog"></button>
 				</div>
 			</td>
 		</tr>

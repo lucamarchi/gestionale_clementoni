@@ -6,14 +6,12 @@
 }
 
 .modal-xl .modal-dialog {
-	width: 90%;
+	width: 95%;
+	margin:0 auto;
 }
 
 .modal-body {
-    max-height: calc(100vh - 210px);
-}
-
-.modal-dialog .modal-body {
+	max-height: calc(100vh - 300px);
 	overflow-y: auto;
 	overflow-x: auto;
 }
