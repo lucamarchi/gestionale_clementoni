@@ -177,6 +177,7 @@ module.exports = function() {
 			});
 		})
 		.put(function(req,res) {
+			delete req.body.order._id;
 			Order.update({_id: req.params.order_id},{$set: req.body.order}, function(err,order) {
 				if (err)
 					res.status(500).json({message: err, status: false});
