@@ -11,10 +11,12 @@ module.exports = function(app, jwt, apiRoutes) {
         var username = req.body.username;
         var password = req.body.password;
         if (username && password) {
-            User.findByUsername(req.body.username)
+            User.findByUsername(username)
                 .then(function (user) {
                     if (user) {
+                        console.log(user)
                         if (!User.checkPassword(password, user.password)) {
+                            console.log(User.checkPassword(password, user.password))
                             res.status(401).send({
                                 success: false,
                                 message: "Password not valid"
@@ -46,7 +48,7 @@ module.exports = function(app, jwt, apiRoutes) {
         } else {
             res.status(401).send({
                 success: false,
-                message: "User or password not valid",
+                message: "User or password missing",
             });
         }
     });

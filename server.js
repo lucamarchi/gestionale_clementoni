@@ -2,11 +2,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var morgan = require('morgan');
+var path = require('path');
 var config_database = require('./server/configs/database');
 var config_token = require('./server/configs/token');
 
-var mongodb_connection_string = 'mongodb://127.0.0.1:27017/' + config_database.db_name;
+var mongodb_connection_string = config_database.url + config_database.db_name;
 
 if(process.env.OPENSHIFT_MONGODB_DB_URL) {
     console.log('Database connected');
@@ -23,7 +23,6 @@ mongoose.connection.on('open', function(){
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(require('morgan')("dev"));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 

@@ -55,7 +55,7 @@ module.exports = {
     },
 
     checkPassword: function(password, hash) {
-        return userModel.comparePassword(hash,password);
+        return bcrypt.compareSync(password, hash);
     },
 
 

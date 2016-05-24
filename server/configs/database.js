@@ -3,5 +3,6 @@
  */
 
 module.exports = {
-    'db_name': 'plimco'
+    'db_name': 'plimco',
+    'url': 'mongodb://127.0.0.1:27017/'
 };

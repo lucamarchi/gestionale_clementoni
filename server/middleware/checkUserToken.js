@@ -6,7 +6,9 @@ var jwt = require('jsonwebtoken');
 
 module.exports = function(req,res,next) {
 
-    if (req.url == '/api/authentication') {
+    var app = req.app;
+
+    if (req._parsedUrl.path == '/api/authenticate') {
         return next();
     }
      var token = req.body.token || req.query.token || req.headers['x-access-token'];

@@ -9,6 +9,7 @@ var checkToken = require('./middleware/checkUserToken.js');
 module.exports = function (app, express) {
 
     app.use(cors());
+    app.use(require('morgan')("dev"));
     app.use(checkToken);
 
     app.get('/', function(req, res, next) {
@@ -21,6 +22,9 @@ module.exports = function (app, express) {
     var router = express.Router();
 
     require('./controllers/authenticationController.js')(app, jwt, router);
+    require('./controllers/orderController.js')(app, router);
+    require('./controllers/productController.js')(app, router);
+    require('./controllers/stockController.js')(app, router);
 
     app.use('/api', router);
 
