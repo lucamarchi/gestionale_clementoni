@@ -127,7 +127,9 @@ module.exports = function() {
 																									if (err)
 																										res.status(500).json({message: err, status: false, msg: "9"});
 																									else {
-																										Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
+																										var newOriginalStock = originalStock;
+																										delete newOriginalStock._id;
+																										Stock.update({_id: originalStock._id},{$set: newOriginalStock}, function(err) {
 																											if (err)
 																												res.status(500).json({message: err, status: false, msg: "10"});
 																											else {
@@ -144,7 +146,9 @@ module.exports = function() {
 																						});
 																				
 																				} else {
-																					Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
+																					var newOriginalStock = originalStock;
+																					delete newOriginalStock._id;
+																					Stock.update({_id: originalStock._id},{$set: newOriginalStock}, function(err) {
 																					if (err)
 																						res.status(500).json({message: err, status: false, msg: "12"});
 																					else {
@@ -271,7 +275,9 @@ module.exports = function() {
 																									if (err)
 																										res.status(500).json({message: err, status: false, msg: "20"});
 																									else {
-																										Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
+																										var newOriginalStock = originalStock;
+																										delete newOriginalStock._id;
+																										Stock.update({_id: originalStock._id},{$set: newOriginalStock}, function(err) {
 																											if (err)
 																												res.status(500).json({message: err, status: false, msg: "21"});
 																											else {
@@ -288,7 +294,9 @@ module.exports = function() {
 																						});
 																				
 																				} else {
-																					Stock.update({_id: originalStock._id},{$set: originalStock}, function(err) {
+																					var newOriginalStock = originalStock;
+																					delete newOriginalStock._id;
+																					Stock.update({_id: originalStock._id},{$set: newOriginalStock}, function(err) {
 																						if (err)
 																							res.status(500).json({message: err, status: false, msg: "23"});
 																						else {
