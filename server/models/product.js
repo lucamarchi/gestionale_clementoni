@@ -55,7 +55,6 @@ module.exports = {
                 deferred.resolve(result);
             }
         });
-
         return deferred.promise;
     },
 

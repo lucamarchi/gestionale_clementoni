@@ -31,23 +31,61 @@ module.exports = customerModel;
 module.exports = {
 
     findOne: function(query) {
-
+        var deferred = Q.defer();
+        customerModel.findOne(query).lean().exec(function (err, result) {
+            if(err) {
+                deferred.reject(err);
+            } if(!result) {
+                var err = new Error("Customer not found");
+                err.status = 400;
+                deferred.reject(err);
+            } else {
+                deferred.resolve(result);
+            }
+        });
+        return deferred.promise;
     },
 
     findById: function(id) {
-
+        var query = {'_id': id};
+        var customer = this.findOne(query);
+        return customer;
     },
 
     findAll: function() {
-
+        var deferred = Q.defer();
+        customerModel.find({}).exec(function (err, result) {
+            if(err) {
+                deferred.reject(err);
+            } if(!result) {
+                var err = new Error("No customers found");
+                err.status = 400;
+                deferred.reject(err);
+            } else {
+                deferred.resolve(result);
+            }
+        });
+        return deferred.promise;
     },
 
     findByIdentity: function(identity) {
-
+        var query = {'ident': identity};
+        var customer = this.findOne(query);
+        return customer;
     },
 
     saveNewCustomer: function(customer) {
-
+        var deferred = Q.defer();
+        var newCustomer = new customerModel();
+        newCustomer.ident = customer.ident;
+        newCustomer.save(function(err) {
+            if (err) {
+                deferred.reject(err)
+            } else {
+                deferred.resolve(newCustomer);
+            }
+        });
+        return deferred.promise;
     }
 
 };
