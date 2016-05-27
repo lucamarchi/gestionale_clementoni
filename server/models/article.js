@@ -137,6 +137,12 @@ module.exports = {
         return article;
     },
 
+    setArticleStatus: function(articleId,status) {
+        var query = {$set: {'stato': status}};
+        var article = this.updateArticle(articleId,query);
+        return article;
+    },
+
     setArticleComplete: function(articleId) {
         var query = {$set: {'stato': 'completato'}} + {$unset: {'stockId': ''}};
         var article = this.updateArticle(articleId,query);

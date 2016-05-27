@@ -15,7 +15,7 @@ var CutSchema = new Schema({
     date: {type: Date},
     accepted: {type: Boolean, default: false},
     operator: {type: String},
-    articles: [{ type: Schema.ObjectId, ref: 'Article'}],
+    articoli: [{ type: Schema.ObjectId, ref: 'Article'}],
     customer: {type: Schema.ObjectId, ref: 'Customer'}
 });
 
@@ -47,7 +47,7 @@ module.exports = {
 
     findAll: function() {
         var deferred = Q.defer();
-        cutModel.findAll().exec(function(err,result) {
+        cutModel.find({}).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
             } if(!result) {
@@ -104,7 +104,8 @@ module.exports = {
     saveNewCut: function(cut) {
         var deferred = Q.defer();
         var newCut = new cutModel();
-        newCut.ddt = order.ddt;
+        newCut.ddt = cut.ddt;
+        newCut.clienteCod = cut.clienteCod;
         newCut.codice(function(err) {
             if (err) {
                 deferred.reject(err)
@@ -115,4 +116,28 @@ module.exports = {
         return deferred.promise;
     },
 
+    setCutAccepted: function(cutId) {
+        var query = {$set: {'accepted': true}};
+        var cut = this.updateCut(cutId,query);
+        return cut;
+    },
+
+    lastCutCod: function() {
+        var deferred = Q.defer();
+        var date = new Date().getFullYear();
+        cutModel.find({"anno": date}).sort({"codice": -1}).limit(1).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            }
+            if(!result) {
+                var err = new Error("No cut accepted found");
+                err.status = 400;
+                deferred.reject(err);
+            } else {
+                var cod = result[0].codice;
+                deferred.resolve(cod);
+            }
+        });
+        return deferred.promise;
+    }
 };

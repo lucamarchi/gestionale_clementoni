@@ -12,13 +12,11 @@ module.exports = function(req,res,next) {
         return next();
     }
      var token = req.body.token || req.query.token || req.headers['x-access-token'];
-        console.log("Token is: "+token);
         if (token) {
             jwt.verify(token, app.get('superSecret'), function(err,decoded) {
                 if (err) {
                     return res.status(401).json({success: false, message: 'Failed to authenticate token'});
                 } else {
-                    console.log("Token verify");
                     req.decoded = decoded;
                     next();
                 }
