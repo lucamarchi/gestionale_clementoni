@@ -1,6 +1,5 @@
-store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory','UserService', function ($scope, articleFactory, stockFactory, processFactory, UserService) {
+store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory', function ($scope, articleFactory, stockFactory, processFactory) {
 	
-//	$scope.userRole = UserService.getUser().role;
 	$scope.riepilogo = true;
 	
 	articleFactory.resourceState().getAll(

@@ -263,16 +263,21 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	$scope.createChildren = function () {
 		$scope.child = {};
 		$scope.bancale = undefined;
-		$scope.scarto = 0;
+		if($scope.machinery.sigle != "a") {
+			$scope.scarto = undefined;
+		}
+		else {
+			$scope.scarto = 0;
+		}
 		$scope.child.materiale = $scope.stock.materiale;
 		$scope.child.qualita = $scope.stock.qualita;
 		$scope.child.scelta = $scope.stock.scelta;
 		$scope.child.finitura = $scope.stock.finitura;
-		$scope.child.colore = $scope.stock.colore;
+		$scope.child.coloreRal = $scope.stock.coloreRal;
 		$scope.child.superficie = $scope.stock.superficie;
 		$scope.child.spessore = $scope.stock.spessore;
 		if($scope.article) {
-			$scope.child.larghezza = $scope.article.larghezza 
+			$scope.child.larghezza = $scope.article.larghezza;
 			$scope.child.lunghezza = $scope.article.lunghezza;
 		}
 		if ($scope.machinery.sigle != "f") {
@@ -289,7 +294,6 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		$scope.children.push(child);
 		if ($scope.machinery.sigle != "a") {
 			$scope.scartoTot.push($scope.scarto);
-			console.log($scope.scartoTot);
 		}
 		console.log("figli ", $scope.children, "scarti ", $scope.scartoTot);
 	}

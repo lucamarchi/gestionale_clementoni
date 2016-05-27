@@ -1,15 +1,13 @@
 var store = angular.module('store');
 
-store.controller('carichiInController', ['$scope', 'orderFactory', 'productFactory','UserService', function ($scope, orderFactory, productFactory, UserService) {
-	
-//	$scope.userRole = UserService.getUser().role;
+store.controller('carichiInController', ['$scope', 'orderFactory', 'productFactory','features', function ($scope, orderFactory, productFactory, features) {
 	
 	orderFactory.getAll(
 		function (resp) {
 			console.log("TUTTI I CARICHI IN ENTRATA" , resp.data);
 			$scope.orders = resp.data;
 			$scope.totalItems = $scope.orders.length;
-			$scope.entryLimit = 50;
+			$scope.entryLimit = 10;
 			$scope.currentPage = 1;
 			$scope.maxSize = Math.ceil($scope.totalItems / $scope.entryLimit);
 		},
@@ -21,6 +19,8 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	$scope.order = undefined;
 	$scope.productsOrder = [];
 	$scope.productsOrder2 = [];
+	$scope.features = features;
+	console.log($scope.features);
 
 	
 	$scope.openProductsOrder = function (order) {
@@ -60,6 +60,7 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	$scope.addProduct = function () {
 		$scope.product.pesoLordo = $scope.product.pesoNetto;
 		valuesProduct($scope.product);
+		console.log($scope.product);
 		$scope.productsOrder.push($scope.product);
 		$scope.productsOrder2.push($scope.product);
 	}
@@ -128,6 +129,7 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 		$scope.product.pesoLordo = $scope.product.pesoNetto;
 		valuesProduct($scope.product);
 		var product = $scope.product;
+		console.log(product);
 		if (product._id){
 			productFactory.update(
 				{

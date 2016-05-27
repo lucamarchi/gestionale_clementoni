@@ -1,5 +1,5 @@
 function valuesProduct (product){
-	if(product.tipo){
+	if(product.tipo && product.pesoNetto && product.larghezza && product.spessore){
 		if (product.tipo.toLowerCase() == "coil" || product.tipo.toLowerCase() == "nastro"){
 			product.lunghezza = (product.pesoNetto/((product.larghezza * product.spessore * 7.85)/1000)).toFixed(2);
 		}
@@ -10,6 +10,9 @@ function valuesProduct (product){
 		else {
 			product.numFogli = 0;
 		}
+	}
+	if (product.materiale != "zincato" && product.materiale != "preverniciato" && product.materiale != "inox") {
+		product.finitura = undefined;
 	}
 	if(product.larghezza){
 		var indexMin;

@@ -15,6 +15,11 @@
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
+			<th><span class="glyphicon glyphicon-filter" aria-hidden="true"></span><input ng-model="codice"></th>
+			<th><span class="glyphicon glyphicon-filter" aria-hidden="true"></span><input ng-model="clienteCod"></th>
+			<th><span class="glyphicon glyphicon-filter" aria-hidden="true"></span><input type="date" ng-model="data"></th>
+		</tr>
+		<tr>
 			<th>Num. Ordine</th>
 			<th>Codice Cliente</th>
 			<th>Data</th>
@@ -24,7 +29,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="cut in cuts | orderBy:['accepted','-codice']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+		<tr ng-repeat="cut in cuts | filtercut:codice:clienteCod:data | orderBy:['accepted','-codice']|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
 			<td><button type="button" class="btn btn-info btn-block" ng-click="openArticlesCut(cut)" data-target="#cutarticle" data-toggle="modal">{{cut.codice}}</button></td>
 			<td>{{cut.clienteCod}}</td>
 			<td>{{cut.date | date:'medium'}}</td>
@@ -50,9 +55,6 @@
 				<div ng-include src="'public/cut/cut_products.html'"></div>
 			</div>
 		</div>
-<!--
-		<div class="modal-footer">
-		</div>
--->
+
 	</div>
 </div>
