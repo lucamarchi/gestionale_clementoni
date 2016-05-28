@@ -2,7 +2,7 @@ var store = angular.module('store', ['ngRoute', 'ngResource'/*, 'ngTouch', 'ngAn
 
 store.constant("myConfig", {
 	"url": "http://localhost:8080",
-//	"url": "http://plimco-gianclementoni.rhcloud.com"
+//	"url": "http://clements-clementoni.rhcloud.com"
 });
 
 store.constant("features", {
@@ -24,9 +24,9 @@ store.constant("features", {
 	"lunghezze": ["2000","2500","3000"],
 	"classiLarghezza":["1000", "1250", "1500"],
 	"stati": ["sospeso", "approvato", "respinto"],
-	"stabilimenti": ["1", "2"]
+	"stabilimenti": ["1", "2"],
+	"fornitori": ["21","15","7","5","4","2","1"]
 });
-
 
 store.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');

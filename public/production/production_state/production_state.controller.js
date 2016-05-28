@@ -1,4 +1,4 @@
-store.controller('productionStateController', ['$scope', 'articleFactory', 'stockFactory', 'productionStateFactory', 'processFactory', 'UserService', function ($scope, articleFactory, stockFactory, productionStateFactory, processFactory, UserService) {
+store.controller('productionStateController', ['$scope', 'articleFactory', 'stockFactory', 'productionStateFactory', 'processFactory', 'UserService', 'features', function ($scope, articleFactory, stockFactory, productionStateFactory, processFactory, UserService, features) {
 	$scope.riepilogo = false;
 	$scope.state = {};
 	$scope.article = {};
@@ -10,6 +10,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	$scope.isUpdate = false;
 	$scope.workInProgress = false;
 	$scope.monster = [];
+	$scope.features = features;
 	
 	productionStateFactory.getAll(
 		function (resp) {
@@ -280,6 +281,9 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 			$scope.child.larghezza = $scope.article.larghezza;
 			$scope.child.lunghezza = $scope.article.lunghezza;
 		}
+		else {
+			$scope.child.larghezza = $scope.stock.larghezza;
+		}
 		if ($scope.machinery.sigle != "f") {
 			$scope.child.stabilimento = 1;
 		}
@@ -328,14 +332,14 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		}
 		process.operatore = UserService.getUser().username;	
 		console.log("process", process);
-		processFactory.resource().save({},
-			process,
-			function(resp){
-				console.log("CONFERMATA LAVORAZIONE", resp)
-			},
-			function (err){
-				console.log(err);
-			})
+//		processFactory.resource().save({},
+//			process,
+//			function(resp){
+//				console.log("CONFERMATA LAVORAZIONE", resp)
+//			},
+//			function (err){
+//				console.log(err);
+//			})
 	}
 	
 	
