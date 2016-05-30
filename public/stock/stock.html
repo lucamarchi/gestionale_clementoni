@@ -14,7 +14,8 @@
 				<input type="checkbox" ng-click="includeMaterial('zincato')">Zincato&nbsp&nbsp
 				<input type="checkbox" ng-click="includeMaterial('decapato')">Decapato&nbsp&nbsp
 			</div>
-			<div><input type="checkbox" ng-click="includeMaterial('laf')">Laf&nbsp&nbsp
+			<div>
+				<input type="checkbox" ng-click="includeMaterial('laf')">Laf&nbsp&nbsp
 				<input type="checkbox" ng-click="includeMaterial('preverniciato')">Preverniciato&nbsp&nbsp
 			</div>
 			<div>
@@ -24,6 +25,9 @@
 			<div>
 				<input type="checkbox" ng-click="includeMaterial('alluminato')">Alluminato&nbsp&nbsp
 				<input type="checkbox" ng-click="includeMaterial('elettrozincato')">Elettrozincato&nbsp&nbsp
+			</div>
+			<div>
+				<input type="checkbox" ng-click="includeMaterial('inox')">Inox&nbsp&nbsp
 			</div>
 		</ul>
 	</td>
@@ -80,6 +84,7 @@
 				<input type="checkbox" ng-click="includeSpessor(6)">6.00&nbsp&nbsp
 				<input type="checkbox" ng-click="includeSpessor(8)">8.00&nbsp&nbsp
 				<input type="checkbox" ng-click="includeSpessor(10)">10.00&nbsp&nbsp
+				<input type="checkbox" ng-click="includeSpessor(12)">12.00&nbsp&nbsp
 			</div>
 		</ul>
 	</td>
@@ -103,13 +108,13 @@
 					<th>Num Collo</th>
 					<th>Matricola</th>
 					<th>Spessore</th>
-					<th>Largh Nominale</th>
+					<th>Largh. Nom.</th>
+					<th>Largh. Eff.</th>
 					<th>Qualita</th>
 					<th>Scelta</th>
 					<th>Finitura</th>
 					<th>Colore/Ral</th>
 					<th>Superficie</th>
-					<th>Largh Effettiva</th>
 					<th>Lungh</th>
 					<th>Num. Fogli</th>
 					<th>Peso Netto(kg)</th>
@@ -129,12 +134,12 @@
 					<td>{{p.matricola}}</td>
 					<td>{{s2p.key}}</td>
 					<td>{{l2p.key}}</td>
+					<td>{{p.larghezza}}</td>
 					<td>{{p.qualita|uppercase}}</td>
 					<td>{{p.scelta}}</td>
 					<td>{{p.finitura}}</td>
 					<td>{{p.coloreRal}}</td>
 					<th>{{p.superficie}}</th>
-					<td>{{p.larghezza}}</td>
 					<td>{{p.lunghezza}}</td>
 					<td>{{p.numFogli}}</td>
 					<td>

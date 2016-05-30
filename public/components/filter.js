@@ -89,3 +89,46 @@ store.filter('filterstock', function() {
 		return output;
 	}
 });
+
+store.filter('filterriep', function() {
+	
+  	return function(input, dataConsegna, ordineCod, clienteCod, materiale, tipo, spessore) {
+		var output;
+		if (input) {
+			output = input.slice();
+			if (dataConsegna) {
+				output = output.filter(function(el){
+					return (new Date(el.dataConsegna).getTime() == new Date(dataConsegna).getTime());
+				});
+			}
+			if (ordineCod) {
+				output = output.filter(function(el){
+					return (el.ordineCod.toString().substring(0,ordineCod.length) == ordineCod.toString());
+				});
+			}
+			if (clienteCod) {
+				output = output.filter(function(el){
+					console.log(el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
+					return (el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
+				});
+			}
+			if (materiale) {
+				output = output.filter(function(el){
+					return (el.materiale == materiale);
+				});
+			}
+			if (tipo) {
+				output = output.filter(function(el){
+					return (el.tipo == tipo);
+				});
+			}
+			if (spessore) {
+				output = output.filter(function(el){
+					return (el.spessore == spessore);
+				});
+			}
+			
+		}
+		return output;
+	}
+});

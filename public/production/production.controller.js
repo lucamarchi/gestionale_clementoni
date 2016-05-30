@@ -1,4 +1,4 @@
-store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory', function ($scope, articleFactory, stockFactory, processFactory) {
+store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory','features', function ($scope, articleFactory, stockFactory, processFactory,features) {
 	
 	$scope.riepilogo = true;
 	
@@ -16,6 +16,7 @@ store.controller('productionController', ['$scope', 'articleFactory', 'stockFact
 		}
 	);
 	
+	$scope.features = features;
 	$scope.viewStock = function (article) {
 		stockFactory.resource().get(
 			{id: article.stockId},

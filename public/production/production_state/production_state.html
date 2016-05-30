@@ -150,7 +150,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-target="#newprocess" data-toggle="modal" data-dismiss="modal">Indietro</button>
-				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newprocess3" data-dismiss="modal">Conferma</button>
+				<button ng-if="isUpdate" type="button" class="btn btn-success" data-toggle="modal" data-target="#completework" data-dismiss="modal">Conferma</button>
 			</div>
 		</div>
 	</div>
@@ -176,27 +176,6 @@
 		</div>
 	</div>
 </div>
-
-<!-- Modal new_process3.html-->
-<div id="newprocess3" class="modal modal-xl fade" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" align="center">LAVORAZIONE PARTE 3</h4>
-			</div>
-			<div class="modal-body">
-				<div ng-include src="'public/production/production_state/new_process3.html'"></div>
-					
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-target="#newprocess2" data-toggle="modal" data-dismiss="modal">Indietro</button>
-				<button ng-if="isUpdate" type="button" class="btn btn-success" data-toggle="modal" data-target="#completework" data-dismiss="modal">Conferma</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 
 <!-- Modal update_collo.html-->
 <div id="updatestock" class="modal fade" role="dialog">

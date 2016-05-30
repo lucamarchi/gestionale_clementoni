@@ -332,14 +332,14 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		}
 		process.operatore = UserService.getUser().username;	
 		console.log("process", process);
-//		processFactory.resource().save({},
-//			process,
-//			function(resp){
-//				console.log("CONFERMATA LAVORAZIONE", resp)
-//			},
-//			function (err){
-//				console.log(err);
-//			})
+		processFactory.resource().save({},
+			process,
+			function(resp){
+				console.log("CONFERMATA LAVORAZIONE", resp)
+			},
+			function (err){
+				console.log(err);
+			})
 	}
 	
 	

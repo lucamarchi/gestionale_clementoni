@@ -1,15 +1,16 @@
 <table ng-if="children.length != 0" class="table">
 	<thead>
+		<th>Num. Collo</th>
 		<th>Materiale</th>
 		<th>Tipo</th>
 		<th>Spessore</th>
-		<th>C.Larghezza</th>
+		<th>Largh. Nom</th>
+		<th>Largh. Eff.</th>
 		<th>Qualita</th>
 		<th>Scelta</th>
 		<th>Finitura</th>
 		<th>Colore/Ral</th>
 		<th>Superficie</th>
-		<th>Larghezza</th>
 		<th>Lunghezza</th>
 		<th>N.Fogli</th>
 		<th>PesoNetto</th>
@@ -19,16 +20,17 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="child in children">
+			<td><span style="color:blue">{{child.numeroCollo}}</span></td>
 			<td>{{child.materiale}}</td>
 			<td>{{child.tipo}}</td>
 			<td>{{child.spessore}}</td>
 			<td>{{child.classeLarghezza}}</td>
+			<td>{{child.larghezza}}</td>
 			<td>{{child.qualita}}</td>
 			<td>{{child.scelta}}</td>
 			<td>{{child.finitura}}</td>
 			<td>{{child.coloreRal}}</td>
 			<td>{{child.superficie}}</td>
-			<td>{{child.larghezza}}</td>
 			<td>{{child.lunghezza}}</td>
 			<td>{{child.numFogli}}</td>
 			<td>{{child.pesoNetto}}</td>
