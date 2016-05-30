@@ -68,7 +68,8 @@ store.controller('productionController', ['$scope', 'articleFactory', 'stockFact
 			},
 			function (resp) {
 				$scope.customer = resp.data;
-				console.log("CLIENTE ARTICOLO", resp);
+				$scope.customer.codice = article.clienteCod;
+				console.log("CLIENTE ARTICOLO", $scope.customer);
 			},
 			function (err) {
 				console.log(resp);

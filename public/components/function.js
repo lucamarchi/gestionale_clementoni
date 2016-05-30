@@ -38,3 +38,8 @@ function calculateScarto (stockOld, stockNew, children){
 //	console.log("scarto="+stockOld.pesoNetto+"-"+stockNew.pesoNetto+"-"+pesoChildren+"="+scarto);
 	return scarto;
 }
+
+function convertScarto (stock, lunghScarto) {
+	var scarto = stock.spessore * stock.larghezza * lunghScarto * (7.85/1000000);
+	return scarto;
+}

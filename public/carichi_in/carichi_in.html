@@ -40,7 +40,7 @@
   			<td>{{order.fornitore}}</td>
 			<td>{{order.dataDdt | date:'medium'}}</td>
 			<td>{{order.dataArrivo | date:'medium'}}</td>
-			<td>
+			<td ng-if="userRole == 'logistica' || userRole == 'admin'">
 				<button type="button" class="btn btn-warning btn-circle" ng-click="openOrder(order)" data-target="#neworder" data-toggle="modal">Modifica <span class="glyphicon glyphicon-cog"></button>
 				<button type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteOrder(order, orders.indexOf(order))" data-target="#delete" data-toggle="modal">Cancella <span class="glyphicon glyphicon-trash"></span></button>	
 			</td>
@@ -68,7 +68,7 @@
 			</div>
 			<div class="modal-footer">
 				<div align="left">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>
+					<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>
 				</div>
 				<div>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>

@@ -119,7 +119,8 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 			},
 			function (resp) {
 				$scope.customer = resp.data;
-				console.log("CLIENTE ARTICOLO", resp.data);
+				$scope.customer.codice = article.clienteCod;
+				console.log("CLIENTE ARTICOLO", $scope.customer);
 			},
 			function (err) {
 				console.log(resp);
@@ -297,7 +298,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		valuesProduct(child);
 		$scope.children.push(child);
 		if ($scope.machinery.sigle != "a") {
-			$scope.scartoTot.push($scope.scarto);
+			$scope.scartoTot.push(convertScarto($scope.stock, scarto));
 		}
 		console.log("figli ", $scope.children, "scarti ", $scope.scartoTot);
 	}
