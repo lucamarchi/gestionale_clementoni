@@ -86,6 +86,19 @@ module.exports = {
             }
         });
         return deferred.promise;
+    },
+
+    checkCustomer: function(identity) {
+        var check = false;
+        var deferred = Q.defer();
+        this.findByIdentity(identity).then(function (result) {
+            if (result)
+                check = true;
+            deferred.resolve(check);
+        }).catch(function(err) {
+            deferred.resolve(check);
+        });
+        return deferred.promise;
     }
 
 };

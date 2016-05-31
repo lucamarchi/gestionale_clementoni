@@ -90,14 +90,14 @@ module.exports = {
     },
 
     addArticleToCut: function(articleId,cutId) {
-        var query = {$push: {'articles': articleId}};
-        var cut = this.updateCut(articleId, query);
+        var query = {$push: {'articoli': articleId}};
+        var cut = this.updateCut(cutId, query);
         return cut;
     },
 
     addCustomerToCut: function(customerId,cutId) {
         var query = {'customer': customerId};
-        var cut = this.updateCut(customerId, query);
+        var cut = this.updateCut(cutId, query);
         return cut;
     },
 
@@ -106,7 +106,9 @@ module.exports = {
         var newCut = new cutModel();
         newCut.ddt = cut.ddt;
         newCut.clienteCod = cut.clienteCod;
-        newCut.codice(function(err) {
+        newCut.codice = cut.codice;
+        newCut.anno = cut.anno;
+        newCut.save(function(err) {
             if (err) {
                 deferred.reject(err)
             } else {
@@ -125,16 +127,17 @@ module.exports = {
     lastCutCod: function() {
         var deferred = Q.defer();
         var date = new Date().getFullYear();
-        cutModel.find({"anno": date}).sort({"codice": -1}).limit(1).exec(function(err,result) {
+        cutModel.findOne({"anno": date}).sort({"codice": -1}).limit(1).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
             }
             if(!result) {
-                var err = new Error("No cut accepted found");
-                err.status = 400;
-                deferred.reject(err);
+                console.log("CASO NON TROVATO: "+result);
+                var cod = 0;
+                deferred.resolve(cod);
             } else {
-                var cod = result[0].codice;
+                console.log("CASO TROVATO: "+result);
+                var cod = result.codice;
                 deferred.resolve(cod);
             }
         });

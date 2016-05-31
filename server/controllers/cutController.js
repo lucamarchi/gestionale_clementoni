@@ -143,15 +143,62 @@ module.exports = function(app, apiRoutes) {
     });
 
     apiRoutes.get('/cuts/update', function(req,res,next) {
-        Cut.lastCutCod().then(function(result) {
+        Cut.lastCutCod().then(function (result) {
             var date = new Date().getFullYear();
-            request.findNewCuts(date,result+1).then(function(cuts) {
-                console.log("CONSOLE FUORI MODULE: ");
+            var newCod = result + 1;
+            console.log("CODICE: "+newCod);
+            request.findNewCuts(date, newCod).then(function (cuts) {
+                if (cuts && cuts.length > 0) {
+                    Q.all(cuts.map(function (currCut) {
+                        return Cut.saveNewCut(currCut)
+                            .then(function (cut) {
+                                return Q.all(currCut.articoli.map(function (currArticle) {
+                                    return Article.saveNewArticle(currArticle)
+                                        .then(function (article) {
+                                            return Cut.addArticleToCut(article.id, cut.id)
+                                        })
+                                }))
+                            })
+                    })).then(function (result) {
+                        res.status(404).json({
+                            "success": true,
+                            "message": "Cuts updated",
+                            "cuts": cuts
+                        });
+                    }).catch(function (err) {
+                        res.status(404).json({
+                            "success": false,
+                            "message": "Internal server error 2",
+                            "err": err
+                        });
+                    });
+                } else {
+                    res.status(404).json({
+                        "success": true,
+                        "message": "No new cut found",
+                    });
+                }
             });
         }).catch(function(err) {
-           console.log(err);
-        });
-        return next();
-    });
+            res.status(404).json({
+                "success": false,
+                "message": "Internal server error 2",
+                "err": err
+            });
+        })
+    }),
+
+    apiRoutes.get('/prova', function(res,req,err) {
+        request.findCustomer().then(function (results) {
+            var promises = [];
+            for (var i in results) {
+                var newMethod = Customer.checkCustomer(results[i].Id);
+                promises.push(newMethod);
+            }
+            Q.all(promises).then(function (results) {
+                console.log(results);
+            });
+        })
+    })
 
 };
