@@ -146,6 +146,26 @@ module.exports = {
         return deferred.promise;
     },
 
+    findNewCustomerByIdentity: function(identity) {
+        var deferred = Q.defer();
+        this.findCustomer().then(function(results) {
+            if (results.length > 0) {
+                results.forEach(function(currCustomer) {
+                    if (currCustomer.ident === identity) {
+                        deferred.resolve(currCustomer);
+                    }
+                });
+            } else {
+                var err = new Error("No customer with this identity");
+                err.status = 400;
+                deferred.reject(err);
+            }
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    }
+
 
 
 };

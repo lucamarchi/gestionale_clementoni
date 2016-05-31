@@ -146,29 +146,37 @@ module.exports = function(app, apiRoutes) {
         Cut.lastCutCod().then(function (result) {
             var date = new Date().getFullYear();
             var newCod = result + 1;
-            console.log("CODICE: "+newCod);
+            var finalCuts = [];
             request.findNewCuts(date, newCod).then(function (cuts) {
                 if (cuts && cuts.length > 0) {
                     Q.all(cuts.map(function (currCut) {
                         return Cut.saveNewCut(currCut)
                             .then(function (cut) {
+                                finalCuts.push(cut);
                                 return Q.all(currCut.articoli.map(function (currArticle) {
                                     return Article.saveNewArticle(currArticle)
                                         .then(function (article) {
                                             return Cut.addArticleToCut(article.id, cut.id)
                                         })
-                                }))
+                                }));
                             })
-                    })).then(function (result) {
-                        res.status(404).json({
-                            "success": true,
-                            "message": "Cuts updated",
-                            "cuts": cuts
-                        });
+                    })).then(function (cuts) {
+                        Q.all(finalCuts.map(function(currCut) {
+                            return Customer.findByIdentity(currCut.clienteCod)
+                                .then(function(customer) {
+                                    return Cut.addCustomerToCut(customer._id,currCut._id)
+                                })
+                        })).then(function(res) {
+                            res.status(200).json({
+                                "success": true,
+                                "message": "Cuts updated",
+                                "cuts": finalCuts
+                            });
+                        })
                     }).catch(function (err) {
                         res.status(404).json({
                             "success": false,
-                            "message": "Internal server error 2",
+                            "message": "Internal server error 1",
                             "err": err
                         });
                     });
@@ -201,4 +209,28 @@ module.exports = function(app, apiRoutes) {
         })
     })
 
+
+    var addCustomerToCutSupport = function(customerId,cutId,identity) {
+        var deferred = Q.defer();
+        Customer.findById(customerId).then(function(customer) {
+            if (customer && customer.identity === identity) {
+                console.log(customer);
+                Cut.addCustomerToCut(customer.id,cutId).then(function(result) {
+                    deferred.resolve(result);
+                });
+            } else {
+                request.findNewCustomerByIdentity(identity).then(function(tmpCustomer) {
+                    Customer.saveNewCustomer(tmpCustomer).then(function(customer) {
+                        Cut.addCustomerToCut(customerId,cutId).then(function(cut) {
+                            deferred.resolve(cut);
+                        })
+                    })
+                })
+            }
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    }
 };
+

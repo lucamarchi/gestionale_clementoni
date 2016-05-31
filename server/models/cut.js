@@ -132,11 +132,9 @@ module.exports = {
                 deferred.reject(err);
             }
             if(!result) {
-                console.log("CASO NON TROVATO: "+result);
                 var cod = 0;
                 deferred.resolve(cod);
             } else {
-                console.log("CASO TROVATO: "+result);
                 var cod = result.codice;
                 deferred.resolve(cod);
             }
