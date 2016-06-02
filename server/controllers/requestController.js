@@ -49,7 +49,7 @@ module.exports = {
             json: true
         }, function(error,response,body) {
             if (error) {
-                deferred.reject(err);
+                deferred.reject(error);
             } else if (!error && response.statusCode == 200) {
                 deferred.resolve(body.data);
             } else {
@@ -152,6 +152,7 @@ module.exports = {
             if (results.length > 0) {
                 results.forEach(function(currCustomer) {
                     if (currCustomer.ident === identity) {
+                        console.log(currCustomer.ident === identity)
                         deferred.resolve(currCustomer);
                     }
                 });

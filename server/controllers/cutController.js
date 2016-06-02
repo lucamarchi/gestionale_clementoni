@@ -162,18 +162,16 @@ module.exports = function(app, apiRoutes) {
                             })
                     })).then(function (cuts) {
                         Q.all(finalCuts.map(function(currCut) {
-                            return Customer.findByIdentity(currCut.clienteCod)
-                                .then(function(customer) {
-                                    return Cut.addCustomerToCut(customer._id,currCut._id)
-                                })
-                        })).then(function(res) {
+                            return addCustomerToCutSupport(currCut._id,currCut.clienteCod)
+                        })).then(function(finalResult) {
                             res.status(200).json({
                                 "success": true,
                                 "message": "Cuts updated",
-                                "cuts": finalCuts
+                                "cuts": finalResult
                             });
                         })
                     }).catch(function (err) {
+                        console.log("ERR1")
                         res.status(404).json({
                             "success": false,
                             "message": "Internal server error 1",
@@ -188,6 +186,7 @@ module.exports = function(app, apiRoutes) {
                 }
             });
         }).catch(function(err) {
+            console.log("ERR2")
             res.status(404).json({
                 "success": false,
                 "message": "Internal server error 2",
@@ -207,28 +206,29 @@ module.exports = function(app, apiRoutes) {
                 console.log(results);
             });
         })
-    })
+    }),
 
-
-    var addCustomerToCutSupport = function(customerId,cutId,identity) {
+    addCustomerToCutSupport = function(cutId,identity) {
         var deferred = Q.defer();
-        Customer.findById(customerId).then(function(customer) {
-            if (customer && customer.identity === identity) {
-                console.log(customer);
-                Cut.addCustomerToCut(customer.id,cutId).then(function(result) {
+        Customer.findByIdentity(identity).then(function(customer) {
+            if (customer && customer.ident === identity) {
+                Cut.addCustomerToCut(customer._id,cutId).then(function(result) {
                     deferred.resolve(result);
                 });
-            } else {
+            }
+        }).catch(function(err) {
+            if (err.message === "Customer not found" && err.status === 400) {
                 request.findNewCustomerByIdentity(identity).then(function(tmpCustomer) {
                     Customer.saveNewCustomer(tmpCustomer).then(function(customer) {
-                        Cut.addCustomerToCut(customerId,cutId).then(function(cut) {
+                        console.log("NEWCUST: "+customer)
+                        Cut.addCustomerToCut(customer._id,cutId).then(function(cut) {
                             deferred.resolve(cut);
                         })
                     })
                 })
+            } else {
+                deferred.reject(err);
             }
-        }).catch(function(err) {
-            deferred.reject(err);
         });
         return deferred.promise;
     }

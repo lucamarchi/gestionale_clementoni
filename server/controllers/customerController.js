@@ -14,17 +14,15 @@ module.exports = function(app, apiRoutes) {
     apiRoutes.get('/customers/update', function(req,res,next) {
        request.findCustomer().then(function(results) {
            var promises = [];
-           console.log("LUNG: " +results.length);
            results.forEach(function(currCustomer) {
-               console.log(currCustomer.ident);
                var newMethod = Customer.saveNewCustomer(currCustomer);
                promises.push(newMethod);
            });
-           Q.all(promises).then(function(res) {
+           Q.all(promises).then(function(customers) {
                res.status(404).json({
                    "success": true,
                    "message": "Customers updated",
-                   "customers": res
+                   "customers": customers
                });
            })
        }).catch(function(err) {
