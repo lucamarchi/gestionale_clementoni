@@ -149,6 +149,7 @@ module.exports = {
     findNewCustomerByIdentity: function(identity) {
         var deferred = Q.defer();
         this.findCustomer().then(function(results) {
+            console.log("RESULTS: "+results)
             if (results.length > 0) {
                 results.forEach(function(currCustomer) {
                     if (currCustomer.ident === identity) {

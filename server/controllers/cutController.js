@@ -161,15 +161,19 @@ module.exports = function(app, apiRoutes) {
                                 }));
                             })
                     })).then(function (cuts) {
-                        Q.all(finalCuts.map(function(currCut) {
-                            return addCustomerToCutSupport(currCut._id,currCut.clienteCod)
-                        })).then(function(finalResult) {
-                            res.status(200).json({
-                                "success": true,
-                                "message": "Cuts updated",
-                                "cuts": finalResult
-                            });
-                        })
+                        request.findCustomer().then(function(tmpCustomers) {
+                           if (tmpCustomers.length > 0) {
+                               Q.all(finalCuts.map(function(currFinalCut) {
+                                   return checkAndSetCustomer(currFinalCut._id,currFinalCut.clienteCod,tmpCustomers)
+                               })).then(function(finalResult) {
+                                   res.status(200).json({
+                                       "success": true,
+                                       "message": "Cuts updated",
+                                       "cuts": finalResult
+                                   });
+                               })
+                           }
+                        });
                     }).catch(function (err) {
                         console.log("ERR1")
                         res.status(404).json({
@@ -195,20 +199,7 @@ module.exports = function(app, apiRoutes) {
         })
     }),
 
-    apiRoutes.get('/prova', function(res,req,err) {
-        request.findCustomer().then(function (results) {
-            var promises = [];
-            for (var i in results) {
-                var newMethod = Customer.checkCustomer(results[i].Id);
-                promises.push(newMethod);
-            }
-            Q.all(promises).then(function (results) {
-                console.log(results);
-            });
-        })
-    }),
-
-    addCustomerToCutSupport = function(cutId,identity) {
+    checkAndSetCustomer = function(cutId,identity,tmpCustomers) {
         var deferred = Q.defer();
         Customer.findByIdentity(identity).then(function(customer) {
             if (customer && customer.ident === identity) {
@@ -218,19 +209,23 @@ module.exports = function(app, apiRoutes) {
             }
         }).catch(function(err) {
             if (err.message === "Customer not found" && err.status === 400) {
-                request.findNewCustomerByIdentity(identity).then(function(tmpCustomer) {
-                    Customer.saveNewCustomer(tmpCustomer).then(function(customer) {
-                        console.log("NEWCUST: "+customer)
-                        Cut.addCustomerToCut(customer._id,cutId).then(function(cut) {
-                            deferred.resolve(cut);
+                tmpCustomers.forEach(function (currTmpCustomer) {
+                    if (currTmpCustomer.ident === identity) {
+                        console.log("IDENT: "+identity+",CURRTMPCUSTOMER: "+currTmpCustomer);
+                        Customer.saveNewCustomer(currTmpCustomer).then(function (customer) {
+                            console.log("SALVATO: "+customer)
+                            Cut.addCustomerToCut(customer._id, cutId).then(function (cut) {
+                                deferred.resolve(cut);
+                            })
                         })
-                    })
-                })
+                    }
+                });
             } else {
                 deferred.reject(err);
             }
         });
         return deferred.promise;
     }
+
 };
 

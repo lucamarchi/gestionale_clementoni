@@ -137,6 +137,19 @@ module.exports = {
             }
         });
         return deferred.promise;
+    },
+
+    checkFiglio: function(stockId) {
+        var deferred = Q.defer();
+        this.findById(stockId).then(function(result) {
+            var numeroCollo = result.numeroCollo;
+            var isFilgio = false;
+            for (var i in numeroCollo) {
+                if (numeroCollo[i] === "/") {
+                    isFiglio = true;
+                }
+            }
+        });
     }
 
 };

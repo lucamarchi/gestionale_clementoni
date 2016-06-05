@@ -105,6 +105,7 @@ module.exports = function(app, apiRoutes) {
                     .then(function(products) {
                         Product.findNewNumeroCollo()
                             .then(function(number) {
+                                console.log("NUM: "+number);
                                 var lastNumberInserted = number;
                                 var promises = [];
                                 products.forEach(function(product) {

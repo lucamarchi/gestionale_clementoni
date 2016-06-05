@@ -82,17 +82,19 @@ module.exports = {
     findNewNumeroCollo: function() {
         var deferred = Q.defer();
         var year = new Date().getFullYear();
-        var query = {'anno': year};
-        productModel.findOne(query).sort({numeroCollo: -1}).limit(1).exec(function(err,result) {
+        var query = {'numeroCollo': {$exists: true}};
+        productModel.findOne(query).sort({"numeroCollo": -1}).limit(1).exec(function(err,result) {
            if (err) {
                deferred.reject(err);
            } else {
                if (!result) {
+                   console.log("STIAMO QUI")
                    var prefix = year.toString().slice(-2);
                    var matr = prefix + "0001";
                    matr = parseInt(matr);
                    deferred.resolve(matr);
                } else {
+                   console.log("Stiamo QUI: "+result)
                    var workedProduct = false;
                    var tmpMatr = result.numeroCollo;
                    var j = 0;
@@ -104,11 +106,9 @@ module.exports = {
                    }
                    if (workedProduct) {
                        var matr = tmpMatr.substr(0,j);
-                       matr = parseInt(matr)+1
-                       console.log("NUMCollo prodotto figlio: "+matr)
+                       matr = parseInt(matr)+1;
                    } else {
                        var matr = parseInt(tmpMatr)+1;
-                       console.log("NUMCollo prodotto non figlio: "+matr)
                    }
                    deferred.resolve(matr);
                }
@@ -120,6 +120,8 @@ module.exports = {
     saveNewProduct: function(product) {
         var deferred = Q.defer();
         var newProduct = new productModel();
+        var year = new Date().getFullYear();
+        newProduct.anno = year;
         newProduct.tipo = product.tipo;
         newProduct.save(function(err) {
             if (err) {
@@ -133,7 +135,6 @@ module.exports = {
 
     updateProduct: function(productId, query) {
         var deferred = Q.defer();
-        // FARLO CON IL SELETTORE E QUERY
         productModel.findByIdAndUpdate(productId,query,{new: true}).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
@@ -209,6 +210,12 @@ module.exports = {
             }
         });
         return deferred.promise;
+    },
+
+    findByStock: function(stockId) {
+        var query = {'stockId': stockId};
+        var product = this.findOne(query);
+        return product;
     }
 
 

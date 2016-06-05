@@ -27,6 +27,8 @@ module.exports = function (app, express) {
     require('./controllers/stockController.js')(app, router);
     require('./controllers/cutController')(app,router);
     require('./controllers/customerController.js')(app, router);
+    require('./controllers/articleController.js')(app,router);
+    require('./controllers/prodController.js')(app,router);
 
     app.use('/api', router);
 

@@ -144,8 +144,15 @@ module.exports = {
     },
 
     setArticleComplete: function(articleId) {
-        var query = {$set: {'stato': 'completato'}} + {$unset: {'stockId': ''}};
+        var query = {$set: {'stato': 'completato'}};
+        var article = this.updateArticle(articleId,query);
+        return article;
+    },
+
+    unsetStockToArticle: function(articleId) {
+        var query = {$unset: {'stockId': ''}};
         var article = this.updateArticle(articleId,query);
         return article;
     }
+
 };
