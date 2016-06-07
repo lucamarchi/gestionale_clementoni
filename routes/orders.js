@@ -5,6 +5,7 @@ module.exports = function() {
 	var Product = require('./../app/models/product');
 	var Order = require('./../app/models/order');
 	var Stock = require('./../app/models/stock');
+	var Expected = require('./../app/models/expected');
 
 	// AGGIUNTA DI UN ORDINE POST /api/orders ED VISUALIZZAZIONE ORDINI GET /api/orders
 
@@ -129,10 +130,23 @@ module.exports = function() {
 												else{
 													itemProducts++;
 													if (itemProducts == products.length){
-														Order.findById(orderId, function(err,ord) {
-															if (err) res.status(500).json({message: err, status: false});
-															else res.json({message: 'Order, stocks e products salvati',
-															 status: true, order: ord});
+														var expected = req.body.expected;
+														var itemExpected = 0;
+														expected.forEach(function(currExpected) {
+															itemExpected++;
+															Expected.update(currExpected._id, {$set: currExpected},function(err,result) {
+																if (err)
+																	res.status(500).json({message: err, status: false});
+																else {
+																	if (itemExpected == expected.length) {
+																		Order.findById(orderId, function(err,ord) {
+																			if (err) res.status(500).json({message: err, status: false});
+																			else res.json({message: 'Order, stocks e products salvati',
+																				status: true, order: ord});
+																		});
+																	}
+																}
+															})
 														});
 													}
 												}
