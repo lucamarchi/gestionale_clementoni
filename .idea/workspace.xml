@@ -2,26 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cea3d316-c0a8-4769-aa46-5b99719c4142" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/article.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/customer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/cut.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/order.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/process.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/prod.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/product.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/stock.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/models/user.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/articles.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/customers.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/cuts.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/default.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/orders.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/processes.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/prods.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/products.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/routes/stocks.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/articleController.js" afterPath="$PROJECT_DIR$/server/controllers/articleController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/authenticationController.js" afterPath="$PROJECT_DIR$/server/controllers/authenticationController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/customerController.js" afterPath="$PROJECT_DIR$/server/controllers/customerController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/cutController.js" afterPath="$PROJECT_DIR$/server/controllers/cutController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/orderController.js" afterPath="$PROJECT_DIR$/server/controllers/orderController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/processController.js" afterPath="$PROJECT_DIR$/server/controllers/processController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/prodController.js" afterPath="$PROJECT_DIR$/server/controllers/prodController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/productController.js" afterPath="$PROJECT_DIR$/server/controllers/productController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/requestController.js" afterPath="$PROJECT_DIR$/server/controllers/requestController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/stockController.js" afterPath="$PROJECT_DIR$/server/controllers/stockController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/article.js" afterPath="$PROJECT_DIR$/server/models/article.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/customer.js" afterPath="$PROJECT_DIR$/server/models/customer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/cut.js" afterPath="$PROJECT_DIR$/server/models/cut.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/order.js" afterPath="$PROJECT_DIR$/server/models/order.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/process.js" afterPath="$PROJECT_DIR$/server/models/process.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/prod.js" afterPath="$PROJECT_DIR$/server/models/prod.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/product.js" afterPath="$PROJECT_DIR$/server/models/product.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/stock.js" afterPath="$PROJECT_DIR$/server/models/stock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/routes.js" afterPath="$PROJECT_DIR$/server/routes.js" />
     </list>
     <ignored path="gestionale_clementoni.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,16 +49,6 @@
               <folding>
                 <element signature="e#0#39#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cuts.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/cuts.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="215" column="44" selection-start-line="215" selection-start-column="35" selection-end-line="215" selection-end-column="44" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -116,16 +105,6 @@
               <folding>
                 <element signature="e#0#39#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="processes.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/processes.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="145" column="81" selection-start-line="145" selection-start-column="81" selection-end-line="145" selection-end-column="81" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -243,74 +222,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionale_clementoni" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionale_clementoni" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionale_clementoni" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionale_clementoni" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionale_clementoni" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionale_clementoni" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="routes" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionale_clementoni" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gestionale_clementoni" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1311,12 +1222,12 @@
       <workItem from="1464940718823" duration="9894000" />
       <workItem from="1464964360103" duration="6380000" />
       <workItem from="1464985000389" duration="4436000" />
-      <workItem from="1465288450311" duration="18674000" />
+      <workItem from="1465288450311" duration="18851000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124389000" />
+    <option name="totallyTimeSpent" value="124566000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1329,9 +1240,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24959612" sideWeight="0.475" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24959612" sideWeight="0.475" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36748633" sideWeight="0.56785136" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329235" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
