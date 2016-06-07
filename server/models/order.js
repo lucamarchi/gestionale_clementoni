@@ -131,6 +131,8 @@ module.exports = {
             } else {
                 if (result || result !== null) {
                     result.ddt = order.ddt;
+                    result.fornitore = order.fornitore;
+                    result.dataDdt = order.dataDdt;
                 }
                 result.save(function(err) {
                     if (err) {

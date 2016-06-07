@@ -144,6 +144,41 @@ module.exports = {
         return deferred.promise;
     },
 
+    modifyArticle: function(articleId, article) {
+        var deferred = Q.defer();
+        var query = {'_id': articleId};
+        articleModel.findOne(query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                if (result || result !== null) {
+                    result.codArticolo = article.codArticolo;
+                    result.tipo = article.tipo;
+                    result.note = article.note;
+                    result.materiale = article.materiale;
+                    result.sottoTipo = article.sottoTipo;
+                    result.quantita = article.quantita;
+                    result.prezzo = article.prezzo;
+                    result.spessore = article.spessore;
+                    result.lunghezza = article.lunghezza;
+                    result.larghezza = article.larghezza;
+                    result.peso = article.peso;
+                    result.ordineCod = article.codice;
+                    result.clienteCod = article.clienteCod;
+                    result.dataConsegna = article.dataConsegna;
+                }
+                result.save(function(err) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(result);
+                    }
+                });
+            }
+        });
+        return deferred.promise;
+    },
+
     addStockToArticle: function(articleId,stockId) {
         var query = {'stockId': stockId};
         var article = this.updateArticle(articleId, query);

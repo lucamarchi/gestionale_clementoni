@@ -216,7 +216,24 @@ module.exports = {
                 deferred.reject(err);
             } else {
                 if (result || result !== null) {
+                    result.matricola = product.matricola;
                     result.tipo = product.tipo;
+                    result.materiale = product.materiale;
+                    result.qualita = product.qualita;
+                    result.scelta = product.scelta;
+                    result.finitura = product.finitura;
+                    result.coloreRal = product.coloreRal;
+                    result.pesoLordo = product.pesoLordo;
+                    result.pesoNetto = product.pesoNetto;
+                    result.spessore = product.spessore;
+                    result.larghezza = product.larghezza;
+                    result.classeLarghezza = product.classeLarghezza;
+                    result.lunghezza = product.lunghezza;
+                    result.numFogli = product.numFogli;
+                    result.prezzo = product.prezzo;
+                    result.difetti = product.difetti;
+                    result.stabilimento = product.stabilimento;
+                    result.superficie = product.superficie;
                 }
                 result.save(function(err) {
                     if (err) {

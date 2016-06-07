@@ -100,6 +100,42 @@ module.exports = {
             }
         });
         return deferred.promise;
-    }
+    },
+
+    modifyCustomer: function(customerId, customer) {
+        var deferred = Q.defer();
+        var query = {'_id': customerId};
+        customerModel.findOne(query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                if (result || result !== null) {
+                    result.ident = customer.ident;
+                    result.agente = customer.agente;
+                    result.bancaAbi = customer.bancaAbi;
+                    result.bancaCab = customer.bancaCab;
+                    result.codFiscale = customer.codFiscale;
+                    result.fax = customer.fax;
+                    result.indirizzo = customer.indirizzo;
+                    result.localita = customer.localita;
+                    result.nome = customer.name;
+                    result.pagamento = customer.pagamento;
+                    result.partitaIva = customer.partitaIva;
+                    result.provincia = customer.provincia;
+                    result.regione = customer.regione;
+                    result.telefono = customer.telefono;
+                    result.email = customer.email;
+                }
+                result.save(function(err) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(result);
+                    }
+                });
+            }
+        });
+        return deferred.promise;
+    },
 
 };

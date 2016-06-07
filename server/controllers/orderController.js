@@ -5,6 +5,7 @@
 var Order = require('./../models/order');
 var Product = require('./../models/product');
 var Stock = require('./../models/stock');
+var Expected = require('./../models/expected');
 var Q = require('q');
 
 module.exports = function(app, apiRoutes) {
@@ -121,6 +122,18 @@ module.exports = function(app, apiRoutes) {
                                                 lastNumberInserted++;
                                                 promises.push(newMethodStock);
                                             });
+                                            if (req.body.expected && req.body.expected.length > 0) {
+                                                var expected = req.body.expected;
+                                                expected.forEach(function(currExpected) {
+                                                    var newMethod;
+                                                    if (currExpected.pesoNetto === 0) {
+                                                        newMethod = Expected.deleteExpected(currExpected._id);
+                                                    } else {
+                                                        newMethod = Expected.modifyExpected(currExpected._id, currExpected);
+                                                    }
+                                                    promises.push(newMethod);
+                                                });
+                                            }
                                             Q.all(promises)
                                                 .then(function(stocks) {
                                                     res.status(200).json({
@@ -256,6 +269,18 @@ module.exports = function(app, apiRoutes) {
                                                     lastNumberInserted++;
                                                     promises.push(newMethodStock);
                                                 });
+                                                if (req.body.expected && req.body.expected.length > 0) {
+                                                    var expected = req.body.expected;
+                                                    expected.forEach(function(currExpected) {
+                                                        var newMethod;
+                                                        if (currExpected.pesoNetto === 0) {
+                                                            newMethod = Expected.deleteExpected(currExpected._id);
+                                                        } else {
+                                                            newMethod = Expected.modifyExpected(currExpected._id, currExpected);
+                                                        }
+                                                        promises.push(newMethod);
+                                                    });
+                                                }
                                                 Q.all(promises)
                                                     .then(function(stocks) {
                                                         res.status(200).json({
