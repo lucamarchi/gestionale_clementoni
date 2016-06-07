@@ -137,6 +137,20 @@ module.exports = {
             for (var i in results) {
                 var tmpCustomer = new TmpCustomer();
                 tmpCustomer.ident = results[i].Id;
+                tmpCustomer.agente = results[i].Agente;
+                tmpCustomer.bancaAbi = results[i].BancaAbi;
+                tmpCustomer.bancaCab = results[i].BancaCab;
+                tmpCustomer.codFiscale = (results[i].CodFiscale).trim();
+                tmpCustomer.fax = results[i].Fax;
+                tmpCustomer.indirizzo = results[i].Indirizzo;
+                tmpCustomer.localita = results[i].Localita;
+                tmpCustomer.nome = results[i].Name;
+                tmpCustomer.pagamento = results[i].Pagamento;
+                tmpCustomer.partitaIva = (results[i].PartitaIva).trim();
+                tmpCustomer.provincia = results[i].Provincia;
+                tmpCustomer.regione = results[i].Regione;
+                tmpCustomer.telefono = results[i].Telefono;
+                tmpCustomer.email = results[i].eMail;
                 customers.push(tmpCustomer);
             }
             deferred.resolve(customers)

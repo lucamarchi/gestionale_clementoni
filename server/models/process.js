@@ -48,7 +48,7 @@ module.exports = {
 
     findAll: function() {
         var deferred = Q.defer();
-        processModel.findAll().exec(function(err,result) {
+        processModel.find({}).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
             } if(!result) {
@@ -66,6 +66,8 @@ module.exports = {
         var deferred = Q.defer();
         var newProcess = new processModel();
         newProcess.macchina = process.macchina;
+        newProcess.scarto = process.scarto;
+        newProcess.operatore = process.operatore;
         newProcess.save(function(err) {
             if (err) {
                 deferred.reject(err)
@@ -104,6 +106,24 @@ module.exports = {
         var query = {'product': productId};
         var process = this.updateProcess(processId, query);
         return process;
+    },
+
+    findByArticle: function(articleId) {
+        var deferred = Q.defer();
+        processModel.find({'article': {$in: articleId}}).exec(function(err,results) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                if (results && results.length > 0) {
+                    deferred.resolve(results);
+                } else {
+                    var err = new Error("Process with article not found");
+                    err.status = 400;
+                    deferred.reject(err);
+                }
+            }
+        });
+        return deferred.promise;
     }
 
 };

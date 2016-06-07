@@ -64,6 +64,7 @@ module.exports = {
         var newProd = new prodModel();
         newProd.codice = prod.codice;
         newProd.numero = number;
+        newProd.dataEvasione = prod.dataEvasione;
         newProd.save(function(err) {
             if (err) {
                 deferred.reject(err)

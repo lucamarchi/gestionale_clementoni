@@ -78,25 +78,26 @@ module.exports = {
         var deferred = Q.defer();
         var newCustomer = new customerModel();
         newCustomer.ident = customer.ident;
+        newCustomer.agente = customer.agente;
+        newCustomer.bancaAbi = customer.bancaAbi;
+        newCustomer.bancaCab = customer.bancaCab;
+        newCustomer.codFiscale = customer.codFiscale;
+        newCustomer.fax = customer.fax;
+        newCustomer.indirizzo = customer.indirizzo;
+        newCustomer.localita = customer.localita;
+        newCustomer.nome = customer.name;
+        newCustomer.pagamento = customer.pagamento;
+        newCustomer.partitaIva = customer.partitaIva;
+        newCustomer.provincia = customer.provincia;
+        newCustomer.regione = customer.regione;
+        newCustomer.telefono = customer.telefono;
+        newCustomer.email = customer.email;
         newCustomer.save(function(err) {
             if (err) {
                 deferred.reject(err)
             } else {
                 deferred.resolve(newCustomer);
             }
-        });
-        return deferred.promise;
-    },
-
-    checkCustomer: function(identity) {
-        var check = false;
-        var deferred = Q.defer();
-        this.findByIdentity(identity).then(function (result) {
-            if (result)
-                check = true;
-            deferred.resolve(check);
-        }).catch(function(err) {
-            deferred.resolve(check);
         });
         return deferred.promise;
     }

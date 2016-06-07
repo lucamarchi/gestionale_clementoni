@@ -65,6 +65,8 @@ module.exports = {
         var deferred = Q.defer();
         var newOrder = new orderModel();
         newOrder.ddt = order.ddt;
+        newOrder.fornitore = order.fornitore;
+        newOrder.dataDdt = order.dataDdt;
         newOrder.save(function(err) {
             if (err) {
                 deferred.reject(err)
@@ -140,5 +142,5 @@ module.exports = {
             }
         });
         return deferred.promise;
-    },
+    }
 };

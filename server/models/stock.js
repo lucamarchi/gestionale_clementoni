@@ -75,7 +75,24 @@ module.exports = {
     saveNewStock: function(stock) {
         var deferred = Q.defer();
         var newStock = new stockModel();
+        newStock.matricola = stock.matricola;
         newStock.tipo = stock.tipo;
+        newStock.materiale = stock.materiale;
+        newStock.qualita = stock.qualita;
+        newStock.scelta = stock.scelta;
+        newStock.finitura = stock.finitura;
+        newStock.coloreRal = stock.coloreRal;
+        newStock.pesoLordo = stock.pesoLordo;
+        newStock.pesoNetto = stock.pesoNetto;
+        newStock.spessore = stock.spessore;
+        newStock.larghezza = stock.larghezza;
+        newStock.classeLarghezza = stock.classeLarghezza;
+        newStock.lunghezza = stock.lunghezza;
+        newStock.numFogli = stock.numFogli;
+        newStock.prezzo = stock.prezzo;
+        newStock.difetti = stock.difetti;
+        newStock.stabilimento = stock.stabilimento;
+        newStock.superficie = stock.superficie;
         newStock.save(function(err) {
             if (err) {
                 deferred.reject(err);
@@ -137,19 +154,6 @@ module.exports = {
             }
         });
         return deferred.promise;
-    },
-
-    checkFiglio: function(stockId) {
-        var deferred = Q.defer();
-        this.findById(stockId).then(function(result) {
-            var numeroCollo = result.numeroCollo;
-            var isFilgio = false;
-            for (var i in numeroCollo) {
-                if (numeroCollo[i] === "/") {
-                    isFiglio = true;
-                }
-            }
-        });
     }
 
 };

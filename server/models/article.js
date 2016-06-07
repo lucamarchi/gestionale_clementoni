@@ -109,6 +109,19 @@ module.exports = {
         var deferred = Q.defer();
         var newArticle = new articleModel();
         newArticle.codArticolo = article.codArticolo;
+        newArticle.tipo = article.tipo;
+        newArticle.note = article.note;
+        newArticle.materiale = article.materiale;
+        newArticle.sottoTipo = article.sottoTipo;
+        newArticle.quantita = article.quantita;
+        newArticle.prezzo = article.prezzo;
+        newArticle.spessore = article.spessore;
+        newArticle.lunghezza = article.lunghezza;
+        newArticle.larghezza = article.larghezza;
+        newArticle.peso = article.peso;
+        newArticle.ordineCod = article.codice;
+        newArticle.clienteCod = article.clienteCod;
+        newArticle.dataConsegna = article.dataConsegna;
         newArticle.save(function(err) {
             if (err) {
                 deferred.reject(err)
@@ -151,6 +164,12 @@ module.exports = {
 
     unsetStockToArticle: function(articleId) {
         var query = {$unset: {'stockId': ''}};
+        var article = this.updateArticle(articleId,query);
+        return article;
+    },
+
+    increaseScarto: function(articleId,scarto) {
+        var query = {$inc: {'scarto': scarto}};
         var article = this.updateArticle(articleId,query);
         return article;
     }

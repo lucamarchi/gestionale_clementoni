@@ -108,6 +108,8 @@ module.exports = {
         newCut.clienteCod = cut.clienteCod;
         newCut.codice = cut.codice;
         newCut.anno = cut.anno;
+        newCut.date = cut.date;
+        newCut.note = cut.note;
         newCut.save(function(err) {
             if (err) {
                 deferred.reject(err)
@@ -140,5 +142,11 @@ module.exports = {
             }
         });
         return deferred.promise;
+    },
+
+    setOperatorToCut: function(cutId,operator) {
+        var query = {$set: {'operator': operator}};
+        var cut = this.updateCut(cutId,query);
+        return cut;
     }
 };

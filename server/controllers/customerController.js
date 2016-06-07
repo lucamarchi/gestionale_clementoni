@@ -11,78 +11,79 @@ var Q = require('q');
 
 module.exports = function(app, apiRoutes) {
 
-    apiRoutes.get('/customers/update', function(req,res,next) {
-       request.findCustomer().then(function(results) {
-           var promises = [];
-           results.forEach(function(currCustomer) {
-               var newMethod = Customer.saveNewCustomer(currCustomer);
-               promises.push(newMethod);
-           });
-           Q.all(promises).then(function(customers) {
+    apiRoutes
+        .get('/customers/update', function(req,res,next) {
+           request.findCustomer().then(function(results) {
+               var promises = [];
+               results.forEach(function(currCustomer) {
+                   var newMethod = Customer.saveNewCustomer(currCustomer);
+                   promises.push(newMethod);
+               });
+               Q.all(promises).then(function(customers) {
+                   res.status(404).json({
+                       "success": true,
+                       "message": "Customers updated",
+                       "customers": customers
+                   });
+               })
+           }).catch(function(err) {
                res.status(404).json({
-                   "success": true,
-                   "message": "Customers updated",
-                   "customers": customers
+                   "success": false,
+                   "message": "Customers not updated",
+                   "err": err.message
                });
            })
-       }).catch(function(err) {
-           res.status(404).json({
-               "success": false,
-               "message": "Customers not updated",
-               "err": err.message
-           });
-       })
-    });
-
-    apiRoutes.get('/customers', function(req, res, next) {
-        Customer.findAll()
-            .then(function(result) {
-                if (!result || result.length == 0) {
-                    res.status(404).json({
+        })
+    
+        .get('/customers', function(req, res, next) {
+            Customer.findAll()
+                .then(function(result) {
+                    if (!result || result.length == 0) {
+                        res.status(404).json({
+                            "success": false,
+                            "message": "Customers not found"
+                        });
+                    } else {
+                        res.status(200).json({
+                            "success": true,
+                            "message": "Customers list",
+                            "customers": result
+                        });
+                    }
+                })
+                .catch(function(err) {
+                    res.status(500).json({
                         "success": false,
-                        "message": "Customers not found"
+                        "message": "Internal server error",
+                        "error": err.message
                     });
-                } else {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Customers list",
-                        "customers": result
-                    });
-                }
-            })
-            .catch(function(err) {
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
                 });
-            });
-    });
-
-    apiRoutes.get('/customer/:customer_id', function(req,res,next) {
-        var customerId = req.params.customer_id;
-        Customer.findById(customerId)
-            .then(function(result) {
-                if (!result) {
-                    res.status(404).json({
+        })
+    
+        .get('/customer/:customer_id', function(req,res,next) {
+            var customerId = req.params.customer_id;
+            Customer.findById(customerId)
+                .then(function(result) {
+                    if (!result) {
+                        res.status(404).json({
+                            "success": false,
+                            "message": "Customer not found"
+                        });
+                    } else {
+                        res.status(200).json({
+                            "success": true,
+                            "message": "Customer found",
+                            "customer": result
+                        });
+                    }
+                })
+                .catch(function(err) {
+                    res.status(500).json({
                         "success": false,
-                        "message": "Customer not found"
+                        "message": "Internal server error",
+                        "error": err.message
                     });
-                } else {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Customer found",
-                        "customer": result
-                    });
-                }
-            })
-            .catch(function(err) {
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
                 });
-            });
-    })
+        });
 
 };

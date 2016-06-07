@@ -88,13 +88,11 @@ module.exports = {
                deferred.reject(err);
            } else {
                if (!result) {
-                   console.log("STIAMO QUI")
                    var prefix = year.toString().slice(-2);
                    var matr = prefix + "0001";
                    matr = parseInt(matr);
                    deferred.resolve(matr);
                } else {
-                   console.log("Stiamo QUI: "+result)
                    var workedProduct = false;
                    var tmpMatr = result.numeroCollo;
                    var j = 0;
@@ -121,8 +119,28 @@ module.exports = {
         var deferred = Q.defer();
         var newProduct = new productModel();
         var year = new Date().getFullYear();
+        newProduct.matricola = product.matricola;
         newProduct.anno = year;
         newProduct.tipo = product.tipo;
+        newProduct.materiale = product.materiale;
+        newProduct.qualita = product.qualita;
+        newProduct.scelta = product.scelta;
+        newProduct.finitura = product.finitura;
+        newProduct.coloreRal = product.coloreRal;
+        newProduct.pesoLordo = product.pesoLordo;
+        newProduct.pesoNetto = product.pesoNetto;
+        newProduct.spessore = product.spessore;
+        newProduct.larghezza = product.larghezza;
+        newProduct.classeLarghezza = product.classeLarghezza;
+        newProduct.lunghezza = product.lunghezza;
+        newProduct.numFogli = product.numFogli;
+        newProduct.prezzo = product.prezzo;
+        newProduct.difetti = product.difetti;
+        newProduct.stabilimento = product.stabilimento;
+        newProduct.superficie = product.superficie;
+        if (!product.stato) {
+            newProduct.stato = "sospeso";
+        } else newProduct.stato = product.stato
         newProduct.save(function(err) {
             if (err) {
                 deferred.reject(err);
@@ -215,6 +233,24 @@ module.exports = {
     findByStock: function(stockId) {
         var query = {'stockId': stockId};
         var product = this.findOne(query);
+        return product;
+    },
+
+    increaseScarto: function(productId,scarto) {
+        var query = {$inc: {'scarto': scarto}};
+        var product = this.updateProduct(productId,query);
+        return product;
+    },
+
+    increaseLavorazione: function(productId) {
+        var query = {$inc: {'lavorazione': 1}};
+        var product = this.updateProduct(productId,query);
+        return product;
+    },
+
+    setFatherId: function(productId,fatherId) {
+        var query = {'fatherId': fatherId};
+        var product = this.updateProduct(productId,query);
         return product;
     }
 
