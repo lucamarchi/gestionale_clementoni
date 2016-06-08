@@ -21,29 +21,21 @@ module.exports = function() {
         .post(function(req,res) {
             var tmpExpected = req.body.expected;
             var expected = new Expected();
-            expected.matricola = tmpExpected.matricola;
             expected.tipo = tmpExpected.tipo;
             expected.materiale = tmpExpected.materiale;
             expected.qualita = tmpExpected.qualita;
             expected.scelta = tmpExpected.scelta;
             expected.finitura = tmpExpected.finitura;
             expected.coloreRal = tmpExpected.coloreRal;
-            expected.pesoLordo = tmpExpected.pesoLordo;
             expected.pesoNetto = tmpExpected.pesoNetto;
             expected.spessore = tmpExpected.spessore;
             expected.larghezza = tmpExpected.larghezza;
-            expected.classeLarghezza = tmpExpected.classeLarghezza;
             expected.lunghezza = tmpExpected.lunghezza;
             expected.numFogli = tmpExpected.numFogli;
             expected.prezzo = tmpExpected.prezzo;
-            expected.difetti = tmpExpected.difetti;
-            expected.stabilimento = tmpExpected.stabilimento;
-            expected.stato = tmpExpected.stato;
-            expected.anno = tmpExpected.anno;
             expected.superficie = tmpExpected.superficie;
-            expected.ddt = tmpExpected.ddt;
             expected.fornitore = tmpExpected.fornitore;
-            expected.dataDdt = tmpExpected.dataDdt;
+            expected.dataPrevista = tmpExpected.dataPrevista;
             expected.save(function(err,result) {
                 if (err) {
                     res.status(500).json({message: err, status: false});
