@@ -19,29 +19,37 @@ module.exports = function() {
         })
         
         .post(function(req,res) {
-            var tmpExpected = req.body.expected;
-            var expected = new Expected();
-            expected.tipo = tmpExpected.tipo;
-            expected.materiale = tmpExpected.materiale;
-            expected.qualita = tmpExpected.qualita;
-            expected.scelta = tmpExpected.scelta;
-            expected.finitura = tmpExpected.finitura;
-            expected.coloreRal = tmpExpected.coloreRal;
-            expected.pesoNetto = tmpExpected.pesoNetto;
-            expected.spessore = tmpExpected.spessore;
-            expected.larghezza = tmpExpected.larghezza;
-            expected.lunghezza = tmpExpected.lunghezza;
-            expected.numFogli = tmpExpected.numFogli;
-            expected.prezzo = tmpExpected.prezzo;
-            expected.superficie = tmpExpected.superficie;
-            expected.fornitore = tmpExpected.fornitore;
-            expected.dataPrevista = tmpExpected.dataPrevista;
-            expected.save(function(err,result) {
-                if (err) {
-                    res.status(500).json({message: err, status: false});
-                }
-                res.json({message: 'Expected salvato', status: true, data: result});
-            })
+            var expectedArray = req.body.expected;
+            var finalResult = [];
+            var itemExpected = 0;
+            expectedArray.forEach(function(tmpExpected) {
+                var expected = new Expected();
+                expected.tipo = tmpExpected.tipo;
+                expected.materiale = tmpExpected.materiale;
+                expected.qualita = tmpExpected.qualita;
+                expected.scelta = tmpExpected.scelta;
+                expected.finitura = tmpExpected.finitura;
+                expected.coloreRal = tmpExpected.coloreRal;
+                expected.pesoNetto = tmpExpected.pesoNetto;
+                expected.spessore = tmpExpected.spessore;
+                expected.larghezza = tmpExpected.larghezza;
+                expected.lunghezza = tmpExpected.lunghezza;
+                expected.numFogli = tmpExpected.numFogli;
+                expected.prezzo = tmpExpected.prezzo;
+                expected.superficie = tmpExpected.superficie;
+                expected.fornitore = tmpExpected.fornitore;
+                expected.dataPrevista = tmpExpected.dataPrevista;
+                finalResult.push(expected);
+                itemExpected++;
+                expected.save(function(err,result) {
+                    if (err) {
+                        res.status(500).json({message: err, status: false});
+                    }
+                    if (itemExpected == expected.length) {
+                        res.json({message: 'Expected salvati', status: true, data: finalResult});
+                    }
+                });
+            });
         
     });
 
