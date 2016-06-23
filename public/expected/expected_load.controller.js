@@ -3,8 +3,9 @@ store.controller('expectedLoadController', ['$scope', 'expectedLoadFactory', 'fe
 	
 	expectedLoadFactory.getAll(
 		function (resp) {
-			console.log("TUTTI I CARICHI IN ATTESA" , resp.data);
-			$scope.expectedLoads = resp.data;
+			console.log("TUTTI I CARICHI IN ATTESA" , resp.expected);
+			console.log(resp);
+			$scope.expectedLoads = resp.expected;
 			$scope.totalItems = $scope.expectedLoads.length;
 			$scope.entryLimit = 20;
 			$scope.currentPage = 1;
@@ -28,16 +29,16 @@ store.controller('expectedLoadController', ['$scope', 'expectedLoadFactory', 'fe
 	}
 
 	$scope.addExpectedLoad = function () {
-		valuesProduct($scope.expectedLoad);
-		console.log($scope.expectedLoad);
+		var expectedLoad = $scope.expectedLoad;
+		valuesProduct(expectedLoad);
+		expectedLoad.dataPrevista = $scope.expectedOrder.dataPrevista;
+		expectedLoad.fornitore = $scope.expectedOrder.fornitore;
 		$scope.orderExpectedLoads.push($scope.expectedLoad);
 		console.log($scope.orderExpectedLoads);
 	}
 	
 	$scope.confirmExpectedOrder = function () {
 		var expected = $scope.orderExpectedLoads;
-		expected.dataPrevista = $scope.expectedOrder.dataPrevista;
-		expected.fornitore = $scope.expectedOrder.fornitore;
 		expectedLoadFactory.save({},
 			{expected},
 			function(resp){

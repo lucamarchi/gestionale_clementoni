@@ -36,7 +36,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/order/:order_id', function(req,res,next) {
+        .get('/orders/:order_id', function(req,res,next) {
             Order.findById(req.params.order_id)
                 .then(function(result) {
                     if (!result) {
@@ -86,7 +86,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .post('/order', function(req,res,next) {
+        .post('/orders', function(req,res,next) {
             var order = req.body.order;
             Order.saveNewOrder(order)
                 .then(function(result) {
@@ -171,7 +171,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .delete('/order/:order_id', function(req,res,next) {
+        .delete('/orders/:order_id', function(req,res,next) {
             var orderId = req.params.order_id;
             Order.findById(orderId)
                 .then(function(order) {
@@ -233,7 +233,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .put('/order/:order_id', function(req,res,next) {
+        .put('/orders/:order_id', function(req,res,next) {
             var order = req.body.order;
             var orderId = req.params.order_id;
             Order.modifyOrder(orderId,order)

@@ -6,7 +6,7 @@ store.controller('stockController', ['$scope', 'stockFactory', function ($scope,
 	$scope.getStock = function () {
 		stockFactory.resource().getAll(
 			function (resp) {
-				var products = resp.data;
+				var products = resp.stocks;
 				$scope.monster = stockFactory.createMapProducts(products);
 				console.log("MAP", $scope.monster);
 				console.log("PRODUCTS", products);

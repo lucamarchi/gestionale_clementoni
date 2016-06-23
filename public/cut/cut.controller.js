@@ -3,8 +3,9 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
     
 	cutFactory.getAll(
 		function (resp) {
-			$scope.cuts = resp.data;
-			console.log("TUTTI GLI ORDINI DI TAGLIO ",resp.data);
+			console.log(resp);
+			$scope.cuts = resp.cuts;
+			console.log("TUTTI GLI ORDINI DI TAGLIO ",resp.cuts);
 			$scope.totalItems = $scope.cuts.length;
 			$scope.entryLimit = 50;
 			$scope.currentPage = 1;
@@ -18,8 +19,8 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
 	$scope.refresh = function (){
 		refreshFactory.refresh(
 			function (resp) {
-				if (resp.data != undefined) {
-					$scope.cuts = $scope.cuts.concat(resp.data);
+				if (resp.cuts != undefined) {
+					$scope.cuts = $scope.cuts.concat(resp.cuts);
 				}
 			},
 			function(err) {
@@ -36,7 +37,7 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
 			function (resp) {
 				console.log("TAGLIO E ARTICOLI" , resp);
 				$scope.cut = resp.cut;
-				$scope.articlesCut = resp.articoli;
+				$scope.articlesCut = resp.articles;
 				$scope.customer = resp.customer;
 			},
 			function (err) {

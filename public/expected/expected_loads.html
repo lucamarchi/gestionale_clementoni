@@ -59,7 +59,7 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="expected in expectedLoads | filterexp:dataPrevista:fornitore:materiale:tipo:spessore | orderBy:'dataPrevista'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-			<td>{{expected.dataDdt}}</td>
+			<td>{{expected.dataPrevista}}</td>
 			<td>{{expected.fornitore}}</td>
 			<td>{{expected.materiale}}</td>
 			<td>{{expected.tipo}}</td>

@@ -37,7 +37,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/cut/:cut_id', function(req,res,next) {
+        .get('/cuts/:cut_id', function(req,res,next) {
             var cutId = req.params.cut_id;
             Cut.findById(cutId)
                 .then(function (result) {
@@ -118,7 +118,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .put('/cut/:cut_id', function (req,res,next) {
+        .put('/cuts/:cut_id', function (req,res,next) {
             var cutId = req.params.cut_id;
             var operator = req.body.operator;
             Cut.setCutAccepted(cutId).then(function(result) {

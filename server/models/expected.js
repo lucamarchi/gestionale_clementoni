@@ -7,30 +7,30 @@ var Q = require('q');
 var Schema = mongoose.Schema;
 
 var ExpectedSchema = new Schema({
-    matricola: {type: String},
+    matricola: {type: String}, //
     tipo: {type: String},
     materiale: {type: String},
     qualita: {type: String},
     scelta: {type: String},
     finitura: {type: String},
     coloreRal: {type: String},
-    pesoLordo: {type: Number},
+    pesoLordo: {type: Number}, //
     pesoNetto: {type: Number},
     spessore: {type: Number},
-    larghezza: {type: Number},
+    larghezza: {type: Number}, //
     classeLarghezza: {type: Number},
-    lunghezza: {type: Number},
+    lunghezza: {type: Number},  
     numFogli: {type: Number},
-    prezzo: {type: Number},
-    difetti: {type: String},
-    stabilimento: {type: Number},
+    prezzo: {type: Number}, 
+    difetti: {type: String}, //
+    stabilimento: {type: Number}, //
     stato: {type: String},
-    scarto: {type: Number, default: 0},
+    scarto: {type: Number, default: 0}, //
     anno: {type: String},
     superficie: {type: String},
-    ddt: {type: Number, require: true},
+    ddt: {type: Number, require: true}, //
     fornitore: {type: String},
-    dataDdt: {type: Date}
+    dataPrevista: {type: Date}
 });
 
 
@@ -103,7 +103,7 @@ module.exports = {
         newExpected.superficie = expected.superficie;
         newExpected.ddt = expected.ddt;
         newExpected.fornitore = expected.fornitore;
-        newExpected.dataDdt = expected.dataDdt;
+        newExpected.dataPrevista = expected.dataPrevista;
         newExpected.save(function(err) {
             if (err) {
                 deferred.reject(err)
@@ -144,7 +144,7 @@ module.exports = {
                     result.superficie = expected.superficie;
                     result.ddt = expected.ddt;
                     result.fornitore = expected.fornitore;
-                    result.dataDdt = expected.dataDdt;
+                    result.dataPrevista = expected.dataPrevista;
                 }
                 result.save(function(err) {
                     if (err) {

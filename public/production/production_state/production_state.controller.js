@@ -14,8 +14,8 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	
 	productionStateFactory.getAll(
 		function (resp) {
-			console.log("TUTTI GLI STATI PRODUZIONE" , resp.data);
-			$scope.states = resp.data;
+			console.log("TUTTI GLI STATI PRODUZIONE" , resp.prods);
+			$scope.states = resp.prods;
 		},
 		function(err) {
 			console.log(resp);
@@ -45,7 +45,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		$scope.article = article;
 		stockFactory.resource().getAll(
 			function (resp) {
-				$scope.products = resp.data;
+				$scope.products = resp.stocks;
 			},
 			function(err) {
 				console.log(err);
@@ -72,8 +72,8 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		stockFactory.resource().get(
 			{id: article.stockId},
 			function (resp) {
-				console.log("COLLO SELEZIONATO", resp.data);
-				$scope.stock = resp.data;
+				console.log("COLLO SELEZIONATO", resp.stock);
+				$scope.stock = resp.stock;
 			},
 			function(err) {
 				console.log(err);
@@ -138,8 +138,8 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 				state: "libero"
 			},
 			function (resp) {
-				console.log("TUTTI GLI ARTICOLI LIBERI" , resp.data);
-				$scope.articles = resp.data;
+				console.log("TUTTI GLI ARTICOLI LIBERI" , resp.articles);
+				$scope.articles = resp.articles;
 			},
 			function(err) {
 				console.log(resp);
@@ -147,38 +147,36 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		);
 	}
 	
-	$scope.editProductionState = function (state, articles) {
-		console.log("state ", state, " articles ",articles);
-		$scope.state = state;
-		$scope.articlesState = articles;
-		$scope.articlesState2 = [];
-		$scope.isEnabled = true;
-		articleFactory.resourceState().get (
-			{
-				state: "libero"
-			},
-			function (resp) {
-				console.log("TUTTI GLI ARTICOLI LIBERI" , resp.data);
-				$scope.articles = resp.data;
-			},
-			function(err) {
-				console.log(resp);
-			}
-		);
-	}
+//	$scope.editProductionState = function (state, articles) {
+//		console.log("state ", state, " articles ",articles);
+//		$scope.state = state;
+//		$scope.articlesState = articles;
+//		$scope.articlesState2 = [];
+//		$scope.isEnabled = true;
+//		articleFactory.resourceState().get (
+//			{
+//				state: "libero"
+//			},
+//			function (resp) {
+//				console.log("TUTTI GLI ARTICOLI LIBERI" , resp.data);
+//				$scope.articles = resp.data;
+//			},
+//			function(err) {
+//				console.log(resp);
+//			}
+//		);
+//	}
 	
 	$scope.addArticle = function (article, index) {
 		$scope.articlesState.push(article);
 		$scope.articlesState2.push(article);
 		$scope.articles.splice(index,1);
-//		console.log("index push ", index);
 	}
 
 	$scope.deleteArticle = function (article, index){
 		$scope.articles.push(article);
 		$scope.articlesState.splice(index,1);
 		$scope.articlesState2.splice(index,1);
-//		console.log("index pop ", index);
 	}
 	
 	$scope.confirmProductionState = function () {

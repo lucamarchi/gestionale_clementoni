@@ -4,8 +4,8 @@ store.controller('productionController', ['$scope', 'articleFactory', 'stockFact
 	
 	articleFactory.resourceState().getAll(
 		function (resp) {
-			console.log("TUTTI GLI ARTICOLI CONFERMATI" , resp.data);
-			$scope.articles = resp.data;
+			console.log("TUTTI GLI ARTICOLI CONFERMATI" , resp.articles);
+			$scope.articles = resp.articles;
 			$scope.totalItems = $scope.articles.length;
 			$scope.entryLimit = 100;
 			$scope.currentPage = 1;
@@ -17,12 +17,13 @@ store.controller('productionController', ['$scope', 'articleFactory', 'stockFact
 	);
 	
 	$scope.features = features;
+	
 	$scope.viewStock = function (article) {
 		stockFactory.resource().get(
 			{id: article.stockId},
 			function (resp) {
 				console.log(resp);
-				$scope.stock = resp.data;
+				$scope.stock = resp.stock;
 			},
 			function(err) {
 				console.log(err);
@@ -67,6 +68,7 @@ store.controller('productionController', ['$scope', 'articleFactory', 'stockFact
 				id:article.clienteCod
 			},
 			function (resp) {
+				console.log(resp);
 				$scope.customer = resp.data;
 				$scope.customer.codice = article.clienteCod;
 				console.log("CLIENTE ARTICOLO", $scope.customer);

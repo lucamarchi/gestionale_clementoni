@@ -39,7 +39,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
     
-        .get('/product/:product_id', function(req,res,next) {
+        .get('/products/:product_id', function(req,res,next) {
             Product.findById(req.params.product_id)
                 .then(function(result) {
                     if (!result) {
@@ -64,7 +64,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
     
-        .delete('/product/:product_id', function(req,res,next) {
+        .delete('/products/:product_id', function(req,res,next) {
             var productId = req.params.product_id;
             Product.findById(productId)
                 .then(function(product) {
@@ -101,7 +101,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
     
-        .put('/product/:product_id', function(req,res,next) {
+        .put('/products/:product_id', function(req,res,next) {
             var newProduct = req.body.product;
             var productId = req.params.product_id;
             Product.modifyProduct(productId, newProduct)

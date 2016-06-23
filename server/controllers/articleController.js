@@ -63,7 +63,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
     
-        .put('/article/stock/:article_id', function(req,res,next) {
+        .put('/articles/stock/:article_id', function(req,res,next) {
             var articleId = req.params.article_id;
             var stockId = req.body.stock._id;
             Article.addStockToArticle(articleId,stockId)
@@ -83,7 +83,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
     
-        .put('/article/complete/:article_id', function(req,res,next) {
+        .put('/articles/complete/:article_id', function(req,res,next) {
             var articleId = req.params.article_id;
             Article.setArticleComplete(articleId)
                 .then(function(result) {

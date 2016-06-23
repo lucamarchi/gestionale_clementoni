@@ -34,7 +34,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/prod/:prod_id', function(req,res,next) {
+        .get('/prods/:prod_id', function(req,res,next) {
             var prodId = req.params.prod_id;
             Prod.findById(prodId).then(function(result) {
                 if (result.articoliId && result.articoliId.length > 0) {
@@ -69,7 +69,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .post('/prod', function(req,res,next) {
+        .post('/prods', function(req,res,next) {
             var prod = req.body.prod;
             Prod.findNewNumeroProd().then(function(number) {
                 Prod.saveNewProd(prod,number)
@@ -107,7 +107,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .delete('/prod/:prod_id', function(req,res,next) {
+        .delete('/prods/:prod_id', function(req,res,next) {
             var prodId = req.params.prod_id;
             Prod.findById(prodId).then(function(prod) {
                 var promises = [
@@ -143,7 +143,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .put('/prod/:prod_id', function(req,res,next) {
+        .put('/prods/:prod_id', function(req,res,next) {
             var prodId = req.params.prod_id;
             var prod = req.body.prod;
             var promises = [

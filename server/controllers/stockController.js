@@ -34,7 +34,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/stock/:stock_id', function(req,res,next) {
+        .get('/stocks/:stock_id', function(req,res,next) {
             Stock.findById(req.params.stock_id)
                 .then(function(result) {
                     if (!result) {
@@ -59,7 +59,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .delete('/stock/:stock_id', function(req,res,next) {
+        .delete('/stocks/:stock_id', function(req,res,next) {
             var stockId = req.params.stock_id;
             var promises = [
                 Stock.deleteStock(stockId),
@@ -81,7 +81,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .put('/stock/:stock_id', function(req,res,next) {
+        .put('/stocks/:stock_id', function(req,res,next) {
             var stock = req.body.stock;
             var stockId = req.params.stock_id;
             Stock.modifyStock(stockId,stock)

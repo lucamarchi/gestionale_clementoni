@@ -4,8 +4,8 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	
 	orderFactory.getAll(
 		function (resp) {
-			console.log("TUTTI I CARICHI IN ENTRATA" , resp.data);
-			$scope.orders = resp.data;
+			console.log("TUTTI I CARICHI IN ENTRATA" , resp.orders);
+			$scope.orders = resp.orders;
 			$scope.totalItems = $scope.orders.length;
 			$scope.entryLimit = 10;
 			$scope.currentPage = 1;
@@ -65,8 +65,8 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 			console.log("bbbbb", $scope.expectedLoads);
 			expectedLoadFactory.getAll(
 				function (resp) {
-					console.log("TUTTI I CARICHI IN ATTESA" , resp.data);
-					$scope.expectedLoads = resp.data;
+					console.log("TUTTI I CARICHI IN ATTESA" , resp.expected);
+					$scope.expectedLoads = resp.expected;
 				},
 				function(err) {
 					console.log(resp);
