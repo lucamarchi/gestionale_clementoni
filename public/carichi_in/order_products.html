@@ -1,61 +1,104 @@
-<table class="table table-bordered">
-	<thead>
-		<tr>
-			<th>Numero Collo</th>
-			<th>Matricola</th>
-			<th>Materiale</th>
-			<th>Tipo</th>
-			<th>Spess</th>
-			<th>Largh Nom.</th>
-			<th>Largh Eff.</th>
-			<th>Qualita</th>
-			<th>Scelta</th>
-			<th>Finitura</th>
-			<th>Colore Ral</th>
-			<th>Superficie</th>
-			<th>Lungh</th>
-			<th>N.Fogli</th>
-			<th>Peso</th>
-			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
-			<th>Difetti</th>
-			<th>Stab</th>
-			<th>Scarto</th>
-			<th>Stato</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="product in productsOrder">
-			<td><span style="color:blue">{{product.numeroCollo}}</span></td>
-			<td>{{product.matricola}}</td>
-			<td>{{product.materiale}}</td>
-			<td>{{product.tipo}}</td>
-			<td>{{product.spessore}}</td>
-			<td>{{product.classeLarghezza}}</td>
-			<td>{{product.larghezza}}</td>
-			<td>{{product.qualita}}</td>
-			<td>{{product.scelta}}</td>
-			<td>{{product.finitura}}</td>
-			<td>{{product.coloreRal}}</td>
-			<td>{{product.superficie}}</td>
-			<td>{{product.lunghezza}}</td>
-			<td>{{product.numFogli}}</td>
-			<td>{{product.pesoNetto}}</td>
-			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{product.prezzo}}</td>
-			<td>{{product.difetti}}</td>
-			<td>{{product.stabilimento}}</td>
-			<td>{{product.scarto}}</td>
-			<td>{{product.stato}}</td>
-			<td>
-				<div ng-if="product._id">
-					<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteProduct(product, productsOrder.indexOf(product))" data-target="#delete" data-toggle="modal">Cancella<span class="glyphicon glyphicon-trash"></button>
-				</div>
-				<div ng-if="!product._id">
-					<button type="button" class="btn btn-danger btn-circle" ng-click="deleteProduct(product, productsOrder.indexOf(product))">Cancella<span class="glyphicon glyphicon-trash"></button>
-				</div>
-				<div>
-					<button ng-if="userRole == 'responsabile' || userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-warning btn-circle" ng-click="openProduct(product, productsOrder.indexOf(product))" data-target="#updateproduct" data-toggle="modal">Modifica<span class="glyphicon glyphicon-cog"></button>
-				</div>
-			</td>
-		</tr>
-	</tbody>
-</table>
+<fieldset ng-if="selectExpectedArray.length != 0">
+	<legend>Attese selezionate:</legend>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Materiale</th>
+				<th>Tipo</th>
+				<th>Spess</th>
+				<th>Largh</th>
+				<th>Qualita</th>
+				<th>Scelta</th>
+				<th>Finitura</th>
+				<th>Colore Ral</th>
+				<th>Superficie</th>
+				<th>Lungh</th>
+				<th>N.Fogli</th>
+				<th>Peso</th>
+				<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="expectedLoad in selectExpectedArray">
+				<td>{{expectedLoad.materiale}}</td>
+				<td>{{expectedLoad.tipo}}</td>
+				<td>{{expectedLoad.spessore}}</td>
+				<td>{{expectedLoad.larghezza}}</td>
+				<td>{{expectedLoad.qualita}}</td>
+				<td>{{expectedLoad.scelta}}</td>
+				<td>{{expectedLoad.finitura}}</td>
+				<td>{{expectedLoad.coloreRal}}</td>
+				<td>{{expectedLoad.superficie}}</td>
+				<td>{{expectedLoad.lunghezza}}</td>
+				<td>{{expectedLoad.numFogli}}</td>
+				<td>{{expectedLoad.pesoNetto}}</td>
+				<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{expectedLoad.prezzo}}</td>
+			</tr>
+		</tbody>
+	</table>
+</fieldset>
+
+<fieldset>
+	<legend>Prodotti dell'ordine:</legend>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Numero Collo</th>
+				<th>Matricola</th>
+				<th>Materiale</th>
+				<th>Tipo</th>
+				<th>Spess</th>
+				<th>Largh Nom.</th>
+				<th>Largh Eff.</th>
+				<th>Qualita</th>
+				<th>Scelta</th>
+				<th>Finitura</th>
+				<th>Colore Ral</th>
+				<th>Superficie</th>
+				<th>Lungh</th>
+				<th>N.Fogli</th>
+				<th>Peso</th>
+				<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
+				<th>Difetti</th>
+				<th>Stab</th>
+				<th>Scarto</th>
+				<th>Stato</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="product in productsOrder">
+				<td><span style="color:blue">{{product.numeroCollo}}</span></td>
+				<td>{{product.matricola}}</td>
+				<td>{{product.materiale}}</td>
+				<td>{{product.tipo}}</td>
+				<td>{{product.spessore}}</td>
+				<td>{{product.classeLarghezza}}</td>
+				<td>{{product.larghezza}}</td>
+				<td>{{product.qualita}}</td>
+				<td>{{product.scelta}}</td>
+				<td>{{product.finitura}}</td>
+				<td>{{product.coloreRal}}</td>
+				<td>{{product.superficie}}</td>
+				<td>{{product.lunghezza}}</td>
+				<td>{{product.numFogli}}</td>
+				<td>{{product.pesoNetto}}</td>
+				<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{product.prezzo}}</td>
+				<td>{{product.difetti}}</td>
+				<td>{{product.stabilimento}}</td>
+				<td>{{product.scarto}}</td>
+				<td>{{product.stato}}</td>
+				<td>
+					<div ng-if="product._id">
+						<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteProduct(product, productsOrder.indexOf(product))" data-target="#delete" data-toggle="modal">Cancella<span class="glyphicon glyphicon-trash"></button>
+					</div>
+					<div ng-if="!product._id">
+						<button type="button" class="btn btn-danger btn-circle" ng-click="deleteProduct(product, productsOrder.indexOf(product))">Cancella<span class="glyphicon glyphicon-trash"></button>
+					</div>
+					<div>
+						<button ng-if="userRole == 'responsabile' || userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-warning btn-circle" ng-click="openProduct(product, productsOrder.indexOf(product))" data-target="#updateproduct" data-toggle="modal">Modifica<span class="glyphicon glyphicon-cog"></button>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</fieldset>

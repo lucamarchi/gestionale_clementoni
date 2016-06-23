@@ -10,8 +10,8 @@
 	<div class="form-group">
 		<label for="stabilimento" class="col-md-2 control-label">Stabilimento:</label>
 		<div class="col-md-10">
-			<select ng-model="$parent.product.stabilimento" ng-options="stabilimento for stabilimento in features.stabilimenti" class="form-control" convert-to-number required>
-<!--				<option value="">-- seleziona --</option>-->
+			<select ng-model="$parent.product.stabilimento" ng-options="stabilimento for stabilimento in features.stabilimenti" class="form-control" convert-to-number>
+				<option value="">-- seleziona --</option>
 			</select>
 		</div>
 	</div>
@@ -139,7 +139,7 @@
 	<div class="form-group">
 		<label for="peso" class="col-md-2 control-label">Peso(kg):</label>
 		<div class="col-md-10">
-			<input type="number" ng-model="$parent.product.pesoNetto" class="form-control"/>
+			<input type="number" ng-model="$parent.product.pesoNetto" class="form-control" required/>
 		</div>
 	</div>
 	

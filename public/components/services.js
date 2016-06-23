@@ -23,15 +23,6 @@ store.factory('productFactory',  ['$resource', 'myConfig', function ($resource, 
 	);
 }]);
 
-store.filter('startFrom', function () {
-	return function (input, start) {
-		if (input) {
-			start = +start;
-			return input.slice(start);
-		}
-		return [];
-	};
-});
 
 
 /*-----------------------> ORDINI DI TAGLIO <--------------------------------------------*/
@@ -99,8 +90,22 @@ store.factory('articleFactory', ['$resource', 'myConfig', function ($resource, m
 	}
 }]);
 
+/*--------------------------------> PRODUCTION STATE<-------------------------------------*/
 store.factory('productionStateFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
     return resource = $resource(myConfig.url+'/api/prods/:id', 
+		{
+			id: "@id"
+		},
+		{
+			update: {method:'PUT'},
+			getAll: {method:'GET', isArray: false}
+		}
+  	);
+}]);
+
+/*--------------------------------> EXPECTED LOAD<-------------------------------------*/
+store.factory('expectedLoadFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
+    return resource = $resource(myConfig.url+'/api/expected/:id', 
 		{
 			id: "@id"
 		},
@@ -186,7 +191,7 @@ store.factory('TokenInterceptor', ['$q', '$window', '$location', '$rootScope', '
   
         /* Revoke client authentication if 401 is received */
         responseError: function(rejection) {
-            if (rejection != null && rejection.status === 401 && rejection.status === 500 && rejection.status === 403 && ($window.sessionStorage.token || $rootScope.isLogged)) {
+            if (rejection != null && (rejection.status === 401 || rejection.status === 500 || rejection.status === 403) && ($window.sessionStorage.token || $rootScope.isLogged)) {
                 delete $window.sessionStorage.user;	
 				delete $window.sessionStorage.token;
 				$rootScope.isLogged = false;

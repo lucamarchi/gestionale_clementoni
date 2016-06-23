@@ -1,5 +1,15 @@
 var store = angular.module('store');
 
+store.filter('startFrom', function () {
+	return function (input, start) {
+		if (input) {
+			start = +start;
+			return input.slice(start);
+		}
+		return [];
+	};
+});
+
 store.filter('filtercut', function() {
 	
   	return function(input, codice, clienteCod, data) {
@@ -110,6 +120,43 @@ store.filter('filterriep', function() {
 				output = output.filter(function(el){
 					console.log(el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
 					return (el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
+				});
+			}
+			if (materiale) {
+				output = output.filter(function(el){
+					return (el.materiale == materiale);
+				});
+			}
+			if (tipo) {
+				output = output.filter(function(el){
+					return (el.tipo == tipo);
+				});
+			}
+			if (spessore) {
+				output = output.filter(function(el){
+					return (el.spessore == spessore);
+				});
+			}
+			
+		}
+		return output;
+	}
+});
+
+store.filter('filterexp', function() {
+	
+  	return function(input, dataPrevista, fornitore, materiale, tipo, spessore) {
+		var output;
+		if (input) {
+			output = input.slice();
+			if (dataPrevista) {
+				output = output.filter(function(el){
+					return (new Date(el.dataPrevista).getTime() == new Date(dataPrevista).getTime());
+				});
+			}
+			if (fornitore) {
+				output = output.filter(function(el){
+					return (el.fornitore == fornitore);
 				});
 			}
 			if (materiale) {

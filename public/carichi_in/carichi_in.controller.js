@@ -1,6 +1,6 @@
 var store = angular.module('store');
 
-store.controller('carichiInController', ['$scope', 'orderFactory', 'productFactory','features', function ($scope, orderFactory, productFactory, features) {
+store.controller('carichiInController', ['$scope', 'orderFactory', 'productFactory','expectedLoadFactory','features', function ($scope, orderFactory, productFactory, expectedLoadFactory,features) {
 	
 	orderFactory.getAll(
 		function (resp) {
@@ -16,15 +16,17 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 		}
 	);
 	
+	$scope.expectedLoads = [];
 	$scope.order = undefined;
 	$scope.productsOrder = [];
 	$scope.productsOrder2 = [];
+	$scope.selectExpectedArray = [];
 	$scope.features = features;
-	console.log($scope.features);
 
 	
 	$scope.openProductsOrder = function (order) {
 		$scope.productsOrder2 = [];
+		$scope.expectedLoads = [];
 		orderFactory.get(
 			{
 				id: order._id
@@ -45,12 +47,38 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 		$scope.order = undefined;
 		$scope.productsOrder = [];
 		$scope.productsOrder2 = [];
+		$scope.selectExpectedArray = [];
+		$scope.expectedLoads = [];
 	}
 	
 	$scope.openOrder = function (order){
 		order.dataDdt = new Date(order.dataDdt);
 		$scope.order = order;
 		$scope.productsOrder2 = [];
+		$scope.selectedExpectedArray = [];
+		$scope.expectedLoads = [];
+	}
+	
+	$scope.viewExpectedLoads = function (){
+		console.log("aaaaaaaa", $scope.expectedLoads);
+		if ($scope.expectedLoads.length == 0) {
+			console.log("bbbbb", $scope.expectedLoads);
+			expectedLoadFactory.getAll(
+				function (resp) {
+					console.log("TUTTI I CARICHI IN ATTESA" , resp.data);
+					$scope.expectedLoads = resp.data;
+				},
+				function(err) {
+					console.log(resp);
+				}
+			);
+		}
+	}
+	
+	$scope.selectExpectedLoad = function (expected) {
+		$scope.expected = expected;
+		$scope.product = undefined;
+		console.log(expected);
 	}
 	
 	$scope.createProduct = function () {
@@ -59,19 +87,24 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 
 	$scope.addProduct = function () {
 		$scope.product.pesoLordo = $scope.product.pesoNetto;
+		$scope.expectedLoads[$scope.expectedLoads.indexOf($scope.expected)].pesoNetto-=$scope.product.pesoNetto
 		valuesProduct($scope.product);
 		console.log($scope.product);
 		$scope.productsOrder.push($scope.product);
 		$scope.productsOrder2.push($scope.product);
+		if ($scope.selectExpectedArray.indexOf($scope.expected) == -1) { 
+			$scope.selectExpectedArray.push($scope.expectedLoads[$scope.expectedLoads.indexOf($scope.expected)]);
+		}
 	}
 	
 	$scope.updateOrder = function (order) {
 		var products = $scope.productsOrder2;
+		var expected = $scope.selectedExpectedArray;
 		orderFactory.update(
 			{
 				id: order._id
 			},
-			{order, products},
+			{order, products, expected},
 			function(resp){
 				console.log("ORDINE AGGIORNATO" , resp);
 			},
@@ -150,8 +183,9 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	$scope.confirmOrder = function () {
 		var order = $scope.order;
 		var products = $scope.productsOrder2;
+		var expected = $scope.selectedExpectedArray;
 		orderFactory.save({},
-			{order, products},
+			{order, products, expected},
 			function(resp){
 				console.log("ORDINE CONFERMATO ", resp);
 				$scope.orders.push(resp.order);

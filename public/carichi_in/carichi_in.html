@@ -55,11 +55,11 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<td><h2>DDT {{order.ddt}}</h2>
 				<table class="table">
-	    			<tr>
-						<td><h4>{{order.dataDdt | date:'fullDate'}}</h4></td>
-						<td><h4>FORNITORE {{order.fornitore}}</h4></td>
+					<tr>
+						<td><h3>DDT {{order.ddt}}</h3></td>
+						<td><h3>FORNITORE {{order.fornitore}}</h3></td>
+						<td><h3>{{order.dataDdt | date:'fullDate'}}</h3></td>
 					</tr>
 				</table>
 			</div>
@@ -67,8 +67,13 @@
 				<div ng-include src="'public/carichi_in/order_products.html'"></div>
 			</div>
 			<div class="modal-footer">
+<!--
 				<div align="left">
 					<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>
+				</div>
+-->
+				<div align="left">
+					<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectexpected" ng-click="viewExpectedLoads()">Aggiungi prodotto</button>
 				</div>
 				<div>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
@@ -79,6 +84,44 @@
 		</div>
 	</div>
 </div>
+
+
+<div id="updateproduct" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">MODIFICA PRODOTTO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/carichi_in/new_product.html'"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+				<button ng-if="productForm.$valid" type="button" class="btn btn-success" ng-click="updateProduct()" data-dismiss="modal">Conferma</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="selectexpected" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">SELEZIONA PRODOTTO PREVISTO</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/carichi_in/select_expected_loads.html'"></div>
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <!-- Modal new_product.html-->
 <div id="newproduct" class="modal fade" role="dialog">
@@ -95,25 +138,6 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
 				<button ng-if="productForm.$valid" type="button" class="btn btn-success" ng-click="addProduct()" data-dismiss="modal">Conferma</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div id="updateproduct" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">MODIFICA PRODOTTO</h4>
-			</div>
-			<div class="modal-body">
-				<div ng-include src="'public/carichi_in/new_product.html'"></div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-				<button ng-if="productForm.$valid" type="button" class="btn btn-success" ng-click="updateProduct()" data-dismiss="modal">Conferma</button>
 			</div>
 		</div>
 	</div>
