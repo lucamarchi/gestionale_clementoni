@@ -5,14 +5,13 @@
 var Expected = require('./../models/expected');
 var Article = require('./../models/article');
 var Customer = require('./../models/customer');
-var request = require('./requestController');
 var configs = require('./../configs/url');
 var Q = require('q');
 
 module.exports = function(app, apiRoutes) {
 
     apiRoutes
-        .get('/expected', function(req,res,next) {
+        .get('/expecteds', function(req,res,next) {
             Expected.findAll()
                 .then(function(result) {
                     if (!result || result.length == 0) {
@@ -37,7 +36,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/expected/:expected_id', function(req,res,next) {
+        .get('/expecteds/:expected_id', function(req,res,next) {
             var expectedId = req.params.expected_id;
             Expected.findById(expectedId)
                 .then(function(result) {
@@ -63,17 +62,20 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .post('/expected', function(req,res,next) {
+        .post('/expecteds', function(req,res,next) {
             var expected = req.body.expected;
-            Expected.saveNewExpected(expected)
-                .then(function(result) {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Expected saved",
-                        "expected": result
-                    });
-                })
-                .catch(function(err) {
+            var promises = [];
+            expected.forEach(function(currExpected) {
+                var newMethod = Expected.saveNewExpected(currExpected);
+                promises.push(newMethod);
+            });
+            Q.all(promises).then(function(result) {
+                res.status(200).json({
+                    "success": true,
+                    "message": "Expected saved",
+                    "expected": result
+                });
+            }).catch(function(err) {
                     res.status(500).json({
                         "success": false,
                         "message": "Internal server error",

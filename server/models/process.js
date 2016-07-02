@@ -29,10 +29,6 @@ module.exports = {
         processModel.findOne(query).lean().exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Process not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }

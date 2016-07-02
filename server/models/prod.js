@@ -25,10 +25,6 @@ module.exports = {
         prodModel.findOne(query).lean().exec(function (err, result) {
             if(err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Prod not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -46,10 +42,6 @@ module.exports = {
         var deferred = Q.defer();
         prodModel.find({}).exec(function (err, result) {
             if(err) {
-                deferred.reject(err);
-            } if(!result) {
-                var err = new Error("No prods found");
-                err.status = 400;
                 deferred.reject(err);
             } else {
                 deferred.resolve(result);
@@ -69,7 +61,6 @@ module.exports = {
             if (err) {
                 deferred.reject(err)
             } else {
-                console.log(newProd)
                 deferred.resolve(newProd);
             }
         });

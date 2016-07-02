@@ -47,10 +47,6 @@ module.exports = {
         productModel.findOne(query).lean().exec(function (err, result) {
             if(err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Product not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -67,10 +63,6 @@ module.exports = {
         var deferred = Q.defer();
         productModel.find({}).exec(function (err, result) {
             if(err) {
-                deferred.reject(err);
-            } if(!result) {
-                var err = new Error("No products found");
-                err.status = 400;
                 deferred.reject(err);
             } else {
                 deferred.resolve(result);
@@ -176,13 +168,7 @@ module.exports = {
             if (err) {
                 deferred.reject(err);
             } else {
-                if (!result) {
-                    var err = new Error("No product found");
-                    err.status = 400;
-                    deferred.reject(err);
-                } else {
-                    deferred.resolve(result);
-                }
+                deferred.resolve(result);
             }
         });
         return deferred.promise;

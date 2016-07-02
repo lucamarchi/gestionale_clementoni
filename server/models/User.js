@@ -29,17 +29,12 @@ module.exports = {
     findOne: function(query) {
         var deferred = Q.defer();
         userModel.findOne(query).lean().exec(function (err, result) {
-            if(err) {
-                deferred.reject(err);
-            } if(!result) {
-                var err = new Error("User not found");
-                err.status = 400;
+            if (err) {
                 deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
         });
-
         return deferred.promise;
     },
 

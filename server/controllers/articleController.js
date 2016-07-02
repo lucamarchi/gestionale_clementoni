@@ -103,6 +103,18 @@ module.exports = function(app, apiRoutes) {
                         "error": err.message
                     });
                 });
+        })
+
+        .get('/articles/prova/:article_id', function(req,res,next) {
+            var articleId = req.params.article_id;
+            Article.findOne(articleId).then(function(result) {
+                if (!result)
+                    console.log("NO!: "+result);
+                else console.log("SI: "+result);
+            }).catch(function(err) {
+                console.log("ERR");
+                console.log(err);
+            })
         });
 
 };

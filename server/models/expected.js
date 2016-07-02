@@ -44,10 +44,6 @@ module.exports = {
         expectedModel.findOne(query).lean().exec(function (err, result) {
             if(err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Expected not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -65,10 +61,6 @@ module.exports = {
         var deferred = Q.defer();
         expectedModel.find({}).exec(function (err, result) {
             if(err) {
-                deferred.reject(err);
-            } if(!result) {
-                var err = new Error("No expected found");
-                err.status = 400;
                 deferred.reject(err);
             } else {
                 deferred.resolve(result);

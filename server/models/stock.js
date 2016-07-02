@@ -40,10 +40,6 @@ module.exports = {
         stockModel.findOne(query).lean().exec(function (err, result) {
             if(err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Stock not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -60,10 +56,6 @@ module.exports = {
         var deferred = Q.defer();
         stockModel.find({}).exec(function (err, result) {
             if(err) {
-                deferred.reject(err);
-            } if(!result) {
-                var err = new Error("No stocks found");
-                err.status = 400;
                 deferred.reject(err);
             } else {
                 deferred.resolve(result);

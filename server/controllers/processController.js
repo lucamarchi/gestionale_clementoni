@@ -36,7 +36,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/process/:process_id', function(req,res,next) {
+        .get('/processes/:process_id', function(req,res,next) {
             var processId = req.params.process_id;
             Process.findById(processId)
                 .then(function(result) {
@@ -62,7 +62,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/process/figli/:process_id', function(req,res,next) {
+        .get('/processes/figli/:process_id', function(req,res,next) {
             var processId = req.params.process_id;
             Process.findById(processId).then(function(process) {
                 if (process.figli && process.figli.length > 0) {
@@ -96,7 +96,7 @@ module.exports = function(app, apiRoutes) {
             })
         })
 
-        .get('/process/article/:article_id', function(req,res,next) {
+        .get('/processes/article/:article_id', function(req,res,next) {
             var articleId = req.params.article_id;
             Process.findByArticle(articleId).then(function (results) {
                 res.status(200).json({
@@ -121,7 +121,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .post('/process', function(req,res,next) {
+        .post('/processes', function(req,res,next) {
             var stockOriginal = req.body.stock;
             var process = req.body.process;
             var figli = req.body.figli;

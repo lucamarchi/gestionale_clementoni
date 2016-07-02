@@ -38,10 +38,6 @@ module.exports = {
         articleModel.findOne(query).lean().exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Article not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -60,10 +56,6 @@ module.exports = {
         articleModel.findAll().exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Article not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -77,10 +69,6 @@ module.exports = {
         articleModel.find(query).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
-            } if (!result) {
-                var err = new Error("No article with status");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -93,10 +81,6 @@ module.exports = {
         var query = {'stato': {$exists: true}};
         articleModel.find(query).exec(function(err,result) {
             if (err) {
-                deferred.reject(err);
-            } if (!result) {
-                var err = new Error("No article with status");
-                err.status = 400;
                 deferred.reject(err);
             } else {
                 deferred.resolve(result);

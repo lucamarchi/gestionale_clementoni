@@ -27,10 +27,6 @@ module.exports = {
         orderModel.findOne(query).lean().exec(function (err, result) {
             if(err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Order not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -48,10 +44,6 @@ module.exports = {
         var deferred = Q.defer();
         orderModel.find({}).exec(function (err, result) {
             if(err) {
-                deferred.reject(err);
-            } if(!result) {
-                var err = new Error("No orders found");
-                err.status = 400;
                 deferred.reject(err);
             } else {
                 deferred.resolve(result);

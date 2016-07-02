@@ -3,15 +3,6 @@
  */
 
 
-
-
-/*
-PROBLEMA AD ISTANZIARE CUT; METODI REQUEST TORNANO UN JSON CREATO CON UN'OGGETTO DEFINITO PRIMA IN QUESTO MODO
- var exjson = {'key':'value'}; ; I METODI TORNANO IL JSON E CUTCONTROLLER FA LE SOLITE OPERAZIONI; OCCHIO
- ARRAY PRODOTTI NON data[key]
- */
-
-
 var Cut = require('./../models/cut');
 var Article = require('./../models/article');
 var Customer = require('./../models/customer');

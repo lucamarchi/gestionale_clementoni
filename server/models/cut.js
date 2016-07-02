@@ -29,10 +29,6 @@ module.exports = {
         cutModel.findOne(query).lean().exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Cut not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -50,10 +46,6 @@ module.exports = {
         cutModel.find({}).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Cuts not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -65,10 +57,6 @@ module.exports = {
         var deferred = Q.defer();
         cutModel.find({'accepted': true}).exec(function(err,result) {
             if (err) {
-                deferred.reject(err);
-            } if(!result) {
-                var err = new Error("No cut accepted found");
-                err.status = 400;
                 deferred.reject(err);
             } else {
                 deferred.resolve(result);

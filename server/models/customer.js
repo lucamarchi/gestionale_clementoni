@@ -35,10 +35,6 @@ module.exports = {
         customerModel.findOne(query).lean().exec(function (err, result) {
             if(err) {
                 deferred.reject(err);
-            } if(!result) {
-                var err = new Error("Customer not found");
-                err.status = 400;
-                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
@@ -56,10 +52,6 @@ module.exports = {
         var deferred = Q.defer();
         customerModel.find({}).exec(function (err, result) {
             if(err) {
-                deferred.reject(err);
-            } if(!result) {
-                var err = new Error("No customers found");
-                err.status = 400;
                 deferred.reject(err);
             } else {
                 deferred.resolve(result);
@@ -85,7 +77,7 @@ module.exports = {
         newCustomer.fax = customer.fax;
         newCustomer.indirizzo = customer.indirizzo;
         newCustomer.localita = customer.localita;
-        newCustomer.nome = customer.name;
+        newCustomer.nome = customer.nome;
         newCustomer.pagamento = customer.pagamento;
         newCustomer.partitaIva = customer.partitaIva;
         newCustomer.provincia = customer.provincia;
@@ -118,7 +110,7 @@ module.exports = {
                     result.fax = customer.fax;
                     result.indirizzo = customer.indirizzo;
                     result.localita = customer.localita;
-                    result.nome = customer.name;
+                    result.nome = customer.nome;
                     result.pagamento = customer.pagamento;
                     result.partitaIva = customer.partitaIva;
                     result.provincia = customer.provincia;

@@ -60,7 +60,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
     
-        .get('/customer/:customer_id', function(req,res,next) {
+        .get('/customers/:customer_id', function(req,res,next) {
             var customerId = req.params.customer_id;
             Customer.findById(customerId)
                 .then(function(result) {
@@ -84,6 +84,30 @@ module.exports = function(app, apiRoutes) {
                         "error": err.message
                     });
                 });
+        })
+
+        .get('/customers/:cod_cliente', function(req,res,next) {
+            var codCliente = req.params.cod_cliente;
+            Customer.findByIdentity(cod_cliente).then(function(result) {
+                if (!result) {
+                    res.status(404).json({
+                        "success": false,
+                        "message": "Customer not found"
+                    });
+                } else {
+                    res.status(200).json({
+                        "success": true,
+                        "message": "Customer found",
+                        "customer": result
+                    });
+                }
+            }).catch(function(err) {
+                res.status(500).json({
+                    "success": false,
+                    "message": "Internal server error",
+                    "error": err.message
+                });
+            });
         });
 
 };

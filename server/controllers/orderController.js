@@ -126,7 +126,7 @@ module.exports = function(app, apiRoutes) {
                                                 var expected = req.body.expected;
                                                 expected.forEach(function(currExpected) {
                                                     var newMethod;
-                                                    if (currExpected.pesoNetto === 0) {
+                                                    if (currExpected.pesoNetto <= 0) {
                                                         newMethod = Expected.deleteExpected(currExpected._id);
                                                     } else {
                                                         newMethod = Expected.modifyExpected(currExpected._id, currExpected);
@@ -273,7 +273,7 @@ module.exports = function(app, apiRoutes) {
                                                     var expected = req.body.expected;
                                                     expected.forEach(function(currExpected) {
                                                         var newMethod;
-                                                        if (currExpected.pesoNetto === 0) {
+                                                        if (currExpected.pesoNetto <= 0) {
                                                             newMethod = Expected.deleteExpected(currExpected._id);
                                                         } else {
                                                             newMethod = Expected.modifyExpected(currExpected._id, currExpected);
