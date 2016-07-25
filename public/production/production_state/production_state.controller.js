@@ -1,4 +1,4 @@
-store.controller('productionStateController', ['$scope', 'articleFactory', 'stockFactory', 'productionStateFactory', 'processFactory', 'UserService', 'features', function ($scope, articleFactory, stockFactory, productionStateFactory, processFactory, UserService, features) {
+store.controller('productionStateController', ['$scope', 'articleFactory', 'stockFactory', 'productionStateFactory', 'processFactory', 'UserService', 'features','customerFactory', function ($scope, articleFactory, stockFactory, productionStateFactory, processFactory, UserService, features, customerFactory) {
 	$scope.riepilogo = false;
 	$scope.state = {};
 	$scope.article = {};
@@ -88,7 +88,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 			},
 			function (resp) {
 				$scope.articleProcesses = resp.processes;
-				console.log("TUTTE LE LAVORAZIONI", resp);
+				console.log("TUTTE LE LAVORAZIONI", $scope.articleProcesses);
 			},
 			function (err) {
 				console.log(resp);
@@ -113,12 +113,12 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	}
 	
 	$scope.viewArticleCustomer = function (article) {
-		articleFactory.resourceCustomer().get(
+		customerFactory.resourceCod().get(
 			{
 				id:article.clienteCod
 			},
 			function (resp) {
-				$scope.customer = resp.data;
+				$scope.customer = resp.customer;
 				$scope.customer.codice = article.clienteCod;
 				console.log("CLIENTE ARTICOLO", $scope.customer);
 			},
@@ -188,7 +188,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 				{prod, articoli},
 				function(resp){
 					console.log("STATO PRODUZIONE CONFERMATO" , resp);
-					$scope.states.push(resp.data);
+					$scope.states.push(resp.prod);
 				},
 				function (err){
 					console.log(err);
@@ -217,8 +217,8 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 			stockFactory.resource().get(
 				{id: article.stockId},
 				function (resp) {
-					$scope.stock = Object.assign({},resp.data);
-					$scope.stockOld = Object.assign({},resp.data);
+					$scope.stock = Object.assign({},resp.stock);
+					$scope.stockOld = Object.assign({},resp.stock);
 				},
 				function(err) {
 					console.log(err);
@@ -241,7 +241,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	$scope.openListStock2 = function(){
 		stockFactory.resource().getAll(
 			function (resp) {
-				$scope.products = resp.data;
+				$scope.products = resp.stocks;
 			},
 			function(err) {
 				console.log(err);
@@ -317,12 +317,12 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	
 	$scope.confirmWork = function(){
 		var stockOld = $scope.stockOld;
-		process.article = $scope.article;
-		process.stock = $scope.stock;
+		var article = $scope.article;
+		var stock = $scope.stock;
 		process.macchina = $scope.machinery.sigle;
-		process.figli = $scope.children;
+		var figli = $scope.children;
 		if (process.macchina == "a") {
-			process.scarto = calculateScarto(stockOld, process.stock, process.figli);	
+			process.scarto = calculateScarto(stockOld, stock, figli);	
 		}
 		else {
 			process.scarto = $scope.scartoTot.reduce(function(previousValue, currentValue, currentIndex, array) {
@@ -331,8 +331,11 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		}
 		process.operatore = UserService.getUser().username;	
 		console.log("process", process);
+		console.log("figli", figli);
+		console.log("article", article);
+		console.log("stock", stock);
 		processFactory.resource().save({},
-			process,
+			{process,stock,figli,article},
 			function(resp){
 				console.log("CONFERMATA LAVORAZIONE", resp)
 			},

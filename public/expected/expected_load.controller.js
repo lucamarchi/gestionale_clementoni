@@ -3,8 +3,8 @@ store.controller('expectedLoadController', ['$scope', 'expectedLoadFactory', 'fe
 	
 	expectedLoadFactory.getAll(
 		function (resp) {
-			console.log("TUTTI I CARICHI IN ATTESA" , resp.expected);
 			console.log(resp);
+			console.log("TUTTI I CARICHI IN ATTESA" , resp.expected);
 			$scope.expectedLoads = resp.expected;
 			$scope.totalItems = $scope.expectedLoads.length;
 			$scope.entryLimit = 20;

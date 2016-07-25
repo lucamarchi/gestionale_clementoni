@@ -1,4 +1,4 @@
-store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory','features', function ($scope, articleFactory, stockFactory, processFactory,features) {
+store.controller('productionController', ['$scope', 'articleFactory', 'stockFactory','processFactory','features','customerFactory', function ($scope, articleFactory, stockFactory, processFactory,features,customerFactory) {
 	
 	$scope.riepilogo = true;
 	
@@ -63,13 +63,13 @@ store.controller('productionController', ['$scope', 'articleFactory', 'stockFact
 	}
 	
 	$scope.viewArticleCustomer = function (article) {
-		articleFactory.resourceCustomer().get(
+		customerFactory.resourceCod().get(
 			{
 				id:article.clienteCod
 			},
 			function (resp) {
 				console.log(resp);
-				$scope.customer = resp.data;
+				$scope.customer = resp.customer;
 				$scope.customer.codice = article.clienteCod;
 				console.log("CLIENTE ARTICOLO", $scope.customer);
 			},

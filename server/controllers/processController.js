@@ -102,14 +102,14 @@ module.exports = function(app, apiRoutes) {
                 res.status(200).json({
                     "success": true,
                     "message": "Process with article found",
-                    "process": results
+                    "processes": results
                 });
             }).catch(function (err) {
                 if (err.message === "Process with article not found" && err.status === 400) {
                     res.status(200).json({
                         "success": true,
                         "message": "Process with article not found",
-                        "process": []
+                        "processes": []
                     });
                 } else {
                     res.status(500).json({

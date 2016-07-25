@@ -15,9 +15,10 @@ module.exports = function(app, apiRoutes) {
             Order.findAll()
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
-                            "message": "Orders not found"
+                            "message": "Orders not found",
+							"orders": []
                         });
                     } else {
                         res.status(200).json({

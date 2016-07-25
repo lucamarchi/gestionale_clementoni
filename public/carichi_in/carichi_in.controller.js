@@ -99,7 +99,7 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	
 	$scope.updateOrder = function (order) {
 		var products = $scope.productsOrder2;
-		var expected = $scope.selectedExpectedArray;
+		var expected = $scope.selectExpectedArray;
 		orderFactory.update(
 			{
 				id: order._id
@@ -183,7 +183,8 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	$scope.confirmOrder = function () {
 		var order = $scope.order;
 		var products = $scope.productsOrder2;
-		var expected = $scope.selectedExpectedArray;
+		var expected = $scope.selectExpectedArray;
+		console.log("Cosa ti mando: ", order, products, expected);
 		orderFactory.save({},
 			{order, products, expected},
 			function(resp){

@@ -42,9 +42,10 @@ module.exports = function(app, apiRoutes) {
             Article.findByStatus(status)
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
-                            "message": "Articles not found"
+                            "message": "Articles not found",
+							"articles": []
                         });
                     } else {
                         res.status(200).json({

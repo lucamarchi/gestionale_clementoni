@@ -27,15 +27,35 @@ store.factory('productFactory',  ['$resource', 'myConfig', function ($resource, 
 
 /*-----------------------> ORDINI DI TAGLIO <--------------------------------------------*/
 store.factory('cutFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return $resource(myConfig.url+'/api/cuts/:id',
-		{
-			id: "@id"
-		}, 
-		{
-			update: {method:'PUT'},
-			getAll: {method:'GET', isArray: false}
+    return {
+		resourceGroup: function () {
+			return $resource(myConfig.url+'/api/cuts/:id',
+				{
+					id: "@id"
+				}, 
+				{
+					getAll: {method:'GET', isArray: false}
+				}
+			);
+		},
+		resource: function () {
+			return $resource(myConfig.url+'/api/cut/:id',
+				{
+					id: "@id"
+				}, 
+				{
+					update: {method:'PUT'},
+				}
+			);
+		},
+		resourceRefresh: function () {
+			return resource = $resource(myConfig.url+'/api/cuts/update', {},
+				{
+					refresh: {method:'GET', isArray: false}
+				}
+			);
 		}
-	);
+	}
 }]);
 
 store.factory('refreshFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
@@ -105,7 +125,7 @@ store.factory('productionStateFactory', ['$resource', 'myConfig', function ($res
 
 /*--------------------------------> EXPECTED LOAD<-------------------------------------*/
 store.factory('expectedLoadFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return resource = $resource(myConfig.url+'/api/expected/:id', 
+    return resource = $resource(myConfig.url+'/api/expecteds/:id', 
 		{
 			id: "@id"
 		},
@@ -123,7 +143,7 @@ store.factory('processFactory', ['$resource', 'myConfig', function ($resource, m
 			return $resource(myConfig.url+'/api/processes', {});
 		},
 		resourceArticle: function() {
-			return $resource(myConfig.url+'/api/processes/articles/:id',
+			return $resource(myConfig.url+'/api/processes/article/:id',
 				{
 					id:"@id"
 				}
@@ -139,9 +159,28 @@ store.factory('processFactory', ['$resource', 'myConfig', function ($resource, m
 	} 
 }]);
 
-
-
-
+/*--------------------------------> CUSTOMER <-------------------------------------*/
+store.factory('customerFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
+	return {
+		resourceGroup: function() {
+			return $resource(myConfig.url+'/api/customers', {});
+		},
+		resourceId: function() {
+			return $resource(myConfig.url+'/api/customer/:id', 
+				{
+					id:"@id"
+				}
+			);
+		},
+		resourceCod: function() {
+			return $resource(myConfig.url+'/api/customerCod/:id', 
+				{
+					id:"@id"
+				}
+			);
+		},
+	}
+}]);
 /*--------------------------------> LOGIN/LOGOUT <-------------------------------------*/
 store.factory('UserService', ['$resource','$window', 'myConfig', function ($resource, $window, myConfig) {
     return{ 

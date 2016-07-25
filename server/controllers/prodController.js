@@ -13,9 +13,10 @@ module.exports = function(app, apiRoutes) {
             Prod.findAll()
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
-                            "message": "Prods not found"
+                            "message": "Prods not found",
+							"prods": []
                         });
                     } else {
                         res.status(200).json({

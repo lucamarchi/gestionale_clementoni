@@ -1,7 +1,7 @@
 var store = angular.module('store');
 store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'UserService', function ($scope, cutFactory, refreshFactory, UserService) {
     
-	cutFactory.getAll(
+	cutFactory.resourceGroup().getAll(
 		function (resp) {
 			console.log(resp);
 			$scope.cuts = resp.cuts;
@@ -17,8 +17,9 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
 	);
 	
 	$scope.refresh = function (){
-		refreshFactory.refresh(
+		cutFactory.resourceRefresh().refresh(
 			function (resp) {
+				console.log("REFRESH", resp);
 				if (resp.cuts != undefined) {
 					$scope.cuts = $scope.cuts.concat(resp.cuts);
 				}
@@ -30,7 +31,7 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
 	};
 	
 	$scope.openArticlesCut = function (cut){
-		cutFactory.get(
+		cutFactory.resource().get(
 			{
 				id: cut._id
 			},
@@ -49,7 +50,7 @@ store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'Us
 	$scope.confirmCut = function (cut) {
 		var user = UserService.getUser().username;
 		console.log(user);
-		cutFactory.update( 
+		cutFactory.resource().update( 
 			{id : cut._id},
 			{operator : user},
 			function(resp) {

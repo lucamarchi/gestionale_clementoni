@@ -22,9 +22,10 @@ module.exports = function(app, apiRoutes) {
             Cut.findAll()
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
-                            "message": "Cuts not found"
+                            "message": "Cuts not found",
+							"cuts": []
                         });
                     } else {
                         res.status(200).json({
@@ -239,7 +240,7 @@ module.exports = function(app, apiRoutes) {
                                        res.status(200).json({
                                            "success": true,
                                            "message": "Cuts updated",
-                                           "cuts": cuts
+                                           "cuts": finalCuts
                                        });
                                    })
                                }
@@ -252,9 +253,10 @@ module.exports = function(app, apiRoutes) {
                             });
                         });
                     } else {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": true,
                             "message": "No new cut found",
+							"cuts": []
                         });
                     }
                 });
