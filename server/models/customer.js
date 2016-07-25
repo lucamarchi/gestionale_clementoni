@@ -35,6 +35,10 @@ module.exports = {
         customerModel.findOne(query).lean().exec(function (err, result) {
             if(err) {
                 deferred.reject(err);
+            } if (!result) {
+                var err = new Error("Customer not found");
+                err.status = 400;
+                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }

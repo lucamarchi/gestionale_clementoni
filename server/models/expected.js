@@ -7,28 +7,21 @@ var Q = require('q');
 var Schema = mongoose.Schema;
 
 var ExpectedSchema = new Schema({
-    matricola: {type: String}, //
     tipo: {type: String},
     materiale: {type: String},
     qualita: {type: String},
     scelta: {type: String},
     finitura: {type: String},
     coloreRal: {type: String},
-    pesoLordo: {type: Number}, //
     pesoNetto: {type: Number},
     spessore: {type: Number},
-    larghezza: {type: Number}, //
     classeLarghezza: {type: Number},
     lunghezza: {type: Number},  
     numFogli: {type: Number},
-    prezzo: {type: Number}, 
-    difetti: {type: String}, //
-    stabilimento: {type: Number}, //
+    prezzo: {type: Number},
     stato: {type: String},
-    scarto: {type: Number, default: 0}, //
     anno: {type: String},
     superficie: {type: String},
-    ddt: {type: Number, require: true}, //
     fornitore: {type: String},
     dataPrevista: {type: Date}
 });
@@ -73,27 +66,20 @@ module.exports = {
     saveNewExpected: function(expected) {
         var deferred = Q.defer();
         var newExpected = new expectedModel();
-        newExpected.matricola = expected.matricola;
         newExpected.tipo = expected.tipo;
         newExpected.materiale = expected.materiale;
         newExpected.qualita = expected.qualita;
         newExpected.scelta = expected.scelta;
         newExpected.finitura = expected.finitura;
         newExpected.coloreRal = expected.coloreRal;
-        newExpected.pesoLordo = expected.pesoLordo;
         newExpected.pesoNetto = expected.pesoNetto;
         newExpected.spessore = expected.spessore;
-        newExpected.larghezza = expected.larghezza;
         newExpected.classeLarghezza = expected.classeLarghezza;
         newExpected.lunghezza = expected.lunghezza;
         newExpected.numFogli = expected.numFogli;
         newExpected.prezzo = expected.prezzo;
-        newExpected.difetti = expected.difetti;
-        newExpected.stabilimento = expected.stabilimento;
-        newExpected.stato = expected.stato;
         newExpected.anno = expected.anno;
         newExpected.superficie = expected.superficie;
-        newExpected.ddt = expected.ddt;
         newExpected.fornitore = expected.fornitore;
         newExpected.dataPrevista = expected.dataPrevista;
         newExpected.save(function(err) {
@@ -114,27 +100,20 @@ module.exports = {
                 deferred.reject(err);
             } else {
                 if (result || result !== null) {
-                    result.matricola = expected.matricola;
                     result.tipo = expected.tipo;
                     result.materiale = expected.materiale;
                     result.qualita = expected.qualita;
                     result.scelta = expected.scelta;
                     result.finitura = expected.finitura;
                     result.coloreRal = expected.coloreRal;
-                    result.pesoLordo = expected.pesoLordo;
                     result.pesoNetto = expected.pesoNetto;
                     result.spessore = expected.spessore;
-                    result.larghezza = expected.larghezza;
                     result.classeLarghezza = expected.classeLarghezza;
                     result.lunghezza = expected.lunghezza;
                     result.numFogli = expected.numFogli;
                     result.prezzo = expected.prezzo;
-                    result.difetti = expected.difetti;
-                    result.stabilimento = expected.stabilimento;
-                    result.stato = expected.stato;
                     result.anno = expected.anno;
                     result.superficie = expected.superficie;
-                    result.ddt = expected.ddt;
                     result.fornitore = expected.fornitore;
                     result.dataPrevista = expected.dataPrevista;
                 }

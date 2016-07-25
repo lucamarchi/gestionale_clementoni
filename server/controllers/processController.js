@@ -222,6 +222,10 @@ module.exports = function(app, apiRoutes) {
                 });
             });
 
+        })
+
+        .get('/prova/processes', function(req,res,next) {
+            console.log("OK");
         });
 
 

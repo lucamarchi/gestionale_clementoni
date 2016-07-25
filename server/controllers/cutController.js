@@ -7,7 +7,13 @@ var Article = require('./../models/article');
 var Customer = require('./../models/customer');
 var request = require('./requestController');
 var configs = require('./../configs/url');
+var regions = require('./../configs/regions');
 var Q = require('q');
+
+function Report() {
+    this.name = 'x';
+    this.peso = 'y';
+}
 
 module.exports = function(app, apiRoutes) {
 
@@ -37,7 +43,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/cuts/:cut_id', function(req,res,next) {
+        .get('/cut/:cut_id', function(req,res,next) {
             var cutId = req.params.cut_id;
             Cut.findById(cutId)
                 .then(function (result) {
@@ -118,7 +124,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .put('/cuts/:cut_id', function (req,res,next) {
+        .put('/cut/:cut_id', function (req,res,next) {
             var cutId = req.params.cut_id;
             var operator = req.body.operator;
             Cut.setCutAccepted(cutId).then(function(result) {
@@ -154,6 +160,52 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
+        .get('/cuts/regions/:region_name', function(req,res,next) {
+            var region = req.params.region_name;
+            Cut.findByRegion(region).then(function(result) {
+                if (!result || result.length === 0) {
+                    res.status(404).json({
+                        "success": false,
+                        "message": "No cut by this region"
+                    });
+                } else {
+                    res.status(200).json({
+                        "success": true,
+                        "message": "Cuts list",
+                        "cuts": result
+                    });
+                }
+            }).catch(function(err) {
+                res.status(404).json({
+                    "success": false,
+                    "message": "Internal server error",
+                    "err": err.message
+                });
+            });
+        })
+
+        .get('/cuts/report', function(req,res,next) {
+            var regionsArr = regions.name;
+            var promises = [];
+            regionsArr.forEach(function (currRegion) {
+                var newMethod = calculateRegionPeso(currRegion);
+                promises.push(newMethod);
+            });
+            Q.all(promises).then(function (result) {
+                res.status(200).json({
+                    "success": true,
+                    "message": "Reports found",
+                    "report": result
+                });
+            }).catch(function (err) {
+                res.status(404).json({
+                    "success": false,
+                    "message": "Internal server error 1",
+                    "err": err
+                });
+            });
+        })
+
         .get('/cuts/update', function(req,res,next) {
             Cut.lastCutCod().then(function (result) {
                 var date = new Date().getFullYear();
@@ -168,7 +220,10 @@ module.exports = function(app, apiRoutes) {
                                     return Q.all(currCut.articoli.map(function (currArticle) {
                                         return Article.saveNewArticle(currArticle)
                                             .then(function (article) {
-                                                return Cut.addArticleToCut(article.id, cut.id)
+                                                return Cut.increasePeso(cut.id, article.peso)
+                                                    .then(function(res) {
+                                                        return Cut.addArticleToCut(article.id, cut.id)
+                                                    })
                                             })
                                     }));
                                 })
@@ -217,7 +272,11 @@ module.exports = function(app, apiRoutes) {
         Customer.findByIdentity(identity).then(function(customer) {
             if (customer && customer.ident === identity) {
                 Cut.addCustomerToCut(customer._id,cutId).then(function(result) {
-                    deferred.resolve(result);
+                    Cut.addRegionToCut(cutId,customer.regione.toLowerCase()).then(function(cutF) {
+                        Cut.addPRToCut(cutId, customer.provincia).then(function (cutP) {
+                            deferred.resolve(cutP);
+                        })
+                    });
                 });
             }
         }).catch(function(err) {
@@ -226,7 +285,11 @@ module.exports = function(app, apiRoutes) {
                     if (currTmpCustomer.ident === identity) {
                         Customer.saveNewCustomer(currTmpCustomer).then(function (customer) {
                             Cut.addCustomerToCut(customer._id, cutId).then(function (cut) {
-                                deferred.resolve(cut);
+                                Cut.addRegionToCut(cutId,customer.regione.toLowerCase()).then(function(cutF) {
+                                    Cut.addPRToCut(cutId,customer.provincia).then(function(cutP) {
+                                        deferred.resolve(cutP);
+                                    })
+                                })
                             })
                         })
                     }
@@ -234,6 +297,23 @@ module.exports = function(app, apiRoutes) {
             } else {
                 deferred.reject(err);
             }
+        });
+        return deferred.promise;
+    }
+
+    calculateRegionPeso = function(region) {
+        var deferred = Q.defer();
+        var report = [];
+        Cut.findByRegion(region).then(function(result) {
+            var peso = 0;
+            result.forEach(function(currCuts) {
+                peso += currCuts.pesoTotale;
+            });
+            var tmpReport = [region,peso];
+            console.log(tmpReport);
+            deferred.resolve(tmpReport);
+        }).catch(function(err) {
+            deferred.reject(err);
         });
         return deferred.promise;
     }

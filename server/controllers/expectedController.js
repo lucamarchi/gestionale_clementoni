@@ -17,7 +17,8 @@ module.exports = function(app, apiRoutes) {
                     if (!result || result.length == 0) {
                         res.status(404).json({
                             "success": false,
-                            "message": "Expected not found"
+                            "message": "Expected not found",
+                            "expected": []
                         });
                     } else {
                         res.status(200).json({

@@ -2,9 +2,6 @@
  * Created by luca on 23/05/16.
  */
 
-/**
- * Created by luca on 20/05/16.
- */
 
 var Product = require('./../models/product');
 var Order = require('./../models/order');

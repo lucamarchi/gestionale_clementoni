@@ -105,7 +105,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/articles/prova/:article_id', function(req,res,next) {
+        .get('/articles/prova/', function(req,res,next) {
             var articleId = req.params.article_id;
             Article.findOne(articleId).then(function(result) {
                 if (!result)

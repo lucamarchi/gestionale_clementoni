@@ -31,6 +31,7 @@ module.exports = function (app, express) {
     require('./controllers/prodController.js')(app,router);
     require('./controllers/processController')(app,router);
     require('./controllers/expectedController')(app,router);
+    require('./controllers/releaseController')(app,router);
 
     app.use('/api', router);
 

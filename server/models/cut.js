@@ -16,7 +16,10 @@ var CutSchema = new Schema({
     accepted: {type: Boolean, default: false},
     operator: {type: String},
     articoli: [{ type: Schema.ObjectId, ref: 'Article'}],
-    customer: {type: Schema.ObjectId, ref: 'Customer'}
+    customer: {type: Schema.ObjectId, ref: 'Customer'},
+    region: {type: String},
+    provincia: {type: String},
+    pesoTotale: {type: Number, default: 0}
 });
 
 cutModel = mongoose.model('Cut', CutSchema);
@@ -136,5 +139,38 @@ module.exports = {
         var query = {$set: {'operator': operator}};
         var cut = this.updateCut(cutId,query);
         return cut;
+    },
+
+    addRegionToCut: function(cutId,region) {
+        var query = {$set: {'region': region}};
+        var cut = this.updateCut(cutId,query);
+        return cut;
+    },
+
+    addPRToCut: function(cutId,pr) {
+        var query = {$set: {'provincia': pr}};
+        var cut = this.updateCut(cutId,query);
+        return cut;
+    },
+
+    findByRegion: function(region) {
+        var deferred = Q.defer();
+        var query = {'region': region};
+        cutModel.find(query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(result);
+            }
+        });
+        return deferred.promise;
+    },
+
+    increasePeso: function(cutId,peso) {
+        var query = {$inc: {'pesoTotale': peso}};
+        var cut = this.updateCut(cutId,query);
+        return cut;
     }
+    
+
 };

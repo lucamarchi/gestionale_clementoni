@@ -60,7 +60,7 @@ module.exports = function(app, apiRoutes) {
                 });
         })
     
-        .get('/customers/:customer_id', function(req,res,next) {
+        .get('/customer/:customer_id', function(req,res,next) {
             var customerId = req.params.customer_id;
             Customer.findById(customerId)
                 .then(function(result) {
@@ -86,9 +86,9 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/customers/:cod_cliente', function(req,res,next) {
+        .get('/customerCod/:cod_cliente', function(req,res,next) {
             var codCliente = req.params.cod_cliente;
-            Customer.findByIdentity(cod_cliente).then(function(result) {
+            Customer.findByIdentity(codCliente).then(function(result) {
                 if (!result) {
                     res.status(404).json({
                         "success": false,
@@ -102,6 +102,9 @@ module.exports = function(app, apiRoutes) {
                     });
                 }
             }).catch(function(err) {
+                if (err.message === "Customer not found" && err.status === 400) {
+                    console.log("PORCODIO");
+                }
                 res.status(500).json({
                     "success": false,
                     "message": "Internal server error",
