@@ -104,6 +104,7 @@ module.exports = function(app, apiRoutes) {
                 }
             }).catch(function(err) {
                 if (err.message === "Customer not found" && err.status === 400) {
+                    console.log("Customer not found");
                 }
                 res.status(500).json({
                     "success": false,
