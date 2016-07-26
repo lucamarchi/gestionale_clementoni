@@ -41,7 +41,7 @@ module.exports = function(app, apiRoutes) {
             Order.findById(req.params.order_id)
                 .then(function(result) {
                     if (!result) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
                             "message": "Order not found"
                         });

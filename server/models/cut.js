@@ -95,7 +95,6 @@ module.exports = {
     saveNewCut: function(cut) {
         var deferred = Q.defer();
         var newCut = new cutModel();
-        newCut.ddt = cut.ddt;
         newCut.clienteCod = cut.clienteCod;
         newCut.codice = cut.codice;
         newCut.anno = cut.anno;
@@ -106,6 +105,29 @@ module.exports = {
                 deferred.reject(err)
             } else {
                 deferred.resolve(newCut);
+            }
+        });
+        return deferred.promise;
+    },
+
+    modifyCut: function(cutId,cut) {
+        var deferred = Q.defer();
+        var query = {'_id': cutId};
+        cutModel.findOne(query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                if (result || result !== null) {
+                    result.date = cut.date;
+                    result.note = cut.note;
+                }
+                result.save(function (err) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(result);
+                    }
+                });
             }
         });
         return deferred.promise;

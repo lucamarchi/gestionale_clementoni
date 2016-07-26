@@ -171,6 +171,30 @@ module.exports = function(app, apiRoutes) {
                     "error": err.message
                 });
             });
+        })
+
+        .delete('/prod/articles/:prod_id', function(req,res,next) {
+            var articleId = req.body.article._id;
+            Prod.removeArticleToProd(articleId).then(function(result) {
+                if (result || result !== null) {
+                    res.status(200).json({
+                        "success": true,
+                        "message": "Article removed from prod",
+                        "prod": result
+                    });
+                } else {
+                    res.status(200).json({
+                        "success": true,
+                        "message": "No article in prod"
+                    });
+                }
+            }).catch(function(err) {
+                res.status(500).json({
+                    "success": false,
+                    "message": "Internal server error",
+                    "error": err.message
+                });
+            });
         });
 
 };

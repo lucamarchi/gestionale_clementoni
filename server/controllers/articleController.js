@@ -16,9 +16,10 @@ module.exports = function(app, apiRoutes) {
             Article.findAllWithStatus()
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
-                            "message": "Articles not found"
+                            "message": "Articles not found",
+                            "articles": []
                         });
                     } else {
                         res.status(200).json({
@@ -106,17 +107,42 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
-        .get('/articles/prova/', function(req,res,next) {
-            var articleId = req.params.article_id;
-            Article.findOne(articleId).then(function(result) {
-                if (!result)
-                    console.log("NO!: "+result);
-                else console.log("SI: "+result);
+        .get('/articles/region/:region_name', function(req,res,next) {
+            var region = req.params.region_name;
+            Cut.findByRegion(region).then(function(result) {
+                if (result && result.length > 0) {
+                    var promises = [];
+                    result.forEach(function(currCut) {
+                        if (currCut.articoli && currCut.articoli.length > 0) {
+                            var currArticles = currCut.articoli;
+                            currArticles.forEach(function(currArt) {
+                                var newMethod = Article.findById(currArt);
+                                promises.push(newMethod);
+                            });
+                        }
+                    });
+                    Q.all(promises).then(function(articles) {
+                        res.status(200).json({
+                            "success": true,
+                            "message": "Article by region list",
+                            "articles": articles
+                        });
+                    });
+                } else {
+                    res.status(200).json({
+                        "success": true,
+                        "message": "No Article by this region",
+                        "articles": []
+                    });
+                }
             }).catch(function(err) {
-                console.log("ERR");
-                console.log(err);
-            })
-        });
+                res.status(500).json({
+                    "success": false,
+                    "message": "Internal server error",
+                    "error": err.message
+                });
+            });
+        })
 
 };
 

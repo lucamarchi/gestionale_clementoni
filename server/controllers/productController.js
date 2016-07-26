@@ -15,9 +15,10 @@ module.exports = function(app, apiRoutes) {
             Product.findAll()
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
-                            "message": "Products not found"
+                            "message": "Products not found",
+                            "products": []
                         });
                     } else {
                         res.status(200).json({
@@ -40,7 +41,7 @@ module.exports = function(app, apiRoutes) {
             Product.findById(req.params.product_id)
                 .then(function(result) {
                     if (!result) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
                             "message": "Product not found"
                         });
@@ -104,7 +105,6 @@ module.exports = function(app, apiRoutes) {
             Product.modifyProduct(productId, newProduct)
                 .then(function(product) {
                     if (product.stockId && product.stockId !== null) {
-                        console.log("PROD: "+product.stockId);
                         Stock.modifyStock(product.stockId, newProduct)
                             .then(function(stock) {
                                 res.status(200).json({

@@ -3,7 +3,7 @@
  */
 
 var Product = require('./../models/product');
-var Cut = require('./../models/cut');
+var Article = require('./../models/article');
 var Release = require('./../models/release');
 var Q = require('q');
 
@@ -14,9 +14,10 @@ module.exports = function(app, apiRoutes) {
             Release.findAll()
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
-                            "message": "Releases not found"
+                            "message": "Releases not found",
+                            "releases": []
                         });
                     } else {
                         res.status(200).json({
@@ -39,12 +40,12 @@ module.exports = function(app, apiRoutes) {
             Release.findById(req.params.release_id)
                 .then(function(result) {
                     if (!result) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
                             "message": "Release not found"
                         });
                     } else {
-                        var promisesCut = [];
+                        var promisesArticle = [];
                         var promisesProduct = [];
                         if (result.productsId && result.productsId.length > 0) {
                             var productsId = result.productsId;
@@ -53,22 +54,22 @@ module.exports = function(app, apiRoutes) {
                                 promisesProduct.push(newMethod);
                             });
                         }
-                        if (result.cutsId && result.cutsId.length > 0) {
-                            var cutsId = result.cutsId;
-                            cutsId.forEach(function (currCut) {
-                                var newMethod = Cut.findById(currCut);
-                                promisesCut.push(newMethod);
+                        if (result.articlesId && result.articlesId.length > 0) {
+                            var articlesId = result.articlesId;
+                            articlesId.forEach(function (currArticle) {
+                                var newMethod = Article.findById(currArticle);
+                                promisesArticle.push(newMethod);
                             });
                         }
                         Q.all(promisesProduct).then(function (products) {
-                            Q.all(promisesCut)
-                                .then(function (cuts) {
+                            Q.all(promisesArticle)
+                                .then(function (articles) {
                                     res.status(200).json({
                                         "success": true,
                                         "message": "Release and product list",
                                         "release": result,
                                         "products": products,
-                                        "cuts": cuts
+                                        "articles": articles
                                     });
                                 });
                         });
@@ -94,14 +95,16 @@ module.exports = function(app, apiRoutes) {
                         promises.push(newMethod);
                     });
                 }
-                if (req.body.cuts && req.body.cuts.length > 0) {
-                    var cuts = req.body.cuts;
+                if (req.body.articles && req.body.articles.length > 0) {
+                    var articles = req.body.articles;
                     if (!promises) {
                         var promises = [];
                     }
-                    cuts.forEach(function (currCut) {
-                        var newMethod = Release.addCutToRelease(result._id, currCut._id);
+                    articles.forEach(function (currArticle) {
+                        var newMethod = Release.addArticleToRelease(result._id, currArticle._id);
+                        var newMethodSet = Article.setArticleStatus(currArticle._id,"in uscita");
                         promises.push(newMethod);
+                        promises.push(newMethodSet);
                     });
                 }
                 if (promises && promises.length > 0) {
@@ -130,31 +133,22 @@ module.exports = function(app, apiRoutes) {
 
         .delete('/release/:release_id', function(req,res,next) {
             var releaseId = req.params.release_id;
-            Release.findById(releaseId).then(function(release) {
-                var promises = [
-                    Release.deleteRelease(releaseId)
-                ];
-                if (release.productsId && release.productsId.length > 0) {
-                    var productsId = release.productsId;
-                    productsId.forEach(function(currProduct) {
-                        var newMethod = Release.removeProductToRelease(releaseId,currProduct);
+            var promises = [];
+            Release.findById(releaseId).then(function(result) {
+                console.log(result);
+                if (result && result.articlesId && result.articlesId.length > 0) {
+                    var articles = result.articlesId;
+                    articles.forEach(function(currArticle) {
+                        var newMethod = Article.setArticleStatus(currArticle,"lavorazione");
                         promises.push(newMethod);
                     });
                 }
-                if (release.cutsId && release.cutsId.length > 0) {
-                    var cutsId = release.cutsId;
-                    if (!promises) {
-                        var promises = [];
-                    }
-                    cutsId.forEach(function(currCut) {
-                        var newMethod = Release.removeCutToRelease(releaseId,currCut);
-                        promises.push(newMethod);
-                    })
-                }
+                var newMethod = Release.deleteRelease(releaseId);
+                promises.push(newMethod);
                 Q.all(promises).then(function(result) {
                     res.status(200).json({
                         "success": true,
-                        "message": "Release deleted",
+                        "message": "Release deleted"
                     });
                 });
             }).catch(function(err) {
@@ -164,7 +158,22 @@ module.exports = function(app, apiRoutes) {
                     "error": err.message
                 });
             });
-        });
-
+        })
+    
+        .put('/release/complete/:release_id', function(req,res,next) {
+            var releaseId = req.params.release_id;
+            Release.setReleaseComplete(releaseId).then(function(result) {
+                res.status(200).json({
+                    "success": true,
+                    "message": "Release complete"
+                });
+            }).catch(function(err) {
+                res.status(500).json({
+                    "success": false,
+                    "message": "Internal server error",
+                    "error": err.message
+                });
+            });
+        })
 
 };

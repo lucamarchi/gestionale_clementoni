@@ -42,7 +42,7 @@ module.exports = function(app, apiRoutes) {
             Expected.findById(expectedId)
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
                             "message": "Expected not found"
                         });
@@ -83,6 +83,42 @@ module.exports = function(app, apiRoutes) {
                         "error": err.message
                     });
                 });
-        });
+        })
+
+        .put('/expecteds/:expected_id', function(req,res,next) {
+            var expected = req.body.expected;
+            var expectedId = req.params.expected_id;
+            Expected.modifyExpected(expectedId,expected)
+                .then(function(expected) {
+                    res.status(200).json({
+                        "success": true,
+                        "message": "Expected modified",
+                        "expected": expected
+                    });
+                })
+                .catch(function(err) {
+                    res.status(500).json({
+                        "success": false,
+                        "message": "Internal server error",
+                        "error": err.message
+                    });
+                });
+        })
+
+        .delete('/expecteds/:expected_id', function(req,res,next) {
+            var expectedId = req.params.expected_id;
+            Expected.deleteExpected(expectedId).then(function(err,result) {
+                    res.status(200).json({
+                    "success": true,
+                    "message": "Expected deleted"
+                });
+            }).catch(function(err) {
+                res.status(500).json({
+                    "success": false,
+                    "message": "Internal server error",
+                    "error": err.message
+                });
+            });
+        })
 };
 

@@ -187,10 +187,26 @@ module.exports = {
         return article;
     },
 
+    removeStockToArticle: function(stockId) {
+        var deferred = Q.defer();
+        var query = {$unset: {'stockId': ''}};
+        articleModel.update({'stockId': stockId},query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                console.log("DAJE");
+                deferred.resolve(result);
+            }
+        });
+        return deferred.promise;
+    },
+
     increaseScarto: function(articleId,scarto) {
         var query = {$inc: {'scarto': scarto}};
         var article = this.updateArticle(articleId,query);
         return article;
-    }
+    },
+    
+    
 
 };

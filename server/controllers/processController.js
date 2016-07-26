@@ -15,9 +15,10 @@ module.exports = function(app, apiRoutes) {
             Process.findAll()
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
-                            "message": "Processes not found"
+                            "message": "Processes not found",
+                            "processes": []
                         });
                     } else {
                         res.status(200).json({
@@ -41,7 +42,7 @@ module.exports = function(app, apiRoutes) {
             Process.findById(processId)
                 .then(function(result) {
                     if (!result) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
                             "message": "Process not found"
                         });
@@ -223,10 +224,6 @@ module.exports = function(app, apiRoutes) {
             });
 
         })
-
-        .get('/prova/processes', function(req,res,next) {
-            console.log("OK");
-        });
 
 
 };

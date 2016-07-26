@@ -39,9 +39,10 @@ module.exports = function(app, apiRoutes) {
             Customer.findAll()
                 .then(function(result) {
                     if (!result || result.length == 0) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
-                            "message": "Customers not found"
+                            "message": "Customers not found",
+                            "customers": []
                         });
                     } else {
                         res.status(200).json({
@@ -65,7 +66,7 @@ module.exports = function(app, apiRoutes) {
             Customer.findById(customerId)
                 .then(function(result) {
                     if (!result) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
                             "message": "Customer not found"
                         });
@@ -90,7 +91,7 @@ module.exports = function(app, apiRoutes) {
             var codCliente = req.params.cod_cliente;
             Customer.findByIdentity(codCliente).then(function(result) {
                 if (!result) {
-                    res.status(404).json({
+                    res.status(200).json({
                         "success": false,
                         "message": "Customer not found"
                     });
@@ -103,7 +104,6 @@ module.exports = function(app, apiRoutes) {
                 }
             }).catch(function(err) {
                 if (err.message === "Customer not found" && err.status === 400) {
-                    console.log("PORCODIO");
                 }
                 res.status(500).json({
                     "success": false,

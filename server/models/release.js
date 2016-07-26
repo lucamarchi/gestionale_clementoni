@@ -4,7 +4,7 @@
 
 var mongoose = require('mongoose');
 var Q = require('q');
-var Cut = require('./../models/cut');
+var Article = require('./../models/article');
 var Product = require('./../models/product');
 var Schema = mongoose.Schema;
 
@@ -19,7 +19,8 @@ var ReleaseSchema = new Schema({
     pesoTotale: {type: Number},
     unita: {type: Number},
     productsId: [{ type: Schema.ObjectId, ref: 'Product'}],
-    cutsId: [{ type: Schema.ObjectId, ref: 'Cut'}]
+    articlesId: [{ type: Schema.ObjectId, ref: 'Article'}],
+    stato: {type: String, default: 'sospeso'}
 });
 
 releaseModel = mongoose.model('Release', ReleaseSchema);
@@ -96,8 +97,8 @@ module.exports = {
         return release;
     },
 
-    addCutToRelease: function(releaseId,cutId) {
-        var query = {$push: {'cutsId': cutId}};
+    addArticleToRelease: function(releaseId,articleId) {
+        var query = {$push: {'articlesId': articleId}};
         var release = this.updateRelease(releaseId, query);
         return release;
     },
@@ -115,9 +116,9 @@ module.exports = {
         return deferred.promise;
     },
 
-    removeCutToRelease: function(releaseId,cutId) {
+    removeArticleToRelease: function(releaseId,articleId) {
         var deferred = Q.defer();
-        var query = {$pull: {'cutsId': cutId}};
+        var query = {$pull: {'articlesId': articleId}};
         releaseModel.findOneAndUpdate({'_id': releaseId},query).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
@@ -133,12 +134,18 @@ module.exports = {
         var query = {'_id': releaseId};
         releaseModel.remove(query).exec(function(err,result) {
             if (err) {
-                deferred.reject(err)
+                deferred.reject(err);
             } else {
                 deferred.resolve(result);
             }
         });
         return deferred.promise;
     },
+
+    setReleaseComplete: function(releaseId) {
+        var query = {$set: {'stato': 'evaso'}};
+        var release = this.updateRelease(releaseId,query);
+        return release;
+    }
 
 };

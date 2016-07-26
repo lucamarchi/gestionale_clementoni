@@ -49,7 +49,7 @@ module.exports = function(app, apiRoutes) {
             Cut.findById(cutId)
                 .then(function (result) {
                     if (!result) {
-                        res.status(404).json({
+                        res.status(200).json({
                             "success": false,
                             "message": "Cut not found"
                         });
@@ -78,7 +78,7 @@ module.exports = function(app, apiRoutes) {
                                 } else {
                                     res.status(200).json({
                                         "success": true,
-                                        "message": "Cut found withoud customer",
+                                        "message": "Cut found without customer",
                                         "cut": result,
                                         "articles": articles
                                     });
@@ -105,9 +105,10 @@ module.exports = function(app, apiRoutes) {
         .get('/cuts/accepted', function(req,res,next) {
             Cut.findAllAccepted().then(function(result) {
                 if (!result || result.length === 0) {
-                    res.status(404).json({
+                    res.status(200).json({
                         "success": false,
-                        "message": "No cut accepted"
+                        "message": "No cut accepted",
+                        "cuts": []
                     });
                 } else {
                     res.status(200).json({
@@ -130,7 +131,7 @@ module.exports = function(app, apiRoutes) {
             var operator = req.body.operator;
             Cut.setCutAccepted(cutId).then(function(result) {
                 if (!result) {
-                    res.status(404).json({
+                    res.status(200).json({
                         "success": false,
                         "message": "No cut accepted"
                     });
@@ -165,9 +166,10 @@ module.exports = function(app, apiRoutes) {
             var region = req.params.region_name;
             Cut.findByRegion(region).then(function(result) {
                 if (!result || result.length === 0) {
-                    res.status(404).json({
+                    res.status(200).json({
                         "success": false,
-                        "message": "No cut by this region"
+                        "message": "No cut by this region",
+                        "cuts": []
                     });
                 } else {
                     res.status(200).json({
@@ -265,6 +267,24 @@ module.exports = function(app, apiRoutes) {
                     "success": false,
                     "message": "Internal server error",
                     "err": err
+                });
+            })
+        })
+
+        .put('/cutModify/:cut_id', function(req,res,next) {
+            var cut = req.body.cut;
+            var cutId = req.params.cut_id;
+            Cut.modifyCut(cutId,cut).then(function(result) {
+                res.status(200).json({
+                    "success": true,
+                    "message": "Cut modified",
+                    "cut": result
+                });
+            }).catch(function(err) {
+                res.status(500).json({
+                    "success": false,
+                    "message": "Internal server error",
+                    "error": err.message
                 });
             })
         });
