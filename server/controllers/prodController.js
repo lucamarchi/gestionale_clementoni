@@ -147,24 +147,31 @@ module.exports = function(app, apiRoutes) {
         .put('/prods/:prod_id', function(req,res,next) {
             var prodId = req.params.prod_id;
             var prod = req.body.prod;
-            var promises = [
-                Prod.modifyProd(prodId,prod)
-            ];
-            if (req.body.articoli && req.body.articoli.length > 0) {
-                var articoli = req.body.articoli;
-                articoli.forEach(function(currArticle) {
-                    var newMethodAdd = Prod.addArticleToProd(prodId,currArticle._id);
-                    var newMethodSet = Article.setArticleStatus(currArticle._id, "definito");
-                    promises.push(newMethodAdd,newMethodSet);
-                });
-            }
-            Q.all(promises).then(function(result) {
-                res.status(200).json({
-                    "success": true,
-                    "message": "Prod updated",
-                    "prod": result
-                });
-            }).catch(function(err) {
+            Prod.modifyProd(prodId,prod).then(function(result) {
+                if (req.body.articoli && req.body.articoli.length > 0) {
+                    var promises = [];
+                    var articoli = req.body.articoli;
+                    articoli.forEach(function(currArticle) {
+                        var newMethodAdd = Prod.addArticleToProd(prodId,currArticle._id);
+                        var newMethodSet = Article.setArticleStatus(currArticle._id, "definito");
+                        promises.push(newMethodAdd,newMethodSet);
+                    });
+                    Q.all(promises).then(function(final) {
+                        res.status(200).json({
+                            "success": true,
+                            "message": "Prod updated",
+                            "prod": result
+                        });
+                    });
+                } else {
+                    res.status(200).json({
+                        "success": true,
+                        "message": "Prod updated with 0 articles",
+                        "prod": result
+                    });
+                }
+            })
+            .catch(function(err) {
                 res.status(500).json({
                     "success": false,
                     "message": "Internal server error",

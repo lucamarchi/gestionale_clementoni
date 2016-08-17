@@ -163,6 +163,11 @@ module.exports = {
             }
         });
         return deferred.promise;
+    },
+    
+    findProduct: function(stockId) {
+        var deferred = Q.defer();
+        product
     }
 
 };

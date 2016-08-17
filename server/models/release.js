@@ -91,10 +91,24 @@ module.exports = {
         return deferred.promise;
     },
 
-    addProductToRelease: function(releaseId,productId) {
-        var query = {$push: {'productsId': productId}};
-        var release = this.updateRelease(releaseId, query);
-        return release;
+    addProductToRelease: function(releaseId,stockId) {
+        var deferred = Q.defer();
+        var query = {'stockId': stockId};
+        Product.findOne(query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                var query = {$push: {'productsId': result.id}};
+                releaseModel.findByIdAndUpdate(releaseId,query,{new: true}).exec(function(err,result) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(result);
+                    }
+                });
+            }
+        })
+        return deferred.promise;
     },
 
     addArticleToRelease: function(releaseId,articleId) {

@@ -3,7 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="89545f39-e5f7-4a0a-9ff4-37a927f5a3d5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/configs/database.js" afterPath="$PROJECT_DIR$/server/configs/database.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/cutController.js" afterPath="$PROJECT_DIR$/server/controllers/cutController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/processController.js" afterPath="$PROJECT_DIR$/server/controllers/processController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/prodController.js" afterPath="$PROJECT_DIR$/server/controllers/prodController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/controllers/releaseController.js" afterPath="$PROJECT_DIR$/server/controllers/releaseController.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/article.js" afterPath="$PROJECT_DIR$/server/models/article.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/prod.js" afterPath="$PROJECT_DIR$/server/models/prod.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/release.js" afterPath="$PROJECT_DIR$/server/models/release.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/models/stock.js" afterPath="$PROJECT_DIR$/server/models/stock.js" />
     </list>
     <ignored path="gestionale_clementoni.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,8 +35,8 @@
       <file leaf-file-name="release.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/models/release.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2482">
-              <caret line="148" column="5" selection-start-line="148" selection-start-column="5" selection-end-line="148" selection-end-column="5" />
+            <state relative-caret-position="126">
+              <caret line="94" column="33" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
               <folding>
                 <element signature="e#0#39#0" expanded="false" />
               </folding>
@@ -36,24 +44,64 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="requestController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/controllers/requestController.js">
+      <file leaf-file-name="stock.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/models/stock.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1207">
-              <caret line="71" column="26" selection-start-line="71" selection-start-column="20" selection-end-line="71" selection-end-column="26" />
+            <state relative-caret-position="585">
+              <caret line="169" column="15" selection-start-line="169" selection-start-column="15" selection-end-line="169" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="releaseController.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="product.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/models/product.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="755">
+              <caret line="251" column="6" selection-start-line="251" selection-start-column="6" selection-end-line="251" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="prod.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/models/prod.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="41" column="32" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="releaseController.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server/controllers/releaseController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2958">
-              <caret line="176" column="10" selection-start-line="176" selection-start-column="10" selection-end-line="176" selection-end-column="10" />
+            <state relative-caret-position="313">
+              <caret line="100" column="44" selection-start-line="100" selection-start-column="44" selection-end-line="100" selection-end-column="44" />
               <folding>
                 <element signature="e#0#39#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="prodController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/controllers/prodController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1554">
+              <caret line="149" column="22" selection-start-line="149" selection-start-column="22" selection-end-line="149" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="orderController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/controllers/orderController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="200" column="42" selection-start-line="200" selection-start-column="42" selection-end-line="200" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -61,8 +109,8 @@
       <file leaf-file-name="processController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/controllers/processController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3825">
-              <caret line="225" column="10" selection-start-line="225" selection-start-column="10" selection-end-line="225" selection-end-column="10" />
+            <state relative-caret-position="211">
+              <caret line="134" column="66" selection-start-line="134" selection-start-column="66" selection-end-line="134" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -71,58 +119,8 @@
       <file leaf-file-name="cutController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server/controllers/cutController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="164" column="40" selection-start-line="164" selection-start-column="40" selection-end-line="164" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="article.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/server/models/article.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="194" column="26" selection-start-line="194" selection-start-column="26" selection-end-line="194" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cut.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/models/cut.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="articleController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/controllers/articleController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="75" selection-start-line="8" selection-start-column="75" selection-end-line="8" selection-end-column="75" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="database.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/configs/database.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+            <state relative-caret-position="551">
+              <caret line="245" column="42" selection-start-line="245" selection-start-column="42" selection-end-line="245" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -147,20 +145,22 @@
         <option value="$PROJECT_DIR$/server/configs/regions.js" />
         <option value="$PROJECT_DIR$/server/routes.js" />
         <option value="$PROJECT_DIR$/server/controllers/orderController.js" />
-        <option value="$PROJECT_DIR$/server/controllers/processController.js" />
         <option value="$PROJECT_DIR$/server/controllers/productController.js" />
         <option value="$PROJECT_DIR$/server/controllers/expectedController.js" />
-        <option value="$PROJECT_DIR$/server/controllers/cutController.js" />
         <option value="$PROJECT_DIR$/server/controllers/stockController.js" />
-        <option value="$PROJECT_DIR$/server/controllers/prodController.js" />
         <option value="$PROJECT_DIR$/server/models/cut.js" />
         <option value="$PROJECT_DIR$/server/models/customer.js" />
         <option value="$PROJECT_DIR$/server/controllers/customerController.js" />
+        <option value="$PROJECT_DIR$/server/controllers/articleController.js" />
+        <option value="$PROJECT_DIR$/server/configs/database.js" />
+        <option value="$PROJECT_DIR$/server/controllers/prodController.js" />
+        <option value="$PROJECT_DIR$/server/models/prod.js" />
+        <option value="$PROJECT_DIR$/server/models/article.js" />
+        <option value="$PROJECT_DIR$/server/controllers/cutController.js" />
+        <option value="$PROJECT_DIR$/server/controllers/processController.js" />
+        <option value="$PROJECT_DIR$/server/models/stock.js" />
         <option value="$PROJECT_DIR$/server/models/release.js" />
         <option value="$PROJECT_DIR$/server/controllers/releaseController.js" />
-        <option value="$PROJECT_DIR$/server/configs/database.js" />
-        <option value="$PROJECT_DIR$/server/controllers/articleController.js" />
-        <option value="$PROJECT_DIR$/server/models/article.js" />
       </list>
     </option>
   </component>
@@ -199,6 +199,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -305,8 +307,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -402,11 +402,12 @@
       <workItem from="1469452080232" duration="11244000" />
       <workItem from="1469527371557" duration="9183000" />
       <workItem from="1469798913470" duration="3381000" />
+      <workItem from="1471440344853" duration="4081000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44659000" />
+    <option name="totallyTimeSpent" value="48740000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -681,20 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/models/stock.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2516">
-          <caret line="148" column="55" selection-start-line="148" selection-start-column="55" selection-end-line="148" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/controllers/orderController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1421">
-          <caret line="200" column="42" selection-start-line="200" selection-start-column="42" selection-end-line="200" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/controllers/productController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="738">
@@ -723,32 +710,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/controllers/authenticationController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/controllers/stockController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-27">
           <caret line="69" column="14" selection-start-line="69" selection-start-column="14" selection-end-line="69" selection-end-column="14" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/models/prod.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1496">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/controllers/prodController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="187" column="55" selection-start-line="187" selection-start-column="55" selection-end-line="187" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -763,23 +729,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1802">
           <caret line="106" column="51" selection-start-line="106" selection-start-column="51" selection-end-line="106" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/models/product.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4267">
-          <caret line="251" column="6" selection-start-line="251" selection-start-column="6" selection-end-line="251" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/controllers/processController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3825">
-          <caret line="225" column="10" selection-start-line="225" selection-start-column="10" selection-end-line="225" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -787,34 +736,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1207">
           <caret line="71" column="26" selection-start-line="71" selection-start-column="20" selection-end-line="71" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/models/release.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2482">
-          <caret line="148" column="5" selection-start-line="148" selection-start-column="5" selection-end-line="148" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/controllers/releaseController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2958">
-          <caret line="176" column="10" selection-start-line="176" selection-start-column="10" selection-end-line="176" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/models/cut.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -827,35 +748,119 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/controllers/cutController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="164" column="40" selection-start-line="164" selection-start-column="40" selection-end-line="164" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/configs/database.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+        <state relative-caret-position="85">
+          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/controllers/articleController.js">
+    <entry file="file://$PROJECT_DIR$/server/models/cut.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
+        <state relative-caret-position="323">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="20" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/controllers/authenticationController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server/models/article.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="194" column="26" selection-start-line="194" selection-start-column="26" selection-end-line="194" selection-end-column="26" />
+        <state relative-caret-position="493">
+          <caret line="29" column="29" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="29" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/controllers/articleController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-44">
+          <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/controllers/orderController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="200" column="42" selection-start-line="200" selection-start-column="42" selection-end-line="200" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/controllers/cutController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="245" column="42" selection-start-line="245" selection-start-column="42" selection-end-line="245" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/models/stock.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="169" column="15" selection-start-line="169" selection-start-column="15" selection-end-line="169" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/models/product.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="755">
+          <caret line="251" column="6" selection-start-line="251" selection-start-column="6" selection-end-line="251" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/models/prod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="41" column="32" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/models/release.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="94" column="33" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/controllers/prodController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1554">
+          <caret line="149" column="22" selection-start-line="149" selection-start-column="22" selection-end-line="149" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/controllers/processController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="134" column="66" selection-start-line="134" selection-start-column="66" selection-end-line="134" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/controllers/releaseController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="100" column="44" selection-start-line="100" selection-start-column="44" selection-end-line="100" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#39#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

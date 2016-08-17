@@ -142,7 +142,7 @@ module.exports = {
             } else {
                 if (result || result !== null) {
                     result.codice = prod.codice;
-                    result.numero = prod.number;
+                    result.numero = prod.numero;
                     result.dataEvasione = prod.dataEvasione;
                 }
                 result.save(function(err) {

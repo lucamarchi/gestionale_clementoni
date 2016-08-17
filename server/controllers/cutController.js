@@ -296,7 +296,17 @@ module.exports = function(app, apiRoutes) {
                 Cut.addCustomerToCut(customer._id,cutId).then(function(result) {
                     Cut.addRegionToCut(cutId,customer.regione.toLowerCase()).then(function(cutF) {
                         Cut.addPRToCut(cutId, customer.provincia).then(function (cutP) {
-                            deferred.resolve(cutP);
+                            var articleIds = cutP.articoli;
+                            var promises = [];
+                            articleIds.forEach(function(currArticle) {
+                                var newMethod1 = Article.addRegionToArticle(currArticle,cutP.region);
+                                var newMethod2 = Article.addPRToArticle(currArticle,cutP.provincia);
+                                promises.push(newMethod1);
+                                promises.push(newMethod2);
+                            });
+                            Q.all(promises).then(function(result) {
+                                deferred.resolve(cutP);
+                            });
                         })
                     });
                 });
@@ -309,7 +319,17 @@ module.exports = function(app, apiRoutes) {
                             Cut.addCustomerToCut(customer._id, cutId).then(function (cut) {
                                 Cut.addRegionToCut(cutId,customer.regione.toLowerCase()).then(function(cutF) {
                                     Cut.addPRToCut(cutId,customer.provincia).then(function(cutP) {
-                                        deferred.resolve(cutP);
+                                        var articleIds = cutP.articoli;
+                                        var promises = [];
+                                        articleIds.forEach(function(currArticle) {
+                                            var newMethod1 = Article.addRegionToArticle(currArticle,cutP.region);
+                                            var newMethod2 = Article.addPRToArticle(currArticle,cutP.provincia);
+                                            promises.push(newMethod1);
+                                            promises.push(newMethod2);
+                                        });
+                                        Q.all(promises).then(function(result) {
+                                            deferred.resolve(cutP);
+                                        });
                                     })
                                 })
                             })

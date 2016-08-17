@@ -25,7 +25,9 @@ var ArticleSchema = new Schema({
     stato: {type: String},
     stockId: {type: Schema.ObjectId, ref: 'Stock'},
     ordineCod: {type: Number},
-    clienteCod: {type: Number}
+    clienteCod: {type: Number},
+    region: {type: String},
+    provincia: {type: String}
 });
 
 articleModel = mongoose.model('Article', ArticleSchema);
@@ -205,5 +207,17 @@ module.exports = {
         var article = this.updateArticle(articleId,query);
         return article;
     },
+
+    addRegionToArticle: function(articleId,region) {
+        var query = {$set: {'region': region}};
+        var article = this.updateArticle(articleId,query);
+        return article;
+    },
+
+    addPRToArticle: function(articleId,pr) {
+        var query = {$set: {'provincia': pr}};
+        var article = this.updateArticle(articleId,query);
+        return article;
+    }
 
 };

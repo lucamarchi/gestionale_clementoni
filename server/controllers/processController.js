@@ -132,7 +132,7 @@ module.exports = function(app, apiRoutes) {
                 numFigli.push(i+1);
             }
             var promises = [
-                Stock.modifyStock(stockOriginal._id,stockOriginal),
+                Stock.modifyStock(stockOriginal._id,stockOriginal)
             ];
             if (req.body.article) {
                 var article = req.body.article;

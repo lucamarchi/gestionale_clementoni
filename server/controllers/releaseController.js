@@ -86,9 +86,55 @@ module.exports = function(app, apiRoutes) {
 
         .post('/release', function(req,res,next) {
             var release = req.body.release;
+            if (req.body.stocks && req.body.stocks.length > 0) {
+                var stocks = req.body.stocks;
+                var products = [];
+                var promises = [];
+                stocks.forEach(function(currStocks) {
+                    var newMethod = Product.findByStock(currStocks._id);
+                    promises.push(newMethod);
+                });
+                Q.all(promises).then(function(products) {
+                    Release.saveNewRelease(release).then(function(result) {
+                        if (products && products.length > 0) {
+                            var promises = [];
+                            products.forEach(function (currProduct) {
+                                var newMethod = Release.addProductToRelease(result._id, currProduct._id);
+                                promises.push(newMethod);
+                            });
+                        }
+                        if (req.body.articles && req.body.articles.length > 0) {
+                            var articles = req.body.articles;
+                            if (!promises) {
+                                var promises = [];
+                            }
+                            articles.forEach(function (currArticle) {
+                                var newMethod = Release.addArticleToRelease(result._id, currArticle._id);
+                                var newMethodSet = Article.setArticleStatus(currArticle._id,"in uscita");
+                                promises.push(newMethod);
+                                promises.push(newMethodSet);
+                            });
+                        }
+                        if (promises && promises.length > 0) {
+                            Q.all(promises).then(function (restmp) {
+                                res.status(200).json({
+                                    "success": true,
+                                    "message": "Release saved",
+                                    "release": result
+                                });
+                            });
+                        } else {
+                            res.status(200).json({
+                                "success": true,
+                                "message": "Release saved",
+                                "release": result
+                            });
+                        }
+                    })
+                });
+            }
             Release.saveNewRelease(release).then(function(result) {
-                if (req.body.products && req.body.products.length > 0) {
-                    var products = req.body.products;
+                if (products && products.length > 0) {
                     var promises = [];
                     products.forEach(function (currProduct) {
                         var newMethod = Release.addProductToRelease(result._id, currProduct._id);
