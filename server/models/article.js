@@ -194,7 +194,6 @@ module.exports = {
             if (err) {
                 deferred.reject(err);
             } else {
-                console.log("DAJE");
                 deferred.resolve(result);
             }
         });
@@ -206,7 +205,5 @@ module.exports = {
         var article = this.updateArticle(articleId,query);
         return article;
     },
-    
-    
 
 };
