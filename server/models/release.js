@@ -9,6 +9,7 @@ var Product = require('./../models/product');
 var Schema = mongoose.Schema;
 
 var ReleaseSchema = new Schema({
+    numero: {type: String},
     trasportatore: {type: String},
     dataSpedizione: {type: Date},
     tipoMezzo: {type: String},
@@ -20,7 +21,9 @@ var ReleaseSchema = new Schema({
     unita: {type: Number},
     productsId: [{ type: Schema.ObjectId, ref: 'Product'}],
     articlesId: [{ type: Schema.ObjectId, ref: 'Article'}],
-    stato: {type: String, default: 'sospeso'}
+    stato: {type: String, default: 'sospeso'},
+    anno: {type: String}
+
 });
 
 releaseModel = mongoose.model('Release', ReleaseSchema);
@@ -69,6 +72,7 @@ module.exports = {
         newRelease.note = release.note;
         newRelease.pesoTotale = release.pesoTotale;
         newRelease.unita = release.unita;
+        newRelease.anno = new Date().getFullYear();
         newRelease.save(function(err) {
             if (err) {
                 deferred.reject(err);
@@ -91,24 +95,10 @@ module.exports = {
         return deferred.promise;
     },
 
-    addProductToRelease: function(releaseId,stockId) {
-        var deferred = Q.defer();
-        var query = {'stockId': stockId};
-        Product.findOne(query).exec(function(err,result) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                var query = {$push: {'productsId': result.id}};
-                releaseModel.findByIdAndUpdate(releaseId,query,{new: true}).exec(function(err,result) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(result);
-                    }
-                });
-            }
-        })
-        return deferred.promise;
+    addProductToRelease: function(releaseId,productId) {
+        var query = {$push: {'productsId': productId}};
+        var release = this.updateRelease(releaseId, query);
+        return release;
     },
 
     addArticleToRelease: function(releaseId,articleId) {
@@ -160,6 +150,30 @@ module.exports = {
         var query = {$set: {'stato': 'evaso'}};
         var release = this.updateRelease(releaseId,query);
         return release;
+    },
+
+    findNewNumeroRelease: function() {
+        var deferred = Q.defer();
+        var year = new Date().getFullYear();
+        var query = {'numero': {$exists: true}};
+        releaseModel.findOne(query).sort({numero: -1}).limit(1).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                if (!result) {
+                    var prefix = year.toString().slice(-2);
+                    var matr = prefix + "00001";
+                    deferred.resolve(matr);
+                } else {
+                    var prefix = year.toString().slice(-2);
+                    var number = result.numero.slice(-5);
+                    var last = prefix + number;
+                    var number = (parseInt(last)+1).toString();
+                    deferred.resolve(number);
+                }
+            }
+        });
+        return deferred.promise;
     }
 
 };

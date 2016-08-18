@@ -96,11 +96,17 @@ module.exports = {
                    }
                    if (workedProduct) {
                        var matr = tmpMatr.substr(0,j);
-                       matr = parseInt(matr)+1;
+                       var prefix = year.toString().slice(-2);
+                       var number = matr.slice(-4);
+                       var last = prefix + number;
+                       var number = (parseInt(last)+1).toString();
                    } else {
-                       var matr = parseInt(tmpMatr)+1;
+                       var prefix = year.toString().slice(-2);
+                       var number = tmpMatr.slice(-4);
+                       var last = prefix + number;
+                       var number = (parseInt(last)+1).toString();
                    }
-                   deferred.resolve(matr);
+                   deferred.resolve(number);
                }
            }
         });
