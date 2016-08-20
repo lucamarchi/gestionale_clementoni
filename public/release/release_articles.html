@@ -1,0 +1,47 @@
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>Data Consegna</th>
+			<th>Cod. Articolo</th>
+			<th>Num. Ordine</th>
+			<th>Cod. Cliente</th>
+			<th>Materiale</th>
+			<th>Tipo</th>
+			<th>Spess</th>
+			<th>Largh</th>
+			<th>Lungh</th>
+			<th>Peso</th>
+			<th>Qta</th>
+			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo</th>
+			<th>Stato</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="article in releaseArticles | orderBy:['materiale','tipo','spessore','larghezza']">
+			<td>{{article.dataConsegna| date:'medium'}}</td>
+			<td>{{article.codArticolo}}</td>
+			<td>{{article.ordineCod}}</td>
+			<td>
+				<button ng-if="article.clienteCod" type="button" class="btn btn-info btn-block" ng-click="viewArticleCustomer(article)" data-target="#viewarticlecustomer" data-toggle="modal">{{article.clienteCod}}</button>
+			</td>
+			<td>{{article.materiale}}</td>
+			<td>{{article.tipo}}</td>
+			<td>{{article.spessore}}</td>
+			<td>{{article.larghezza}}</td>
+			<td>{{article.lunghezza}}</td>
+			<td>{{article.peso}}</td>
+			<td>{{article.quantita}}</td>
+			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{article.prezzo}}</td>
+			<td>
+				<div ng-if="article.stato == undefined" align="center">{{article.stato}}</div>
+				<div ng-if="article.stato == 'libero'" align="center"><span class="label label-default">{{article.stato}}</span></div>
+				<div ng-if="article.stato == 'definito'" align="center"><span class="label label-info">{{article.stato}}</span></div>
+				<div ng-if="article.stato == 'lavorazione'" align="center"><span class="label label-warning">{{article.stato}}</span></div>
+				<div ng-if="article.stato == 'completato'" align="center"><span class="label label-success">{{article.stato}}</span></div>
+			</td>
+			<td>
+				<button type="button" class="btn btn-danger btn-circle" ng-click="deleteArticle(article, loadArticles.indexOf(article))"><span class="glyphicon glyphicon-trash"></span></button>
+			</td>
+		</tr>
+	</tbody>
+</table>

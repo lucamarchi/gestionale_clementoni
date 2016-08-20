@@ -42,8 +42,9 @@ store.controller('expectedLoadController', ['$scope', 'expectedLoadFactory', 'fe
 		expectedLoadFactory.save({},
 			{expected},
 			function(resp){
-				console.log("ORDINE CONFERMATO ", resp);
-//				$scope.expectedLoads.push(resp);
+				console.log("ORDINE CONFERMATO ", resp.expected);
+				$scope.expectedLoads = $scope.expectedLoads.concat(resp.expected);
+				console.log($scope.expectedLoads);
 			},
 			function (err){
 				console.log(err);

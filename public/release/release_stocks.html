@@ -1,0 +1,53 @@
+<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Numero Collo</th>
+				<th>Matricola</th>
+				<th>Materiale</th>
+				<th>Tipo</th>
+				<th>Spess</th>
+				<th>Largh Nom.</th>
+				<th>Largh Eff.</th>
+				<th>Qualita</th>
+				<th>Scelta</th>
+				<th>Finitura</th>
+				<th>Colore Ral</th>
+				<th>Superficie</th>
+				<th>Lungh</th>
+				<th>N.Fogli</th>
+				<th>Peso</th>
+				<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
+				<th>Difetti</th>
+				<th>Stab</th>
+				<th>Scarto</th>
+				<th>Stato</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="stock in releaseStocks">
+				<td><span style="color:blue">{{stock.numeroCollo}}</span></td>
+				<td>{{stock.matricola}}</td>
+				<td>{{stock.materiale}}</td>
+				<td>{{stock.tipo}}</td>
+				<td>{{stock.spessore}}</td>
+				<td>{{stock.classeLarghezza}}</td>
+				<td>{{stock.larghezza}}</td>
+				<td>{{stock.qualita}}</td>
+				<td>{{stock.scelta}}</td>
+				<td>{{stock.finitura}}</td>
+				<td>{{stock.coloreRal}}</td>
+				<td>{{stock.superficie}}</td>
+				<td>{{stock.lunghezza}}</td>
+				<td>{{stock.numFogli}}</td>
+				<td>{{stock.pesoNetto}}</td>
+				<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{stock.prezzo}}</td>
+				<td>{{stock.difetti}}</td>
+				<td>{{stock.stabilimento}}</td>
+				<td>{{stock.scarto}}</td>
+				<td>{{stock.stato}}</td>
+				<td>
+					<button type="button" class="btn btn-danger btn-circle" ng-click="deleteStock(stock, releaseStocks.indexOf(stock))"><span class="glyphicon glyphicon-trash"></span></button>
+				</td>
+			</tr>
+		</tbody>
+	</table>

@@ -128,6 +128,59 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		);
 	}
 	
+	$scope.prepareDeleteState = function (state, index){
+		state.dataCreazione = new Date(state.dataCreazione);
+		$scope.state = state;
+		$scope.index = index;
+	}
+	
+	$scope.deleteState = function (state, index) {
+		productionStateFactory.delete(
+			{
+				id:state._id
+			},
+			function(resp){
+				console.log("STATO PRODUZIONE CANCELLATO INDICE "+index);
+				console.log(resp);
+				$scope.states.splice(index,1);
+			},
+			function(err){
+				console.log(err);
+			}
+		);
+	}
+	
+	$scope.editProductionState = function (state) {
+		$scope.articlesState2 = [];
+		$scope.isEnabled = true;
+		productionStateFactory.get(
+			{
+				id: state._id
+			},
+			function (resp) {
+				console.log("STATE E ARTICLES" , resp);
+				$scope.state = resp.prod;
+				$scope.articlesState = resp.articoli;
+			},
+			function (err) {
+				console.log (err);
+			}
+		);
+		articleFactory.resourceState().get (
+			{
+				state: "libero"
+			},
+			function (resp) {
+				console.log("TUTTI GLI ARTICOLI LIBERI" , resp.articles);
+				$scope.articles = resp.articles;
+			},
+			function(err) {
+				console.log(resp);
+			}
+		);
+	}
+	
+	
 	$scope.newProductionState = function () {
 		$scope.state = {};
 		$scope.articlesState = [];
@@ -147,26 +200,6 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 		);
 	}
 	
-//	$scope.editProductionState = function (state, articles) {
-//		console.log("state ", state, " articles ",articles);
-//		$scope.state = state;
-//		$scope.articlesState = articles;
-//		$scope.articlesState2 = [];
-//		$scope.isEnabled = true;
-//		articleFactory.resourceState().get (
-//			{
-//				state: "libero"
-//			},
-//			function (resp) {
-//				console.log("TUTTI GLI ARTICOLI LIBERI" , resp.data);
-//				$scope.articles = resp.data;
-//			},
-//			function(err) {
-//				console.log(resp);
-//			}
-//		);
-//	}
-	
 	$scope.addArticle = function (article, index) {
 		$scope.articlesState.push(article);
 		$scope.articlesState2.push(article);
@@ -182,8 +215,8 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 	$scope.confirmProductionState = function () {
 		var prod = $scope.state;
 		var articoli = $scope.articlesState2;
-		console.log("State ",prod, "	Article ",articoli);
-		if (prod == {} || prod._id == undefined) {
+		console.log("State ", prod, "	Articles ", articoli);
+		if (prod._id == undefined) {
 			productionStateFactory.save({},
 				{prod, articoli},
 				function(resp){
@@ -195,6 +228,7 @@ store.controller('productionStateController', ['$scope', 'articleFactory', 'stoc
 				}
 			);
 		} else {
+			console.log("prod ", prod, "articles ", articoli);
 			productionStateFactory.update(
 				{
 					id: prod._id

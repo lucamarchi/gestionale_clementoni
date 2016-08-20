@@ -22,7 +22,7 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	$scope.productsOrder2 = [];
 	$scope.selectExpectedArray = [];
 	$scope.features = features;
-
+	var product2expected = [];
 	
 	$scope.openProductsOrder = function (order) {
 		$scope.productsOrder2 = [];
@@ -60,9 +60,7 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	}
 	
 	$scope.viewExpectedLoads = function (){
-		console.log("aaaaaaaa", $scope.expectedLoads);
 		if ($scope.expectedLoads.length == 0) {
-			console.log("bbbbb", $scope.expectedLoads);
 			expectedLoadFactory.getAll(
 				function (resp) {
 					console.log("TUTTI I CARICHI IN ATTESA" , resp.expected);
@@ -86,6 +84,7 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 	}
 
 	$scope.addProduct = function () {
+		var element = {};
 		$scope.product.pesoLordo = $scope.product.pesoNetto;
 		$scope.expectedLoads[$scope.expectedLoads.indexOf($scope.expected)].pesoNetto-=$scope.product.pesoNetto
 		valuesProduct($scope.product);
@@ -95,6 +94,10 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 		if ($scope.selectExpectedArray.indexOf($scope.expected) == -1) { 
 			$scope.selectExpectedArray.push($scope.expectedLoads[$scope.expectedLoads.indexOf($scope.expected)]);
 		}
+		element.prodPeso = $scope.product.pesoLordo;
+		element.expInd = $scope.expectedLoads.indexOf($scope.expected); 
+		product2expected.push(element);
+		console.log(product2expected);
 	}
 	
 	$scope.updateOrder = function (order) {
@@ -148,8 +151,14 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 			);
 		}
 		else {
+			var prodPeso = product2expected[$scope.productsOrder2.indexOf(product)].prodPeso;
+			var expInd = product2expected[$scope.productsOrder2.indexOf(product)].expInd;
+			$scope.selectExpectedArray[expInd].pesoNetto += product.pesoNetto;
+			product2expected.splice($scope.productsOrder2.indexOf(product),1);
+			console.log(product2expected);
 			$scope.productsOrder.splice(index,1);
 			$scope.productsOrder2.splice(index,1);
+			
 			
 		}
 	}

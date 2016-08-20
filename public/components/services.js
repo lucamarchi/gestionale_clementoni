@@ -70,6 +70,14 @@ store.factory('refreshFactory', ['$resource', 'myConfig', function ($resource, m
 /*--------------------------> PRODUZIONE <----------------------------------------------------*/
 store.factory('articleFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
     return { 
+		resource: function () {
+			return $resource(myConfig.url+'/api/articles/', 
+				{},
+				{
+					getAll: {method:'GET', isArray: false},
+				}
+			);
+		},
 		resourceState: function () {
 			return $resource(myConfig.url+'/api/articles/:state', 
 				{
@@ -112,7 +120,7 @@ store.factory('articleFactory', ['$resource', 'myConfig', function ($resource, m
 
 /*--------------------------------> PRODUCTION STATE<-------------------------------------*/
 store.factory('productionStateFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return resource = $resource(myConfig.url+'/api/prods/:id', 
+    return $resource(myConfig.url+'/api/prods/:id', 
 		{
 			id: "@id"
 		},
@@ -181,6 +189,30 @@ store.factory('customerFactory', ['$resource', 'myConfig', function ($resource, 
 		},
 	}
 }]);
+
+store.factory('releaseFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
+	return {
+		resourceGroup: function() {
+			return $resource(myConfig.url+'/api/releases', 
+				{},
+				{
+					getAll: {method:'GET', isArray: false},
+				}
+			);
+		},
+		resource: function() {
+			return $resource(myConfig.url+'/api/release/:id', 
+				{
+					id:"@id"
+				},
+				{			 
+					update: {method:'PUT'}
+				}			 
+			);
+		}
+	}
+}]);
+
 /*--------------------------------> LOGIN/LOGOUT <-------------------------------------*/
 store.factory('UserService', ['$resource','$window', 'myConfig', function ($resource, $window, myConfig) {
     return{ 

@@ -25,7 +25,8 @@ store.constant("features", {
 	"classiLarghezza":["1000", "1250", "1500"],
 	"stati": ["sospeso", "approvato", "respinto"],
 	"stabilimenti": ["1", "2"],
-	"fornitori": ["21","15","7","5","4","2","1"]
+	"fornitori": ["21","15","7","5","4","2","1"],
+	"trasportatori":["tizio", "caio", "sempronio"]
 });
 
 store.config(function ($httpProvider) {
@@ -106,9 +107,9 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
 			}
       	})
 	
-		.when('/carichiOut', {
-        	templateUrl: 'public/production/carichi_out/carichi_out.html',
-			controller: 'carichiOutController',
+		.when('/release', {
+        	templateUrl: 'public/release/releases.html',
+			controller: 'releaseController',
 			access: { 
 				requiredLogin: true
 			}

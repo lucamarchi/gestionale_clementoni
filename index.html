@@ -46,15 +46,25 @@
 <!--								<li><a href="">Stock Virtuale</a></li> -->
 							</ul>
 						</li>
-						<li><a ng-if="isLogged" href="#/carichiIn"><b>Entrate</b></a></li>
-						<li><a ng-if="isLogged" href="#/expectedLoad"><b>Previste</b></a></li>
-						<li><a ng-if="isLogged && (userRole == 'logistica' || userRole == 'admin')" href="#/cut"><b>Ordini</b></a></li>
+						<li class="dropdown">
+							<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Entrate</b><span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a ng-if="isLogged" href="#/carichiIn">Effettive</a></li>
+								<li><a ng-if="isLogged" href="#/expectedLoad">Previste</a></li>
+							</ul>
+						</li>
+						<li>
+							<a ng-if="isLogged && (userRole == 'logistica' || userRole == 'admin')" href="#/cut"><b>Ordini</b></a>
+						</li>
 						<li class="dropdown">
 							<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Produzione</b><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="#/productionSort">Riepilogo</a></li>
 								<li><a href="#/productionState">Stato produzione</a></li> 
 							</ul>
+						</li>
+						<li>
+							<a ng-if="isLogged" href="#/release"><b>Uscite</b></a>
 						</li>
 					</ul>
 
@@ -109,7 +119,7 @@
 		<script src="public/cut/cut.controller.js"></script>
 		<script src="public/production/production.controller.js"></script>
 		<script src="public/production/production_state/production_state.controller.js"></script>
-		
+		<script src="public/release/release.controller.js"></script>
 	</body>
 
 </html>
