@@ -104,13 +104,14 @@ module.exports = function(app, apiRoutes) {
                            if (req.body.articles && req.body.articles.length > 0) {
                                var articles = req.body.articles;
                                articles.forEach(function(currArticle) {
-                                   var newMethod = Release.addArticleToRelease(result._id,currArticle._id);
+                                   var newMethod = Release.addArticleToRelease(result._id,currArticle._id)
+                                   var newMethodStat = Article.setArticleStatus(currArticle._id, "completato");
                                    promises.push(newMethod);
+                                   promises.push(newMethodStat);
                                })
                            }
                            Release.findNewNumeroRelease().then(function(number) {
                                var query = {'numero': number};
-                               console.log("NUMERO: "+number);
                                Release.updateRelease(result._id, query).then(function(result) {
                                    console.log(result);
                                    Q.all(promises).then(function(resp) {
@@ -129,7 +130,9 @@ module.exports = function(app, apiRoutes) {
                     var promises = [];
                     articles.forEach(function(currArticle) {
                         var newMethod = Release.addArticleToRelease(result._id,currArticle._id);
+                        var newMethodStat = Article.setArticleStatus(currArticle._id, "completato");
                         promises.push(newMethod);
+                        promises.push(newMethodStat);
                     });
                     Release.findNewNumeroRelease().then(function(number) {
                         var query = {'numero': number};

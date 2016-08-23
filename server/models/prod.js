@@ -11,7 +11,6 @@ var ProdSchema = new Schema({
     numero: {type: Number},
     codice: {type: String},
     dataCreazione: {type: Date,default: Date.now()},
-    dataEvasione: {type: Date},
     articoliId: [{type: Schema.ObjectId, ref: 'Article', unique: true}]
 });
 
@@ -56,7 +55,6 @@ module.exports = {
         var newProd = new prodModel();
         newProd.codice = prod.codice;
         newProd.numero = number;
-        newProd.dataEvasione = prod.dataEvasione;
         newProd.save(function(err) {
             if (err) {
                 deferred.reject(err)
@@ -142,8 +140,6 @@ module.exports = {
             } else {
                 if (result || result !== null) {
                     result.codice = prod.codice;
-                    result.numero = prod.numero;
-                    result.dataEvasione = prod.dataEvasione;
                 }
                 result.save(function(err) {
                     if (err) {
