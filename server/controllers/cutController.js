@@ -301,8 +301,10 @@ module.exports = function(app, apiRoutes) {
                             articleIds.forEach(function(currArticle) {
                                 var newMethod1 = Article.addRegionToArticle(currArticle,cutP.region);
                                 var newMethod2 = Article.addPRToArticle(currArticle,cutP.provincia);
+                                var newMethod3 = Article.addCodCutToArticle(currArticle,cutP.codice);
                                 promises.push(newMethod1);
                                 promises.push(newMethod2);
+                                promises.push(newMethod3);
                             });
                             Q.all(promises).then(function(result) {
                                 deferred.resolve(cutP);
@@ -324,8 +326,10 @@ module.exports = function(app, apiRoutes) {
                                         articleIds.forEach(function(currArticle) {
                                             var newMethod1 = Article.addRegionToArticle(currArticle,cutP.region);
                                             var newMethod2 = Article.addPRToArticle(currArticle,cutP.provincia);
+                                            var newMethod3 = Article.addCodCutToArticle(currArticle,cutP.codice);
                                             promises.push(newMethod1);
                                             promises.push(newMethod2);
+                                            promises.push(newMethod3);
                                         });
                                         Q.all(promises).then(function(result) {
                                             deferred.resolve(cutP);

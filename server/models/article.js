@@ -218,6 +218,12 @@ module.exports = {
         var query = {$set: {'provincia': pr}};
         var article = this.updateArticle(articleId,query);
         return article;
+    },
+
+    addCodCutToArticle: function(articleId,pr) {
+        var query = {$set: {'ordineCod': pr}};
+        var article = this.updateArticle(articleId,query);
+        return article;
     }
 
 };
