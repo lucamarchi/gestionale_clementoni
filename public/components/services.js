@@ -58,14 +58,6 @@ store.factory('cutFactory', ['$resource', 'myConfig', function ($resource, myCon
 	}
 }]);
 
-store.factory('refreshFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return resource = $resource(myConfig.url+'/api/cuts/update', {},
-		{
-			refresh: {method:'GET', isArray: false}
-		}
-  	);
-}]);
-
 
 /*--------------------------> PRODUZIONE <----------------------------------------------------*/
 store.factory('articleFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
@@ -132,7 +124,7 @@ store.factory('productionStateFactory', ['$resource', 'myConfig', function ($res
 }]);
 
 /*--------------------------------> EXPECTED LOAD<-------------------------------------*/
-store.factory('expectedLoadFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
+store.factory('expectedFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
     return resource = $resource(myConfig.url+'/api/expecteds/:id', 
 		{
 			id: "@id"
@@ -187,29 +179,6 @@ store.factory('customerFactory', ['$resource', 'myConfig', function ($resource, 
 				}
 			);
 		},
-	}
-}]);
-
-store.factory('releaseFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-	return {
-		resourceGroup: function() {
-			return $resource(myConfig.url+'/api/releases', 
-				{},
-				{
-					getAll: {method:'GET', isArray: false},
-				}
-			);
-		},
-		resource: function() {
-			return $resource(myConfig.url+'/api/release/:id', 
-				{
-					id:"@id"
-				},
-				{			 
-					update: {method:'PUT'}
-				}			 
-			);
-		}
 	}
 }]);
 

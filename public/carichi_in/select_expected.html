@@ -45,7 +45,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="expected in expectedLoads | filterexp:dataPrevista:fornitore:materiale:tipo:spessore | orderBy:'dataPrevista'">
+		<tr ng-repeat="expected in expecteds | filterexp:dataPrevista:fornitore:materiale:tipo:spessore | orderBy:'dataPrevista'">
 			<td>{{expected.dataDdt}}</td>
 			<td>{{expected.fornitore}}</td>
 			<td>{{expected.materiale}}</td>
@@ -62,7 +62,7 @@
 			<td>{{expected.pesoNetto}}</td>
 			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{expected.prezzo}}</td>
 			<td>
-				<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#newproduct" data-dismiss="modal" ng-click="selectExpectedLoad(expected)">
+				<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#newproduct" data-dismiss="modal" ng-click="selectExpected(expected)">
 					<span class="glyphicon glyphicon-ok"></span>
 				</button>
 			</td>

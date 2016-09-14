@@ -7,16 +7,29 @@
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
+			
 			<th>
 				<input type="date" ng-model="dataConsegna">
 			</th>
-			<td></td>
+			
 			<th>
-				<input ng-model="ordineCod">
+				<input ng-model="region">
 			</th>
+			
+			<th>
+				<input ng-model="provincia">
+			</th>
+			
 			<th>
 				<input ng-model="clienteCod">
 			</th>
+			
+			<th>
+				<input ng-model="ordineCod">
+			</th>
+			
+			<th></th>
+			
 			<th>
 				<select ng-model="materiale" ng-options="materiale for materiale in features.materiali">
 					<option value="">-- seleziona --</option>
@@ -38,9 +51,11 @@
 		</tr>
 		<tr>
 			<th>Data Consegna</th>
-			<th>Cod. Articolo</th>
-			<th>Num. Ordine</th>
+			<th>Regione</th>
+			<th>Provincia</th>
 			<th>Cod. Cliente</th>
+			<th>Num. Ordine</th>
+			<th>Cod. Articolo</th>
 			<th>Materiale</th>
 			<th>Tipo</th>
 			<th>Spess</th>
@@ -54,11 +69,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="article in articles | filterriep:dataConsegna:ordineCod:clienteCod:materiale:tipo:spessore | orderBy:'dataConsegna'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+		<tr ng-repeat="article in articles | filterriep:dataConsegna:region:provincia:clienteCod:ordineCod:materiale:tipo:spessore | orderBy:'dataConsegna'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
 			<td>{{article.dataConsegna | date:'medium'}}</td>
-			<td>{{article.codArticolo}}</td>
-			<td>{{article.ordineCod}}</td>
+			<td>{{article.region}}</td>
+			<td>{{article.provincia}}</td>
 			<td><button ng-if="article.clienteCod" type="button" class="btn btn-info btn-block" ng-click="viewArticleCustomer(article)" data-target="#viewarticlecustomer2" data-toggle="modal">{{article.clienteCod}}</button></td>
+			<td>{{article.ordineCod}}</td>
+			<td>{{article.codArticolo}}</td>
 			<td>{{article.materiale}}</td>
 			<td>{{article.tipo}}</td>
 			<td>{{article.spessore}}</td>

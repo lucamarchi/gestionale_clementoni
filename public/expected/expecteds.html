@@ -47,7 +47,6 @@
 			<th>Spess</th>
 			<th>Largh</th>
 			<th>Qualita</th>
-			<th>Scelta</th>
 			<th>Finitura</th>
 			<th>Colore Ral</th>
 			<th>Superficie</th>
@@ -58,7 +57,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="expected in expectedLoads | filterexp:dataPrevista:fornitore:materiale:tipo:spessore | orderBy:'dataPrevista'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+		<tr ng-repeat="expected in expecteds | filterexp:dataPrevista:fornitore:materiale:tipo:spessore | orderBy:'dataPrevista'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
 			<td>{{expected.dataPrevista| date:'medium'}}</td>
 			<td>{{expected.fornitore}}</td>
 			<td>{{expected.materiale}}</td>
@@ -66,7 +65,6 @@
 			<td>{{expected.spessore}}</td>
 			<td>{{expected.larghezza}}</td>
 			<td>{{expected.qualita}}</td>
-			<td>{{expected.scelta}}</td>
 			<td>{{expected.finitura}}</td>
 			<td>{{expected.coloreRal}}</td>
 			<td>{{expected.superficie}}</td>
@@ -80,7 +78,7 @@
 
 
 <!-- Modal order_products.html-->
-<div id="orderexpectedloads" class="modal modal-xl fade" role="dialog">
+<div id="orderexpecteds" class="modal modal-xl fade" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
@@ -89,11 +87,11 @@
 				<h4 class="modal-title">NUOVO ORDINE</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'public/expected/order_expected_loads.html'"></div>
+				<div ng-include src="'public/expected/order_expecteds.html'"></div>
 			</div>
 			<div class="modal-footer">
 				<div align="left">
-					<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#newexpectedload" ng-click="newExpectedLoad()">Aggiungi prodotto</button>
+					<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#newexpected" ng-click="newExpected()">Aggiungi prodotto</button>
 				</div>
 				<div>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
@@ -106,7 +104,7 @@
 
 
 <!-- Modal new_product.html-->
-<div id="newexpectedload" class="modal fade" role="dialog">
+<div id="newexpected" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
@@ -115,11 +113,11 @@
 				<h4 class="modal-title">NUOVO PRODOTTO</h4>
 			</div>
 			<div class="modal-body">
-				<div ng-include src="'public/expected/new_expected_load.html'"></div>
+				<div ng-include src="'public/expected/new_expected.html'"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-				<button ng-if="expectedLoadForm.$valid" type="button" class="btn btn-success" ng-click="addExpectedLoad()" data-dismiss="modal">Conferma</button>
+				<button ng-if="expectedForm.$valid" type="button" class="btn btn-success" ng-click="addExpected()" data-dismiss="modal">Conferma</button>
 			</div>
 		</div>
 	</div>
@@ -140,7 +138,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-				<button ng-if="expectedOrderForm.$valid" type="button" class="btn btn-success" ng-click="" data-toggle="modal" data-target="#orderexpectedloads" data-dismiss="modal">Conferma</button>
+				<button ng-if="expectedOrderForm.$valid" type="button" class="btn btn-success" ng-click="" data-toggle="modal" data-target="#orderexpecteds" data-dismiss="modal">Conferma</button>
 			</div>
 		</div>
 	</div>

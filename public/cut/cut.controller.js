@@ -1,5 +1,5 @@
 var store = angular.module('store');
-store.controller('cutController', ['$scope', 'cutFactory', 'refreshFactory', 'UserService', function ($scope, cutFactory, refreshFactory, UserService) {
+store.controller('cutController', ['$scope', 'cutFactory', 'UserService', function ($scope, cutFactory, UserService) {
     
 	cutFactory.resourceGroup().getAll(
 		function (resp) {

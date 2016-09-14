@@ -1,4 +1,4 @@
-<fieldset ng-if="selectExpectedArray.length != 0">
+<fieldset ng-if="selectExpecteds.length != 0">
 	<legend>Attese selezionate:</legend>
 	<table class="table">
 		<thead>
@@ -19,20 +19,20 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="expectedLoad in selectExpectedArray">
-				<td>{{expectedLoad.materiale}}</td>
-				<td>{{expectedLoad.tipo}}</td>
-				<td>{{expectedLoad.spessore}}</td>
-				<td>{{expectedLoad.larghezza}}</td>
-				<td>{{expectedLoad.qualita}}</td>
-				<td>{{expectedLoad.scelta}}</td>
-				<td>{{expectedLoad.finitura}}</td>
-				<td>{{expectedLoad.coloreRal}}</td>
-				<td>{{expectedLoad.superficie}}</td>
-				<td>{{expectedLoad.lunghezza}}</td>
-				<td>{{expectedLoad.numFogli}}</td>
-				<td>{{expectedLoad.pesoNetto}}</td>
-				<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{expectedLoad.prezzo}}</td>
+			<tr ng-repeat="expected in selectExpecteds">
+				<td>{{expected.materiale}}</td>
+				<td>{{expected.tipo}}</td>
+				<td>{{expected.spessore}}</td>
+				<td>{{expected.larghezza}}</td>
+				<td>{{expected.qualita}}</td>
+				<td>{{expected.scelta}}</td>
+				<td>{{expected.finitura}}</td>
+				<td>{{expected.coloreRal}}</td>
+				<td>{{expected.superficie}}</td>
+				<td>{{expected.lunghezza}}</td>
+				<td>{{expected.numFogli}}</td>
+				<td>{{expected.pesoNetto}}</td>
+				<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{expected.prezzo}}</td>
 			</tr>
 		</tbody>
 	</table>

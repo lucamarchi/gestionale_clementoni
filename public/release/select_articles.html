@@ -1,16 +1,29 @@
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
+			
 			<th>
 				<input type="date" ng-model="dataConsegna">
 			</th>
-			<td></td>
+			
 			<th>
-				<input ng-model="ordineCod">
+				<input ng-model="region">
 			</th>
+			
+			<th>
+				<input ng-model="provincia">
+			</th>
+			
 			<th>
 				<input ng-model="clienteCod">
 			</th>
+			
+			<th>
+				<input ng-model="ordineCod">
+			</th>
+			
+			<th></th>
+			
 			<th>
 				<select ng-model="materiale" ng-options="materiale for materiale in features.materiali">
 					<option value="">-- seleziona --</option>
@@ -32,9 +45,11 @@
 		</tr>
 		<tr>
 			<th>Data Consegna</th>
-			<th>Cod. Articolo</th>
-			<th>Num. Ordine</th>
+			<th>Regione</th>
+			<th>Provincia</th>
 			<th>Cod. Cliente</th>
+			<th>Num. Ordine</th>
+			<th>Cod. Articolo</th>
 			<th>Materiale</th>
 			<th>Tipo</th>
 			<th>Spess</th>
@@ -43,16 +58,17 @@
 			<th>Peso</th>
 			<th>Quant</th>
 			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
-<!--			<th>Riepilogo</th>-->
 			<th>Stato</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="article in articles | filterriep:dataConsegna:ordineCod:clienteCod:materiale:tipo:spessore | orderBy:'dataConsegna'">
+		<tr ng-repeat="article in articles | filterriep:dataConsegna:region:provincia:clienteCod:ordineCod:materiale:tipo:spessore | orderBy:'dataConsegna'">
 			<td>{{article.dataConsegna | date:'medium'}}</td>
-			<td>{{article.codArticolo}}</td>
+			<td>{{article.region}}</td>
+			<td>{{article.provincia}}</td>
+			<td>{{article.clienteCod}}</td>
 			<td>{{article.ordineCod}}</td>
-<!--			<td><button ng-if="article.clienteCod" type="button" class="btn btn-info btn-block" ng-click="viewArticleCustomer(article)" data-target="#viewarticlecustomer2" data-toggle="modal">{{article.clienteCod}}</button></td>-->	<td>{{article.clienteCod}}</td>
+			<td>{{article.codArticolo}}</td>
 			<td>{{article.materiale}}</td>
 			<td>{{article.tipo}}</td>
 			<td>{{article.spessore}}</td>
@@ -61,12 +77,6 @@
 			<td>{{article.peso}}</td>
 			<td>{{article.quantita}}</td>
 			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{article.prezzo}}</td>
-<!--
-			<td>
-				<button ng-if="article.stockId != undefined" type="button" class="btn btn-info btn-block" ng-click="viewStock(article)" data-target="#viewstock2" data-toggle="modal">Stock</button>
-				<button ng-if="article.stato == 'lavorazione'" type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses2">Lavorazioni</button>
-			</td>
--->
 			<td ng-if="article.stato == undefined">{{article.stato}}</td>
 			<td ng-if="article.stato == 'libero'"><span class="label label-default">{{article.stato}}</span></td>
 			<td ng-if="article.stato == 'definito'"><span class="label label-info">{{article.stato}}</span></td>

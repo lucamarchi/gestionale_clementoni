@@ -4,6 +4,7 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 	
 	$scope.features = features;
 	
+	
 	releaseFactory.resourceGroup().getAll(
 		function (resp) {
 			console.log("TUTTI I CARICHI IN USCITA" , resp.releases);
@@ -18,6 +19,17 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 		}
 	);
 	
+//	articleFactory.resource().get (
+//			function (resp) {
+//				console.log("TUTTI GLI ARTICOLI LIBERI" , resp.articles);
+//				$scope.articles = resp.articles;
+//				$scope.monster = releaseFactory.createMapArticles($scope.articles);
+//			},
+//			function(err) {
+//				console.log(resp);
+//			}
+//	);
+		
 	$scope.releaseDetails = function (release) {
 		releaseFactory.resource().get(
 			{id: release._id},
@@ -45,6 +57,9 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 			function (resp) {
 				console.log("TUTTI GLI ARTICOLI LIBERI" , resp.articles);
 				$scope.articles = resp.articles;
+				$scope.regionArray = findDistinctRegion(resp.articles);
+				$scope.provinciaArray = findDistinctProvincia(resp.articles);
+				$scope.monster = releaseFactory.createMapArticles($scope.articles);
 			},
 			function(err) {
 				console.log(resp);
@@ -57,7 +72,41 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 		$scope.releaseArticles.push(article);
 		$scope.articles.splice(index,1);
 	}
+	
+	$scope.addArticle2 = function (article, index1,index2, index3) {
+		console.log(index1, index2, index3);
+		$scope.releaseArticles.push(article);
+//		console.log("lunghezza1 ", $scope.monster.length);
+//		console.log("lunghezza2 ", $scope.monster[index1].value.length);
+//		console.log("lunghezza3 ", $scope.monster[index1].value[index2].value.length);
+		$scope.monster[index1].value[index2].value.splice(index3,1);
+//		if ($scope.monster[index1].value[index2].value.length == 0){
+//			console.log("A");
+//			$scope.monster[index1].value.splice(index2,1);
+//		}
+//		if($scope.monster[index1].value.length == 0){
+//			console.log("B");
+//			$scope.monster.splice(index1,1);
+//		}
+//		console.log("lunghezza1 ", $scope.monster.length);
+//		console.log("lunghezza2 ", $scope.monster[index1].value.length);
+//		console.log("lunghezza3 ", $scope.monster[index1].value[index2].value.length);
+	}
 
+	$scope.deleteArticle2 = function (article, index){
+		$scope.releaseArticles.splice(index,1);
+		var mappa = $scope.monster;
+		for (var i = 0; i < mappa.length; i++) {
+			if (mappa[i].key == article.region){
+				for (var j = 0; j < mappa[i].value.length; j++) {
+					if (mappa[i].value[j].key == article.provincia){
+						$scope.monster[i].value[j].value.push(article);
+					}
+				}
+			}
+		}
+	}
+	
 	$scope.deleteArticle = function (article, index){
 		$scope.articles.push(article);
 		$scope.releaseArticles.splice(index,1);
@@ -116,10 +165,49 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 		releaseFactory.resource().save({},
 			{release,articles,stocks},
 			function(resp){
-				console.log("CONFERMATA CREAZIONE CARICO IN USCITA", resp)
+				console.log("CONFERMATA CREAZIONE CARICO IN USCITA", resp);
+				$scope.releases.push(resp.release);
 			},
 			function (err){
 				console.log(err);
 			})
 	}
+
+	$scope.regionIncludes = [];
+
+	$scope.includeRegion = function(region) {
+		var i = $.inArray(region, $scope.regionIncludes);
+		if (i > -1) {
+			$scope.regionIncludes.splice(i, 1);
+		} else {
+			$scope.regionIncludes.push(region);
+		}
+	}
+
+	$scope.regionFilter = function(r2a) {
+		if ($scope.regionIncludes.length > 0) {
+			if ($.inArray(r2a.key, $scope.regionIncludes) < 0)
+				return;
+		}
+		return r2a;
+	}
+	
+	$scope.provinciaIncludes = [];
+    
+    $scope.includeProvincia = function(provincia) {
+        var i = $.inArray(provincia, $scope.provinciaIncludes);
+        if (i > -1) {
+            $scope.provinciaIncludes.splice(i, 1);
+        } else {
+            $scope.provinciaIncludes.push(provincia);
+        }
+    }
+    
+    $scope.provinciaFilter = function(p2a) {
+        if ($scope.provinciaIncludes.length > 0) {
+            if ($.inArray(p2a.key, $scope.provinciaIncludes) < 0)
+                return;
+        }
+        return p2a;
+    }
 }]);

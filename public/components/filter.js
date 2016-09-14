@@ -102,7 +102,7 @@ store.filter('filterstock', function() {
 
 store.filter('filterriep', function() {
 	
-  	return function(input, dataConsegna, ordineCod, clienteCod, materiale, tipo, spessore) {
+  	return function(input, dataConsegna, region, provincia, clienteCod, ordineCod, materiale, tipo, spessore) {
 		var output;
 		if (input) {
 			output = input.slice();
@@ -111,15 +111,27 @@ store.filter('filterriep', function() {
 					return (new Date(el.dataConsegna).getTime() == new Date(dataConsegna).getTime());
 				});
 			}
-			if (ordineCod) {
-				output = output.filter(function(el){
-					return (el.ordineCod.toString().substring(0,ordineCod.length) == ordineCod.toString());
-				});
-			}
 			if (clienteCod) {
 				output = output.filter(function(el){
 					console.log(el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
 					return (el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
+				});
+			}
+			if (region) {
+				output = output.filter(function(el){
+					console.log(el.region.toString().substring(0,region.length) == region.toString());
+					return (el.region.toString().substring(0,region.length) == region.toString());
+				});
+			}
+			if (provincia) {
+				output = output.filter(function(el){
+					console.log(el.provincia.toString().substring(0,provincia.length) == provincia.toString());
+					return (el.provincia.toString().substring(0,provincia.length) == provincia.toString());
+				});
+			}
+			if (ordineCod) {
+				output = output.filter(function(el){
+					return (el.ordineCod.toString().substring(0,ordineCod.length) == ordineCod.toString());
 				});
 			}
 			if (materiale) {

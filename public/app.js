@@ -67,9 +67,9 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
 			}
       	})
 	
-		.when('/expectedLoad', {
-        	templateUrl: 'public/expected/expected_loads.html',
-			controller: 'expectedLoadController',
+		.when('/expected', {
+        	templateUrl: 'public/expected/expecteds.html',
+			controller: 'expectedController',
 			access: { 
 				requiredLogin: true 
 			}
