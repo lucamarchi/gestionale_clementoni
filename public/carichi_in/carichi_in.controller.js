@@ -104,7 +104,7 @@ store.controller('carichiInController', ['$scope', 'orderFactory', 'productFacto
 				$scope.selectExpecteds.push($scope.expecteds[$scope.expecteds.indexOf($scope.expected)]);
 			}		
 			element.prodPeso = $scope.product.pesoLordo;
-			element.expInd = $scope.expecteds.indexOf($scope.expected); 
+			element.expInd = $scope.selectExpecteds.indexOf($scope.expected); 
 			product2expected.push(element);
 			console.log("P2E", product2expected);
 		}
