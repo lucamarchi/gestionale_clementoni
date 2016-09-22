@@ -21,6 +21,13 @@ mongoose.connection.on('open', function(){
 	console.log("Mongoose connected to the database");
 });
 
+app.get('/', function(req, res, next) {
+    var options = {
+        root: __dirname
+    };
+    res.sendFile('index.html', options, function(err){});
+});
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use('/public', express.static(path.join(__dirname, 'public')));

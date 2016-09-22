@@ -12,13 +12,6 @@ module.exports = function (app, express) {
     app.use(require('morgan')("dev"));
     app.use(checkToken);
 
-    app.get('/', function(req, res, next) {
-        var options = {
-            root: __dirname
-        };
-        res.sendFile('index.html', options, function(err){});
-    });
-
     var router = express.Router();
 
     require('./controllers/authenticationController.js')(app, jwt, router);
