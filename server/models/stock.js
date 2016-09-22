@@ -27,7 +27,8 @@ var StockSchema = new Schema({
     difetti: {type: String},
     stabilimento: {type: Number},
     scarto: {type: Number},
-    superficie: {type: String}
+    superficie: {type: String},
+    clienteCod: {type: Number}
 });
 
 var stockModel = mongoose.model('Stock', StockSchema);
@@ -152,18 +153,24 @@ module.exports = {
                     result.difetti = stock.difetti;
                     result.stabilimento = stock.stabilimento;
                     result.superficie = stock.superficie;
+                    result.save(function(err) {
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(result);
+                        }
+                    });
                 }
-                result.save(function(err) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(result);
-                    }
-                });
             }
         });
         return deferred.promise;
     },
+
+    addClienteCodToStock: function(stockId, clienteCod) {
+        var query = {$set: {'clienteCod': clienteCod}};
+        var stock = this.updateStock(stockId,query);
+        return stock;
+    }
     
 
 };

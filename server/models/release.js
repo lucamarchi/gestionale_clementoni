@@ -18,12 +18,14 @@ var ReleaseSchema = new Schema({
     targa: {type: String},
     note: {type: String},
     pesoTotale: {type: Number},
-    unita: {type: Number},
     productsId: [{ type: Schema.ObjectId, ref: 'Product'}],
-    articlesId: [{ type: Schema.ObjectId, ref: 'Article'}],
+    articlesId: [{
+        article: {type: Schema.ObjectId, ref: 'Article'},
+        quantita: {type: Number},
+        unita: {type: String}
+    }],
     stato: {type: String, default: 'sospeso'},
-    anno: {type: String}
-
+    anno: {type: String},
 });
 
 releaseModel = mongoose.model('Release', ReleaseSchema);
@@ -101,8 +103,8 @@ module.exports = {
         return release;
     },
 
-    addArticleToRelease: function(releaseId,articleId) {
-        var query = {$push: {'articlesId': articleId}};
+    addArticleToRelease: function(releaseId,tripla) {
+        var query = {$push: {'articlesId': tripla}};
         var release = this.updateRelease(releaseId, query);
         return release;
     },
@@ -174,6 +176,12 @@ module.exports = {
             }
         });
         return deferred.promise;
+    },
+
+    addPesoTotaleToRelease: function(releaseId,peso) {
+        var query = {$set: {'pesoTotale': peso}};
+        var release = this.updateRelease(releaseId,query);
+        return release;
     }
 
 };

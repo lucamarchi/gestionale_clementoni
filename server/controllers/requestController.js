@@ -22,6 +22,7 @@ function TmpArticolo() {
     this.lunghezza = 'y',
     this.larghezza = 'y',
     this.peso = 'y',
+    this.pesoAttuale = 'y',
     this.ordineCod = 'y',
     this.clienteCod = 'y',
     this.dataConsegna = 'y'
@@ -98,6 +99,7 @@ module.exports = {
                         tmpArticolo.lunghezza = results[i].data[key].Lunghezza;
                         tmpArticolo.larghezza = results[i].data[key].Larghezza;
                         tmpArticolo.peso = (results[i].data[key].Peso).replace(",", ".") * 1000;
+                        tmpArticolo.pesoAttuale = (results[i].data[key].Peso).replace(",", ".") * 1000;
                         var tmpDate = (results[i].data[key].DataConsegna).split(' ');
                         var y = tmpDate[0].split('/');
                         var d = new Date(y[2], y[1] - 1, y[0]);

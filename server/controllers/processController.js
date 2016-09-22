@@ -136,6 +136,7 @@ module.exports = function(app, apiRoutes) {
             ];
             if (req.body.article) {
                 var article = req.body.article;
+                var clienteCod = article.clienteCod;
                 promises.push(Article.setArticleStatus(article._id,"lavorazione"));
                 promises.push(Article.unsetStockToArticle(article._id));
                 promises.push(Article.increaseScarto(article._id,process.scarto));
@@ -170,6 +171,10 @@ module.exports = function(app, apiRoutes) {
                                     var number = newNumeroCollo + numFigli.pop() + '/';
                                     var newMethodProduct = Product.updateNumeroCollo(currProduct.id,number);
                                     var newMethodStock = Stock.updateNumeroCollo(currProduct.stockId,number);
+                                    if (clienteCod) {
+                                        var newMethodClienteCodStock = Stock.addClienteCodToStock(currProduct.stockId, clienteCod);
+                                        promises.push(newMethodClienteCodStock);
+                                    }
                                     promises.push(newMethodProduct);
                                     promises.push(newMethodStock);
                                 });
@@ -202,6 +207,10 @@ module.exports = function(app, apiRoutes) {
                                 var number = newNumeroCollo + numFigli.pop() + '/';
                                 var newMethodProduct = Product.updateNumeroCollo(currProduct.id,number);
                                 var newMethodStock = Stock.updateNumeroCollo(currProduct.stockId,number);
+                                if (clienteCod) {
+                                    var newMethodClienteCodStock = Stock.addClienteCodToStock(currProduct.stockId, clienteCod);
+                                    promises.push(newMethodClienteCodStock);
+                                }
                                 promises.push(newMethodProduct);
                                 promises.push(newMethodStock);
                             });

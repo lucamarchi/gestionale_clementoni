@@ -20,6 +20,7 @@ var ArticleSchema = new Schema({
     lunghezza: {type: Number},
     larghezza: {type: Number},
     peso: {type: Number},
+    pesoAttuale: {type: Number},
     dataConsegna: {type: Date},
     scarto: {type: Number, default: 0},
     stato: {type: String},
@@ -105,6 +106,7 @@ module.exports = {
         newArticle.lunghezza = article.lunghezza;
         newArticle.larghezza = article.larghezza;
         newArticle.peso = article.peso;
+        newArticle.pesoAttuale = article.pesoAttuale;
         newArticle.ordineCod = article.codice;
         newArticle.clienteCod = article.clienteCod;
         newArticle.dataConsegna = article.dataConsegna;
@@ -149,6 +151,7 @@ module.exports = {
                     result.lunghezza = article.lunghezza;
                     result.larghezza = article.larghezza;
                     result.peso = article.peso;
+                    result.pesoAttuale = article.pesoAttuale;
                     result.ordineCod = article.codice;
                     result.clienteCod = article.clienteCod;
                     result.dataConsegna = article.dataConsegna;
@@ -222,6 +225,12 @@ module.exports = {
 
     addCodCutToArticle: function(articleId,pr) {
         var query = {$set: {'ordineCod': pr}};
+        var article = this.updateArticle(articleId,query);
+        return article;
+    },
+
+    updatePesoAttualeArticle: function(articleId,peso) {
+        var query = {$set: {'pesoAttuale': peso}};
         var article = this.updateArticle(articleId,query);
         return article;
     }

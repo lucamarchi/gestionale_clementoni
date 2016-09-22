@@ -90,7 +90,9 @@ module.exports = function(app, apiRoutes) {
                 if (req.body.stocks && req.body.stocks.length > 0) {
                     var stocks = req.body.stocks;
                     var promises = [];
+                    var pesoTotale = 0;
                     stocks.forEach(function(currStock) {
+                        pesoTotale += currStock.pesoNetto;
                         var newMethod = Product.findByStock(currStock._id);
                         promises.push(newMethod);
                     });
@@ -104,16 +106,23 @@ module.exports = function(app, apiRoutes) {
                            if (req.body.articles && req.body.articles.length > 0) {
                                var articles = req.body.articles;
                                articles.forEach(function(currArticle) {
-                                   var newMethod = Release.addArticleToRelease(result._id,currArticle._id)
-                                   var newMethodStat = Article.setArticleStatus(currArticle._id, "completato");
+                                   var article = currArticle.article;
+                                   var quantita = currArticle.quantita;
+                                   var unita = currArticle.unita;
+                                   var triplaArticle = { article: article._id, quantita: quantita, unita: unita };
+                                   var newMethod = Release.addArticleToRelease(result._id,triplaArticle);
+                                   var newMethodStat = Article.setArticleStatus(article._id, "completato");
+                                   var newMethodScalaArt = Article.updatePesoAttualeArticle(article._id,article.pesoAttuale);
+                                   var newMethodPesoTot = Release.addPesoTotaleToRelease(result._id,pesoTotale);
                                    promises.push(newMethod);
                                    promises.push(newMethodStat);
+                                   promises.push(newMethodPesoTot);
+                                   promises.push(newMethodScalaArt);
                                })
                            }
                            Release.findNewNumeroRelease().then(function(number) {
                                var query = {'numero': number};
                                Release.updateRelease(result._id, query).then(function(result) {
-                                   console.log(result);
                                    Q.all(promises).then(function(resp) {
                                        res.status(200).json({
                                            "success": true,
@@ -129,10 +138,16 @@ module.exports = function(app, apiRoutes) {
                     var articles = req.body.articles;
                     var promises = [];
                     articles.forEach(function(currArticle) {
-                        var newMethod = Release.addArticleToRelease(result._id,currArticle._id);
-                        var newMethodStat = Article.setArticleStatus(currArticle._id, "completato");
+                        var article = currArticle.article;
+                        var quantita = currArticle.quantita;
+                        var unita = currArticle.unita;
+                        var triplaArticle = { article: article._id, quantita: quantita, unita: unita };
+                        var newMethod = Release.addArticleToRelease(result._id,triplaArticle);
+                        var newMethodStat = Article.setArticleStatus(article._id, "completato");
+                        var newMethodScalaArt = Article.updatePesoAttualeArticle(article._id,article.pesoAttuale);
                         promises.push(newMethod);
                         promises.push(newMethodStat);
+                        promises.push(newMethodScalaArt);
                     });
                     Release.findNewNumeroRelease().then(function(number) {
                         var query = {'numero': number};
@@ -171,7 +186,6 @@ module.exports = function(app, apiRoutes) {
             var releaseId = req.params.release_id;
             var promises = [];
             Release.findById(releaseId).then(function(result) {
-                console.log(result);
                 if (result && result.articlesId && result.articlesId.length > 0) {
                     var articles = result.articlesId;
                     articles.forEach(function(currArticle) {
