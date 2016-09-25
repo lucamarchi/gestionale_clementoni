@@ -57,7 +57,7 @@ module.exports = function(app, apiRoutes) {
                         if (result.articlesId && result.articlesId.length > 0) {
                             var articlesId = result.articlesId;
                             articlesId.forEach(function (currArticle) {
-                                var newMethod = Article.findById(currArticle);
+                                var newMethod = Article.findById(currArticle.article);
                                 promisesArticle.push(newMethod);
                             });
                         }
@@ -189,7 +189,7 @@ module.exports = function(app, apiRoutes) {
                 if (result && result.articlesId && result.articlesId.length > 0) {
                     var articles = result.articlesId;
                     articles.forEach(function(currArticle) {
-                        var newMethod = Article.setArticleStatus(currArticle,"lavorazione");
+                        var newMethod = Article.setArticleStatus(currArticle.article,"lavorazione");
                         promises.push(newMethod);
                     });
                 }
