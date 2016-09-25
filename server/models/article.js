@@ -69,7 +69,7 @@ module.exports = {
 
     findByStatus: function(status) {
         var deferred = Q.defer();
-        var query = {'stato': status};
+        var query = {'statoProduzione': status};
         articleModel.find(query).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
@@ -82,7 +82,7 @@ module.exports = {
 
     findAllWithStatus: function() {
         var deferred = Q.defer();
-        var query = {'stato': {$exists: true}};
+        var query = {$and: [{'statoProduzione': {$exists: true}},{'statoEvasione': {$exists: true}}]};
         articleModel.find(query).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
