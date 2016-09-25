@@ -137,7 +137,7 @@ module.exports = function(app, apiRoutes) {
             if (req.body.article) {
                 var article = req.body.article;
                 var clienteCod = article.clienteCod;
-                promises.push(Article.setArticleStatus(article._id,"lavorazione"));
+                promises.push(Article.setArticleStatusProd(article._id,"lavorazione"));
                 promises.push(Article.unsetStockToArticle(article._id));
                 promises.push(Article.increaseScarto(article._id,process.scarto));
             }

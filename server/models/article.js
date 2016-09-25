@@ -23,7 +23,8 @@ var ArticleSchema = new Schema({
     pesoAttuale: {type: Number},
     dataConsegna: {type: Date},
     scarto: {type: Number, default: 0},
-    stato: {type: String},
+    statoProduzione: {type: String},
+    statoEvasione: {type: String},
     stockId: {type: Schema.ObjectId, ref: 'Stock'},
     ordineCod: {type: Number},
     clienteCod: {type: Number},
@@ -174,8 +175,14 @@ module.exports = {
         return article;
     },
 
-    setArticleStatus: function(articleId,status) {
-        var query = {$set: {'stato': status}};
+    setArticleStatusProd: function(articleId,status) {
+        var query = {$set: {'statoProduzione': status}};
+        var article = this.updateArticle(articleId,query);
+        return article;
+    },
+
+    setArticleStatusEvas: function(articleId,status) {
+        var query = {$set: {'statoEvasione': status}};
         var article = this.updateArticle(articleId,query);
         return article;
     },

@@ -140,15 +140,16 @@ module.exports = function(app, apiRoutes) {
                         var promises = [];
                         var status = "libero";
                         result.articoli.forEach(function (currArticle) {
-                            var newMethod = Article.setArticleStatus(currArticle, status);
-                            promises.push(newMethod);
+                            var newMethod1 = Article.setArticleStatusProd(currArticle, status);
+                            var newMethod2 = Article.setArticleStatusEvas(currArticle, status);
+                            promises.push(newMethod1);
+                            promises.push(newMethod2);
                         });
                         Q.all(promises).then(function (articles) {
                             res.status(200).json({
                                 "success": true,
                                 "message": "Cut accepted",
-                                "cut": result,
-                                "articles": articles
+                                "cut": result
                             });
                         })
                     });

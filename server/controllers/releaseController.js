@@ -97,42 +97,48 @@ module.exports = function(app, apiRoutes) {
                         promises.push(newMethod);
                     });
                     Q.all(promises).then(function(products) {
-                       if (products && products.length > 0) {
-                           var promises = [];
-                           products.forEach(function(currProduct) {
-                               var newMethod = Release.addProductToRelease(result._id,currProduct._id);
-                               promises.push(newMethod);
-                           });
-                           if (req.body.articles && req.body.articles.length > 0) {
-                               var articles = req.body.articles;
-                               articles.forEach(function(currArticle) {
-                                   var article = currArticle.article;
-                                   var quantita = currArticle.quantita;
-                                   var unita = currArticle.unita;
-                                   var triplaArticle = { article: article._id, quantita: quantita, unita: unita };
-                                   var newMethod = Release.addArticleToRelease(result._id,triplaArticle);
-                                   var newMethodStat = Article.setArticleStatus(article._id, "completato");
-                                   var newMethodScalaArt = Article.updatePesoAttualeArticle(article._id,article.pesoAttuale);
-                                   var newMethodPesoTot = Release.addPesoTotaleToRelease(result._id,pesoTotale);
-                                   promises.push(newMethod);
-                                   promises.push(newMethodStat);
-                                   promises.push(newMethodPesoTot);
-                                   promises.push(newMethodScalaArt);
-                               })
-                           }
-                           Release.findNewNumeroRelease().then(function(number) {
-                               var query = {'numero': number};
-                               Release.updateRelease(result._id, query).then(function(result) {
-                                   Q.all(promises).then(function(resp) {
-                                       res.status(200).json({
-                                           "success": true,
-                                           "message": "Release saved",
-                                           "release": result
-                                       });
-                                   });
-                               });
-                           });
-                       }
+                        if (products && products.length > 0) {
+                            var promises = [];
+                            products.forEach(function(currProduct) {
+                                var newMethod = Release.addProductToRelease(result._id,currProduct._id);
+                                promises.push(newMethod);
+                            });
+                            if (req.body.articles && req.body.articles.length > 0) {
+                                var articles = req.body.articles;
+                                articles.forEach(function(currArticle) {
+                                    var article = currArticle.article;
+                                    var quantita = currArticle.quantita;
+                                    var unita = currArticle.unita;
+                                    var triplaArticle = { article: article._id, quantita: quantita, unita: unita };
+                                    var newMethod = Release.addArticleToRelease(result._id,triplaArticle);
+                                    var newMethodStat = Article.setArticleStatusEvas(article._id, "assegnato");
+                                    var newMethodScalaArt = Article.updatePesoAttualeArticle(article._id,article.pesoAttuale);
+                                    var newMethodPesoTot = Release.addPesoTotaleToRelease(result._id,pesoTotale);
+                                    promises.push(newMethod);
+                                    promises.push(newMethodStat);
+                                    promises.push(newMethodPesoTot);
+                                    promises.push(newMethodScalaArt);
+                                })
+                            }
+                            Release.findNewNumeroRelease().then(function(number) {
+                                var query = {'numero': number};
+                                Release.updateRelease(result._id, query).then(function(result) {
+                                    Q.all(promises).then(function(resp) {
+                                        res.status(200).json({
+                                            "success": true,
+                                            "message": "Release saved",
+                                            "release": result
+                                        });
+                                    }).catch(function(err) {
+                                        res.status(500).json({
+                                            "success": false,
+                                            "message": "Internal server error",
+                                            "error": err.message
+                                        });
+                                    })
+                                });
+                            });
+                        }
                     });
                 } else if (req.body.articles && req.body.articles.length > 0) {
                     var articles = req.body.articles;
@@ -143,7 +149,7 @@ module.exports = function(app, apiRoutes) {
                         var unita = currArticle.unita;
                         var triplaArticle = { article: article._id, quantita: quantita, unita: unita };
                         var newMethod = Release.addArticleToRelease(result._id,triplaArticle);
-                        var newMethodStat = Article.setArticleStatus(article._id, "completato");
+                        var newMethodStat = Article.setArticleStatusEvas(article._id, "assegnato");
                         var newMethodScalaArt = Article.updatePesoAttualeArticle(article._id,article.pesoAttuale);
                         promises.push(newMethod);
                         promises.push(newMethodStat);
@@ -189,7 +195,7 @@ module.exports = function(app, apiRoutes) {
                 if (result && result.articlesId && result.articlesId.length > 0) {
                     var articles = result.articlesId;
                     articles.forEach(function(currArticle) {
-                        var newMethod = Article.setArticleStatus(currArticle.article,"lavorazione");
+                        var newMethod = Article.setArticleStatusEvas(currArticle.article,"libero");
                         promises.push(newMethod);
                     });
                 }
@@ -209,14 +215,31 @@ module.exports = function(app, apiRoutes) {
                 });
             });
         })
-    
+
         .put('/release/complete/:release_id', function(req,res,next) {
             var releaseId = req.params.release_id;
             Release.setReleaseComplete(releaseId).then(function(result) {
-                res.status(200).json({
-                    "success": true,
-                    "message": "Release complete"
-                });
+                if (result.articlesId && result.articlesId.length > 0) {
+                    var articles = result.articlesId;
+                    var promises = [];
+                    articles.forEach(function(currArticle) {
+                        var newMethod1 = Article.setArticleStatusEvas(currArticle.article, "evaso");
+                        var newMethod2 = Article.setArticleStatusProd(currArticle.article, "evaso");
+                        promises.push(newMethod1);
+                        promises.push(newMethod2)
+                    });
+                    Q.all(promises).then(function(result) {
+                        res.status(200).json({
+                            "success": true,
+                            "message": "Release complete"
+                        });
+                    });
+                } else {
+                    res.status(200).json({
+                        "success": true,
+                        "message": "Release complete with zero art"
+                    });
+                }
             }).catch(function(err) {
                 res.status(500).json({
                     "success": false,

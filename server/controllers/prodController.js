@@ -80,7 +80,7 @@ module.exports = function(app, apiRoutes) {
                             var promises = [];
                             articoli.forEach(function (currArticle) {
                                 var newMethodAdd = Prod.addArticleToProd(result._id, currArticle._id);
-                                var newMethodSet = Article.setArticleStatus(currArticle._id,"definito");
+                                var newMethodSet = Article.setArticleStatusProd(currArticle._id,"assegnato");
                                 promises.push(newMethodAdd,newMethodSet);
                             });
                             Q.all(promises)
@@ -117,7 +117,7 @@ module.exports = function(app, apiRoutes) {
                 if (prod.articoliId && prod.articoliId.length > 0) {
                     var articoli = prod.articoliId;
                     articoli.forEach(function(currArticle) {
-                        var newMethodSet = Article.setArticleStatus(currArticle,"libero");
+                        var newMethodSet = Article.setArticleStatusProd(currArticle,"libero");
                         promises.push(newMethodSet);
                     });
                     Q.all(promises)
@@ -153,7 +153,7 @@ module.exports = function(app, apiRoutes) {
                     var articoli = req.body.articoli;
                     articoli.forEach(function(currArticle) {
                         var newMethodAdd = Prod.addArticleToProd(prodId,currArticle._id);
-                        var newMethodSet = Article.setArticleStatus(currArticle._id, "definito");
+                        var newMethodSet = Article.setArticleStatusProd(currArticle._id, "assegnato");
                         promises.push(newMethodAdd,newMethodSet);
                     });
                     Q.all(promises).then(function(final) {
@@ -184,11 +184,13 @@ module.exports = function(app, apiRoutes) {
             var articleId = req.body.article._id;
             Prod.removeArticleToProd(articleId).then(function(result) {
                 if (result || result !== null) {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Article removed from prod",
-                        "prod": result
-                    });
+                    Article.setArticleStatusProd(articleId,"libero").then(function(prod) {
+                        res.status(200).json({
+                            "success": true,
+                            "message": "Article removed from prod",
+                            "prod": result
+                        });
+                });
                 } else {
                     res.status(200).json({
                         "success": true,
