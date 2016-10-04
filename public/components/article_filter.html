@@ -1,0 +1,40 @@
+<th>
+	<input type="date" ng-model="dataConsegna">
+</th>
+
+<th>
+	<input ng-model="region">
+</th>
+
+<th>
+	<input ng-model="provincia">
+</th>
+
+<th>
+	<input ng-model="clienteCod">
+</th>
+
+<th>
+	<input ng-model="ordineCod">
+</th>
+
+<th></th>
+
+<th>
+	<select ng-model="materiale" ng-options="materiale for materiale in features.materiali">
+		<option value="">-- seleziona --</option>
+	</select>
+</th>
+
+<th>
+	<select ng-model="tipo" ng-options="tipo for tipo in features.tipi">
+		<option value="">-- seleziona --</option>
+	</select>
+</th>
+
+
+<th>
+	<select ng-model="spessore" ng-options="spess for spess in features.spessori" convert-to-float>
+		<option value="">-- seleziona --</option>
+	</select>
+</th>

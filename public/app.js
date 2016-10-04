@@ -7,14 +7,14 @@ store.constant("myConfig", {
 
 store.constant("features", {
 	"tipi": ["coil", "nastro", "piana","ondulata", "grecata", "pressopiegata", "collaboranteh55", "collaboranteh55-s", "collaboranteh75", "collaboranteh75-s"],
-	"materiali": ["zincato", "decapato", "laf", "preverniciato", "caldo", "aluzinc", "alluminato", "inox"],
-	"qualitaZincato": ["dx51d", "dx52d", "dx53d", "dx54d"],
-	"qualitaDecapato": ["dd11", "dd12", "dd13", "dd14"],
+	"materiali": ["zincato", "decapato","elettrozincato", "laf", "preverniciato", "caldo", "aluzinc", "alluminato", "inox"],
+	"qualitaZincato": ["dx51d", "dx52d", "dx53d", "dx54d","s250gd","s280gd"],
+	"qualitaDecapato": ["dd11", "dd12", "dd13", "dd14","s235jr","s355jr","s355mc","s420mc"],
 	"qualitaLaf": ["dc01", "dc02", "dc03", "dc04"],
 	"qualitaCaldo": ["s235jr", "s275jr", "s355jr","s235jo", "s275jo", "s355jo","s235j2", "s275j2", "s355j2"],
 	"qualitaPreverniciato": ["dx51d", "dx52d", "dx53d", "dx54d"],
 	"qualitaElettrozincato": ["dc01", "dc02", "dc03", "dc04"],
-	"qualitaInox":["430","304","316"],
+	"qualitaInox":["430","304","316","303l","304t","316l","316t"],
 	"scelte":["a", "b", "c", "0"],
 	"finitureZincPrev":["z100", "z140", "z200", "z275"],
 	"finitureInox": ["2b","ba", "sb", "satinato"],
@@ -26,7 +26,8 @@ store.constant("features", {
 	"stati": ["sospeso", "approvato", "respinto"],
 	"stabilimenti": ["1", "2"],
 	"fornitori": ["21","15","7","5","4","2","1"],
-	"trasportatori":["tizio", "caio", "sempronio"]
+	"trasportatori":["tizio", "caio", "sempronio"],
+	"unita":["0","1","01"]
 });
 
 store.config(function ($httpProvider) {
@@ -128,7 +129,6 @@ store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', fu
 			function(resp) {
 				$rootScope.isLogged = true;
 				$rootScope.userRole = UserService.getUser().role;
-//				$rootScope.userRole = 'admin';
 			},
 			function(err) {
 				if (nextRoute.access && nextRoute.access.requiredLogin) {

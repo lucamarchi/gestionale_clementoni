@@ -6,8 +6,9 @@
 
 <table class="table table-bordered table-hover">
 	<thead>
+<!--
 		<tr>
-			
+
 			<th>
 				<input type="date" ng-model="dataConsegna">
 			</th>
@@ -48,7 +49,10 @@
 					<option value="">-- seleziona --</option>
 				</select>
 			</th>
+
 		</tr>
+-->
+		<tr article-filter></tr>
 		<tr>
 			<th>Data Consegna</th>
 			<th>Regione</th>
@@ -65,7 +69,8 @@
 			<th>Quant</th>
 			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
 			<th>Riepilogo</th>
-			<th>Stato</th>
+			<th>Stato Produzione</th>
+			<th>Stato Evasione</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -86,13 +91,18 @@
 			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{article.prezzo}}</td>
 			<td>
 				<button ng-if="article.stockId != undefined" type="button" class="btn btn-info btn-block" ng-click="viewStock(article)" data-target="#viewstock2" data-toggle="modal">Stock</button>
-				<button ng-if="article.stato == 'lavorazione'" type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses2">Lavorazioni</button>
+				<button ng-if="article.statoProduzione == 'lavorazione'" type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses2">Lavorazioni</button>
 			</td>
-			<td ng-if="article.stato == undefined">{{article.stato}}</td>
-			<td ng-if="article.stato == 'libero'"><span class="label label-default">{{article.stato}}</span></td>
-			<td ng-if="article.stato == 'definito'"><span class="label label-info">{{article.stato}}</span></td>
-			<td ng-if="article.stato == 'lavorazione'"><span class="label label-warning">{{article.stato}}</span></td>
-			<td ng-if="article.stato == 'completato'"><span class="label label-success">{{article.stato}}</span></td>
+			<td ng-if="article.statoProduzione == undefined">{{article.statoProduzione}}</td>
+			<td ng-if="article.statoProduzione == 'libero'"><span class="label label-default">{{article.statoProduzione}}</span></td>
+			<td ng-if="article.statoProduzione == 'assegnato'"><span class="label label-info">{{article.statoProduzione}}</span></td>
+			<td ng-if="article.statoProduzione == 'lavorazione'"><span class="label label-warning">{{article.statoProduzione}}</span></td>
+			<td ng-if="article.statoProduzione == 'completato'"><span class="label label-success">{{article.statoProduzione}}</span></td>
+			<td ng-if="article.statoEvasione == undefined">{{article.statoEvasione}}</td>
+			<td ng-if="article.statoEvasione == 'libero'"><span class="label label-default">{{article.statoEvasione}}</span></td>
+			<td ng-if="article.statoEvasione == 'assegnato'"><span class="label label-info">{{article.statoEvasione}}</span></td>
+			<td ng-if="article.statoEvasione == 'lavorazione'"><span class="label label-warning">{{article.statoEvasione}}</span></td>
+			<td ng-if="article.statoEvasione == 'completato'"><span class="label label-success">{{article.statoEvasione}}</span></td>
 			<td ng-if="isEnabled">
 				<button type="button" class="btn btn-primary btn-circle" ng-click="addArticle(article, articles.indexOf(article))"><span class="glyphicon glyphicon-plus"></span></button>
 			</td>

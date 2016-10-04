@@ -14,7 +14,7 @@
 			<th>Qta</th>
 			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo</th>
 			<th>Stock</th>
-			<th>Stato</th>
+			<th>Stato Produzione</th>
 			<th>Operaz.</th>
 		</tr>
 	</thead>
@@ -35,7 +35,7 @@
 			<td>{{article.quantita}}</td>
 			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{article.prezzo}}</td>
 			<td>
-				<div ng-if="article.stato == 'definito' || article.stato == 'lavorazione'">
+				<div ng-if="article.statoProduzione == 'assegnato' || article.statoProduzione == 'lavorazione'">
 					<div>
 						<button ng-if="!article.stockId" type="button" class="btn btn-primary btn-block" ng-click="openListStocks(article)" data-target="#stock" data-toggle="modal">Seleziona</button>
 					</div>
@@ -46,23 +46,23 @@
 				</div>
 			</td>
 			<td>
-				<div ng-if="article.stato == undefined" align="center">{{article.stato}}</div>
-				<div ng-if="article.stato == 'libero'" align="center"><span class="label label-default">{{article.stato}}</span></div>
-				<div ng-if="article.stato == 'definito'" align="center"><span class="label label-info">{{article.stato}}</span></div>
-				<div ng-if="article.stato == 'lavorazione'" align="center"><span class="label label-warning">{{article.stato}}</span></div>
-				<div ng-if="article.stato == 'completato'" align="center"><span class="label label-success">{{article.stato}}</span></div>
+				<div ng-if="article.statoProduzione == undefined" align="center">{{article.statoProduzione}}</div>
+				<div ng-if="article.statoProduzione == 'libero'" align="center"><span class="label label-default">{{article.statoProduzione}}</span></div>
+				<div ng-if="article.statoProduzione == 'assegnato'" align="center"><span class="label label-info">{{article.statoProduzione}}</span></div>
+				<div ng-if="article.statoProduzione == 'lavorazione'" align="center"><span class="label label-warning">{{article.statoProduzione}}</span></div>
+				<div ng-if="article.statoProduzione == 'completato'" align="center"><span class="label label-success">{{article.statoProduzione}}</span></div>
 				<br>
-				<div ng-if="!isEnabled && (article.stato == 'lavorazione' || article.stato == 'completato')">
+				<div ng-if="!isEnabled && (article.statoProduzione == 'lavorazione' || article.statoProduzione == 'completato')">
 					<button type="button" class="btn btn-info btn-block" ng-click="viewArticleProcesses(article)" data-toggle="modal" data-target="#viewprocesses">Riepilogo</button>
 				</div>
 			</td>
 			<td>
-				<div ng-if="!isEnabled && (article.stato == 'definito' || article.stato == 'lavorazione')">
+				<div ng-if="!isEnabled && (article.statoProduzione == 'assegnato' || article.statoProduzione == 'lavorazione')">
 					<button type="button" class="btn btn-warning btn-block" ng-click="startWork(article)" data-toggle="modal" data-target="#newprocess">Lavora<span class="glyphicon glyphicon-wrench"></span></button>
 					<button type="button" class="btn btn-success btn-block" ng-click="prepareCompleteArticle(article)" data-toggle="modal" data-target="#completearticle">Completo<span class="glyphicon glyphicon-ok"></span></button>
 				</div>
 			</td>
-			<td ng-if="isEnabled && article.stato == 'libero'">
+			<td ng-if="isEnabled && article.statoProduzione == 'libero'">
 				<button type="button" class="btn btn-danger btn-circle" ng-click="deleteArticle(article, articlesState.indexOf(article))"><span class="glyphicon glyphicon-trash"></span></button>
 			</td>
 		</tr>

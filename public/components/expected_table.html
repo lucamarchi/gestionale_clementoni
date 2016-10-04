@@ -1,4 +1,3 @@
-<!--
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
@@ -9,33 +8,32 @@
 				<input ng-model="fornitore">
 			</th>
 			<th>
-				<select ng-model="materiale" ng-options="materiale for materiale in features.materiali">
+				<select ng-model="materiale" ng-options="materiale for materiale in featureList.materiali">
 					<option value="">-- seleziona --</option>
 				</select>
 			</th>
 
 			<th>
-				<select ng-model="tipo" ng-options="tipo for tipo in features.tipi">
+				<select ng-model="tipo" ng-options="tipo for tipo in featureList.tipi">
 					<option value="">-- seleziona --</option>
 				</select>
 			</th>
 
 
 			<th>
-				<select ng-model="spessore" ng-options="spess for spess in features.spessori" convert-to-float>
+				<select ng-model="spessore" ng-options="spess for spess in featureList.spessori" convert-to-float>
 					<option value="">-- seleziona --</option>
 				</select>
 			</th>
 		</tr>
 		<tr>
-			<th>Data Prevista</th>
-			<th>Fornitore</th>
+			<th ng-if="!creationProgress">Data Prevista</th>
+			<th ng-if="!creationProgress">Fornitore</th>
 			<th>Materiale</th>
 			<th>Tipo</th>
 			<th>Spess</th>
 			<th>Largh</th>
 			<th>Qualita</th>
-			<th>Scelta</th>
 			<th>Finitura</th>
 			<th>Colore Ral</th>
 			<th>Superficie</th>
@@ -43,12 +41,13 @@
 			<th>N.Fogli</th>
 			<th>Peso</th>
 			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
+
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="expected in expecteds | filterexp:dataPrevista:fornitore:materiale:tipo:spessore | orderBy:'dataPrevista'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-			<td>{{expected.dataPrevista| date:'medium'}}</td>
-			<td>{{expected.fornitore}}</td>
+		<tr ng-repeat="expected in expectedList | filterexp:dataPrevista:fornitore:materiale:tipo:spessore | orderBy:'dataPrevista'|startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+			<td ng-if="!creationProgress">{{expected.dataPrevista| date:'medium'}}</td>
+			<td ng-if="!creationProgress">{{expected.fornitore}}</td>
 			<td>{{expected.materiale}}</td>
 			<td>{{expected.tipo}}</td>
 			<td>{{expected.spessore}}</td>
@@ -61,14 +60,11 @@
 			<td>{{expected.numFogli}}</td>
 			<td>{{expected.pesoNetto}}</td>
 			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{expected.prezzo}}</td>
-			<td>
-				<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#newproduct" data-dismiss="modal" ng-click="selectExpected(expected)">
+			<td ng-if="selectExpectedButton">
+				<button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#newproduct" data-dismiss="modal" ng-click="selectExpectedAction({expected:expected})">
 					<span class="glyphicon glyphicon-ok"></span>
 				</button>
 			</td>
 		</tr>
 	</tbody>
 </table>
--->
-
-<expected-table expected-list="expecteds" feature-list="features" select-expected-button=true select-expected-action="selectExpected(expected)"></expected-table>

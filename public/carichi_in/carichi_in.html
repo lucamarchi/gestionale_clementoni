@@ -55,26 +55,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<table class="table">
-					<tr>
-						<td><h3>DDT {{order.ddt}}</h3></td>
-						<td><h3>FORNITORE {{order.fornitore}}</h3></td>
-						<td><h3>{{order.dataDdt | date:'fullDate'}}</h3></td>
-					</tr>
-				</table>
 			</div>
 			<div class="modal-body">
 				<div ng-include src="'public/carichi_in/order_products.html'"></div>
 			</div>
 			<div class="modal-footer">
-<!--
-				<div align="left">
-					<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#newproduct" ng-click="createProduct()">Aggiungi prodotto</button>
-				</div>
--->
-				<div align="left">
-					<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectexpected" ng-click="viewExpecteds()">Aggiungi prodotto ordinato</button>
-					<button ng-if="userRole == 'logistica' || userRole == 'admin'" type="button" class="btn btn-primary" data-toggle="modal" data-target="#newproduct" ng-click="createProduct()">Aggiungi nuovo prodotto</button>
+				<div align="left" ng-if="userRole == 'logistica' || userRole == 'admin'">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectexpected" ng-click="viewExpecteds()">Aggiungi prodotto ordinato</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newproduct" ng-click="createProduct()">Aggiungi nuovo prodotto</button>
 				</div>
 				<div>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>

@@ -133,7 +133,9 @@
 	<div class="form-group">
 		<label for="larghezza" class="col-md-2 control-label">Larghezza:</label>
 		<div class="col-md-10">
-			<input type="number" ng-model="$parent.expected.larghezza" class="form-control"/>
+			<select ng-model="$parent.expected.larghezza" class="form-control" ng-options="larghezza for larghezza in features.classiLarghezza" convert-to-number>
+				<option value="">-- seleziona --</option>
+			</select>
 		</div>
 	</div>
 	

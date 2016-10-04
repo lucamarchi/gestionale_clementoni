@@ -11,6 +11,7 @@
 	</tr>
 </table>
 
+<!--
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
@@ -54,6 +55,7 @@
 			<th>N.Fogli</th>
 			<th>Peso</th>
 			<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
+
 		</tr>
 	</thead>
 	<tbody>
@@ -72,10 +74,12 @@
 			<td>{{expected.numFogli}}</td>
 			<td>{{expected.pesoNetto}}</td>
 			<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{expected.prezzo}}</td>
+			
 		</tr>
 	</tbody>
 </table>
-
+-->
+<expected-table expected-list="expecteds" feature-list="features"></expected-table>
 
 <!-- Modal order_products.html-->
 <div id="orderexpecteds" class="modal modal-xl fade" role="dialog">

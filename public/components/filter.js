@@ -113,19 +113,16 @@ store.filter('filterriep', function() {
 			}
 			if (clienteCod) {
 				output = output.filter(function(el){
-					console.log(el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
 					return (el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
 				});
 			}
 			if (region) {
 				output = output.filter(function(el){
-					console.log(el.region.toString().substring(0,region.length) == region.toString());
 					return (el.region.toString().substring(0,region.length) == region.toString());
 				});
 			}
 			if (provincia) {
 				output = output.filter(function(el){
-					console.log(el.provincia.toString().substring(0,provincia.length) == provincia.toString());
 					return (el.provincia.toString().substring(0,provincia.length) == provincia.toString());
 				});
 			}

@@ -3,7 +3,7 @@ var store = angular.module('store');
 store.controller('releaseController', ['$scope','releaseFactory','articleFactory','stockFactory','features', function ($scope, releaseFactory, articleFactory, stockFactory, features) {
 	
 	$scope.features = features;
-	
+	var releaseArticlesObject = [];
 	
 	releaseFactory.resourceGroup().getAll(
 		function (resp) {
@@ -52,6 +52,7 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 	}
 	
 	$scope.selectArticles = function () {
+		releaseArticlesObject = [];
 		$scope.releaseArticles = [];
 		articleFactory.resource().get (
 			function (resp) {
@@ -67,15 +68,13 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 		);
 	}
 	
-	
-	$scope.addArticle = function (article, index) {
-		$scope.releaseArticles.push(article);
-		$scope.articles.splice(index,1);
-	}
-	
-	$scope.addArticle2 = function (article, index1,index2, index3) {
+	$scope.addArticle = function (article, index1,index2, index3) {
+		article.pesoAttuale -= article.pesoSelected;
 		console.log(index1, index2, index3);
 		$scope.releaseArticles.push(article);
+		releaseArticlesObject.push({article: article, quantita: article.pesoSelected, unita: article.unita});
+		console.log("AAAAAA ", article.pesoAttuale);
+		console.log("AAAAAA2 ", releaseArticlesObject);
 //		console.log("lunghezza1 ", $scope.monster.length);
 //		console.log("lunghezza2 ", $scope.monster[index1].value.length);
 //		console.log("lunghezza3 ", $scope.monster[index1].value[index2].value.length);
@@ -93,8 +92,14 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 //		console.log("lunghezza3 ", $scope.monster[index1].value[index2].value.length);
 	}
 
-	$scope.deleteArticle2 = function (article, index){
+	$scope.deleteArticle = function (article, index){
 		$scope.releaseArticles.splice(index,1);
+		article.pesoAttuale += article.pesoSelected;
+		delete article.pesoSelected;
+		delete article.unita;
+		releaseArticlesObject.splice(index,1);
+		console.log("BBBBBBB", article.pesoAttuale);
+		console.log("BBBBBBB2 ", releaseArticlesObject);
 		var mappa = $scope.monster;
 		for (var i = 0; i < mappa.length; i++) {
 			if (mappa[i].key == article.region){
@@ -105,11 +110,6 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 				}
 			}
 		}
-	}
-	
-	$scope.deleteArticle = function (article, index){
-		$scope.articles.push(article);
-		$scope.releaseArticles.splice(index,1);
 	}
 	
 	$scope.selectStocks = function () {
@@ -160,7 +160,7 @@ store.controller('releaseController', ['$scope','releaseFactory','articleFactory
 	
 	$scope.confirmRelease = function () {
 		var release = $scope.release;
-		var articles = $scope.releaseArticles;
+		var articles = releaseArticlesObject;
 		var stocks = $scope.releaseStocks;
 		releaseFactory.resource().save({},
 			{release,articles,stocks},

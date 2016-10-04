@@ -38,7 +38,6 @@
 			<th>Autista</th>
 			<th>Targa</th>
 			<th>Peso Totale</th>
-			<th>Unita</th>
 			<th>Note</th>
 			<th>Stato</th>
 		</tr>
@@ -53,7 +52,6 @@
 			<td>{{release.autista}}</td>
 			<td>{{release.targa}}</td>
 			<td>{{release.pesoTotale}}</td>
-			<td>{{release.unita}}</td>
 			<td>{{release.note}}</td>
 			<td>{{release.stato}}</td>
 
@@ -100,7 +98,7 @@
 			<div class="modal-body">
 				<div ng-include src="'public/release/release_articles.html'"></div>
 				<hr>
-				<div ng-include src="'public/release/select_articles2.html'"></div>
+				<div ng-include src="'public/release/select_articles.html'"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
@@ -139,7 +137,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Dettagli carico in uscita AAAAA</h4>
+				<h4 class="modal-title">Dettagli carico in uscita {{release.numero}}</h4>
 			</div>
 			<div class="modal-body">
 				<div ng-include src="'public/release/release_details.html'"></div>
