@@ -25,7 +25,9 @@ function TmpArticolo() {
     this.pesoAttuale = 'y',
     this.ordineCod = 'y',
     this.clienteCod = 'y',
-    this.dataConsegna = 'y'
+    this.dataConsegna = 'y',
+    this.qualita = 'y',
+    this.descrizione = 'y'
 };
 
 function TmpCut() { this.anno = 'x', this.codice = 'x', this.clienteCod = 'x', this.note = 'x', this.date = 'x', this.articoli = [] };
@@ -105,6 +107,37 @@ module.exports = {
                         var d = new Date(y[2], y[1] - 1, y[0]);
                         tmpArticolo.ordineCod = tmpCut.codice;
                         tmpArticolo.clienteCod = tmpCut.clienteCod;
+                        tmpArticolo.qualita = results[i].data[key].Qualita;
+                        tmpArticolo.descrizione = "";
+                        var descr = "";
+                        if (results[i].data[key].Feature1 != undefined || results[i].data[key].Feature1.length > 0) {
+                            descr += results[i].data[key].Feature1 +" ";
+                        }
+                        if (results[i].data[key].Feature2 != undefined || results[i].data[key].Feature2.length > 0) {
+                            descr += results[i].data[key].Feature2 +" ";
+                        }
+                        if (results[i].data[key].Feature3 != undefined || results[i].data[key].Feature3.length > 0) {
+                            descr += results[i].data[key].Feature3 +" ";
+                        }
+                        if (results[i].data[key].Feature4 != undefined || results[i].data[key].Feature4.length > 0) {
+                            descr += results[i].data[key].Feature4 +" ";
+                        }
+                        if (results[i].data[key].Feature5 != undefined || results[i].data[key].Feature5.length > 0) {
+                            descr += results[i].data[key].Feature5 +" ";
+                        }
+                        if (results[i].data[key].Feature6 != undefined || results[i].data[key].Feature6.length > 0) {
+                            descr += results[i].data[key].Feature6 +" ";
+                        }
+                        if (results[i].data[key].Feature7 != undefined || results[i].data[key].Feature7.length > 0) {
+                            descr += results[i].data[key].Feature7 +" ";
+                        }
+                        if (results[i].data[key].Feature8 != undefined || results[i].data[key].Feature8.length > 0) {
+                            descr += results[i].data[key].Feature8 +" ";
+                        }
+                        if (results[i].data[key].Feature9 != undefined || results[i].data[key].Feature9.length > 0) {
+                            descr += results[i].data[key].Feature9 +" ";
+                        }
+                        tmpArticolo.descrizione = descr.trim();
                         tmpArticolo.dataConsegna = d;
                         articoli.push(tmpArticolo);
 
@@ -156,7 +189,6 @@ module.exports = {
     findNewCustomerByIdentity: function(identity) {
         var deferred = Q.defer();
         this.findCustomer().then(function(results) {
-            console.log("RESULTS: "+results)
             if (results.length > 0) {
                 results.forEach(function(currCustomer) {
                     if (currCustomer.ident === identity) {

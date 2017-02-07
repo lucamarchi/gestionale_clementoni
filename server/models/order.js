@@ -69,7 +69,6 @@ module.exports = {
         return deferred.promise;
     },
 
-
     updateOrder: function(orderId, query) {
         var deferred = Q.defer();
         orderModel.findByIdAndUpdate(orderId,query,{new: true}).exec(function(err,result) {

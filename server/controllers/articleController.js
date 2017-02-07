@@ -107,6 +107,88 @@ module.exports = function(app, apiRoutes) {
                 });
         })
 
+        .delete('/article/:article_id', function(req,res,next) {
+            var articleId = req.params.article_id;
+            Article.deleteArticle(articleId)
+                .then(function(result) {
+                    Cut.removeArticleToCut(articleId).then(function(result) {
+                        res.status(200).json({
+                            "success": true,
+                            "message": "Article deleted"
+                        });
+                    });
+                }).catch(function(err) {
+                    res.status(500).json({
+                        "success": false,
+                        "message": "Internal server error",
+                        "error": err.message
+                    });
+            });
+        })
+
+        .put('/articles/:article_id', function(req,res,next) {
+            var articleId = req.params.article_id;
+            var article = req.body.article;
+            Article.modifyArticle(articleId, article).then(function(result) {
+                if (article.lunghezzaAssegnata && article.larghezzaAssegnata && article.qualita) {
+                    Cut.findByArticle(articleId).then(function (cut) {
+                        if (cut && cut !== null) {
+                            var promises = [];
+                            if (cut.articoli && cut.articoli.length > 0) {
+                                var articles = cut.articoli;
+                                articles.forEach(function (currArt) {
+                                    var newMethod = Article.findById(currArt);
+                                    promises.push(newMethod);
+                                });
+                                Q.all(promises).then(function (articles) {
+                                    var check = true;
+                                    articles.forEach(function (currArticles) {
+                                        if (!currArticles.lunghezzaAssegnata && !currArticles.larghezzaAssegnata && !article.qualita) {
+                                            check = false;
+                                        }
+                                    });
+                                    if (check) {
+                                        Cut.setCutReady(cut._id).then(function (result) {
+                                            res.status(200).json({
+                                                "success": true,
+                                                "message": "Article and cut modified"
+                                            })
+                                        });
+                                    } else {
+                                        res.status(200).json({
+                                            "success": true,
+                                            "message": "Article modified"
+                                        })
+                                    }
+                                });
+                            } else {
+                                res.status(200).json({
+                                    "success": true,
+                                    "message": "Article modified"
+                                });
+                            }
+                        } else {
+                            res.status(200).json({
+                                "success": true,
+                                "message": "Article modified"
+                            });
+                        }
+                    });
+                } else {
+                    res.status(200).json({
+                        "success": true,
+                        "message": "Article modified"
+                    })
+                }
+            }).catch(function(err) {
+                res.status(500).json({
+                    "success": false,
+                    "message": "Internal server error",
+                    "error": err.message
+                });
+            })
+        })
+
         .get('/articles/region/:region_name', function(req,res,next) {
             var region = req.params.region_name;
             Cut.findByRegion(region).then(function(result) {

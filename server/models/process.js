@@ -14,9 +14,9 @@ var ProcessSchema = new Schema({
     operatore: {type: String},
     scarto: {type: Number},
     data: {type: Date, default: Date.now},
-    figli: [{type: Schema.ObjectId, ref: 'Product'}],
+    figli: {type: Schema.ObjectId, ref: 'Product'},
     article: {type: Schema.ObjectId, ref: 'Article'},
-    product: {type: Schema.ObjectId, ref: 'Product'}
+    product: [{type: Schema.ObjectId, ref: 'Product'}]
 });
 
 processModel = mongoose.model('Process', ProcessSchema);
@@ -87,7 +87,7 @@ module.exports = {
     },
 
     setFiglioToProcess: function(processId,productId) {
-        var query = {$push: {'figli': productId}};
+        var query = {'figli': productId};
         var process = this.updateProcess(processId, query);
         return process;
     },
@@ -98,8 +98,8 @@ module.exports = {
         return process;
     },
 
-    setProductToProcess: function(processId,productId) {
-        var query = {'product': productId};
+    addProductToProcess: function(processId,productId) {
+        var query = {$push: {'product': productId}};
         var process = this.updateProcess(processId, query);
         return process;
     },
@@ -120,6 +120,25 @@ module.exports = {
             }
         });
         return deferred.promise;
+    },
+
+    findByProduct: function(productId) {
+        var deferred = Q.defer();
+        processModel.find({'product': productId}).exec(function(err,results) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                if (results && results.length > 0) {
+                    deferred.resolve(results);
+                } else {
+                    var err = new Error("Process with no process");
+                    err.status = 400;
+                    deferred.reject(err);
+                }
+            }
+        });
+        return deferred.promise;
     }
+
 
 };

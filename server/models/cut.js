@@ -12,6 +12,7 @@ var CutSchema = new Schema({
     codice: {type: Number},
     clienteCod: {type: Number},
     note: {type: String},
+    nomeCliente: {type: String},
     date: {type: Date},
     accepted: {type: Boolean, default: false},
     operator: {type: String},
@@ -19,7 +20,8 @@ var CutSchema = new Schema({
     customer: {type: Schema.ObjectId, ref: 'Customer'},
     region: {type: String},
     provincia: {type: String},
-    pesoTotale: {type: Number, default: 0}
+    pesoTotale: {type: Number, default: 0},
+    flag: {type: Boolean, default: false}
 });
 
 cutModel = mongoose.model('Cut', CutSchema);
@@ -49,6 +51,19 @@ module.exports = {
         cutModel.find({}).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
+            } else {
+                deferred.resolve(result);
+            }
+        });
+        return deferred.promise;
+    },
+
+    deleteCut: function(id) {
+        var deferred = Q.defer();
+        var query = {'_id': id};
+        cutModel.remove(query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err)
             } else {
                 deferred.resolve(result);
             }
@@ -133,6 +148,31 @@ module.exports = {
         return deferred.promise;
     },
 
+    removeArticleToCut: function(articleId) {
+        var deferred = Q.defer();
+        var query = {$pull: {'articoli': articleId}};
+        cutModel.findOneAndUpdate({articoli: articleId},query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(result);
+            }
+        });
+        return deferred.promise;
+    },
+
+    setCutReady: function(cutId) {
+        var query = {$set: {'flag': true}};
+        var cut = this.updateCut(cutId,query);
+        return cut;
+    },
+
+    findByArticle: function(articleId) {
+        var query = {"articoli": articleId};
+        var cut = this.findOne(query);
+        return cut;
+    },
+
     setCutAccepted: function(cutId) {
         var query = {$set: {'accepted': true}};
         var cut = this.updateCut(cutId,query);
@@ -165,6 +205,12 @@ module.exports = {
 
     addRegionToCut: function(cutId,region) {
         var query = {$set: {'region': region}};
+        var cut = this.updateCut(cutId,query);
+        return cut;
+    },
+
+    addNomeClienteToCut: function(cutId,nomeCliente) {
+        var query = {$set: {'nomeCliente': nomeCliente}};
         var cut = this.updateCut(cutId,query);
         return cut;
     },

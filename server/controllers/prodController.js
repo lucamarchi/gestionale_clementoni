@@ -85,10 +85,25 @@ module.exports = function(app, apiRoutes) {
                             });
                             Q.all(promises)
                                 .then(function (finalResult) {
-                                    res.status(200).json({
-                                        "success": true,
-                                        "message": "Prod save",
-                                        "prod": result
+                                    var artPromises = [];
+                                    articoli.forEach(function(currArticle) {
+                                       var newMethod = Article.findById(currArticle);
+                                        artPromises.push(newMethod);
+                                    });
+                                    Q.all(artPromises).then(function(retrieveArt) {
+                                        var peso = 0;
+                                        retrieveArt.forEach(function(currArticle) {
+                                            peso += currArticle.pesoAttuale;
+                                        });
+                                        Prod.setPesoInizialeProd(result.id,peso).then(function(prods1) {
+                                            Prod.setPesoSaldoProd(result.id,peso).then(function(prods2) {
+                                                res.status(200).json({
+                                                    "success": true,
+                                                    "message": "Prod save",
+                                                    "prod": result
+                                                });
+                                            });
+                                        })
                                     });
                                 })
                         } else {
@@ -151,16 +166,23 @@ module.exports = function(app, apiRoutes) {
                 if (req.body.articoli && req.body.articoli.length > 0) {
                     var promises = [];
                     var articoli = req.body.articoli;
+                    var peso = 0;
                     articoli.forEach(function(currArticle) {
                         var newMethodAdd = Prod.addArticleToProd(prodId,currArticle._id);
                         var newMethodSet = Article.setArticleStatusProd(currArticle._id, "assegnato");
+                        peso += currArticle.pesoAttuale;
                         promises.push(newMethodAdd,newMethodSet);
                     });
+                    peso += prod.pesoIniziale;
                     Q.all(promises).then(function(final) {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Prod updated",
-                            "prod": result
+                        Prod.setPesoInizialeProd(result.id,peso).then(function(prods1) {
+                            Prod.setPesoSaldoProd(result.id,peso).then(function(prods2) {
+                                res.status(200).json({
+                                    "success": true,
+                                    "message": "Prod save",
+                                    "prod": result
+                                });
+                            });
                         });
                     });
                 } else {

@@ -10,20 +10,17 @@ var ExpectedSchema = new Schema({
     tipo: {type: String},
     materiale: {type: String},
     qualita: {type: String},
-    scelta: {type: String},
     finitura: {type: String},
-    coloreRal: {type: String},
-    pesoNetto: {type: Number},
+    colore: {type: String},
     spessore: {type: Number},
-    classeLarghezza: {type: Number},
-    lunghezza: {type: Number},  
-    numFogli: {type: Number},
-    prezzo: {type: Number},
-    stato: {type: String},
-    anno: {type: String},
-    superficie: {type: String},
+    lunghezza: {type: Number},
+    larghezza: {type: Number},
     fornitore: {type: String},
-    dataPrevista: {type: Date}
+    dataPrevista: {type: Date},
+    prezzo: {type: Number},
+    pesoOrdinato: {type: Number},
+    pesoConsegnato: {type: Number},
+    pesoSaldo: {type: Number}
 });
 
 
@@ -69,19 +66,17 @@ module.exports = {
         newExpected.tipo = expected.tipo;
         newExpected.materiale = expected.materiale;
         newExpected.qualita = expected.qualita;
-        newExpected.scelta = expected.scelta;
         newExpected.finitura = expected.finitura;
-        newExpected.coloreRal = expected.coloreRal;
-        newExpected.pesoNetto = expected.pesoNetto;
+        newExpected.colore = expected.colore;
         newExpected.spessore = expected.spessore;
-        newExpected.classeLarghezza = expected.classeLarghezza;
         newExpected.lunghezza = expected.lunghezza;
-        newExpected.numFogli = expected.numFogli;
-        newExpected.prezzo = expected.prezzo;
-        newExpected.anno = expected.anno;
-        newExpected.superficie = expected.superficie;
+        newExpected.larghezza = expected.larghezza;
         newExpected.fornitore = expected.fornitore;
         newExpected.dataPrevista = expected.dataPrevista;
+        newExpected.prezzo = expected.prezzo;
+        newExpected.pesoOrdinato = expected.pesoOrdinato;
+        newExpected.pesoConsegnato = expected.pesoConsegnato;
+        newExpected.pesoSaldo = expected.pesoSaldo;
         newExpected.save(function(err) {
             if (err) {
                 deferred.reject(err)
@@ -103,19 +98,17 @@ module.exports = {
                     result.tipo = expected.tipo;
                     result.materiale = expected.materiale;
                     result.qualita = expected.qualita;
-                    result.scelta = expected.scelta;
                     result.finitura = expected.finitura;
-                    result.coloreRal = expected.coloreRal;
-                    result.pesoNetto = expected.pesoNetto;
+                    result.colore = expected.colore;
                     result.spessore = expected.spessore;
-                    result.classeLarghezza = expected.classeLarghezza;
                     result.lunghezza = expected.lunghezza;
-                    result.numFogli = expected.numFogli;
-                    result.prezzo = expected.prezzo;
-                    result.anno = expected.anno;
-                    result.superficie = expected.superficie;
+                    result.larghezza = expected.larghezza;
                     result.fornitore = expected.fornitore;
                     result.dataPrevista = expected.dataPrevista;
+                    result.prezzo = expected.prezzo;
+                    result.pesoOrdinato = expected.pesoOrdinato;
+                    result.pesoConsegnato = expected.pesoConsegnato;
+                    result.pesoSaldo = expected.pesoSaldo;
                 }
                 result.save(function(err) {
                     if (err) {

@@ -122,7 +122,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .post('/processes', function(req,res,next) {
+        .post('/processes1', function(req,res,next) {
             var stockOriginal = req.body.stock;
             var process = req.body.process;
             var figli = req.body.figli;
@@ -234,5 +234,135 @@ module.exports = function(app, apiRoutes) {
 
         })
 
+        .post('/processes', function(req,res,next) {
+            var stockOriginal = req.body.stock;
+            var process = req.body.process;
+            var scarto = process.scarto;
+            var createStock = req.body.figlio;
+            var promises = [];
+            stockOriginal.forEach(function(stock) {
+                promises.push(Stock.modifyStock(stock._id,stock));
+                promises.push(Stock.increaseScarto(stock._id,process.scarto));
+            });
+            if (req.body.article) {
+                var article = req.body.article;
+                var clienteCod = article.clienteCod;
+                promises.push(Article.setArticleStatusProd(article._id,"lavorazione"));
+                promises.push(Article.unsetStockToArticle(article._id));
+                promises.push(Article.increaseScarto(article._id,process.scarto));
+            }
+            Process.saveNewProcess(process).then(function(result) {
+                var promisesProduct = [];
+                if (article) {
+                    var newMethod = Process.setArticleToProcess(result.id,article._id);
+                    promises.push(newMethod);
+                }
+                stockOriginal.forEach(function(currStock) {
+                    var newMethod = Product.findByStock(currStock._id);
+                    promisesProduct.push(newMethod);
+                });
+                Q.all(promisesProduct).then(function(products) {
+                    var singleFatherProd = [];
+                    var multiFatherProd = [];
+                    var numeroCollo = "";
+                    products.forEach(function(currProduct) {
+                        if (currProduct.numeroCollo.indexOf("/") !== -1) {
+                            multiFatherProd.push(currProduct);
+                        } else {
+                            singleFatherProd.push(currProduct);
+                        }
+                        numeroCollo += currProduct.numeroCollo;
+                    });
+                    this.checkNumber(products).then(function(number) {
+                        numeroCollo +=  "/" + number + process.macchina;
+                        var promisesFather = [];
+                        if (multiFatherProd.length > 0) {
+                            multiFatherProd.forEach(function (currProduct) {
+                                var newMethod = Product.findById(currProduct.fatherId);
+                                promisesFather.push(newMethod);
+                            });
+                        }
+                        singleFatherProd.forEach(function(currProduct) {
+                            var newMethod = Product.findById(currProduct._id);
+                            promisesFather.push(newMethod);
+                        });
+                        Q.all(promisesFather).then(function(fatherResult) {
+                            fatherResult.forEach(function(currProduct) {
+                                promises.push(Product.increaseLavorazione(currProduct._id));
+                                promises.push(Product.increaseScarto(currProduct._id,scarto));
+                            });
+                            products.forEach(function(currProduct) {
+                                promises.push(Process.addProductToProcess(result._id,currProduct._id));
+                            });
+                            Stock.saveNewStock(createStock).then(function(figlioStock) {
+                                Product.saveNewProduct(createStock).then(function(figlioProduct) {
+                                    if (clienteCod) {
+                                        promises.push(Stock.addClienteCodToStock(figlioStock._id,clienteCod));
+                                    }
+                                    Product.addStockToProduct(figlioProduct.id,figlioStock.id).then(function(tmpProduct) {
+                                        Process.setFiglioToProcess(result.id,figlioProduct.id).then(function(lastProcess) {
+                                           fatherResult.forEach(function(currFather) {
+                                               var newMethod = Product.addFatherId(figlioProduct.id,currFather._id);
+                                               promises.push(newMethod);
+                                           });
+                                           promises.push(Stock.updateNumeroCollo(figlioStock.id,numeroCollo));
+                                           promises.push(Product.updateNumeroCollo(figlioProduct.id,numeroCollo));
+                                           Q.all(promises).then(function(promises) {
+                                               res.status(200).json({
+                                                   "message": "Process done",
+                                                   "process": result,
+                                                   "status": true
+                                               });
+                                           });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            }).catch(function(err) {
+                res.status(500).json({
+                    "message": "Internal problem",
+                    "status": false,
+                    "err": err.message
+                });
+            });
+
+        });
+
+    checkNumber = function(products) {
+        var promises = [];
+        var deferred = Q.defer();
+        products.forEach(function(currProduct) {
+            var newMethod = Process.findByProduct(currProduct._id);
+            promises.push(newMethod);
+        });
+        Q.all(promises).then(function(result) {
+            var count = 0;
+            result.forEach(function(currProcess) {
+                currProcess.forEach(function(currP) {
+                    var check = true;
+                    var tmpCount = 0;
+                    if (check) {
+                        products.forEach(function (currProduct) {
+                            if (currP.product.indexOf(currProduct._id) == -1) {
+                                check = false;
+                            } else {
+                                tmpCount++;
+                            }
+                        });
+                    }
+                    if (tmpCount == products.length) {
+                        count++;
+                    }
+                });
+            });
+            deferred.resolve(count);
+        }).catch(function(err) {
+            return 0;
+        });
+        return deferred.promise;
+    }
 
 };

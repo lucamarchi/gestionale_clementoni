@@ -16,24 +16,30 @@ var ProductSchema = new Schema({
     qualita: {type: String},
     scelta: {type: String},
     finitura: {type: String},
-    coloreRal: {type: String},
-    pesoLordo: {type: Number},
-    pesoNetto: {type: Number},
-    spessore: {type: Number},
-    larghezza: {type: Number},
-    classeLarghezza: {type: Number},
+    colore: {type: String},
+    ral: {type: String},
+    spessoreNominale: {type: Number},
+    spessoreEffettivo: {type: Number},
+    larghezzaNominale: {type: Number},
+    larghezzaEffettiva: {type: Number},
     lunghezza: {type: Number},
-    numFogli: {type: Number},
+    pesoIniziale: {type: Number},
+    pesoNetto: {type: Number},
+    pesoLordo: {type: Number},
+    superficie: {type: String},
     prezzo: {type: Number},
     difetti: {type: String},
-    stabilimento: {type: Number},
+    stabilimento: {type: String},
+    ubicazione: {type: String},
+    cliente: {type: String},
+    numPezzi: {type: Number},
     stato: {type: String},
     stockId: {type: Schema.ObjectId, ref: 'Stock'},
-    fatherId: {type: Schema.ObjectId, ref: 'Product'},
+    fatherId: [{type: Schema.ObjectId, ref: 'Product'}],
     scarto: {type: Number, default: 0},
     anno: {type: String},
     lavorazione: {type: Number, default: 1},
-    superficie: {type: String}
+    reso: {type: Number, default: 0}
 });
 
 
@@ -124,21 +130,26 @@ module.exports = {
         newProduct.qualita = product.qualita;
         newProduct.scelta = product.scelta;
         newProduct.finitura = product.finitura;
-        newProduct.coloreRal = product.coloreRal;
-        newProduct.pesoLordo = product.pesoLordo;
-        newProduct.pesoNetto = product.pesoNetto;
-        newProduct.spessore = product.spessore;
-        newProduct.larghezza = product.larghezza;
-        newProduct.classeLarghezza = product.classeLarghezza;
+        newProduct.colore = product.colore;
+        newProduct.ral = product.ral;
+        newProduct.spessoreNominale = product.spessoreNominale;
+        newProduct.spessoreEffettivo = product.spessoreEffettivo;
+        newProduct.larghezzaNominale = product.larghezzaNominale;
+        newProduct.larghezzaEffettiva = product.larghezzaEffettiva;
         newProduct.lunghezza = product.lunghezza;
-        newProduct.numFogli = product.numFogli;
+        newProduct.pesoIniziale = product.pesoIniziale;
+        newProduct.pesoNetto = product.pesoNetto;
+        newProduct.pesoLordo = product.pesoLordo;
+        newProduct.superficie = product.superficie;
         newProduct.prezzo = product.prezzo;
         newProduct.difetti = product.difetti;
         newProduct.stabilimento = product.stabilimento;
-        newProduct.superficie = product.superficie;
+        newProduct.ubicazione = product.ubicazione;
+        newProduct.cliente = product.cliente;
+        newProduct.numPezzi = product.numPezzi;
         if (!product.stato) {
             newProduct.stato = "sospeso";
-        } else newProduct.stato = product.stato
+        } else newProduct.stato = product.stato;
         newProduct.save(function(err) {
             if (err) {
                 deferred.reject(err);
@@ -214,18 +225,23 @@ module.exports = {
                     result.qualita = product.qualita;
                     result.scelta = product.scelta;
                     result.finitura = product.finitura;
-                    result.coloreRal = product.coloreRal;
-                    result.pesoLordo = product.pesoLordo;
-                    result.pesoNetto = product.pesoNetto;
-                    result.spessore = product.spessore;
-                    result.larghezza = product.larghezza;
-                    result.classeLarghezza = product.classeLarghezza;
+                    result.colore = product.colore;
+                    result.ral = product.ral;
+                    result.spessoreNominale = product.spessoreNominale;
+                    result.spessoreEffettivo = product.spessoreEffettivo;
+                    result.larghezzaNominale = product.larghezzaNominale;
+                    result.larghezzaEffettiva = product.larghezzaEffettiva;
                     result.lunghezza = product.lunghezza;
-                    result.numFogli = product.numFogli;
+                    result.pesoIniziale = product.pesoIniziale;
+                    result.pesoNetto = product.pesoNetto;
+                    result.pesoLordo = product.pesoLordo;
+                    result.superficie = product.superficie;
                     result.prezzo = product.prezzo;
                     result.difetti = product.difetti;
                     result.stabilimento = product.stabilimento;
-                    result.superficie = product.superficie;
+                    result.ubicazione = product.ubicazione;
+                    result.cliente = product.cliente;
+                    result.numPezzi = product.numPezzi;
                 }
                 result.save(function(err) {
                     if (err) {
@@ -245,22 +261,66 @@ module.exports = {
         return product;
     },
 
-    increaseScarto: function(productId,scarto) {
-        var query = {$inc: {'scarto': scarto}};
-        var product = this.updateProduct(productId,query);
-        return product;
-    },
-
     increaseLavorazione: function(productId) {
         var query = {$inc: {'lavorazione': 1}};
         var product = this.updateProduct(productId,query);
         return product;
     },
 
-    setFatherId: function(productId,fatherId) {
-        var query = {'fatherId': fatherId};
+    increaseScarto: function(productId,scarto) {
+        var query = {$inc: {'scarto': scarto}};
         var product = this.updateProduct(productId,query);
         return product;
+    },
+
+    addFatherId: function(productId,fatherId) {
+        var query = {$push: {'fatherId': fatherId}};
+        var product = this.updateProduct(productId,query);
+        return product;
+    },
+
+    setReso: function(productId,reso) {
+        var query = {$inc: {'reso': reso}};
+        var product = this.updateProduct(productId,query);
+        return product;
+    },
+
+    createReso: function(product,reso) {
+        var deferred = Q.defer();
+        var newProduct = new productModel();
+        newProduct.matricola = product.matricola;
+        newProduct.numeroCollo = product.numeroCollo+"L";
+        newProduct.anno = product.year;
+        newProduct.tipo = product.tipo;
+        newProduct.materiale = product.materiale;
+        newProduct.qualita = product.qualita;
+        newProduct.scelta = product.scelta;
+        newProduct.finitura = product.finitura;
+        newProduct.colore = product.colore;
+        newProduct.ral = product.ral;
+        newProduct.spessoreNominale = product.spessoreNominale;
+        newProduct.spessoreEffettivo = product.spessoreEffettivo;
+        newProduct.larghezzaNominale = product.larghezzaNominale;
+        newProduct.larghezzaEffettiva = product.larghezzaEffettiva;
+        newProduct.lunghezza = product.lunghezza;
+        newProduct.pesoIniziale = reso;
+        newProduct.pesoNetto = product.pesoNetto;
+        newProduct.pesoLordo = product.pesoLordo;
+        newProduct.superficie = product.superficie;
+        newProduct.prezzo = product.prezzo;
+        newProduct.difetti = product.difetti;
+        newProduct.stabilimento = product.stabilimento;
+        newProduct.ubicazione = product.ubicazione;
+        newProduct.cliente = product.cliente;
+        newProduct.numPezzi = product.numPezzi;
+        newProduct.save(function(err) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(newProduct);
+            }
+        });
+        return deferred.promise;
     }
 
 

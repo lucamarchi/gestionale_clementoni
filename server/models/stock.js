@@ -8,27 +8,32 @@ var Q = require('q');
 var Schema = mongoose.Schema;
 
 var StockSchema = new Schema({
-    numeroCollo: {type: String},
+    numeroCollo: {type: String, require: true},
     matricola: {type: String},
     tipo: {type: String},
     materiale: {type: String},
     qualita: {type: String},
     scelta: {type: String},
     finitura: {type: String},
-    coloreRal: {type: String},
-    pesoLordo: {type: Number},
-    pesoNetto: {type: Number},
-    spessore: {type: Number},
-    larghezza: {type: Number},
-    classeLarghezza: {type: Number},
+    colore: {type: String},
+    ral: {type: String},
+    spessoreNominale: {type: Number},
+    spessoreEffettivo: {type: Number},
+    larghezzaNominale: {type: Number},
+    larghezzaEffettiva: {type: Number},
     lunghezza: {type: Number},
-    numFogli: {type: Number},
+    pesoIniziale: {type: Number},
+    pesoNetto: {type: Number},
+    pesoLordo: {type: Number},
+    superficie: {type: String},
     prezzo: {type: Number},
     difetti: {type: String},
-    stabilimento: {type: Number},
-    scarto: {type: Number},
-    superficie: {type: String},
-    clienteCod: {type: Number}
+    stabilimento: {type: String},
+    ubicazione: {type: String},
+    cliente: {type: String},
+    numPezzi: {type: Number},
+    stato: {type: String},
+    scarto: {type: Number, default: 0}
 });
 
 var stockModel = mongoose.model('Stock', StockSchema);
@@ -74,18 +79,23 @@ module.exports = {
         newStock.qualita = stock.qualita;
         newStock.scelta = stock.scelta;
         newStock.finitura = stock.finitura;
-        newStock.coloreRal = stock.coloreRal;
-        newStock.pesoLordo = stock.pesoLordo;
-        newStock.pesoNetto = stock.pesoNetto;
-        newStock.spessore = stock.spessore;
-        newStock.larghezza = stock.larghezza;
-        newStock.classeLarghezza = stock.classeLarghezza;
+        newStock.colore = stock.colore;
+        newStock.ral = stock.ral;
+        newStock.spessoreNominale = stock.spessoreNominale;
+        newStock.spessoreEffettivo = stock.spessoreEffettivo;
+        newStock.larghezzaNominale = stock.larghezzaNominale;
+        newStock.larghezzaEffettiva = stock.larghezzaEffettiva;
         newStock.lunghezza = stock.lunghezza;
-        newStock.numFogli = stock.numFogli;
+        newStock.pesoIniziale = stock.pesoIniziale;
+        newStock.pesoNetto = stock.pesoNetto;
+        newStock.pesoLordo = stock.pesoLordo;
+        newStock.superficie = stock.superficie;
         newStock.prezzo = stock.prezzo;
         newStock.difetti = stock.difetti;
         newStock.stabilimento = stock.stabilimento;
-        newStock.superficie = stock.superficie;
+        newStock.ubicazione = stock.ubicazione;
+        newStock.cliente = stock.cliente;
+        newStock.numPezzi = stock.numPezzi;
         newStock.save(function(err) {
             if (err) {
                 deferred.reject(err);
@@ -141,18 +151,23 @@ module.exports = {
                     result.qualita = stock.qualita;
                     result.scelta = stock.scelta;
                     result.finitura = stock.finitura;
-                    result.coloreRal = stock.coloreRal;
-                    result.pesoLordo = stock.pesoLordo;
-                    result.pesoNetto = stock.pesoNetto;
-                    result.spessore = stock.spessore;
-                    result.larghezza = stock.larghezza;
-                    result.classeLarghezza = stock.classeLarghezza;
+                    result.colore = stock.colore;
+                    result.ral = stock.ral;
+                    result.spessoreNominale = stock.spessoreNominale;
+                    result.spessoreEffettivo = stock.spessoreEffettivo;
+                    result.larghezzaNominale = stock.larghezzaNominale;
+                    result.larghezzaEffettiva = stock.larghezzaEffettiva;
                     result.lunghezza = stock.lunghezza;
-                    result.numFogli = stock.numFogli;
+                    result.pesoIniziale = stock.pesoIniziale;
+                    result.pesoNetto = stock.pesoNetto;
+                    result.pesoLordo = stock.pesoLordo;
+                    result.superficie = stock.superficie;
                     result.prezzo = stock.prezzo;
                     result.difetti = stock.difetti;
                     result.stabilimento = stock.stabilimento;
-                    result.superficie = stock.superficie;
+                    result.ubicazione = stock.ubicazione;
+                    result.cliente = stock.cliente;
+                    result.numPezzi = stock.numPezzi;
                     result.save(function(err) {
                         if (err) {
                             deferred.reject(err);
@@ -170,6 +185,49 @@ module.exports = {
         var query = {$set: {'clienteCod': clienteCod}};
         var stock = this.updateStock(stockId,query);
         return stock;
+    },
+
+    increaseScarto: function(stockId,scarto) {
+        var query = {$inc: {'scarto': scarto}};
+        var stock = this.updateStock(stockId,query);
+        return stock;
+    },
+
+    createReso: function(stock,reso) {
+        var deferred = Q.defer();
+        var newStock = new stockModel();
+        newStock.numeroCollo = stock.numeroCollo+"L";
+        newStock.matricola = stock.matricola;
+        newStock.tipo = stock.tipo;
+        newStock.materiale = stock.materiale;
+        newStock.qualita = stock.qualita;
+        newStock.scelta = stock.scelta;
+        newStock.finitura = stock.finitura;
+        newStock.colore = stock.colore;
+        newStock.ral = stock.ral;
+        newStock.spessoreNominale = stock.spessoreNominale;
+        newStock.spessoreEffettivo = stock.spessoreEffettivo;
+        newStock.larghezzaNominale = stock.larghezzaNominale;
+        newStock.larghezzaEffettiva = stock.larghezzaEffettiva;
+        newStock.lunghezza = stock.lunghezza;
+        newStock.pesoIniziale = reso;
+        newStock.pesoNetto = stock.pesoNetto;
+        newStock.pesoLordo = stock.pesoLordo;
+        newStock.superficie = stock.superficie;
+        newStock.prezzo = stock.prezzo;
+        newStock.difetti = stock.difetti;
+        newStock.stabilimento = stock.stabilimento;
+        newStock.ubicazione = stock.ubicazione;
+        newStock.cliente = stock.cliente;
+        newStock.numPezzi = stock.numPezzi;
+        newStock.save(function(err) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(newStock);
+            }
+        });
+        return deferred.promise;
     }
     
 

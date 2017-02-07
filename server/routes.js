@@ -25,6 +25,7 @@ module.exports = function (app, express) {
     require('./controllers/processController')(app,router);
     require('./controllers/expectedController')(app,router);
     require('./controllers/releaseController')(app,router);
+    require('./controllers/virtualController')(app,router);
 
     app.use('/api', router);
 

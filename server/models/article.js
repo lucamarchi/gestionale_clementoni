@@ -15,11 +15,15 @@ var ArticleSchema = new Schema({
     materiale: {type: String},
     sottoTipo: {type: String},
     quantita: {type: Number},
+    qualita: {type: String},
     prezzo: {type: String},
     spessore: {type: Number},
     lunghezza: {type: Number},
     larghezza: {type: Number},
-    peso: {type: Number},
+    lunghezzaAssegnata: {type: Number},
+    larghezzaAssegnata: {type: Number},
+    pesoSaldo: {type: Number, default: 0},
+    pesoIniziale: {type: Number},
     pesoAttuale: {type: Number},
     dataConsegna: {type: Date},
     scarto: {type: Number, default: 0},
@@ -28,8 +32,11 @@ var ArticleSchema = new Schema({
     stockId: {type: Schema.ObjectId, ref: 'Stock'},
     ordineCod: {type: Number},
     clienteCod: {type: Number},
+    nomeCod: {type: String},
     region: {type: String},
-    provincia: {type: String}
+    provincia: {type: String},
+    descrizione: {type: String},
+    reso: {type: Number, default: 0}
 });
 
 articleModel = mongoose.model('Article', ArticleSchema);
@@ -106,11 +113,12 @@ module.exports = {
         newArticle.spessore = article.spessore;
         newArticle.lunghezza = article.lunghezza;
         newArticle.larghezza = article.larghezza;
-        newArticle.peso = article.peso;
+        newArticle.pesoIniziale = article.pesoIniziale;
         newArticle.pesoAttuale = article.pesoAttuale;
         newArticle.ordineCod = article.codice;
         newArticle.clienteCod = article.clienteCod;
         newArticle.dataConsegna = article.dataConsegna;
+        newArticle.descrizione = article.descrizione;
         newArticle.save(function(err) {
             if (err) {
                 deferred.reject(err)
@@ -126,6 +134,19 @@ module.exports = {
         articleModel.findByIdAndUpdate(articleId,query,{new: true}).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
+            } else {
+                deferred.resolve(result);
+            }
+        });
+        return deferred.promise;
+    },
+
+    deleteArticle: function(id) {
+        var deferred = Q.defer();
+        var query = {'_id': id};
+        articleModel.remove(query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err)
             } else {
                 deferred.resolve(result);
             }
@@ -151,19 +172,23 @@ module.exports = {
                     result.spessore = article.spessore;
                     result.lunghezza = article.lunghezza;
                     result.larghezza = article.larghezza;
-                    result.peso = article.peso;
+                    result.lunghezzaAssegnata = article.lunghezzaAssegnata;
+                    result.larghezzaAssegnata = article.larghezzaAssegnata;
+                    result.qualita = article.qualita;
+                    result.pesoIniziale = article.pesoIniziale;
                     result.pesoAttuale = article.pesoAttuale;
                     result.ordineCod = article.codice;
                     result.clienteCod = article.clienteCod;
                     result.dataConsegna = article.dataConsegna;
-                }
-                result.save(function(err) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(result);
-                    }
-                });
+                    result.descrizione = article.descrizione;
+                    result.save(function(err) {
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(result);
+                        }
+                    });
+                } else return deferred.reject();
             }
         });
         return deferred.promise;
@@ -236,10 +261,35 @@ module.exports = {
         return article;
     },
 
+    addCodNameToArticle: function(articleId,pr) {
+        var query = {$set: {'nomeCod': pr}};
+        var article = this.updateArticle(articleId,query);
+        return article;
+    },
+
     updatePesoAttualeArticle: function(articleId,peso) {
         var query = {$set: {'pesoAttuale': peso}};
         var article = this.updateArticle(articleId,query);
         return article;
+    },
+
+    setReso: function(articleId,reso) {
+        var query = {$inc: {'reso': reso}};
+        var article = this.updateArticle(articleId,query);
+        return article;
+    },
+
+    findAllWithLength: function() {
+        var deferred = Q.defer();
+        var query = {'lunghezzaAssegnata': {$exists: true}};
+        articleModel.find(query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(result);
+            }
+        });
+        return deferred.promise;
     }
 
 };

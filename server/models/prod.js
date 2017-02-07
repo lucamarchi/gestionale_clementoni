@@ -11,7 +11,10 @@ var ProdSchema = new Schema({
     numero: {type: Number},
     codice: {type: String},
     dataCreazione: {type: Date,default: Date.now()},
-    articoliId: [{type: Schema.ObjectId, ref: 'Article', unique: true}]
+    articoliId: [{type: Schema.ObjectId, ref: 'Article', unique: true}],
+    pesoIniziale: {type: Number},
+    pesoLavorato: {type: Number, default: 0},
+    pesoSaldo: {type: Number}
 });
 
 prodModel = mongoose.model('Prod', ProdSchema);
@@ -131,6 +134,18 @@ module.exports = {
         return deferred.promise;
     },
 
+    setPesoInizialeProd: function(prodId,peso) {
+        var query = {$set: {'pesoIniziale': peso}};
+        var prod = this.updateProd(prodId, query);
+        return prod;
+    },
+
+    setPesoSaldoProd: function(prodId,peso) {
+        var query = {$set: {'pesoSaldo': peso}};
+        var prod = this.updateProd(prodId, query);
+        return prod;
+    },
+
     modifyProd: function(prodId, prod) {
         var deferred = Q.defer();
         var query = {'_id': prodId};
@@ -140,6 +155,8 @@ module.exports = {
             } else {
                 if (result || result !== null) {
                     result.codice = prod.codice;
+                    result.pesoIniziale = prod.pesoIniziale;
+                    result.pesoSaldo = prod.pesoSaldo;
                 }
                 result.save(function(err) {
                     if (err) {
