@@ -4,7 +4,7 @@
 	<uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="entryLimit" max-size="maxSize" class="pagination" boundary-links="true" force-ellipses="true"></uib-pagination>
 </div>
 
-<table class="table table-bordered table-hover">
+<table class="table table-condensed table-bordered table-hover">
 	<thead>
 <!--
 		<tr>
@@ -45,7 +45,7 @@
 
 
 			<th>
-				<select ng-model="spessore" ng-options="spess for spess in features.spessori" convert-to-float>
+				<select ng-model="spessore" ng-options="spess for spess in features.spessoriNominali" convert-to-float>
 					<option value="">-- seleziona --</option>
 				</select>
 			</th>

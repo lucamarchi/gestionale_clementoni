@@ -1,0 +1,38 @@
+<h1>ORDINI AL FORNITORE</h1>
+<br><br>
+<div>
+    <a ng-href="#/expected/create">
+        <button ng-if="user.role == 'logistica' || user.role == 'admin'" type="button" class="btn btn-primary btn-lg">Aggiungi nuovo ordine</button>
+    </a>
+</div>
+
+<br>
+
+<div>
+    <expected-table expected-list="expCtrl.expecteds" entry-limit="expCtrl.entryLimit" current-page="expCtrl.currentPage">
+        <table-pagination>
+            <pagination total-items="expCtrl.expecteds.length" current-page="expCtrl.currentPage" entry-limit="expCtrl.entryLimit"></pagination>
+        </table-pagination>
+        <table-filter>
+            <div class="row">
+                <div class="col-md-2">
+                    <select-fornitore-filter label-name="Fornitore" model="$parent.search" attribute-m="fornitore"></select-fornitore-filter>
+                </div>
+                <div class="col-md-2">
+                    <input-date-filter label-name="Data Prevista" model="$parent.search" attribute-m="dataPrevista"></input-date-filter>
+                </div>
+                <div class="col-md-2">
+                    <select-materiale-filter label-name="Materiale" model="$parent.search" attribute-m="materiale"></select-materiale-filter>
+                </div>
+                <div class="col-md-2">
+                    <select-tipo-filter label-name="Tipo" model="$parent.search" attribute-m="tipo"></select-tipo-filter>
+                </div>
+                <div class="col-md-2">
+                    <select-spessore-filter label-name="Spessore" model="$parent.search" attribute-m="spessore"></select-spessore-filter>
+                </div>
+            </div>
+            <br>
+        </table-filter>
+    </expected-table>
+</div>
+

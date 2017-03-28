@@ -1,0 +1,15 @@
+<h1>ORDINI AL FORNITORE</h1>
+<br><br>
+<h3>INSERIMENTO ORDINE AL FORNITORE</h3>
+<br><br>
+<fieldset>
+    <expected-table expected-list="expCreateCtrl.expecteds" entry-limit="expCreateCtrl.expecteds.length" current-page="expCreateCtrl.currentPage"></expected-table>
+</fieldset>
+
+<br><br>
+
+<fieldset>
+   <expected-form model=expCreateCtrl.expected insert-action=expCreateCtrl.addExpected(expCreateCtrl.expected) complete-action=expCreateCtrl.confirmExpectedOrder(expCreateCtrl.expecteds)></expected-form>
+</fieldset>
+<br><br><br>
+<!--{{expCreateCtrl.expected | json}}-->

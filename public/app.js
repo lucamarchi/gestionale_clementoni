@@ -1,4 +1,4 @@
-var store = angular.module('store', ['ngRoute', 'ngResource'/*, 'ngTouch', 'ngAnimate'*/, 'ui.bootstrap']);
+var store = angular.module('store', ['ngRoute', 'ngResource', 'ngTouch', 'ngAnimate', 'ui.bootstrap']);
 
 store.constant("myConfig", {
 	"url": "http://localhost:8080",
@@ -8,21 +8,30 @@ store.constant("myConfig", {
 store.constant("features", {
 	"tipi": ["coil", "nastro", "piana","ondulata", "grecata", "pressopiegata", "collaboranteh55", "collaboranteh55-s", "collaboranteh75", "collaboranteh75-s"],
 	"materiali": ["zincato", "decapato","elettrozincato", "laf", "preverniciato", "caldo", "aluzinc", "alluminato", "inox"],
-	"qualitaZincato": ["dx51d", "dx52d", "dx53d", "dx54d","s250gd","s280gd"],
-	"qualitaDecapato": ["dd11", "dd12", "dd13", "dd14","s235jr","s355jr","s355mc","s420mc"],
-	"qualitaLaf": ["dc01", "dc02", "dc03", "dc04"],
-	"qualitaCaldo": ["s235jr", "s275jr", "s355jr","s235jo", "s275jo", "s355jo","s235j2", "s275j2", "s355j2"],
-	"qualitaPreverniciato": ["dx51d", "dx52d", "dx53d", "dx54d"],
-	"qualitaElettrozincato": ["dc01", "dc02", "dc03", "dc04"],
-	"qualitaInox":["430","304","316","303l","304t","316l","316t"],
+	"qualita": {
+        "zincato": ["dx51d", "dx52d", "dx53d", "dx54d","s250gd","s280gd"],
+        "decapato": ["dd11", "dd12", "dd13", "dd14","s235jr","s355jr","s355mc","s420mc"],
+        "laf": ["dc01", "dc02", "dc03", "dc04"],
+        "caldo": ["s235jr", "s275jr", "s355jr","s235jo", "s275jo", "s355jo","s235j2", "s275j2", "s355j2"],
+        "preverniciato": ["dx51d", "dx52d", "dx53d", "dx54d"],
+        "elettrozincato": ["dc01", "dc02", "dc03", "dc04"],
+        "inox":["430","304","316","303l","304t","316l","316t"]
+    },
 	"scelte":["a", "b", "c", "0"],
-	"finitureZincPrev":["z100", "z140", "z200", "z275"],
-	"finitureInox": ["2b","ba", "sb", "satinato"],
-	"colori":["v","bg","tdm","rs"],
-	"superficiZincato":["br","mf","f","skl"],
-	"spessori": ["0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.2", "1.5", "1.8", "2", "2.5", "3", "4", "5", "6", "8", "10","12"],
+	"finiture": {
+        "zincato":["z100", "z140", "z200", "z275"],
+        "preverniciato":["z100", "z140", "z200", "z275"],
+        "inox": ["2b","ba", "sb", "satinato"]
+    },
+	"colori": {
+        "preverniciato": ["v","bg","tdm","rs"]  
+    },
+	"superfici": {
+        "zincato":["br","mf","f","skl"]
+    },
+	"spessoriNominali": ["0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.6", "0.7", "0.8", "0.9", "1", "1.2", "1.5", "1.8", "2", "2.5", "3", "4", "5", "6", "8", "10","12"],
 	"lunghezze": ["2000","2500","3000"],
-	"classiLarghezza":["1000", "1250", "1500"],
+	"larghezzeNominali":["1000", "1250", "1500"],
 	"stati": ["sospeso", "approvato", "respinto"],
 	"stabilimenti": ["1", "2"],
 	"fornitori": ["21","15","7","5","4","2","1"],
@@ -30,23 +39,23 @@ store.constant("features", {
 	"unita":["0","1","01"]
 });
 
-store.config(function ($httpProvider) {
-    $httpProvider.interceptors.push('TokenInterceptor');
-});
+
 
 store.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
     $routeProvider
 		.when('/', {
-        	templateUrl: 'public/stock/stock.html',
-			controller: 'stockController',
+        	templateUrl: 'public/stock/templates/stock.html',
+			controller: 'StockController',
+            controllerAs: 'stockCtrl',
 			access: { 
 				requiredLogin: true 
 			}
       	})
 		
       	.when('/stock', {
-        	templateUrl: 'public/stock/stock.html',
-			controller: 'stockController',
+        	templateUrl: 'public/stock/templates/stock.html',
+			controller: 'StockController',
+            controllerAs: 'stockCtrl',
 			access: { 
 				requiredLogin: true 
 			}
@@ -60,37 +69,70 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
 //			}
 //      	})
 	
-		.when('/carichiIn', {
-        	templateUrl: 'public/carichi_in/carichi_in.html',
-			controller: 'carichiInController',
+		.when('/inbound', {
+        	templateUrl: 'public/inbound/templates/inbounds.html',
+			controller: 'InboundController',
+            controllerAs: 'inCtrl',
+			access: { 
+				requiredLogin: true 
+			}
+      	})
+    
+        .when('/inbound/create', {
+        	templateUrl: 'public/inbound/templates/inbound-create.html',
+			controller: 'InboundCreateController',
+            controllerAs: 'inCreateCtrl',
+			access: { 
+				requiredLogin: true 
+			}
+      	})
+    
+        .when('/inbound/update/:id', {
+        	templateUrl: 'public/inbound/templates/inbound-update.html',
+			controller: 'InboundUpdateController',
+            controllerAs: 'inUpdateCtrl',
 			access: { 
 				requiredLogin: true 
 			}
       	})
 	
 		.when('/expected', {
-        	templateUrl: 'public/expected/expecteds.html',
-			controller: 'expectedController',
+        	templateUrl: 'public/expected/templates/expecteds.html',
+			controller: 'ExpectedController',
+            controllerAs: 'expCtrl',
+			access: { 
+				requiredLogin: true 
+			}
+      	})
+    
+        .when('/expected/create', {
+        	templateUrl: 'public/expected/templates/expected-create.html',
+			controller: 'ExpectedCreateController',
+            controllerAs: 'expCreateCtrl',
 			access: { 
 				requiredLogin: true 
 			}
       	})
 	
+        .when('/cut', {
+        	templateUrl: 'public/cut/templates/cuts.html',
+			controller: 'CutController',
+            controllerAs: 'cutCtrl',
+			access: { 
+				requiredLogin: true
+			}
+      	})
+    
+    
 		.when('/login', {
-        	templateUrl: 'public/login/login.html',
-			controller:'loginController',
+        	templateUrl: 'public/login/templates/login.html',
+			controller:'LoginController',
 			access: { 
 				requiredLogin: false 
 			}
       	})
 	
-		.when('/cut', {
-        	templateUrl: 'public/cut/cuts.html',
-			controller: 'cutController',
-			access: { 
-				requiredLogin: true
-			}
-      	})
+		
 	
 		.when('/productionSort', {
         	templateUrl: 'public/production/riepilogo.html',
@@ -119,16 +161,22 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
 		.otherwise({
         	redirectTo: '/'
       	});
+    
+        $locationProvider.hashPrefix('');
 		
 }]);
 
+
+store.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('TokenInterceptor');
+});
 
 store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', function($rootScope, $location, AuthenticationService, UserService) {
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
 		AuthenticationService.save({},{},
 			function(resp) {
 				$rootScope.isLogged = true;
-				$rootScope.userRole = UserService.getUser().role;
+				$rootScope.user = UserService.getUser();
 			},
 			function(err) {
 				if (nextRoute.access && nextRoute.access.requiredLogin) {
@@ -139,10 +187,11 @@ store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', fu
 			}
 		);
 	});
-	
+
 	$rootScope.logout = function () {
 		$rootScope.isLogged = false;
 		UserService.emptySession();
+        delete $rootScope.user;
 		$location.path("/login");
 	}
 }]);

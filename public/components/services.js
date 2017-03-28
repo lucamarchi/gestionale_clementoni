@@ -1,63 +1,5 @@
 var store = angular.module('store');
 
-store.factory('orderFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-	return $resource(myConfig.url+'/api/orders/:id',
-		{
-			id: "@id"
-		}, 
-		{
-			update: {method:'PUT'},
-			getAll: {method:'GET', isArray: false}
-		}
-	);
-}]);
-
-store.factory('productFactory',  ['$resource', 'myConfig', function ($resource, myConfig) {
-    return $resource(myConfig.url+'/api/products/:id',
-		{
-			id: "@id"
-		}, 
-		{
-			update:{method:'PUT'}
-  		}
-	);
-}]);
-
-
-
-/*-----------------------> ORDINI DI TAGLIO <--------------------------------------------*/
-store.factory('cutFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return {
-		resourceGroup: function () {
-			return $resource(myConfig.url+'/api/cuts/:id',
-				{
-					id: "@id"
-				}, 
-				{
-					getAll: {method:'GET', isArray: false}
-				}
-			);
-		},
-		resource: function () {
-			return $resource(myConfig.url+'/api/cut/:id',
-				{
-					id: "@id"
-				}, 
-				{
-					update: {method:'PUT'},
-				}
-			);
-		},
-		resourceRefresh: function () {
-			return resource = $resource(myConfig.url+'/api/cuts/update', {},
-				{
-					refresh: {method:'GET', isArray: false}
-				}
-			);
-		}
-	}
-}]);
-
 
 /*--------------------------> PRODUZIONE <----------------------------------------------------*/
 store.factory('articleFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
@@ -123,19 +65,6 @@ store.factory('productionStateFactory', ['$resource', 'myConfig', function ($res
   	);
 }]);
 
-/*--------------------------------> EXPECTED LOAD<-------------------------------------*/
-store.factory('expectedFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return resource = $resource(myConfig.url+'/api/expecteds/:id', 
-		{
-			id: "@id"
-		},
-		{
-			update: {method:'PUT'},
-			getAll: {method:'GET', isArray: false}
-		}
-  	);
-}]);
-
 /*--------------------------------> PROCESS<-------------------------------------*/
 store.factory('processFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
     return {
@@ -189,11 +118,12 @@ store.factory('UserService', ['$resource','$window', 'myConfig', function ($reso
 			return $resource(myConfig.url+'/api/authenticate', {});
 		},
 		getUser: function(){
-			return {username : $window.sessionStorage.user, role: $window.sessionStorage.role};
+			return {username: $window.sessionStorage.username, role:$window.sessionStorage.role};
 		},
-		setUser: function(user, role) {
-			$window.sessionStorage.user = user;
-			$window.sessionStorage.role = role;
+		setUser: function(username, role) {
+            $window.sessionStorage.username = username;
+            $window.sessionStorage.role = role;
+            console.log($window.sessionStorage.username,$window.sessionStorage.role )
 		},
 		getToken: function(){
 			return $window.sessionStorage.token;
@@ -202,8 +132,8 @@ store.factory('UserService', ['$resource','$window', 'myConfig', function ($reso
 			$window.sessionStorage.token = token;
 		},
 		emptySession: function() {
-			delete $window.sessionStorage.user;	
-			delete $window.sessionStorage.role;
+			delete $window.sessionStorage.username;
+            delete $window.sessionStorage.role;
 			delete $window.sessionStorage.token;
 		}
 	};
@@ -227,6 +157,7 @@ store.factory('TokenInterceptor', ['$q', '$window', '$location', '$rootScope', '
  
         requestError: function(rejection) {
             return $q.reject(rejection);
+            console.log("bbbb");
         },
   
         /* Revoke client authentication if 401 is received */

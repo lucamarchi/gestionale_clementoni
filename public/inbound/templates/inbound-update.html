@@ -1,0 +1,15 @@
+<h1>CARICHI IN ENTRATA
+    <a ng-href="#/inbound">
+        <button ng-if="user.role == 'logistica' || user.role == 'admin'" type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home" aria-hidden="true"></button>
+    </a>
+</h1>
+<br>
+<h3><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Modifica del carico</h3>
+<br><br>
+<inbound-set models="inUpdateCtrl.models" complete-action="inUpdateCtrl.updateInboundOrder(inboundOrder, inboundProducts, selectedExpecteds)">
+    <confirm-button>
+        <button ng-if="$parent.orderFormValid" type="button" class="btn btn-warning btn-block" ng-click="">Completa</button>
+        <button ng-if="!$parent.orderFormValid" type="button" class="btn btn-warning btn-block" disabled>Completa</button>
+        {{inbound}}
+    </confirm-button>
+</inbound-set>

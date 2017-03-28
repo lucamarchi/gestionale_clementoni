@@ -1,0 +1,56 @@
+<table class="table table-condensed table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Numero Collo</th>
+            <th>Matricola</th>
+            <th>Materiale</th>
+            <th>Tipo</th>
+            <th>Spess Nom.</th>
+            <th>Spess Eff.</th>
+            <th>Largh Nom.</th>
+            <th>Largh Eff.</th>
+            <th>Qualita</th>
+            <th>Scelta</th>
+            <th>Finitura</th>
+            <th>Colore Ral</th>
+            <th>Superficie</th>
+            <th>Lungh</th>
+            <th>N.Fogli</th>
+            <th>Peso Iniziale</th>
+            <th>Peso Netto</th>
+            <th>Peso Lordo</th>
+            <th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
+            <th>Difetti</th>
+            <th>Stab</th>
+            <th>Scarto</th>
+            <th>Stato</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="inbound in inProdTableCtrl.inboundList">
+            <td>{{inbound.numeroCollo}}</td>
+            <td>{{inbound.matricola}}</td>
+            <td>{{inbound.materiale}}</td>
+            <td>{{inbound.tipo}}</td>
+            <td>{{inbound.spessore}}</td>
+            <td>{{inbound.classeLarghezza}}</td>
+            <td>{{inbound.larghezza}}</td>
+            <td>{{inbound.qualita}}</td>
+            <td>{{inbound.scelta}}</td>
+            <td>{{inbound.finitura}}</td>
+            <td>{{inbound.coloreRal}}</td>
+            <td>{{inbound.superficie}}</td>
+            <td>{{inbound.lunghezza}}</td>
+            <td>{{inbound.numFogli}}</td>
+            <td>{{inbound.pesoIniziale}}</td>
+            <td>{{inbound.pesoNetto}}</td>
+            <td>{{inbound.pesoLordo}}</td>
+            <td ng-if="userRole == 'logistica' || userRole == 'admin'">{{inbound.prezzo}}</td>
+            <td>{{inbound.difetti}}</td>
+            <td>{{inbound.stabilimento}}</td>
+            <td>{{inbound.scarto}}</td>
+            <td>{{inbound.stato}}</td>
+            <td ng-transclude="buttons"></td>
+        </tr>
+    </tbody>
+</table>

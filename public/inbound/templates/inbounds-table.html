@@ -1,0 +1,42 @@
+<div ng-transclude="pagination"></div>
+<table class="table table-condensed table-bordered table-hover">
+<!--
+	<thead>
+		<tr>
+			<th><input ng-model="ddt"></th>
+			<th>
+				<select ng-model="fornitore" ng-options="fornitori for fornitori in features.fornitori">
+				<option value="">-- seleziona --</option>
+				</select>
+			</th>
+			<th><input type="date" ng-model="dataDdt"></th>
+		</tr>
+-->
+	    <tr>
+			<th>DDT</th>
+  			<th>Fornitore</th>
+			<th>Data ddt</th>
+			<th>Data Arrivo</th>
+		</tr>
+	</thead>
+  	<tbody>
+    	<tr ng-repeat="inbound in inTableCtrl.inboundList | filterca:ddt:fornitore:dataDdt | orderBy:'dataDdt':true | startFrom:(inTableCtrl.currentPage-1)*inTableCtrl.entryLimit | limitTo:inTableCtrl.entryLimit">
+			<td>
+                <modal-directive button-action='inTableCtrl.getInbound(inbound._id)' button-name='{{inbound.ddt}}' modal-content="inTableCtrl.inboundModalContent"></modal-directive>
+            </td>
+  			<td>{{inbound.fornitore}}</td>
+			<td custom-date model="inbound" attribute="dataDdt"></td>
+			<td custom-date model="inbound" attribute="dataArrivo"></td>
+			<td>
+                <a ng-href="#/inbound/update/{{inbound._id}}">
+				    <button type="button" class="btn btn-warning btn-block">Modifica<span class="glyphicon glyphicon-cog"></span>
+                    </button>
+                </a>
+            </td>
+            <td>
+				<button type="button" class="btn btn-danger btn-block" ng-click='inTableCtrl.deleteInbound(inbound)'>Cancella <span class="glyphicon glyphicon-trash"></button>	
+			</td>
+		</tr>
+	</tbody>
+</table>
+    

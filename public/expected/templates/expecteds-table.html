@@ -1,0 +1,47 @@
+<div ng-transclude="pagination"></div>
+<div ng-transclude="filters"></div>
+<table class="table table-condensed table-bordered table-hover">
+    <thead>
+		<tr>
+            <th>Fornitore</th>
+            <th>Data Prevista</th>
+			<th>Materiale</th>
+			<th>Tipo</th>
+			<th>Spessore</th>
+			<th>Larghezza</th>
+            <th>Lunghezza</th>
+			<th>Superficie</th>
+            <th>Qualita</th>
+			<th>Finitura</th>
+			<th>Colore</th>
+            <th>Scelta</th>
+            <th ng-if="user.role == 'logistica' || user.role == 'admin'">Prezzo (&euro;/t)</th>
+			<th>N. Pezzi</th>
+			<th>Peso Ordinato</th>
+            <th>Peso Consegnato</th>
+            <th>Peso Saldo</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="expected in expTableCtrl.expectedList | expectedFilter:search | orderBy:'dataPrevista'|startFrom:(expTableCtrl.currentPage-1)*expTableCtrl.entryLimit | limitTo:expTableCtrl.entryLimit">
+            <td>{{expected.fornitore}}</td>
+            <td custom-date model="expected" attribute="dataPrevista"></td>
+			<td>{{expected.materiale}}</td>
+			<td>{{expected.tipo}}</td>
+			<td>{{expected.spessore}}</td>
+			<td>{{expected.larghezza}}</td>
+			<td>{{expected.lunghezza}}</td>
+            <td>{{expected.superficie}}</td>
+            <td>{{expected.qualita}}</td>
+			<td>{{expected.finitura}}</td>
+			<td>{{expected.colore}}</td>
+            <td>{{expected.scelta}}</td>
+            <td ng-if="userRole == 'admin'">{{expected.prezzo}}</td>
+			<td>{{expected.numPezzi}}</td>
+			<td>{{expected.pesoOrdinato}}</td>
+			<td>{{expected.pesoConsegnato}}</td>
+            <td>{{expected.pesoSaldo}}</td>
+            <td ng-transclude="button"></td>
+		</tr>
+	</tbody>
+</table>

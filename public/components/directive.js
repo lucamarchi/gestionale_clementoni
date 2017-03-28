@@ -28,15 +28,4 @@ store.directive('convertToFloat', function() {
   };
 });
 
-store.directive('expectedTable', function(){
-	return {
-		restrict: 'E',
-		templateUrl:'public/components/expected_table.html',
-		scope: { 
-			expectedList: "=",
-			featureList: "=",
-			selectExpectedButton: "=",
-			selectExpectedAction: "&"
-        } 
-	};
-});
+
