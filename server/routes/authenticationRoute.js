@@ -76,6 +76,8 @@ module.exports = function(app, jwt, apiRoutes) {
                     message: 'No token'
                 });
             }
-        });
+        })
+
+    .post('/create')
 
 };

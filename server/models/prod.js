@@ -11,10 +11,10 @@ var ProdSchema = new Schema({
     numero: {type: Number},
     codice: {type: String},
     dataCreazione: {type: Date,default: Date.now()},
-    articoliId: [{type: Schema.ObjectId, ref: 'Article', unique: true}],
-    pesoIniziale: {type: Number},
+    articoliId: [{type: Schema.ObjectId, ref: 'Article'}],
+    pesoIniziale: {type: Number, default: 0},
     pesoLavorato: {type: Number, default: 0},
-    pesoSaldo: {type: Number}
+    pesoSaldo: {type: Number, default: 0}
 });
 
 prodModel = mongoose.model('Prod', ProdSchema);
@@ -100,17 +100,10 @@ module.exports = {
         return deferred.promise;
     },
 
-    removeArticleToProd: function(articleId) {
-        var deferred = Q.defer();
+    removeArticleToProd: function(prodId,articleId) {
         var query = {$pull: {'articoliId': articleId}};
-        prodModel.findOneAndUpdate({articoliId: articleId},query).exec(function(err,result) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(result);
-            }
-        });
-        return deferred.promise;
+        var prod = this.updateProd(prodId,query);
+        return prod;
     },
 
     findNewNumeroProd: function() {
@@ -121,12 +114,9 @@ module.exports = {
             } else {
                 if (!result) {
                     var number = 1;
-                    console.log(number);
                     deferred.resolve(number);
                 } else {
-                    console.log(result);
                     var number = result.numero+1;
-                    console.log(number)
                     deferred.resolve(number);
                 }
             }
@@ -135,13 +125,13 @@ module.exports = {
     },
 
     setPesoInizialeProd: function(prodId,peso) {
-        var query = {$set: {'pesoIniziale': peso}};
+        var query = {$inc: {'pesoIniziale': peso}};;
         var prod = this.updateProd(prodId, query);
         return prod;
     },
 
     setPesoSaldoProd: function(prodId,peso) {
-        var query = {$set: {'pesoSaldo': peso}};
+        var query = {$inc: {'pesoSaldo': peso}};
         var prod = this.updateProd(prodId, query);
         return prod;
     },

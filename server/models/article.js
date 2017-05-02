@@ -4,7 +4,6 @@
 
 var mongoose = require('mongoose');
 var Q = require('q');
-var Stock = require('./stock');
 
 var Schema = mongoose.Schema;
 
@@ -29,7 +28,7 @@ var ArticleSchema = new Schema({
     scarto: {type: Number, default: 0},
     statoProduzione: {type: String},
     statoEvasione: {type: String},
-    stockId: {type: Schema.ObjectId, ref: 'Stock'},
+    productId: {type: Schema.ObjectId, ref: 'Product'},
     ordineCod: {type: Number},
     clienteCod: {type: Number},
     nomeCod: {type: String},
@@ -74,9 +73,22 @@ module.exports = {
         return deferred.promise;
     },
 
-    findByStatus: function(status) {
+    findByStatusProd: function(status) {
         var deferred = Q.defer();
         var query = {'statoProduzione': status};
+        articleModel.find(query).exec(function(err,result) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(result);
+            }
+        });
+        return deferred.promise;
+    },
+
+    findByStatusEvas: function(status) {
+        var deferred = Q.defer();
+        var query = {'statoEvasione': status};
         articleModel.find(query).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
@@ -194,8 +206,8 @@ module.exports = {
         return deferred.promise;
     },
 
-    addStockToArticle: function(articleId,stockId) {
-        var query = {'stockId': stockId};
+    addProductToArticle: function(articleId,productId) {
+        var query = {'productId': productId};
         var article = this.updateArticle(articleId, query);
         return article;
     },
@@ -218,16 +230,16 @@ module.exports = {
         return article;
     },
 
-    unsetStockToArticle: function(articleId) {
-        var query = {$unset: {'stockId': ''}};
+    unsetProductToArticle: function(articleId) {
+        var query = {$unset: {'productId': ''}};
         var article = this.updateArticle(articleId,query);
         return article;
     },
 
-    removeStockToArticle: function(stockId) {
+    removeProductToArticle: function(productId) {
         var deferred = Q.defer();
-        var query = {$unset: {'stockId': ''}};
-        articleModel.update({'stockId': stockId},query).exec(function(err,result) {
+        var query = {$unset: {'productId': ''}};
+        articleModel.update({'productId': productId},query).exec(function(err,result) {
             if (err) {
                 deferred.reject(err);
             } else {

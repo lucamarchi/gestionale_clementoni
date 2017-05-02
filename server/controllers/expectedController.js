@@ -1,124 +1,42 @@
 /**
- * Created by luca on 07/06/16.
+ * Created by luca on 04/04/17.
  */
 
-var Expected = require('./../models/expected');
-var Article = require('./../models/article');
-var Customer = require('./../models/customer');
-var configs = require('./../configs/url');
 var Q = require('q');
+var Expected = require('./../models/expected');
 
-module.exports = function(app, apiRoutes) {
+module.exports = {
 
-    apiRoutes
-        .get('/expecteds', function(req,res,next) {
-            Expected.findAll()
-                .then(function(result) {
-                    if (!result || result.length == 0) {
-                        res.status(200).json({
-                            "success": false,
-                            "message": "Expected not found",
-                            "expected": []
-                        });
-                    } else {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Expected list",
-                            "expected": result
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
+    createExpecteds: function(expecteds) {
+        var deferred = Q.defer();
+        Q.all(expecteds.map(function(currExpected) {
+            return Expected.saveNewExpected(currExpected);
+        })).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
 
-        .get('/expecteds/:expected_id', function(req,res,next) {
-            var expectedId = req.params.expected_id;
-            Expected.findById(expectedId)
-                .then(function(result) {
-                    if (!result || result.length == 0) {
-                        res.status(200).json({
-                            "success": false,
-                            "message": "Expected not found"
-                        });
-                    } else {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Expected list",
-                            "expected": result
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
+    modifyOrDeleteExpected: function(expecteds) {
+        var deferred = Q.defer();
+        var promises = [];
+        expecteds.forEach(function(currExpected) {
+            var newMethod;
+            if (currExpected.pesoSaldo <= 0) {
+                newMethod = Expected.deleteExpected(currExpected._id);
+            } else {
+                newMethod = Expected.modifyExpected(currExpected._id, currExpected);
+            }
+            promises.push(newMethod);
+        });
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    }
 
-        .post('/expecteds', function(req,res,next) {
-            var expected = req.body.expected;
-            var promises = [];
-            expected.forEach(function(currExpected) {
-                var newMethod = Expected.saveNewExpected(currExpected);
-                promises.push(newMethod);
-            });
-            Q.all(promises).then(function(result) {
-                res.status(200).json({
-                    "success": true,
-                    "message": "Expected saved",
-                    "expected": result
-                });
-            }).catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
-
-        .put('/expecteds/:expected_id', function(req,res,next) {
-            var expected = req.body.expected;
-            var expectedId = req.params.expected_id;
-            Expected.modifyExpected(expectedId,expected)
-                .then(function(expected) {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Expected modified",
-                        "expected": expected
-                    });
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
-
-        .delete('/expecteds/:expected_id', function(req,res,next) {
-            var expectedId = req.params.expected_id;
-            Expected.deleteExpected(expectedId).then(function(err,result) {
-                    res.status(200).json({
-                    "success": true,
-                    "message": "Expected deleted"
-                });
-            }).catch(function(err) {
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
-                });
-            });
-        })
 };
-

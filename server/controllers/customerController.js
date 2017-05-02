@@ -1,117 +1,86 @@
 /**
- * Created by luca on 24/05/16.
+ * Created by luca on 05/04/17.
  */
 
+var Q = require('q');
+var Customer = require('./../models/customer');
 var Cut = require('./../models/cut');
 var Article = require('./../models/article');
-var Customer = require('./../models/customer');
-var request = require('./requestController');
-var configs = require('./../configs/url');
-var Q = require('q');
+var request = require('./../controllers/requestController');
 
-module.exports = function(app, apiRoutes) {
+module.exports = {
 
-    apiRoutes
-        .get('/customers/update', function(req,res,next) {
-           request.findCustomer().then(function(results) {
-               var promises = [];
-               results.forEach(function(currCustomer) {
-                   var newMethod = Customer.saveNewCustomer(currCustomer);
-                   promises.push(newMethod);
-               });
-               Q.all(promises).then(function(customers) {
-                   res.status(404).json({
-                       "success": true,
-                       "message": "Customers updated",
-                       "customers": customers
-                   });
-               })
-           }).catch(function(err) {
-               res.status(404).json({
-                   "success": false,
-                   "message": "Customers not updated",
-                   "err": err.message
-               });
-           })
-        })
-    
-        .get('/customers', function(req, res, next) {
-            Customer.findAll()
-                .then(function(result) {
-                    if (!result || result.length == 0) {
-                        res.status(200).json({
-                            "success": false,
-                            "message": "Customers not found",
-                            "customers": []
-                        });
-                    } else {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Customers list",
-                            "customers": result
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
+    findCustomers: function(cuts) {
+        var deferred = Q.defer();
+        request.findCustomer().then(function(tmpCustomers) {
+            if (tmpCustomers.length > 0) {
+                var result = Q(null);
+                Q.all(cuts.map(function(currCut) {
+                    result = result.then(function() {
+                        return checkAndSetCustomer(currCut._id, currCut.clienteCod, tmpCustomers)
                     });
+                })).then(function(finalResult) {
+                    deferred.resolve(finalResult);
                 });
-        })
-    
-        .get('/customer/:customer_id', function(req,res,next) {
-            var customerId = req.params.customer_id;
-            Customer.findById(customerId)
-                .then(function(result) {
-                    if (!result) {
-                        res.status(200).json({
-                            "success": false,
-                            "message": "Customer not found"
-                        });
-                    } else {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Customer found",
-                            "customer": result
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
-
-        .get('/customerCod/:cod_cliente', function(req,res,next) {
-            var codCliente = req.params.cod_cliente;
-            Customer.findByIdentity(codCliente).then(function(result) {
-                if (!result) {
-                    res.status(200).json({
-                        "success": false,
-                        "message": "Customer not found"
-                    });
-                } else {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Customer found",
-                        "customer": result
-                    });
-                }
-            }).catch(function(err) {
-                if (err.message === "Customer not found" && err.status === 400) {
-                    console.log("Customer not found");
-                }
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
-                });
-            });
+            } else {
+                deferred.reject();
+            }
+        }).catch(function(err) {
+           deferred.reject(err);
         });
+        return deferred.promise;
+    }
 
+};
+
+var checkAndSetCustomer = function(cutId,identity,tmpCustomers) {
+    var deferred = Q.defer();
+    Customer.findByIdentity(identity).then(function(customer) {
+        if (customer && customer.ident === identity) {
+            setCustomerToCut(cutId, customer).then(function (result) {
+                deferred.resolve(result);
+            });
+        } else {
+            tmpCustomers.forEach(function (currTmpCustomer) {
+                if (currTmpCustomer.ident === identity) {
+                    Customer.saveNewCustomer(currTmpCustomer).then(function (customer) {
+                        setCustomerToCut(cutId, customer).then(function (result) {
+                            deferred.resolve(result);
+                        });
+                    });
+                }
+            });
+        }
+    }).catch(function(err) {
+        deferred.reject(err);
+    });
+    return deferred.promise;
+};
+
+var setCustomerToCut = function(cutId,customer) {
+    var deferred = Q.defer();
+    Cut.addCustomerToCut(customer._id, cutId).then(function(cut) {
+        Cut.addRegionToCut(cutId,customer.regione.toLowerCase()).then(function(cutF) {
+            Cut.addNomeClienteToCut(cutId, customer.nome).then(function (cutN) {
+                Cut.addPRToCut(cutId, customer.provincia).then(function (cutP) {
+                    var articleIds = cutP.articoli;
+                    var promises = [];
+                    articleIds.forEach(function (currArticle) {
+                        var newMethod1 = Article.addRegionToArticle(currArticle, cutP.region);
+                        var newMethod2 = Article.addPRToArticle(currArticle, cutP.provincia);
+                        var newMethod3 = Article.addCodCutToArticle(currArticle, cutP.codice);
+                        promises.push(newMethod1);
+                        promises.push(newMethod2);
+                        promises.push(newMethod3);
+                    });
+                    Q.all(promises).then(function(result) {
+                        deferred.resolve(cutP);
+                    });
+                })
+            })
+        })
+    }).catch(function(err) {
+        deferred.reject(err);
+    });
+    return deferred.promise;
 };

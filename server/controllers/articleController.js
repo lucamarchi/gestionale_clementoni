@@ -1,230 +1,152 @@
 /**
- * Created by luca on 24/05/16.
+ * Created by luca on 05/04/17.
  */
 
-var Cut = require('./../models/cut');
-var Article = require('./../models/article');
-var Customer = require('./../models/customer');
-var request = require('./requestController');
-var configs = require('./../configs/url');
 var Q = require('q');
+var Article = require('./../models/article');
+var Cut = require('./../models/cut');
 
-module.exports = function(app, apiRoutes) {
+module.exports = {
 
-    apiRoutes
-        .get('/articles', function(req,res,next) {
-            Article.findAllWithStatus()
-                .then(function(result) {
-                    if (!result || result.length == 0) {
-                        res.status(200).json({
-                            "success": false,
-                            "message": "Articles not found",
-                            "articles": []
-                        });
-                    } else {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Article list",
-                            "articles": result
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
-    
-        .get('/articles/:status', function(req,res,next) {
-            var status = req.params.status;
-            Article.findByStatus(status)
-                .then(function(result) {
-                    if (!result || result.length == 0) {
-                        res.status(200).json({
-                            "success": false,
-                            "message": "Articles not found",
-							"articles": []
-                        });
-                    } else {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Article list",
-                            "articles": result
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
-    
-        .put('/articles/stock/:article_id', function(req,res,next) {
-            var articleId = req.params.article_id;
-            var stockId = req.body.stock._id;
-            Article.addStockToArticle(articleId,stockId)
-                .then(function(result) {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Stock add to article",
-                        "articles": result
-                    });
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
-    
-        .put('/articles/complete/:article_id', function(req,res,next) {
-            var articleId = req.params.article_id;
-            Article.setArticleComplete(articleId)
-                .then(function(result) {
-                    Article.unsetStockToArticle(articleId)
-                        .then(function(result) {
-                            res.status(200).json({
-                                "success": true,
-                                "message": "Article complete",
-                                "articles": result
-                            });
-                        })
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
+    retrieveArticles: function(articlesId) {
+        var deferred = Q.defer();
+        var promises = [];
+        articlesId.forEach(function(currArticle) {
+            var newMethod = Article.findById(currArticle);
+            promises.push(newMethod);
+        });
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
 
-        .delete('/article/:article_id', function(req,res,next) {
-            var articleId = req.params.article_id;
-            Article.deleteArticle(articleId)
-                .then(function(result) {
-                    Cut.removeArticleToCut(articleId).then(function(result) {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Article deleted"
-                        });
-                    });
-                }).catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-            });
-        })
+    setArticleInit: function(articleId,status) {
+        var deferred = Q.defer();
+        var promises = [];
+        promises.push(Article.setArticleStatusProd(articleId,status));
+        promises.push(Article.setArticleStatusEvas(articleId,status));
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
 
-        .put('/articles/:article_id', function(req,res,next) {
-            var articleId = req.params.article_id;
-            var article = req.body.article;
-            Article.modifyArticle(articleId, article).then(function(result) {
-                if (article.lunghezzaAssegnata && article.larghezzaAssegnata && article.qualita) {
-                    Cut.findByArticle(articleId).then(function (cut) {
-                        if (cut && cut !== null) {
-                            var promises = [];
-                            if (cut.articoli && cut.articoli.length > 0) {
-                                var articles = cut.articoli;
-                                articles.forEach(function (currArt) {
-                                    var newMethod = Article.findById(currArt);
-                                    promises.push(newMethod);
-                                });
-                                Q.all(promises).then(function (articles) {
-                                    var check = true;
-                                    articles.forEach(function (currArticles) {
-                                        if (!currArticles.lunghezzaAssegnata && !currArticles.larghezzaAssegnata && !article.qualita) {
-                                            check = false;
-                                        }
-                                    });
-                                    if (check) {
-                                        Cut.setCutReady(cut._id).then(function (result) {
-                                            res.status(200).json({
-                                                "success": true,
-                                                "message": "Article and cut modified"
-                                            })
-                                        });
-                                    } else {
-                                        res.status(200).json({
-                                            "success": true,
-                                            "message": "Article modified"
-                                        })
-                                    }
-                                });
-                            } else {
-                                res.status(200).json({
-                                    "success": true,
-                                    "message": "Article modified"
-                                });
-                            }
-                        } else {
-                            res.status(200).json({
-                                "success": true,
-                                "message": "Article modified"
-                            });
-                        }
-                    });
-                } else {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Article modified"
-                    })
+
+    setArticlesInit: function(articlesId,status) {
+        var deferred = Q.defer();
+        var promises = [];
+        articlesId.forEach(function(currArticle) {
+            var newMethodProd = Article.setArticleStatusProd(currArticle,status);
+            var newMethodEvas = Article.setArticleStatusEvas(currArticle,status);
+            promises.push(newMethodProd);
+            promises.push(newMethodEvas);
+        });
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    setArrayArticlesStatusProd: function(articlesId,status) {
+        var deferred = Q.defer();
+        var promises = [];
+        articlesId.forEach(function(currArticle) {
+            var newMethod = Article.setArticleStatusProd(currArticle._id,status);
+            promises.push(newMethod);
+        });
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    setArticlesStatusProd: function(articlesId,status) {
+        var deferred = Q.defer();
+        var promises = [];
+        articlesId.forEach(function(currArticle) {
+            var newMethod = Article.setArticleStatusProd(currArticle,status);
+            promises.push(newMethod);
+        });
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    setArticlesStatusEvas: function(articlesId,status) {
+        var deferred = Q.defer();
+        var promises = [];
+        articlesId.forEach(function(currArticle) {
+            var newMethod = Article.setArticleStatusEvas(currArticle,status);
+            promises.push(newMethod);
+        });
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    deleteArticle: function(articleId) {
+        var deferred = Q.defer();
+        var promises = [
+            Article.deleteArticle(articleId),
+            Cut.removeArticleToCut(articleId)
+        ];
+        Q.all(promises).then(function() {
+            deferred.resolve();
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    deleteArticles: function(articlesId) {
+        var deferred = Q.defer();
+        var promises = [];
+        articlesId.forEach(function(currArticle) {
+           var newMethod = Article.deleteArticle(currArticle);
+            promises.push(newMethod);
+        });
+        Q.all(promises).then(function() {
+            deferred.resolve();
+        }).catch(function(err) {
+           deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    checkArticlesLength: function(articlesId) {
+        var deferred = Q.defer();
+        var promises = [];
+        articlesId.forEach(function(currArticle) {
+            var newMethod = Article.findById(currArticle);
+            promises.push(newMethod);
+        });
+        Q.all(promises).then(function(articles) {
+            var check = true;
+            articles.forEach(function(currArticles) {
+                if (!currArticles.lunghezzaAssegnata && !currArticles.larghezzaAssegnata && !currArticles.qualita) {
+                    check = false;
                 }
-            }).catch(function(err) {
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
-                });
-            })
-        })
-
-        .get('/articles/region/:region_name', function(req,res,next) {
-            var region = req.params.region_name;
-            Cut.findByRegion(region).then(function(result) {
-                if (result && result.length > 0) {
-                    var promises = [];
-                    result.forEach(function(currCut) {
-                        if (currCut.articoli && currCut.articoli.length > 0) {
-                            var currArticles = currCut.articoli;
-                            currArticles.forEach(function(currArt) {
-                                var newMethod = Article.findById(currArt);
-                                promises.push(newMethod);
-                            });
-                        }
-                    });
-                    Q.all(promises).then(function(articles) {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Article by region list",
-                            "articles": articles
-                        });
-                    });
-                } else {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "No Article by this region",
-                        "articles": []
-                    });
-                }
-            }).catch(function(err) {
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
-                });
             });
-        })
+            deferred.resolve(check);
+        }).catch(function(err) {
+           deferred.reject(err);
+        });
+        return deferred.promise;
+    }
 
 };
-

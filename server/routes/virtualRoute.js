@@ -2,7 +2,6 @@
  * Created by luca on 27/01/17.
  */
 
-var Stock = require('./../models/stock');
 var Product = require('./../models/product');
 var Expected = require('./../models/expected');
 var Article = require('./../models/article');
@@ -13,7 +12,8 @@ module.exports = function(app, apiRoutes) {
     apiRoutes
         .get('/virtual', function(req, res, next) {
             var virtual = [];
-            Stock.findAll()
+            var data = {};
+            Product.findAll()
                 .then(function(stocks) {
                     var stockGrouped;
                     if (stocks.length > 0) {
@@ -86,10 +86,11 @@ module.exports = function(app, apiRoutes) {
                                 var finalMergeElem = newMergeElements(sortStock,sortArticle,sortExpected);
                                 lastVirtual.push(finalMergeElem);
                             }
+                            data.virtual = lastVirtual;
                             res.status(200).json({
                                 "success": true,
                                 "message": "Virtual stock",
-                                "virtual": lastVirtual
+                                "data": data
                             })
                         });
                     });
@@ -291,7 +292,7 @@ module.exports = function(app, apiRoutes) {
             if (!checkLocal) {
                 if (virtual[i][0].length > 0) {
                     var testNew = virtual[i][0][1];
-                    if (testNew.tipo == exp.tipo && testNew.qualita == exp.qualita
+                    if (testNew && testNew.tipo == exp.tipo && testNew.qualita == exp.qualita
                         && testNew.spessore == exp.spessore
                         && testNew.materiale == exp.materiale) {
                         if (virtual[i][2].length == 0) {

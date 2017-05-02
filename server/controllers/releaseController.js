@@ -1,252 +1,127 @@
 /**
- * Created by luca on 07/07/16.
+ * Created by luca on 18/04/17.
  */
 
-var Product = require('./../models/product');
-var Article = require('./../models/article');
-var Release = require('./../models/release');
 var Q = require('q');
+var Release = require('./../models/release');
+var Article = require('./../models/article');
 
-module.exports = function(app, apiRoutes) {
 
-    apiRoutes
-        .get('/releases', function(req, res, next) {
-            Release.findAll()
-                .then(function(result) {
-                    if (!result || result.length == 0) {
-                        res.status(200).json({
-                            "success": false,
-                            "message": "Releases not found",
-                            "releases": []
-                        });
-                    } else {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Releases list",
-                            "releases": result
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
+module.exports = {
 
-        .get('/release/:release_id', function(req,res,next) {
-            Release.findById(req.params.release_id)
-                .then(function(result) {
-                    if (!result) {
-                        res.status(200).json({
-                            "success": false,
-                            "message": "Release not found"
-                        });
-                    } else {
-                        var promisesArticle = [];
-                        var promisesProduct = [];
-                        if (result.productsId && result.productsId.length > 0) {
-                            var productsId = result.productsId;
-                            productsId.forEach(function (currProduct) {
-                                var newMethod = Product.findById(currProduct);
-                                promisesProduct.push(newMethod);
-                            });
-                        }
-                        if (result.articlesId && result.articlesId.length > 0) {
-                            var articlesId = result.articlesId;
-                            articlesId.forEach(function (currArticle) {
-                                var newMethod = Article.findById(currArticle.article);
-                                promisesArticle.push(newMethod);
-                            });
-                        }
-                        Q.all(promisesProduct).then(function (products) {
-                            Q.all(promisesArticle)
-                                .then(function (articles) {
-                                    res.status(200).json({
-                                        "success": true,
-                                        "message": "Release and product list",
-                                        "release": result,
-                                        "products": products,
-                                        "articles": articles
-                                    });
-                                });
-                        });
-                    }
-                })
-                .catch(function(err) {
-                    res.status(500).json({
-                        "success": false,
-                        "message": "Internal server error",
-                        "error": err.message
-                    });
-                });
-        })
-
-        .post('/release', function(req,res,next) {
-            var release = req.body.release;
-            Release.saveNewRelease(release).then(function(result) {
-                if (req.body.stocks && req.body.stocks.length > 0) {
-                    var stocks = req.body.stocks;
-                    var promises = [];
-                    var pesoTotale = 0;
-                    stocks.forEach(function(currStock) {
-                        pesoTotale += currStock.pesoNetto;
-                        var newMethod = Product.findByStock(currStock._id);
-                        promises.push(newMethod);
-                    });
-                    Q.all(promises).then(function(products) {
-                        if (products && products.length > 0) {
-                            var promises = [];
-                            products.forEach(function(currProduct) {
-                                var newMethod = Release.addProductToRelease(result._id,currProduct._id);
-                                promises.push(newMethod);
-                            });
-                            if (req.body.articles && req.body.articles.length > 0) {
-                                var articles = req.body.articles;
-                                articles.forEach(function(currArticle) {
-                                    var article = currArticle.article;
-                                    var quantita = currArticle.quantita;
-                                    var unita = currArticle.unita;
-                                    var triplaArticle = { article: article._id, quantita: quantita, unita: unita };
-                                    var newMethod = Release.addArticleToRelease(result._id,triplaArticle);
-                                    var newMethodStat = Article.setArticleStatusEvas(article._id, "assegnato");
-                                    var newMethodScalaArt = Article.updatePesoAttualeArticle(article._id,article.pesoAttuale);
-                                    var newMethodPesoTot = Release.addPesoTotaleToRelease(result._id,pesoTotale);
-                                    promises.push(newMethod);
-                                    promises.push(newMethodStat);
-                                    promises.push(newMethodPesoTot);
-                                    promises.push(newMethodScalaArt);
-                                })
-                            }
-                            Release.findNewNumeroRelease().then(function(number) {
-                                var query = {'numero': number};
-                                Release.updateRelease(result._id, query).then(function(result) {
-                                    Q.all(promises).then(function(resp) {
-                                        res.status(200).json({
-                                            "success": true,
-                                            "message": "Release saved",
-                                            "release": result
-                                        });
-                                    }).catch(function(err) {
-                                        res.status(500).json({
-                                            "success": false,
-                                            "message": "Internal server error",
-                                            "error": err.message
-                                        });
-                                    })
-                                });
-                            });
-                        }
-                    });
-                } else if (req.body.articles && req.body.articles.length > 0) {
-                    var articles = req.body.articles;
-                    var promises = [];
-                    articles.forEach(function(currArticle) {
-                        var article = currArticle.article;
-                        var quantita = currArticle.quantita;
-                        var unita = currArticle.unita;
-                        var triplaArticle = { article: article._id, quantita: quantita, unita: unita };
-                        var newMethod = Release.addArticleToRelease(result._id,triplaArticle);
-                        var newMethodStat = Article.setArticleStatusEvas(article._id, "assegnato");
-                        var newMethodScalaArt = Article.updatePesoAttualeArticle(article._id,article.pesoAttuale);
-                        promises.push(newMethod);
-                        promises.push(newMethodStat);
-                        promises.push(newMethodScalaArt);
-                    });
-                    Release.findNewNumeroRelease().then(function(number) {
-                        var query = {'numero': number};
-                        Release.updateRelease(result._id, query).then(function(result) {
-                            Q.all(promises).then(function(resp) {
-                                res.status(200).json({
-                                    "success": true,
-                                    "message": "Release saved",
-                                    "release": result
-                                });
-                            });
-                        });
-                    });
-                } else {
-                    Release.findNewNumeroRelease().then(function(number) {
-                        var query = {'numero': number};
-                        Release.updateRelease(result._id, query).then(function(result) {
-                            res.status(200).json({
-                                "success": true,
-                                "message": "Release saved",
-                                "release": result
-                            });
-                        });
-                    });
-                }
-            }).catch(function(err) {
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
-                });
-            })
-        })
-
-        .delete('/release/:release_id', function(req,res,next) {
-            var releaseId = req.params.release_id;
-            var promises = [];
-            Release.findById(releaseId).then(function(result) {
-                if (result && result.articlesId && result.articlesId.length > 0) {
-                    var articles = result.articlesId;
-                    articles.forEach(function(currArticle) {
-                        var newMethod = Article.setArticleStatusEvas(currArticle.article,"libero");
-                        promises.push(newMethod);
-                    });
-                }
-                var newMethod = Release.deleteRelease(releaseId);
-                promises.push(newMethod);
-                Q.all(promises).then(function(result) {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Release deleted"
-                    });
-                });
-            }).catch(function(err) {
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
+    createRelease: function(release) {
+        var deferred = Q.defer();
+        Release.saveNewRelease(release).then(function(currRelease) {
+            Release.findNewNumeroRelease().then(function(number) {
+                var query = {'numero': number};
+                Release.updateRelease(currRelease._id, query).then(function(result) {
+                    deferred.resolve(result);
                 });
             });
-        })
+        }).catch(function(err) {
+           deferred. reject(err);
+        });
+        return deferred.promise;
+    },
 
-        .put('/release/complete/:release_id', function(req,res,next) {
-            var releaseId = req.params.release_id;
-            Release.setReleaseComplete(releaseId).then(function(result) {
-                if (result.articlesId && result.articlesId.length > 0) {
-                    var articles = result.articlesId;
-                    var promises = [];
-                    articles.forEach(function(currArticle) {
-                        var newMethod1 = Article.setArticleStatusEvas(currArticle.article, "evaso");
-                        var newMethod2 = Article.setArticleStatusProd(currArticle.article, "evaso");
-                        promises.push(newMethod1);
-                        promises.push(newMethod2)
-                    });
-                    Q.all(promises).then(function(result) {
-                        res.status(200).json({
-                            "success": true,
-                            "message": "Release complete"
-                        });
-                    });
-                } else {
-                    res.status(200).json({
-                        "success": true,
-                        "message": "Release complete with zero art"
-                    });
-                }
-            }).catch(function(err) {
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
+    addProductsToRelease: function(release,products) {
+        var deferred = Q.defer();
+        var promises = [];
+        var pesoTotale = 0;
+        products.forEach(function(currProduct) {
+            var newMethod = Release.addProductToRelease(release._id,currProduct._id);
+            pesoTotale += currProduct.pesoNetto;
+            promises.push(newMethod);
+        });
+        promises.push(Release.addPesoTotaleToRelease(release._id,pesoTotale));
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    createTriplaArticlesToRelease: function(release,articles) {
+        var deferred = Q.defer();
+        var promises = [];
+        articles.forEach(function(currArticle) {
+            var quantita = currArticle.quantita;
+            var unita = currArticle.unita;
+            var triplaArticle = { article: currArticle._id, quantita: quantita, unita: unita };
+            var newMethod = Release.addArticleToRelease(release.id,triplaArticle);
+            var newMethodStat = Article.setArticleStatusEvas(currArticle._id, "assegnato");
+            var newMethodScalaArt = Article.updatePesoAttualeArticle(currArticle._id,currArticle.pesoAttuale);
+            promises.push(newMethod);
+            promises.push(newMethodStat);
+            promises.push(newMethodScalaArt);
+        });
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    removeRelease: function(releaseId) {
+        var deferred = Q.defer();
+        var promises = [];
+        Release.findById(releaseId).then(function(release) {
+            if (release && release.articlesId && release.articlesId.length > 0) {
+                var articles = result.articlesId;
+                articles.forEach(function(currArticle) {
+                    var newMethod = Article.setArticleStatusEvas(currArticle.article,"libero");
+                    promises.push(newMethod);
                 });
+            }
+            promises.push(Release.deleteRelease(releaseId));
+            Q.all(promises).then(function(result) {
+                deferred.resolve(result);
             });
-        })
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    setReleaseComplete: function(releaseId) {
+        var deferred = Q.defer();
+        Release.setReleaseComplete(releaseId).then(function(result) {
+            if (result.articlesId && result.articlesId.length > 0) {
+                var articles = result.articlesId;
+                var promises = [];
+                articles.forEach(function (currArticle) {
+                    var newMethod1 = Article.setArticleStatusEvas(currArticle.article, "evaso");
+                    var newMethod2 = Article.setArticleStatusProd(currArticle.article, "evaso");
+                    promises.push(newMethod1);
+                    promises.push(newMethod2)
+                });
+                Q.all(promises).then(function (res) {
+                    deferred.resolve(res);
+                });
+            } else {
+                deferred.resolve(result);
+            }
+        }).catch(function(err) {
+           deferred.reject(err);
+        });
+        return deferred.promise;
+    },
+
+    retrieveArticles: function(release) {
+        var deferred = Q.defer();
+        var triples = release.articlesId;
+        var promises = [];
+        triples.forEach(function(currElem) {
+            promises.push(Article.findById(currElem.article));
+        });
+        Q.all(promises).then(function(result) {
+            deferred.resolve(result);
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
+    }
 
 };

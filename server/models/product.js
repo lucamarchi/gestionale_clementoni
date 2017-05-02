@@ -4,7 +4,6 @@
 
 var mongoose = require('mongoose');
 var Q = require('q');
-var Stock = require('./stock');
 
 var Schema = mongoose.Schema;
 
@@ -34,7 +33,6 @@ var ProductSchema = new Schema({
     cliente: {type: String},
     numPezzi: {type: Number},
     stato: {type: String},
-    stockId: {type: Schema.ObjectId, ref: 'Stock'},
     fatherId: [{type: Schema.ObjectId, ref: 'Product'}],
     scarto: {type: Number, default: 0},
     anno: {type: String},
@@ -67,7 +65,7 @@ module.exports = {
 
     findAll: function() {
         var deferred = Q.defer();
-        productModel.find({}).exec(function (err, result) {
+        productModel.find({"pesoNetto": {$gt: 0}}).exec(function (err, result) {
             if(err) {
                 deferred.reject(err);
             } else {
@@ -172,26 +170,6 @@ module.exports = {
         return deferred.promise;
     },
 
-    addStockToProduct: function(productId,stockId) {
-        var query = {'stockId': stockId};
-        var product = this.updateProduct(productId, query);
-        return product;
-    },
-
-    removeStockToProduct: function(stockId) {
-        var deferred = Q.defer();
-        var query = {$unset: {"stockId": ""}};
-        productModel.update({'stockId': stockId},query).exec(function(err,result) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(result);
-            }
-        });
-        return deferred.promise;
-    },
-
-
     updateNumeroCollo: function(productId,number) {
         var query = {'numeroCollo': number};
         var product = this.updateProduct(productId,query);
@@ -255,12 +233,6 @@ module.exports = {
         return deferred.promise;
     },
 
-    findByStock: function(stockId) {
-        var query = {'stockId': stockId};
-        var product = this.findOne(query);
-        return product;
-    },
-
     increaseLavorazione: function(productId) {
         var query = {$inc: {'lavorazione': 1}};
         var product = this.updateProduct(productId,query);
@@ -321,7 +293,12 @@ module.exports = {
             }
         });
         return deferred.promise;
-    }
+    },
 
+    addClienteCodToProduct: function(productId, clienteCod) {
+        var query = {$set: {'cliente': clienteCod}};
+        var product = this.updateProduct(productId,query);
+        return product;
+    }
 
 };

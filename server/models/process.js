@@ -5,7 +5,6 @@
 var mongoose = require('mongoose');
 var Q = require('q');
 var Schema = mongoose.Schema;
-var Stock = require('./stock');
 var Article = require('./article');
 var Product = require('./product');
 
@@ -128,13 +127,7 @@ module.exports = {
             if (err) {
                 deferred.reject(err);
             } else {
-                if (results && results.length > 0) {
-                    deferred.resolve(results);
-                } else {
-                    var err = new Error("Process with no process");
-                    err.status = 400;
-                    deferred.reject(err);
-                }
+                deferred.resolve(results);
             }
         });
         return deferred.promise;

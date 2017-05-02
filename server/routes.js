@@ -14,18 +14,17 @@ module.exports = function (app, express) {
 
     var router = express.Router();
 
-    require('./controllers/authenticationController.js')(app, jwt, router);
-    require('./controllers/orderController.js')(app, router);
-    require('./controllers/productController.js')(app, router);
-    require('./controllers/stockController.js')(app, router);
-    require('./controllers/cutController')(app,router);
-    require('./controllers/customerController.js')(app, router);
-    require('./controllers/articleController.js')(app,router);
-    require('./controllers/prodController.js')(app,router);
-    require('./controllers/processController')(app,router);
-    require('./controllers/expectedController')(app,router);
-    require('./controllers/releaseController')(app,router);
-    require('./controllers/virtualController')(app,router);
+    require('./routes/authenticationRoute.js')(app, jwt, router);
+    require('./routes/orderRoute.js')(app, router);
+    require('./routes/productRoute.js')(app, router);
+    require('./routes/cutRoute')(app,router);
+    require('./routes/customerRoute.js')(app, router);
+    require('./routes/articleRoute.js')(app,router);
+    require('./routes/prodRoute.js')(app,router);
+    require('./routes/processRoute')(app,router);
+    require('./routes/expectedRoute')(app,router);
+    require('./routes/releaseRoute')(app,router);
+    require('./routes/virtualRoute')(app,router);
 
     app.use('/api', router);
 
