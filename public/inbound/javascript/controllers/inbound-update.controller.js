@@ -1,20 +1,27 @@
 function InboundUpdateController ($scope, $location, InboundFactory, ExpectedFactory, ProductFactory, $routeParams) {
     var ctrl = this;
    
-    ctrl.models = {
-        inboundProducts : [],
-        inboundOrder : {},
+    ctrl.inbound = {
+        products : [],
+        order : {},
     }
     
-    ctrl.getInboundProducts = function (id) {
+    ctrl.inboundConfirmationModalContent = {
+        modalTitle: 'Modifica carico in entrata',
+        modalBody: 'Confermare le modifiche al carico in entrata?',
+        modalId: 'inboundconfirmation',
+        modalClass: 'modal fade',
+    }
+    
+    ctrl.getInbound = function (id) {
         InboundFactory.getInbound(id)
         .then (function (resp) {
             console.log("TUTTI I PRODOTTI DEL CARICO" , resp);
-            ctrl.models.inboundProducts = resp.data.products;
-            ctrl.models.inboundOrder.fornitore = resp.data.order.fornitore;
-            ctrl.models.inboundOrder.ddt = resp.data.order.ddt;
-            ctrl.models.inboundOrder.dataDdt = new Date(resp.data.order.dataDdt);
-            ctrl.models.inboundOrder._id = resp.data.order._id;
+            ctrl.inbound.products = resp.data.products;
+            ctrl.inbound.order.fornitore = resp.data.order.fornitore;
+            ctrl.inbound.order.ddt = resp.data.order.ddt;
+            ctrl.inbound.order.dataDdt = new Date(resp.data.order.dataDdt);
+            ctrl.inbound.order._id = resp.data.order._id;
 //            ctrl.models.inboundOrder = resp.data.order;
             
         })
@@ -23,35 +30,37 @@ function InboundUpdateController ($scope, $location, InboundFactory, ExpectedFac
         });
     }
     
-    ctrl.getInboundProducts($routeParams.id)
+    ctrl.getInbound($routeParams.id)
     
-    ctrl.updateInboundOrder = function (inboundOrder, addedProducts, deletedProducts, updatedProducts, selectedExpecteds) {
-		InboundFactory.updateInbound({order: inboundOrder, products:addedProducts, expected:selectedExpecteds})
-            .then(function(resp){
-				console.log(resp);
-                for (product of deletedProducts) {
-                    ProductFactory.deleteProduct(product._id)
-                        .then(function(resp){
-				            console.log(resp);
-                        })
-                        .catch(function (err){
-				            console.log(err);
-                        })
-                }
-                for (product of deletedProducts) {
-                    ProductFactory.updateProduct({product:product})
-                        .then(function(resp){
-				            console.log(resp);
-                        })
-                        .catch(function (err){
-				            console.log(err);
-                        })
-                }
-                $location.path("/inbound")
-			})
-			.catch(function (err){
-				console.log(err);
-			})
+    ctrl.updateInboundOrder = function (inbound) {
+		console.log(inbound);
+        $location.path("/inbound");
+//        InboundFactory.updateInbound({order: inbound.order, products: inbound.addedProducts, expected: inbound.selectedExpecteds})
+//            .then(function(resp){
+//				console.log(resp);
+//                for (product of inbound.deletedProducts) {
+//                    ProductFactory.deleteProduct(product._id)
+//                        .then(function(resp){
+//				            console.log(resp);
+//                        })
+//                        .catch(function (err){
+//				            console.log(err);
+//                        })
+//                }
+//                for (product of inbound.modifiedProducts) {
+//                    ProductFactory.updateProduct(product)
+//                        .then(function(resp){
+//				            console.log(resp);
+//                        })
+//                        .catch(function (err){
+//				            console.log(err);
+//                        })
+//                }
+//                $location.path("/inbound")
+//			})
+//			.catch(function (err){
+//				console.log(err);
+//			})
     };
 }
 

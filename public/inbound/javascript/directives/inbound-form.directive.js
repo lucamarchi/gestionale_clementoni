@@ -2,35 +2,30 @@ function inboundProductForm () {
 	return {
 		restrict: 'E',
 		templateUrl:'public/inbound/templates/inbound-product-form.html',
-        transclude: {
-            'actionButton': '?actionButton'
-        },
-		scope: {},
-        require: ["^^inboundSet", "inboundProductForm"],
-        link: function ($scope, $element, $attrs, $ctrl) {
-            $scope.addProduct = $ctrl[0].addInboundProduct;
-            $scope.updateProduct = $ctrl[0].updateInboundProduct;
-            $scope.unlockedForm = $ctrl[0].unlockedForm;
-            $scope.cancel = $ctrl[0].lockForm;
-            $scope.$watchCollection(
-                function () {
-                    return $ctrl[1].inProdForm;
-                }, 
-                function (newVal) {
-                    if (newVal) {
-                        $scope.valid = newVal.$valid;
-                        console.log($scope.valid);
-                    }
-                }
-            );
-        },
         bindToController: {
 			model:"=",
         },
-        controller: function ($scope) {
+        transclude: {
+            'actionButton': '?actionButton',
+            'cancelButton': '?cancelButton'
         },
-        
-        controllerAs: 'inProdFormCtrl',
+		scope: {},
+        controller: function ($scope) {
+            var ctrl = this;
+            $scope.$watchCollection(
+                function () {
+                    return ctrl.inboundProductForm;
+                }, 
+                function (newVal) {
+                    if (newVal) {
+                        $scope.$emit('inboundProductFormValid', newVal);
+                    }
+                }
+            ); 
+        },
+        link: function ($scope, $element, $attrs, $ctrl) {
+        },
+        controllerAs: 'inboundProductFormCtrl',
     };
 };
 
@@ -39,17 +34,26 @@ function inboundOrderForm () {
 		restrict: 'E',
 		templateUrl:'public/inbound/templates/inbound-order-form.html',
 		scope: {},
-        require: ["inboundOrderForm", "^^inboundSet"],
         bindToController: {
 			model:"=",
         },
-        link: function ($scope, $element, $attrs, $ctrl) {
-            var myController = $ctrl[0];
-            var fatherController = $ctrl[1];
-            fatherController.register(myController);
+        
+        controller: function ($scope) {
+            var ctrl = this; 
+            
+            $scope.$watchCollection(
+                function () {
+                    return ctrl.inOrderForm;
+                }, 
+                function (newVal) {
+                    if (newVal) {
+                        $scope.$emit('orderFormValid', newVal);
+                    }
+                }
+            );  
         },
-        controller: function () {
-        },
+        
+        
         controllerAs: 'inOrderFormCtrl',
     };
 };

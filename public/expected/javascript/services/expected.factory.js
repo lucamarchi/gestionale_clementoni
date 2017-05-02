@@ -10,8 +10,11 @@ function ExpectedFactory ($http, myConfig) {
     expectedFactory.addExpecteds = function (expecteds) {
         return $http.post(urlBase, expecteds);
     };
+    
+    expectedFactory.updateExpected = function (expected) {
+        return $http.put(urlBase+'/'+expected._id, expected);
+    };
 
-   
     return expectedFactory;
 };
 

@@ -1,0 +1,9 @@
+<stock-table stock-list="processCtrl.stockSelectionModalContent.stockList">
+    <stock-filters>
+        <stock-filter model="$parent.stockTableCtrl.filterObject"></stock-filter>
+    </stock-filters>
+    <button-action>
+        <button type="button" class="btn btn-primary btn-block" ng-click="processCtrl.addStock($parent.stock)" data-dismiss = "modal"><span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </button-action>
+</stock-table>

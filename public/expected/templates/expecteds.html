@@ -14,25 +14,56 @@
             <pagination total-items="expCtrl.expecteds.length" current-page="expCtrl.currentPage" entry-limit="expCtrl.entryLimit"></pagination>
         </table-pagination>
         <table-filter>
-            <div class="row">
-                <div class="col-md-2">
-                    <select-fornitore-filter label-name="Fornitore" model="$parent.search" attribute-m="fornitore"></select-fornitore-filter>
-                </div>
-                <div class="col-md-2">
-                    <input-date-filter label-name="Data Prevista" model="$parent.search" attribute-m="dataPrevista"></input-date-filter>
-                </div>
-                <div class="col-md-2">
-                    <select-materiale-filter label-name="Materiale" model="$parent.search" attribute-m="materiale"></select-materiale-filter>
-                </div>
-                <div class="col-md-2">
-                    <select-tipo-filter label-name="Tipo" model="$parent.search" attribute-m="tipo"></select-tipo-filter>
-                </div>
-                <div class="col-md-2">
-                    <select-spessore-filter label-name="Spessore" model="$parent.search" attribute-m="spessore"></select-spessore-filter>
-                </div>
-            </div>
+            <expected-filters model="$parent.search"></expected-filters>
             <br>
         </table-filter>
+        <table-button>
+            <td>
+                <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#{{expCtrl.updateExpectedModalContent.modalId}}" ng-click = "expCtrl.selectExpected($parent.expected, $parent.expTableCtrl.expectedList.indexOf($parent.expected))">
+                Modifica <span class="glyphicon glyphicon-cog"></span></button>
+                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#{{expCtrl.deleteExpectedModalContent.modalId}}" ng-click = "expCtrl.selectExpected($parent.expected, $parent.expTableCtrl.expectedList.indexOf($parent.expected))">
+                Elimina <span class="glyphicon glyphicon-trash"></span></button>
+			</td>
+        </table-button>
     </expected-table>
+</div>
+
+
+<!-- Modal update expected-->
+<div ng-class="expCtrl.updateExpectedModalContent.modalClass" id="{{expCtrl.updateExpectedModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{expCtrl.updateExpectedModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <expected-form model = "expCtrl.updateExpectedModalContent.expected"></expected-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "expCtrl.updateExpected(expCtrl.updateExpectedModalContent.expected, expCtrl.updateExpectedModalContent.index)">Conferma</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal confirm delete expected-->
+<div ng-class="expCtrl.deleteExpectedModalContent.modalClass" id="{{expCtrl.deleteExpectedModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{expCtrl.deleteExpectedModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                {{expCtrl.deleteExpectedModalContent.body}}   
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "expCtrl.deleteExpected(expCtrl.deleteExpectedModalContent.expected, expCtrl.deleteExpectedModalContent.index)">Conferma</button>
+            </div>
+        </div>
+    </div>
 </div>
 

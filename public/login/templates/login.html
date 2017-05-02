@@ -15,5 +15,8 @@
         <div class="col-sm-offset-4 col-sm-10">
             <button ng-if="loginForm.$valid" type="submit" class="btn btn-success" ng-click="logIn(user)">Log In</button>
         </div>
+        <div class="col-sm-offset-4 col-sm-10">
+            <button ng-if="!loginForm.$valid" class="btn btn-success" disabled>Log In</button>
+        </div>
     </div>
 </form>

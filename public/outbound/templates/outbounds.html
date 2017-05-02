@@ -1,0 +1,10 @@
+<h1>CARICHI IN USCITA</h1>
+<br><br>
+
+<div>
+    <a ng-href="#/outbound/create">
+        <button ng-if="user.role == 'logistica' || user.role == 'admin'" type="button" class="btn btn-primary btn-lg">Nuovo carico in uscita</button>
+    </a>
+</div>
+<br><br>
+<outbound-table outbounds = "outboundCtrl.outbounds" current-page="outboundCtrl.currentPage" entry-limit="outboundCtrl.entryLimit"></outbound-table>

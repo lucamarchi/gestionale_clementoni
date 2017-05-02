@@ -66,7 +66,7 @@ angular
             controller: function ($scope, features) {
                 $scope.$watch('model.materiale',
                     function(newVal, oldVal) {
-                        if (newVal) {
+                        if (newVal && newVal != oldVal) {
                             console.log(newVal, oldVal); 
                             delete $scope.model[$scope.attributeM];
                         }
@@ -202,6 +202,23 @@ angular
         }
     })
 
+    .component('selectTrasportatoreForm', {
+        restrict: 'E',
+        template: [ 
+            '<select-form label-name="{{$ctrl.labelName}}" model="$ctrl.model[$ctrl.attributeM]" options="$ctrl.options" required="$ctrl.required">',
+            '</select-form>'
+        ].join(''),
+        bindings: { 
+            labelName: "@",
+            model: "=",
+            attributeM: "@",
+            required: "="
+        },
+        controller: function ($scope, features) {
+            this.options = features.trasportatori;
+        }
+    })
+
     .component('selectFinituraForm', {
         restrict: 'E',
         template: [ 
@@ -254,22 +271,6 @@ angular
         },
     })
 
-
-    .component('inputNumForm', {
-        restrict: 'E',
-        template: [
-                '<input-form label-name="{{$ctrl.labelName}}" type="number" model="$ctrl.model[$ctrl.attributeM]" required="$ctrl.required">',
-                '</input-form>',
-        ].join(''),
-         bindings: { 
-            labelName: "@",
-            model: "=",
-            attributeM: "@",
-            required: "="
-        },
-    })
-
-
     .component('inputPrezzoForm', {
         restrict: 'E',
         template: [
@@ -291,7 +292,6 @@ angular
                 },
                 function(newVal, oldVal) {
                     if (newVal) {
-                        console.log(newVal, oldVal); 
                         $scope.userRole = newVal.role;
                     }
                 }
@@ -299,6 +299,21 @@ angular
         }
     })
 
+    
+    .component('inputNumForm', {
+        restrict: 'E',
+        template: [
+                '<input-form label-name="{{$ctrl.labelName}}" type="number" model="$ctrl.model[$ctrl.attributeM]" required="$ctrl.required">',
+                '</input-form>',
+        ].join(''),
+         bindings: { 
+            labelName: "@",
+            model: "=",
+            attributeM: "@",
+            required: "="
+        },
+    })
+    
     .component('inputDateForm', {
         restrict: 'E',
         template: [

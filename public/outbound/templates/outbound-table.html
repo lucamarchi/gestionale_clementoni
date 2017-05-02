@@ -1,0 +1,63 @@
+<!--
+<pagination total-items="prodStateTableCtrl.prodStates.length" current-page="prodStateTableCtrl.currentPage" entry-limit="prodStateTableCtrl.entryLimit">
+</pagination>
+-->
+
+<table class="table table-condensed table-bordered table-hover">
+	<thead>
+	    <tr>
+			<th>Numero</th>
+			<th>Trasportatore</th>
+  			<th>Data spedizione</th>
+			<th>Tipo Mezzo</th>
+			<th>Materiale</th>
+			<th>Autista</th>
+			<th>Targa</th>
+			<th>Peso Totale</th>
+			<th>Note</th>
+			<th>Stato</th>
+		</tr>
+	</thead>
+  	<tbody>
+    	<tr ng-repeat="outbound in outboundTableCtrl.outbounds | orderBy:'dataSpedizione':true | startFrom:(outboundTableCtrl.currentPage-1)*outboundTableCtrl.entryLimit | limitTo:outboundTableCtrl.entryLimit">
+			<td>
+                <button type="button" class="btn btn-info btn-block" ng-click="outboundTableCtrl.showOutboundDetails(outbound._id)">{{outbound.numero}}</button>
+<!--
+                
+                <modal-directive modal-content="outboundTableCtrl.outboundModalContent">
+                    <open-button>
+                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{outboundTableCtrl.outboundModalContent.modalId}}" ng-click="outboundTableCtrl.getOutbound(outbound._id)">{{outbound.numero}}</button>
+                    </open-button>
+                </modal-directive>
+-->
+            </td>
+  			<td>{{outbound.trasportatore}}</td>
+			<td>{{outbound.dataSpedizione | date:'medium'}}</td>
+			<td>{{outbound.tipoMezzo}}</td>
+			<td>{{outbound.materiale}}</td>
+			<td>{{outbound.autista}}</td>
+			<td>{{outbound.targa}}</td>
+			<td>{{outbound.pesoTotale}}</td>
+			<td>{{outbound.note}}</td>
+			<td>{{outbound.stato}}</td>
+
+			<td>
+                <a ng-href="#/outbound/update/{{outbound._id}}">
+				    <button type="button" class="btn btn-warning btn-block">Modifica<span class="glyphicon glyphicon-cog"></span>
+                    </button>
+                </a>
+            </td>
+            <td>
+                <a ng-href="#/outbound/despatch/{{outbound._id}}">
+				    <button type="button" class="btn btn-success btn-block">Evadi<span class="glyphicon glyphicon-cog"></span>
+                    </button>
+                </a>
+            </td>
+<!--
+				<button type="button" class="btn btn-warning btn-circle" ng-click="openLoad(load)" data-target="#newload" data-toggle="modal">Modifica <span class="glyphicon glyphicon-cog"></button>
+				<button type="button" class="btn btn-danger btn-circle" ng-click="prepareDeleteRelease(outbound, outbounds.indexOf(outbound))" data-target="#deleteoutbound" data-toggle="modal">Cancella <span class="glyphicon glyphicon-trash"></span></button>	
+-->
+			
+		</tr>
+	</tbody>
+</table>

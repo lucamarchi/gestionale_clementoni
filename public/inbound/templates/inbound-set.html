@@ -1,13 +1,13 @@
 <fieldset >
     <legend>Dati del carico:</legend>
-	<inbound-order-form model="inSetCtrl.inbound.order"></inbound-product-form>
+	<inbound-order-form model="inboundSetCtrl.inbound.order"></inbound-order-form>
 </fieldset>
 
 <br><br>
 
 <fieldset>
     <legend>Attese selezionate:</legend>
-	<expected-table expected-list="inSetCtrl.inbound.selectedExpecteds" entry-limit="inSetCtrl.inbound.selectedExpecteds.length" current-page="inSetCtrl.currentPage">
+	<expected-table expected-list="inboundSetCtrl.inbound.selectedExpecteds" entry-limit="inboundSetCtrl.inbound.selectedExpecteds.length" current-page="inboundSetCtrl.currentPage">
     </expected-table>
 </fieldset>
 
@@ -15,69 +15,123 @@
 
 <fieldset>
 	<legend>Prodotti del carico:</legend>
-	<inbound-products-table inbound-list="inSetCtrl.inbound.products" entry-limit="inSetCtrl.inbound.products.length" current-page="inSetCtrl.currentPage">
-        <buttons-edit>
-            <button type="button" class="btn btn-danger btn-block" ng-click="inSetCtrl.deleteProduct($parent.inbound)">Cancella<span class="glyphicon glyphicon-trash"></button>
-            <button type="button" class="btn btn-warning btn-block" ng-click="inSetCtrl.selectInboundModifyProduct($parent.inbound)">Modifica<span class="glyphicon glyphicon-cog"></button>
-        </buttons-edit>
+	<inbound-products-table inbound-list="inboundSetCtrl.inbound.products" entry-limit="inboundSetCtrl.inbound.products.length" current-page="inboundSetCtrl.currentPage">
+        <buttons>
+            <button type="button" class="btn btn-danger btn-block" ng-click="inboundSetCtrl.deleteProduct($parent.inboundProduct)">Cancella<span class="glyphicon glyphicon-trash"></span></button>
+            <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#{{inboundSetCtrl.inboundProductEntryModalContent.modalId}}" ng-click="inboundSetCtrl.selectInboundModifyProduct($parent.inboundProduct)">Modifica<span class="glyphicon glyphicon-cog"></span></button>
+        </buttons>
     </inbound-products-table>
 </fieldset>
 
 <br><br>
 
-<fieldset ng-if="inSetCtrl.unlockedForm != 0">
+<!--
+<fieldset ng-if="inboundSetCtrl.unlockedForm != 0">
 	<legend>Inserisci prodotto del carico:</legend>
-    <div ng-if= "inSetCtrl.unlockedForm == 1">
-        <inbound-product-form model="inSetCtrl.inboundProduct">
+    <div ng-if= "inboundSetCtrl.unlockedForm == 1">
+        <inbound-product-form model="inboundSetCtrl.inboundProduct">
             <action-button>
-                <label></label>
-                <button ng-if="$parent.valid" type="button" class="btn btn-block btn-primary" ng-click="inSetCtrl.addInboundProduct(inSetCtrl.inboundProduct)">Inserisci</button>
-                <button ng-if="!$parent.valid" type="button" class="btn btn-block btn-primary" disabled>Inserisci</button>
+                <button ng-if="$parent.inboundProductFormCtrl.inProdForm.$valid" type="button" class="btn btn-block btn-primary" ng-click="inboundSetCtrl.addInboundProduct(inboundSetCtrl.inboundProduct)">Inserisci</button>
+                <button ng-if="!$parent.inboundProductFormCtrl.inProdForm.$valid" type="button" class="btn btn-block btn-primary" disabled>Inserisci</button>
             </action-button>
+            <cancel-button>
+                <button type="button" class="btn btn-block btn-danger" ng-click="inboundSetCtrl.lockForm()" >Annulla</button>
+            </cancel-button>
         </inbound-product-form>
     </div>
-    <div ng-if= "inSetCtrl.unlockedForm == 2">
-        <inbound-product-form model="inSetCtrl.inboundProduct">
+    <div ng-if= "inboundSetCtrl.unlockedForm == 2">
+        <inbound-product-form model="inboundSetCtrl.inboundProduct">
             <action-button>
-                <label></label>
-                <button ng-if="$parent.valid" type="button" class="btn btn-block btn-warning" ng-click="inSetCtrl.updateInboundProduct(inSetCtrl.inboundProduct)">Modifica</button>
-                <button ng-if="!$parent.valid" type="button" class="btn btn-block btn-warning" disabled>Modifica</button>
+                <button ng-if="$parent.inboundProductFormCtrl.inProdForm.$valid" type="button" class="btn btn-block btn-warning" ng-click="inboundSetCtrl.updateInboundProduct(inboundSetCtrl.inboundProduct)">Modifica</button>
+                <button ng-if="!$parent.inboundProductFormCtrl.inProdForm.$valid" type="button" class="btn btn-block btn-warning" disabled>Modifica</button>
             </action-button>
+            <cancel-button>
+                <button type="button" class="btn btn-block btn-danger" ng-click="inboundSetCtrl.lockForm()" >Annulla</button>
+            </cancel-button>
         </inbound-product-form>
     </div>
 </fieldset>
+-->
 
-<fieldset ng-if="inSetCtrl.unlockedForm == 0">
+<fieldset>
     <div class="row">
         <div class="col-md-3">
-            <button type="button" class="btn btn-primary btn-block" ng-click="inSetCtrl.unlockAdditionForm()">Inserisci prodotto non ordinato</button>
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{inboundSetCtrl.inboundProductEntryModalContent.modalId}}" ng-click = "inboundSetCtrl.newInboundProduct()">Inserisci da prodotto non ordinato</button>
         </div>
         <div class="col-md-3">
-            <modal-directive button-action='inSetCtrl.showExpectedList()' button-name='Inserisci da prodotto ordinato' modal-content="inSetCtrl.expectedModalContent"></modal-directive>
+            <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{inboundSetCtrl.expectedSelectionModalContent.modalId}}" ng-click = "inboundSetCtrl.showExpectedList()">Inserisci da prodotto ordinato</button>
         </div>
         <a ng-href="#/inbound">
             <div class="col-md-3">
-                <button type="button" class="btn btn-danger btn-block">Annulla</button>
+                <button type="button" class="btn btn-default btn-block">Annulla</button>
             </div>
         </a>
         <div class="col-md-3" ng-transclude="confirmButton"></div>
     </div>
 </fieldset>
 
+
+<!--Modal expected selection inbound-->
+<div ng-class="inboundSetCtrl.expectedSelectionModalContent.modalClass" id="{{inboundSetCtrl.expectedSelectionModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{inboundSetCtrl.expectedSelectionModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-include = "inboundSetCtrl.expectedSelectionModalContent.url"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal inbound product entry-->
+<div ng-class="inboundSetCtrl.inboundProductEntryModalContent.modalClass" id="{{inboundSetCtrl.inboundProductEntryModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{inboundSetCtrl.inboundProductEntryModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <inbound-product-form model="inboundSetCtrl.inboundProductEntryModalContent.product"></inbound-product-form>
+            </div>
+            <div class="modal-footer">
+                
+                <div ng-if= "inboundSetCtrl.unlockedForm == 1">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >Annulla</button>
+                    <button ng-if="inboundSetCtrl.inboundProductFormValid" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="inboundSetCtrl.addInboundProduct(inboundSetCtrl.inboundProductEntryModalContent.product)">Inserisci</button>
+                    <button ng-if="!inboundSetCtrl.inboundProductFormValid" type="button" class="btn btn-primary" disabled>Inserisci</button>
+                </div>
+                <div ng-if= "inboundSetCtrl.unlockedForm == 2">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >Annulla</button>
+                    <button ng-if="inboundSetCtrl.inboundProductFormValid" type="button" class="btn btn-warning" data-dismiss="modal" ng-click="inboundSetCtrl.updateInboundProduct(inboundSetCtrl.inboundProductEntryModalContent.product)">Modifica</button>
+                    <button ng-if="!inboundSetCtrl.inboundProductFormValid" type="button" class="btn btn-warning" disabled>Modifica</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
 <br><br>
-Inbound Order: {{inSetCtrl.inbound.order | json}}
+Inbound Order: {{inboundSetCtrl.inbound.order | json}}
 <br>
-Inbound Product: {{inSetCtrl.inboundProduct | json}}
+Inbound Product: {{inboundSetCtrl.inboundProductEntryModalContent.product | json}}
 <br>
-Inbound Products: {{inSetCtrl.inbound.products | json}}
+Inbound Selected Expecteds : {{inboundSetCtrl.inbound.selectedExpecteds | json}}
 <br>
-Inbound AddedProducts: {{inSetCtrl.inbound.addedProducts | json}}
+Inbound Products: {{inboundSetCtrl.inbound.products | json}}
 <br>
-Inbound DeletedProducts: {{inSetCtrl.inbound.deletedProducts | json}}
+Inbound AddedProducts: {{inboundSetCtrl.inbound.addedProducts | json}}
 <br>
-product2expected: {{inSetCtrl.product2expected}}
+Inbound DeletedProducts: {{inboundSetCtrl.inbound.deletedProducts | json}}
 <br>
-Inbound ModifiedProducts: {{inSetCtrl.inbound.modifiedProducts | json}}
+product2expected: {{inboundSetCtrl.product2expected}}
 <br>
-unlockedForm: {{inSetCtrl.unlockedForm}}
+Inbound ModifiedProducts: {{inboundSetCtrl.inbound.modifiedProducts | json}}
+<br>
+unlockedForm: {{inboundSetCtrl.unlockedForm}}
+-->
 

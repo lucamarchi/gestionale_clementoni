@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-3">
             <input-date-form label-name="Data Prevista" model="expFormCtrl.model" attribute-m="dataPrevista" required=true>
-            </input-data>
+            </input-date-form>
         </div>
          <div class="col-md-3">
             <select-materiale-form label-name="Materiale" model="expFormCtrl.model" attribute-m="materiale" required=false>
@@ -60,7 +60,6 @@
             </select-scelta-form>
         </div>
     </div>
-    
     <div class="row">
         <div class="col-md-3">
             <input-num-form label-name="Peso" model="expFormCtrl.model" attribute-m="pesoOrdinato" required=false></input-num-form>
@@ -68,17 +67,7 @@
         <div class="col-md-3">
             <input-prezzo-form label-name="Prezzo" model="expFormCtrl.model" attribute-m="prezzo"></input-prezzo-form>
         </div>
-        
-        <div class="col-md-3">
-            <label></label>
-            <button ng-if="expFormCtrl.expectedForm.$valid" type="button" class="btn btn-primary btn-block" ng-click="expFormCtrl.insertAction({param:model})">Inserisci</button>
-            <button ng-if="!expFormCtrl.expectedForm.$valid" type="button" class="btn btn-block btn-primary" disabled>Inserisci</button>
-        </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <label></label>
-            <button type="button" class="btn btn-success btn-block" ng-click="expFormCtrl.completeAction({param:model})">Completa</button>
-        </div>
-    </div>
+
+    <div ng-transclude="formButton"></div>
 </form>

@@ -2,17 +2,17 @@ angular
     .module('store')
 
     .directive('modalDirective', function() {
-            return {
+        return {
             restrict: 'E',
             bindToController:{
                 modalContent: '=',
-                buttonName: '@',
-                buttonAction: '&',
-                okAction: '&',
             },
             scope: {},
+            transclude: {
+                'openButton' : '?openButton',
+                'actionButtons' : '?actionButtons',
+            },
             templateUrl: 'public/components/directives/modal.html',
-            transclude: true,
             controller: function () {
             },
             link: function ($scope, $element, $attrs, $ctrl) {

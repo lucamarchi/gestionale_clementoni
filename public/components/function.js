@@ -54,7 +54,7 @@ function findDistinctRegion (data) {
 	return regionArray;
 }
 
-function findDistinctProvincia (data) {
+function findDistinctProvince (data) {
 	var provinciaArray = [];
 	for(i = 0; i< data.length; i++){    
 		if(provinciaArray.indexOf(data[i].provincia) === -1){

@@ -1,0 +1,62 @@
+<div ng-transclude="pagination"></div>
+<table class="table table-condensed table-bordered table-hover tableSection">
+	<thead>
+<!--		
+        <tr>
+			<th><input ng-model="ddt"></th>
+			<th>
+				<select ng-model="fornitore" ng-options="fornitori for fornitori in features.fornitori">
+				<option value="">-- seleziona --</option>
+				</select>
+			</th>
+			<th><input type="date" ng-model="dataDdt"></th>
+		</tr>
+-->
+	    <tr>
+			<th>DDT</th>
+  			<th>Fornitore</th>
+			<th>Data ddt</th>
+			<th>Data Arrivo</th>
+		</tr>
+	</thead>
+  	<tbody>
+    	<tr ng-repeat="inbound in inboundTableCtrl.inboundList | filterca:ddt:fornitore:dataDdt | orderBy:'dataDdt':true | startFrom:(inboundTableCtrl.currentPage-1)*inboundTableCtrl.entryLimit | limitTo:inboundTableCtrl.entryLimit">
+			<td>
+                <button type="button" class="btn btn-info btn-block" ng-click = "inboundTableCtrl.showInboundDetails(inbound._id)">{{inbound.ddt}}</button>
+            </td>
+  			<td>{{inbound.fornitore}}</td>
+			<td custom-date model="inbound" attribute="dataDdt"></td>
+			<td custom-date model="inbound" attribute="dataArrivo"></td>
+			<td>
+                <a ng-href="#/inbound/update/{{inbound._id}}">
+				    <button type="button" class="btn btn-warning btn-block">Modifica<span class="glyphicon glyphicon-cog"></span>
+                    </button>
+                </a>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#{{inboundTableCtrl.deleteInboundModalContent.modalId}}" ng-click = "inboundTableCtrl.selectInbound(inbound)">Elimina</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<!--Modal delete inbound-->
+<div ng-class="inboundTableCtrl.deleteInboundModalContent.modalClass" id="{{inboundTableCtrl.deleteInboundModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{inboundTableCtrl.deleteInboundModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                {{inboundTableCtrl.deleteInboundModalContent.body}}   
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "inboundTableCtrl.deleteInbound(inboundTableCtrl.deleteInboundModalContent.inbound)">Conferma</button>
+            </div>
+        </div>
+    </div>
+</div>
+    

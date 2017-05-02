@@ -5,7 +5,7 @@ function CutController (CutFactory) {
             .then (function (resp) {
                 console.log(resp);
                 ctrl.cuts = resp.data.cuts;
-                ctrl.entryLimit = 20;
+                ctrl.entryLimit = 10;
                 ctrl.currentPage = 1;
             })
             .catch(function(err) {
@@ -20,37 +20,13 @@ function CutController (CutFactory) {
             .then (function (resp) {
 				console.log("REFRESH", resp);
 				if (resp.cuts != undefined) {
-					ctrl.cuts = ctrl.cuts.concat(resp.cuts);
+					ctrl.cuts = ctrl.cuts.concat(resp.data.cuts);
 				}
 			})
 			.catch(function(err) {
 				console.log(err);
 			})
 	};
-	
-	ctrl.getCut = function (id){
-		CutFactory.getCut(id)
-			.then(function (resp) {
-				console.log("TAGLIO E ARTICOLI" , resp);
-				ctrl.cut = resp.cut;
-				ctrl.articlesCut = resp.articles;
-				ctrl.customer = resp.customer;
-			})
-			.catch(function (err) {
-				console.log (err);
-			})
-	};
-	
-	ctrl.confirmCut = function (cut) {
-		CutFactory.confirmCut(id)
-			.then(function(resp) {
-				console.log(resp);
-				cut.accepted = true;
-			})
-			.catch(function(err) {
-				console.log(err);
-			})
-	}
 }
 
 angular

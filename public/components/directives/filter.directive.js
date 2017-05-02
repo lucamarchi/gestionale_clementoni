@@ -28,7 +28,7 @@ angular
                         '<b>{{labelName|uppercase}}</b>',
                     '</div>',
                     '<select ng-model="model" ng-options="option for option in options">',
-                    '<option value=""></option>',
+                        '<option value=""></option>',
                     '</select>',
             ].join(''),
             scope: { 

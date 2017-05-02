@@ -1,0 +1,72 @@
+<table class="table table-condensed table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Cod. Articolo</th>
+            <th>Tipo</th>
+            <th>Materiale</th>
+            <th>Quantita</th>
+            <th ng-if="$root.user.role == 'logistica' || $root.user.role == 'admin'">Prezzo</th>
+            <th>Spess</th>
+            <th>Larghezza</th>
+            <th>Lunghezza</th>
+            <th>Peso (kg)</th>
+            <th>Data Consegna</th>
+            <th>Virtuale</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="article in cutArticleTableCtrl.articleList">
+            <td>{{article.codArticolo}}</td>
+            <td>{{article.tipo}}</td>
+            <td>{{article.materiale}}</td>
+            <td>{{article.quantita}}</td>
+            <td ng-if="$root.user.role == 'logistica' || $root.user.role == 'admin'">{{article.prezzo}}</td>
+            <td>{{article.spessore}}</td>
+            <td>{{article.larghezza}}</td>
+            <td>{{article.lunghezza}}</td>
+            <td>{{article.peso}}</td>
+            <td custom-date model="article" attribute = "dataConsegna"></td>
+            <td>
+                <ul>
+                    <li>Larghezza: {{article.larghezzaAssegnata}}</li>
+                    <li>Lunghezza: {{article.lunghezzaAssegnata}}</li>
+
+                </ul>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{cutArticleTableCtrl.dimensionSelectionModalContent.modalId}}" ng-click = "cutArticleTableCtrl.selectArticle(article, cutArticleTableCtrl.articleList.indexOf(article))">Inserisci dimensioni stock virtuale</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<!-- Modal dimension selection -->
+<div ng-class="cutArticleTableCtrl.dimensionSelectionModalContent.modalClass" id="{{cutArticleTableCtrl.dimensionSelectionModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{cutArticleTableCtrl.dimensionSelectionModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="cutArticleTableCtrl.articleForm" class="form" novalidate>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <select-larghezza-form label-name="Larghezza" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="larghezzaAssegnata" required=true>
+                            </select-larghezza-form>
+                        </div>
+                        <div class="col-md-6" ng-if="cutArticleTableCtrl.dimensionSelectionModalContent.article.tipo != 'coil' && cutArticleTableCtrl.dimensionSelectionModalContent.article.tipo != 'nastro'">
+                            <select-lunghezza-form label-name="Lunghezza" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="lunghezzaAssegnata" required=true>
+                            </select-lunghezza-form>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+                <button ng-if="cutArticleTableCtrl.articleForm.$valid" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cutArticleTableCtrl.assignDimension(cutArticleTableCtrl.dimensionSelectionModalContent.article, cutArticleTableCtrl.dimensionSelectionModalContent.index)">Inserisci</button>
+                <button ng-if="!cutArticleTableCtrl.articleForm.$valid" type="button" class="btn btn-primary" disabled>Inserisci</button>
+        </div>
+    </div>
+</div>

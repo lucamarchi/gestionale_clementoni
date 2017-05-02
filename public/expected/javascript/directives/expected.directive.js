@@ -6,9 +6,8 @@ angular
             restrict: 'E',
             templateUrl:'public/expected/templates/expecteds-table.html',
             scope: {},
-            require: '^^?inboundSet',
             transclude: {
-                'button': '?tableButton',
+                'tableButton': '?tableButton',
                 'pagination': '?tablePagination',
                 'filters': '?tableFilter'
             },
@@ -17,13 +16,10 @@ angular
                 currentPage:"=",
                 entryLimit: "=",
             },
-            controller: function () {
+            controller: function ($scope) {
+                var ctrl = this;
             },
-            link: function ($scope, $element, $attrs, $ctrl) {
-                if ($ctrl) {
-                    $scope.selectAction = $ctrl.selectExpected;
-                    $scope.unlockProductForm = $ctrl.unlockForm;
-                }
+            link: function ($scope, $element, $attrs) {
             },
             controllerAs: 'expTableCtrl',
         }
@@ -33,13 +29,41 @@ angular
         return {    
             restrict: 'E',
             templateUrl:'public/expected/templates/expected-form.html',
+            scope: {},
+            transclude: {
+                'formButton': '?formButton',
+            },
             bindToController: {
-                model:"=",
-                insertAction:"&",
-                completeAction:"&"
+                model: "=",
+            },
+            controller: function ($scope) {
+                var ctrl = this;
+                $scope.$watchCollection(
+                    function () {
+                        return ctrl.expectedForm;
+                    }, 
+                    function (newVal) {
+                        if (newVal) {
+                            console.log(newVal);
+                            $scope.$emit('expectedFormValid', newVal);
+                        }
+                    }
+                );
+            },
+            controllerAs: 'expFormCtrl',
+        }
+    })
+
+    .directive('expectedFilters', function () {
+        return {    
+            restrict: 'E',
+            templateUrl:'public/expected/templates/expected-filters.html',
+            scope: {},
+            bindToController: {
+                model: "=",
             },
             controller: function () {
             },
-            controllerAs: 'expFormCtrl',
+            controllerAs: 'expFilterCtrl',
         }
     })

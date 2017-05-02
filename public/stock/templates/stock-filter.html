@@ -1,0 +1,28 @@
+<div>
+    <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>Materiale</b></span>&nbsp&nbsp
+    <span ng-repeat="materiale in stockFilterCtrl.features.materiali">
+        <input type="checkbox" ng-click="stockFilterCtrl.includeVal(materiale, stockFilterCtrl.model.materialeArray)">{{materiale}}&nbsp&nbsp
+    </span>
+</div>
+
+<div>
+    <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>Tipo</b></span>&nbsp&nbsp
+    <span ng-repeat="tipo in stockFilterCtrl.features.tipi">
+        <input type="checkbox" ng-click="stockFilterCtrl.includeVal(tipo, stockFilterCtrl.model.tipoArray)">{{tipo}}&nbsp&nbsp
+    </span>
+</div>
+
+<div>
+    <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>Spessore</b></span>&nbsp&nbsp
+    <span ng-repeat="spessore in stockFilterCtrl.features.spessoriNominali">
+        <input type="checkbox" ng-click="stockFilterCtrl.includeVal(spessore, stockFilterCtrl.model.spessoreArray)">{{spessore}}&nbsp&nbsp
+    </span>
+</div>
+
+<div>
+    <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>Larghezza</b></span>&nbsp&nbsp
+    <span ng-repeat="larghezza in stockFilterCtrl.features.larghezzeNominali">
+        <input type="checkbox" ng-click="stockFilterCtrl.includeVal(larghezza, stockFilterCtrl.model.larghezzaArray)">{{larghezza}}&nbsp&nbsp
+    </span>
+</div>
+

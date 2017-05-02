@@ -1,14 +1,6 @@
  function InboundController ($scope, InboundFactory, ExpectedFactory, features) {
 	var ctrl = this;
-	
-    ctrl.inboundModalContent = {
-        url:'public/inbound/templates/inbound-expected-selection.html',
-        modalTitle: 'Prodotti del carico',
-        modalId: 'expectedselection',
-        buttonName: 'Inserisci da prodotto ordinato',
-        expecteds: [],
-    } 
-    
+	    
     ctrl.getInbounds = function() {
         InboundFactory.getInbounds()
             .then (function (resp) {
@@ -23,8 +15,16 @@
     }
 	
     ctrl.getInbounds(); 
-     
- }
+    
+    //    ctrl.inboundModalContent = {
+//        url:'public/inbound/templates/inbound-expected-selection.html',
+//        modalTitle: 'Prodotti del carico',
+//        modalId: 'expectedselection',
+//        buttonName: 'Inserisci da prodotto ordinato',
+//        expecteds: [],
+//    } 
+
+}
 //	ctrl.expecteds = [];
 //	ctrl.order = undefined;
 //	ctrl.productsOrder = [];

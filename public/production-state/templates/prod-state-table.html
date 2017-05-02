@@ -1,0 +1,26 @@
+<pagination total-items="prodStateTableCtrl.prodStates.length" current-page="prodStateTableCtrl.currentPage" entry-limit="prodStateTableCtrl.entryLimit">
+</pagination>
+
+<table class="table table-bordered table-hover">
+	<thead>
+	    <tr>
+			<th>Numero</th>
+			<th>Data Creazione</th>
+		</tr>
+	</thead>
+  	<tbody>
+    	<tr ng-repeat="prodState in prodStateTableCtrl.prodStates | orderBy:'dataCreazione':true">
+			<td>
+<!--                <modal-directive button-action='prodStateTableCtrl.getProdState(prodState._id)' button-name='{{prodState.numero}}' modal-content="prodStateTableCtrl.prodStateModalContent"></modal-directive>-->
+                <a ng-href="#/productionState/details/{{prodState._id}}">
+				    <button type="button" class="btn btn-info btn-block">{{prodState.numero}}</button>
+                </a>
+            </td>
+  			<td custom-date model="prodState" attribute="dataCreazione"></td>
+			<td>
+				<button type="button" class="btn btn-warning" ng-click="editProductionState(state)" data-target="#newstate" data-toggle="modal">Modifica <span class="glyphicon glyphicon-work"></span></button>	
+				<button type="button" class="btn btn-danger" ng-click="prepareDeleteState(state,states.indexOf(state))" data-target="#deletestate" data-toggle="modal">Cancella <span class="glyphicon glyphicon-trash"></span></button>	
+			</td>
+		</tr>
+	</tbody>
+</table>

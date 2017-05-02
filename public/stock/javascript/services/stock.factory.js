@@ -37,14 +37,14 @@ function StockFactory ($http, myConfig, features) {
                         k = 0;
                         for (sp of spessorArray) {
                             temp = stocks.filter(function(el){
-                                return (el.materiale == mt) && (el.tipo == tp) && (el.spessore == sp);
+                                return (el.materiale == mt) && (el.tipo == tp) && (el.spessoreNominale == sp);
                             });
                             if(temp.length != 0){
                                 monster[i].value[j].value.push({key: sp, lung: 0, weight: 0, value: []}); //k per accedere 
                                 z = 0;
                                 for (lg of largArray) {
                                     temp = stocks.filter(function(el){
-                                        return (el.materiale == mt) && (el.tipo == tp) && (el.spessore == sp) && (el.classeLarghezza == lg);
+                                        return (el.materiale == mt) && (el.tipo == tp) && (el.spessoreNominale == sp) && (el.larghezzaNominale == lg);
                                     });
 
                                     if(temp.length != 0){

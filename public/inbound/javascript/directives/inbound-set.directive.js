@@ -4,7 +4,7 @@ function inboundSet () {
         templateUrl: 'public/inbound/templates/inbound-set.html',
         scope: {},
         bindToController: {
-            models: "=",
+            model: "=",
         },
         transclude: {
             'confirmButton': 'confirmButton'
@@ -13,8 +13,6 @@ function inboundSet () {
             var ctrl = this;
             ctrl.product2expected = [];
             ctrl.currentPage = 1;
-            ctrl.inboundProduct = {};
-            
             ctrl.inbound = {};
             ctrl.inbound.order = {};
             ctrl.inbound.products = [];
@@ -26,63 +24,67 @@ function inboundSet () {
             
             $scope.$watchCollection(
                 function () {
-                    return ctrl.models;
+                    return ctrl.model;
                 }, 
                 function (newVal) {
+                    console.log(newVal)
                     if (newVal) {
-                        ctrl.inbound.order = newVal.inboundOrder;
-                        ctrl.inbound.products = newVal.inboundProducts;
+                        ctrl.inbound.order = newVal.order;
+                        ctrl.inbound.products = newVal.products;
+                        
                     }
                 }
             );
             
-            $scope.$watchCollection(
-                function () {
-                    return ctrl.inbound;
-                }, 
-                function(newVal) {
-                        $scope.inbound = newVal;
-                        $scope.completeAction = ctrl.completeAction;
-                        console.log($scope.inbound);
-                }
-            );
-            
-            ctrl.expectedModalContent = {
+            ctrl.expectedSelectionModalContent = {
                 url:'public/inbound/templates/inbound-expected-selection.html',
                 modalTitle: 'Seleziona quantita ordinata',
                 modalId: 'expectedselection',
+                modalClass: 'modal modal-xl fade',
+                entryLimit: 10,
                 expecteds: [],
             }
-
-            ctrl.register = function(childController) {
-                var orderForm = childController.inOrderForm;
-                 $scope.$watchCollection(function () {
-                    return orderForm;
-                 }, function (newVal) {
-                    if (newVal) {
-                        $scope.orderFormValid = newVal.$valid;
-                    }
-                });
-            };
             
-            ctrl.unlockAdditionForm = function () {
+            ctrl.inboundProductEntryModalContent = {
+                modalTitle: '',
+                modalId: 'inboundproductform',
+                modalClass: 'modal modal-xl fade',
+                expected: 'undefined',
+                product: {},
+            }
+            
+            $scope.$on('orderFormValid', function (event, data) {
+                if (data) {
+                    ctrl.orderFormValid = data.$valid;
+                }
+            })
+            
+            $scope.$on('inboundProductFormValid', function (event, data) {
+                if (data) {
+                    ctrl.inboundProductFormValid = data.$valid;
+                }
+            })
+            
+            ctrl.newInboundProduct = function () {
+                ctrl.inboundProductEntryModalContent.modalTitle = 'Inserisci prodotto del carico';
+                ctrl.inboundProductEntryModalContent.product = {};
+                ctrl.inboundProductEntryModalContent.expected = undefined;
                 ctrl.unlockedForm = 1;
             }
             
             ctrl.unlockModificationForm = function () {
+                ctrl.inboundProductEntryModalContent.modalTitle = 'Modifica prodotto del carico';
                 ctrl.unlockedForm = 2;
             }
 
             ctrl.lockForm = function () {
-                ctrl.unlockedForm = 0;
-                ctrl.currentExpected = undefined;
-                ctrl.inboundProduct = undefined;
+                ctrl.inboundProductEntryModalContent.expected = undefined;
             }
 
             ctrl.showExpectedList = function () {
                 ExpectedFactory.getExpecteds()
                     .then (function (resp) {
-                        ctrl.expectedModalContent.expecteds = resp.data.expected;
+                        ctrl.expectedSelectionModalContent.expecteds = resp.data.expected;
                         console.log(resp);
                     })
                     .catch(function(err) {
@@ -91,50 +93,54 @@ function inboundSet () {
             }
 
             ctrl.selectExpected = function (expected) {
-                ctrl.currentExpected = expected;
-                ctrl.inboundProduct = {};
-                ctrl.inboundProduct.materiale = ctrl.currentExpected.materiale;
-                ctrl.inboundProduct.qualita = ctrl.currentExpected.qualita;
-                ctrl.inboundProduct.finitura = ctrl.currentExpected.finitura;
-                ctrl.inboundProduct.tipo = ctrl.currentExpected.tipo;
-                ctrl.inboundProduct.spessoreNominale = ctrl.currentExpected.spessore;
-                ctrl.inboundProduct.larghezzaNominale = ctrl.currentExpected.larghezza;
-                ctrl.unlockAdditionForm();
-                console.log(ctrl.currentExpected);
+                ctrl.inboundProductEntryModalContent.expected = expected;
+                ctrl.inboundProductEntryModalContent.product= {};
+                ctrl.inboundProductEntryModalContent.product.materiale = ctrl.inboundProductEntryModalContent.expected.materiale;
+                ctrl.inboundProductEntryModalContent.product.qualita = ctrl.inboundProductEntryModalContent.expected.qualita;
+                ctrl.inboundProductEntryModalContent.product.colore = ctrl.inboundProductEntryModalContent.expected.colore;
+                ctrl.inboundProductEntryModalContent.product.finitura = ctrl.inboundProductEntryModalContent.expected.finitura;
+                ctrl.inboundProductEntryModalContent.product.tipo = ctrl.inboundProductEntryModalContent.expected.tipo;
+                if (ctrl.inboundProductEntryModalContent.expected.spessore) {
+                    ctrl.inboundProductEntryModalContent.product.spessoreNominale = ctrl.inboundProductEntryModalContent.expected.spessore.toString();
+                }
+                if (ctrl.inboundProductEntryModalContent.expected.larghezza) {
+                    ctrl.inboundProductEntryModalContent.product.larghezzaNominale = ctrl.inboundProductEntryModalContent.expected.larghezza.toString();
+                }
+                ctrl.unlockedForm = 1;
+                console.log(ctrl.inboundProductEntryModalContent.product);
             }
             
             ctrl.selectInboundModifyProduct = function (product) {
-                ctrl.inboundProduct = product;
+                ctrl.oldProduct = product;
+                ctrl.inboundProductEntryModalContent.product = Object.assign({},product);
                 ctrl.unlockModificationForm();
             }
 
             ctrl.addInboundProduct = function (product) {
-                if (ctrl.currentExpected) {
+                if (ctrl.inboundProductEntryModalContent.expected) {
                     var element = {};
-                    if (!ctrl.currentExpected.pesoOrdinato) {
-                        ctrl.currentExpected.pesoOrdinato = 150;
-                        ctrl.currentExpected.pesoSaldo = ctrl.currentExpected.pesoOrdinato - ctrl.currentExpected.pesoConsegnato;
-                        ctrl.currentExpected.pesoConsegnato = 0;
-                    }
                     
                     element.peso = product.pesoIniziale;
                     
                     element.productPos = ctrl.inbound.addedProducts.push(product) - 1;
 
                     var trovato = ctrl.inbound.selectedExpecteds.find(function(e) {
-                       return e._id == ctrl.currentExpected._id;
+                       return e._id == ctrl.inboundProductEntryModalContent.expected._id;
                     });
-
+                    
+                    console.log("trovato",trovato);
+                    
                     if (trovato) {
                         i = ctrl.inbound.selectedExpecteds.indexOf(trovato);
                     }
                     else {
-                        i = ctrl.inbound.selectedExpecteds.push(ctrl.currentExpected) - 1;
+                        i = ctrl.inbound.selectedExpecteds.push(ctrl.inboundProductEntryModalContent.expected) - 1;
                     }
 
                     element.expectedPos = i;
                     ctrl.inbound.selectedExpecteds[i].pesoSaldo-=product.pesoIniziale;
-                    ctrl.inbound.selectedExpecteds[i].pesoConsegnato+=product.pesoIniziale;
+//                    ctrl.inbound.selectedExpecteds[i].pesoConsegnato+=product.pesoIniziale;
+                    ctrl.inbound.selectedExpecteds[i].pesoConsegnato = ctrl.inbound.selectedExpecteds[i].pesoOrdinato -ctrl.inbound.selectedExpecteds[i].pesoSaldo;
                     ctrl.product2expected.push(element);
                 }
                 else {
@@ -156,6 +162,7 @@ function inboundSet () {
                     });
                     if (trovato) {
                         ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoConsegnato-=trovato.peso;
+                        ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoSaldo = ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoOrdinato - ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoConsegnato;
                         ctrl.product2expected.splice(ctrl.product2expected.indexOf(trovato),1);
                         for (p2e of ctrl.product2expected) {
                             if (p2e.productPos > trovato.productPos) {
@@ -171,23 +178,34 @@ function inboundSet () {
             }
             
             ctrl.updateInboundProduct = function (product) {
-                if (product._id  && ctrl.inbound.modifiedProducts.indexOf(product) == -1) {
-                    ctrl.inbound.modifiedProducts.push(product);
+                var pos;
+                pos = ctrl.inbound.products.indexOf(ctrl.oldProduct);
+                ctrl.inbound.products[pos] = product; 
+                if (product._id) {  
+                    if (ctrl.inbound.modifiedProducts.indexOf(ctrl.oldProduct) == -1) {
+                        ctrl.inbound.modifiedProducts.push(product);
+                    }
+                    else {
+                        pos = ctrl.inbound.modifiedProducts.indexOf(ctrl.oldProduct);
+                        ctrl.inbound.modifiedProducts[pos] = product;    
+                    }
                 }
                 else {
-                    var pos = ctrl.inbound.addedProducts.indexOf(product);
+                    pos = ctrl.inbound.addedProducts.indexOf(ctrl.oldProduct);
                     var trovato = ctrl.product2expected.find(function(e) {
                        return e.productPos == pos;
                     });
                     if (trovato) {
                         ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoConsegnato+=(product.pesoIniziale-trovato.peso);
+                        ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoSaldo = ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoOrdinato - ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoConsegnato;
                     }
+                    ctrl.inbound.addedProducts[pos] = product;  
                 }
                 ctrl.lockForm();
                 console.log(product);
             }
         },
-        controllerAs: 'inSetCtrl',
+        controllerAs: 'inboundSetCtrl',
     };
 };
 
