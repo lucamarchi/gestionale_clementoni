@@ -1,0 +1,45 @@
+<!--<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{modalDirCtrl.modalContent.modalId}}" ng-click="modalDirCtrl.buttonAction()">{{modalDirCtrl.buttonName}}</button>-->
+
+<div ng-transclude="openButton"></div>
+
+<div ng-class="modalDirCtrl.modalContent.modalClass" id="{{modalDirCtrl.modalContent.modalId}}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="{{modalDirCtrl.modalContent.modalId}}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">{{modalDirCtrl.modalContent.modalTitle}}
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </h3>
+      </div>
+        
+      <div class="modal-body">
+        <div ng-if = "modalDirCtrl.modalContent.url" ng-include="modalDirCtrl.modalContent.url"></div>
+        <div ng-if = "modalDirCtrl.modalContent.body">{{modalDirCtrl.modalContent.body}}</div>
+      </div>
+      <div class="modal-footer">
+          <div ng-transclude="actionButtons"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{$ctrl.modalContent.modalId}}" ng-click="$ctrl.buttonAction()">{{$ctrl.modalContent.buttonName}}</button>
+
+<div class="modal modal-xl fade" id="{{$ctrl.modalContent.modalId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{$ctrl.modalContent.modalTitle}}</h4>
+      </div>
+      <div class="modal-body">
+        <div ng-include="$ctrl.modalContent.url"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-primary">Conferma</button>
+      </div>
+    </div>
+  </div>
+</div>-->
+

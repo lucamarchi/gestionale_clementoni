@@ -1,0 +1,9 @@
+<h1>STATI PRODUZIONE</h1>
+<br><br>
+<div>
+    <a ng-href="#/productionState/create">
+        <button ng-if="user.role == 'logistica' || user.role == 'admin'" type="button" class="btn btn-primary btn-lg">Nuovo Stato produzione</button>
+    </a>
+</div>
+<br><br>
+<prod-state-table prod-states = "prodStateCtrl.prodStates"></prod-state-table>

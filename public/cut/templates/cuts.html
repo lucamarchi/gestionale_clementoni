@@ -1,0 +1,22 @@
+<h1>ORDINI DI TAGLIO</h1>
+<br><br>
+<button type="button" class="btn btn-primary btn-lg" ng-click="cutCtrl.refreshCuts()">REFRESH</button>
+<br><br>
+<cut-table cut-list="cutCtrl.cuts" entry-limit="cutCtrl.entryLimit" current-page="cutCtrl.currentPage"></cut-table>
+
+<!-- Modal cut_products.html-->
+<!--
+<div id="cutarticle" class="modal modal-xl fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">NUMERO ORDINE {{cut.codice}}</h4>
+			</div>
+			<div class="modal-body">
+				<div ng-include src="'public/cut/cut_products.html'"></div>
+			</div>
+		</div>
+
+	</div>
+</div>-->

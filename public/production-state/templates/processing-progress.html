@@ -1,0 +1,124 @@
+<h1>
+    LAVORAZIONE IN CORSO
+    <button type="button" class="btn btn-primary btn-lg" ng-click = "processCtrl.backProdState()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+</h1>
+
+<br><br>
+
+<fieldset>
+    <div class="row">
+        <div class="col-md-2">
+            <legend>Articolo in lavorazione:</legend>
+        </div>
+    </div>
+    <div>
+        <article-table article-list="processCtrl.selectedArticles" entry-limit="processCtrl.selectedArticles.length" current-page="processCtrl.currentPage"></article-table>
+    </div>
+</fieldset>
+
+<br><br><br>
+
+<fieldset>
+    <div class="row">
+        <div class="col-md-2">
+            <legend>Macchinario Selezionato:</legend>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{processCtrl.machinerySelectionModalContent.modalId}}">Seleziona</button>
+        </div>
+    </div>
+    <br>
+    <div>
+        <machinery-table machinery-list="processCtrl.selectedMachinery"></machinery-table>
+    </div>
+</fieldset>
+
+<br><br><br>
+
+<fieldset>
+    
+        <div class="row">
+            <div class="col-md-2">
+                <legend>Stock selezionati:</legend>
+            </div>
+        
+            <div class="col-md-2">
+                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{processCtrl.stockSelectionModalContent.modalId}}" ng-click = "processCtrl.showStockList()">Seleziona</button>
+            </div>
+        </div>
+        <div>
+            <inbound-products-table inbound-list="processCtrl.selectedStocks" entry-limit="processCtrl.selectedStocks.length" current-page="processCtrl.currentPage">
+            </inbound-products-table>
+        </div>
+        <br>
+    
+</fieldset>
+
+<br><br><br>
+
+<fieldset>
+    <div class="row">
+        <div class="col-md-2">
+            <legend>Collo Prodotto</legend>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{processCtrl.producedProductEntryModalContent.modalId}}">Seleziona</button>
+        </div>
+    </div>
+    <div>
+        <inbound-products-table inbound-list="processCtrl.producedProducts" entry-limit="processCtrl.producedProducts.length" current-page="processCtrl.currentPage">
+        </inbound-products-table>
+    </div>
+</fieldset>
+
+
+<!--Modal machinery selection-->
+<div ng-class="processCtrl.machinerySelectionModalContent.modalClass" id="{{processCtrl.machinerySelectionModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{processCtrl.machinerySelectionModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-include = "processCtrl.machinerySelectionModalContent.url"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal stock selection-->
+<div ng-class="processCtrl.stockSelectionModalContent.modalClass" id="{{processCtrl.stockSelectionModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{processCtrl.stockSelectionModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-include = "processCtrl.stockSelectionModalContent.url"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal produced product entry-->
+<div ng-class="processCtrl.producedProductEntryModalContent.modalClass" id="{{processCtrl.producedProductEntryModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{processCtrl.producedProductEntryModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <inbound-product-form model="processCtrl.producedProductEntryModalContent.producedProduct"></inbound-product-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" >Annulla</button>
+                <button ng-if="processCtrl.producedProductFormValid" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="processCtrl.addProducedProduct(processCtrl.producedProductEntryModalContent.producedProduct)">Inserisci</button>
+                <button ng-if="!processCtrl.producedProductFormValid" type="button" class="btn btn-primary" disabled>Inserisci</button>
+            </div>
+        </div>
+    </div>
+</div>
+

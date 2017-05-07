@@ -1,0 +1,70 @@
+<fieldset>
+    <legend>Articoli selezionati:</legend>
+
+    <outbound-article-table article-list = "outboundEditCtrl.outbound.articles">
+        <weight-column>
+            <td>
+                {{$parent.article.weightSelected}}
+            </td>
+        </weight-column>
+        <quantity-column>
+            <td>
+                {{$parent.article.quantitySelected}}
+            </td>
+        </quantity-column>
+        <unit-column>
+            <td>
+                {{$parent.article.unitSelected}}
+            </td>
+        </unit-column>
+        <action-button>
+            <td>
+				<button type="button" class="btn btn-primary btn-circle" ng-click="outboundEditCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
+            </td>
+        </action-button>
+    </outbound-article-table>
+</fieldset>
+<br><br>
+
+<br><br>
+<fieldset>
+    <legend>Lista articoli:</legend>    
+    <outbound-article-table article-list = "outboundEditCtrl.freeArticles">
+        <table-filters>
+            <div>
+                <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>REGIONI</b></span>&nbsp&nbsp
+                <span ng-repeat="region in $parent.outboundArticleTableCtrl.regionArray">
+                    <input type="checkbox" ng-click="$parent.$parent.outboundArticleTableCtrl.includeVal(region, $parent.$parent.outboundArticleTableCtrl.regionArrayFilter)">{{region}}&nbsp&nbsp
+                </span>
+            </div>
+
+            <div>
+                <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>PROVINCE</b></span>&nbsp&nbsp
+                <span ng-repeat="province in $parent.outboundArticleTableCtrl.provinceArray">
+                    <input type="checkbox" ng-click="$parent.$parent.outboundArticleTableCtrl.includeVal(province, $parent.$parent.outboundArticleTableCtrl.provinceArrayFilter)">{{province}}&nbsp&nbsp
+                </span>
+            </div>    
+        </table-filters>
+        <weight-column>
+            <td>
+                <input type="number" ng-model="$parent.article.weightSelected" class="form-control" required>
+            </td>
+        </weight-column>
+        <quantity-column>
+            <td>
+                <input type="number" ng-model="$parent.article.quantitySelected" class="form-control">
+            </td>
+        </quantity-column>
+        <unit-column>
+            <td>
+                <select ng-model="$parent.article.unitSelected" ng-options="unita for unita in $parent.outboundArticleTableCtrl.features.unita" class="form-control" required></select>
+            </td>
+        </unit-column>
+        <action-button>
+            <td>
+				<button ng-if="$parent.article.weightSelected && $parent.article.unitSelected" type="button" class="btn btn-primary btn-circle" ng-click="$parent.$parent.outboundArticleTableCtrl.addArticle($parent.$parent.article)"><span class="glyphicon glyphicon-plus"></span></button>
+				<button ng-if="!$parent.article.weightSelected || !$parent.article.unitSelected" type="button" class="btn btn-primary btn-circle" disabled><span class="glyphicon glyphicon-plus"></span></button>
+            </td>
+        </action-button>
+    </outbound-article-table>
+</fieldset>

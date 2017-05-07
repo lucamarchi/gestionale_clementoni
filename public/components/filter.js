@@ -10,32 +10,7 @@ store.filter('startFrom', function () {
 	};
 });
 
-store.filter('filtercut', function() {
-	
-  	return function(input, codice, clienteCod, data) {
-		var output;
-		if (input) {
-			output = input.slice();
-			if (codice) {
-				output = output.filter(function(el){
-					return (el.codice.toString().substring(0,codice.length) == codice);
-				});
-			}
-			if (clienteCod) {
-				output = output.filter(function(el){
-					return (el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod);
-				});
-			}
-			if (data) {
-				output = output.filter(function(el){
-					return (new Date(el.date).getTime() == new Date(data).getTime());
-				});
-			}
-		}
-		return output;
-	}
 
-});	
 
 store.filter('filterca', function() {
 	
@@ -129,43 +104,6 @@ store.filter('filterriep', function() {
 			if (ordineCod) {
 				output = output.filter(function(el){
 					return (el.ordineCod.toString().substring(0,ordineCod.length) == ordineCod.toString());
-				});
-			}
-			if (materiale) {
-				output = output.filter(function(el){
-					return (el.materiale == materiale);
-				});
-			}
-			if (tipo) {
-				output = output.filter(function(el){
-					return (el.tipo == tipo);
-				});
-			}
-			if (spessore) {
-				output = output.filter(function(el){
-					return (el.spessore == spessore);
-				});
-			}
-			
-		}
-		return output;
-	}
-});
-
-store.filter('filterexp', function() {
-	
-  	return function(input, dataPrevista, fornitore, materiale, tipo, spessore) {
-		var output;
-		if (input) {
-			output = input.slice();
-			if (dataPrevista) {
-				output = output.filter(function(el){
-					return (new Date(el.dataPrevista).getTime() == new Date(dataPrevista).getTime());
-				});
-			}
-			if (fornitore) {
-				output = output.filter(function(el){
-					return (el.fornitore == fornitore);
 				});
 			}
 			if (materiale) {

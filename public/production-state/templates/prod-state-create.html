@@ -1,0 +1,73 @@
+<h1>
+    STATI PRODUZIONE
+    <a ng-href="#/productionState">
+        <button ng-if="user.role == 'logistica' || user.role == 'admin'" type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+    </a>
+</h1>
+
+<br><br>
+
+<h3><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Creazione stato produzione</h3>
+
+<br><br>
+<fieldset>
+    
+     <div class="row">
+        <div class="col-md-2">
+            <legend>
+                Articoli selezionati:
+            </legend>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary" ng-if = "prodStateCreateCtrl.selectedArticles.length > 0" ng-click="prodStateCreateCtrl.confirmProductionState(prodStateCreateCtrl.selectedArticles)">Conferma</button>
+            <button type="button" class="btn btn-primary" ng-if = "prodStateCreateCtrl.selectedArticles.length == 0" disabled>Conferma</button>
+        </div>
+    </div>
+        <br>
+    
+    
+    <article-table article-list="prodStateCreateCtrl.selectedArticles" entry-limit="prodOverCtrl.entryLimit" current-page="prodOverCtrl.currentPage">
+        <button-action>
+            <button type="button" class="btn btn-primary btn-circle" ng-click="prodStateCreateCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
+        </button-action>
+    </article-table>
+    
+</fieldset>
+<br><br>
+
+<fieldset>
+    <div class="row">
+        <div class="col-md-2">
+            <legend>Lista articoli:</legend>
+        </div>
+    </div>
+        <article-table article-list="prodStateCreateCtrl.freeArticles" entry-limit="prodStateCreateCtrl.entryLimit" current-page="prodStateCreateCtrl.currentPage">
+            <table-pagination>
+                <pagination total-items="prodStateCreateCtrl.freeArticles.length" current-page="prodStateCreateCtrl.currentPage" entry-limit="prodStateCreateCtrl.entryLimit"></pagination>
+                <br><br>
+            </table-pagination>
+
+            <filters>
+                <div class="col-md-2">
+                    <input-date-filter label-name="Data Consegna" model="$parent.search" attribute-m="dataConsegna"></input-date-filter>
+                </div>
+                <div class="col-md-2">
+                    <input-text-filter label-name="Regione" model="$parent.search" attribute-m="region"></input-text-filter>
+                </div>
+                <div class="col-md-2">
+                    <input-text-filter label-name="Provincia" model="$parent.search" attribute-m="provincia"></input-text-filter>
+                </div>
+                <div class="col-md-2">
+                    <input-text-filter label-name="Cliente" model="$parent.search" attribute-m="clienteCod"></input-text-filter>
+                </div>
+                <div class="col-md-2">
+                    <input-text-filter label-name="Ordine" model="$parent.search" attribute-m="ordineCod"></input-text-filter>
+                </div>
+                <br><br><br><br>
+            </filters>
+
+            <button-action>
+                    <button type="button" class="btn btn-primary btn-circle" ng-click="prodStateCreateCtrl.addSelectedArticle($parent.article)"><span class="glyphicon glyphicon-plus"></span></button>
+            </button-action>
+    </article-table>
+</fieldset>
