@@ -1,51 +1,16 @@
 function ProdStateCreateController (ProdStateFactory, ProdOverviewFactory, $location) {
     var ctrl = this;
-    ctrl.selectedArticles = [];
-    ctrl.freeArticles = [];
-    
-    ctrl.getFreeArticles = function () {
-        ProdStateFactory.getFreeArticles()
-            .then (function (resp) {
-                console.log(resp);
-                ctrl.freeArticles = resp.data.articles;
-                ctrl.entryLimit = 10;
-                ctrl.currentPage = 1;
-            })
-            .catch(function(err) {
-                console.log(err);
-            })
-    };
-    
-    
-    ctrl.getFreeArticles();
-    
-    ctrl.addSelectedArticle = function (article) {
-		ctrl.selectedArticles.push(article);
-        index = ctrl.freeArticles.indexOf(article);
-        console.log(article, index);
-		ctrl.freeArticles.splice(index,1);
-	};
+    ctrl.prodStateArticles = [];
 
-	ctrl.removeSelectedArticle = function (article){
-		ctrl.freeArticles.push(article);
-        index = ctrl.selectedArticles.indexOf(article);
-		console.log(article, index);
-        ctrl.selectedArticles.splice(index,1);
-	};
+    ctrl.prodStateConfirmationModalContent = {
+        modalTitle: 'Conferma Stato Produzione',
+        modalBody: 'Confermare la creazione dello stato produzione?',
+        modalId: 'prodstatecreation',
+        modalClass: 'modal fade',
+    }
     
     ctrl.confirmProductionState = function (articles) {
-		var prodState = {};
-        prodState.prod = {};
-		prodState.articoli = articles;
-		console.log(prodState);
-        ProdStateFactory.addProdState(prodState)
-            .then (function (resp) {
-                console.log(resp);
-                $location.path("/productionState")
-            })
-            .catch(function(err) {
-                console.log(err);
-            })
+        console.log(articles);
     };
 }
 

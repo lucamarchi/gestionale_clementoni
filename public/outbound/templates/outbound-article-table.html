@@ -17,7 +17,7 @@
 					<th>Lungh</th>
 					<th>Peso</th>
 					<th>Quant</th>
-					<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
+					<th>Prezzo (&euro;/t)</th>
 					<th>Stato Produzione</th>
 					<th>Stato Evasione</th>
 					<th>Kg da evadere</th>
@@ -26,7 +26,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="article in p2a.value">
+				<tr ng-repeat="article in p2a.value" ng-init="article.weightSelected = article.weightSelected == undefined ? article.peso : article.weightSelected; article.quantitySelected = article.quantitySelected == undefined ? article.quantita : article.quantitySelected; article.unitSelected = article.unitSelected == undefined ? '0' : article.unitSelected">
 					<td>{{article.dataConsegna | date:'medium'}}</td>
 					<td>{{article.clienteCod}}</td>
 					<td>{{article.ordineCod}}</td>
@@ -38,7 +38,7 @@
 					<td>{{article.lunghezza}}</td>
 					<td>{{article.pesoAttuale}}</td>
 					<td>{{article.quantita}}</td>
-					<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{article.prezzo}}</td>
+					<td>{{article.prezzo}}</td>
 					<td production-state model = "article" attribute = "statoProduzione"></td>
                     <td evasion-state model = "article" attribute = "statoEvasione"></td>
 					<td ng-transclude="weightColumn"></td>

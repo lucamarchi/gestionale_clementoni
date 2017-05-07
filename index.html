@@ -39,17 +39,17 @@
 							<a ng-if="isLogged" ng-href="#/inbound"><b>Entrate </b><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
 						</li>
 						<li>
-							<a ng-if="isLogged && (user.role == 'logistica' || user.role == 'admin')" ng-href="#/cut"><b>Ordini di taglio </b><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></a>
+							<a ng-if="isLogged && (user.role == 'logistica' || user.role == 'admin')" ng-href="#/cut"><b>Ordini Cliente </b><span class="glyphicon glyphicon-scissors" aria-hidden="true"></span></a>
 						</li>
 						<li class="dropdown">
-							<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Produzione </b><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span><span class="caret"></span></a>
+							<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Produzione </b><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a ng-href="#/productionOverview">Riepilogo</a></li>
 								<li><a ng-href="#/productionState">Stato produzione</a></li> 
 							</ul>
 						</li>
 						<li>
-							<a ng-if="isLogged" ng-href="#/outbound"><b>Uscite </b><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></a>
+							<a ng-if="isLogged" ng-href="#/outbound"><b>Uscite </b><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
 						</li>
 					</ul>
 
@@ -103,8 +103,6 @@
 		<script src="public/components/directive.js"></script>
         <script src="public/components/directives/form.directive.js"></script>
         <script src="public/components/directives/filter.directive.js"></script>
-        <script src="public/components/directives/modal.directive.js"></script>
-        <script src="public/components/directives/product-body.directive.js"></script>
         <script src="public/components/directives/attribute.directive.js"></script>
         <script src="public/components/directives/pagination.directive.js"></script>
 		
@@ -147,6 +145,7 @@
         <script src="public/production-state/javascript/controllers/prod-state.controller.js"></script>
         <script src="public/production-state/javascript/controllers/prod-state-create.controller.js"></script>
         <script src="public/production-state/javascript/controllers/prod-state-details.controller.js"></script>
+        <script src="public/production-state/javascript/controllers/prod-state-update.controller.js"></script>
         <script src="public/production-state/javascript/controllers/processing.controller.js"></script>
         <script src="public/production-state/javascript/directives/prod-state.directive.js"></script>
         <script src="public/production-state/javascript/filters/prod-state.filter.js"></script>
@@ -157,7 +156,7 @@
         <script src="public/outbound/javascript/controllers/outbound-create.controller.js"></script>
         <script src="public/outbound/javascript/controllers/outbound-update.controller.js"></script>
         <script src="public/outbound/javascript/controllers/outbound-details.controller.js"></script>
-        <script src="public/outbound/javascript/controllers/outbound-despatch.controller.js"></script>
+        <script src="public/outbound/javascript/controllers/outbound-dispatch.controller.js"></script>
         <script src="public/outbound/javascript/directives/outbound.directive.js"></script>
         <script src="public/outbound/javascript/filters/outbound.filter.js"></script>
         <script src="public/outbound/javascript/services/outbound.factory.js"></script>

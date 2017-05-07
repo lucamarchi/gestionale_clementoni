@@ -3,6 +3,8 @@ function OutboundController (OutboundFactory) {
     ctrl.outbounds = [];
     ctrl.currentPage = 1;
     ctrl.entryLimit = 10;
+    
+    
     ctrl.getOutbounds = function () {
         OutboundFactory.getOutbounds()
             .then (function (resp) {

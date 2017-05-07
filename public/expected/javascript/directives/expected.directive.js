@@ -17,7 +17,6 @@ angular
                 entryLimit: "=",
             },
             controller: function ($scope) {
-                var ctrl = this;
             },
             link: function ($scope, $element, $attrs) {
             },

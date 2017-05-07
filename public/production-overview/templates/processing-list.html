@@ -1,0 +1,54 @@
+<!--
+<table class="table table-condensed">
+    <thead>		
+		<tr>
+			<th>Data</th>
+			<th>Macchina</th>
+			<th>Operatore</th>
+			<th>Scarto</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="processing in processingList | orderBy:'data'">
+			<td>{{processing.data | date:'medium'}}</td>
+			<td>{{processing.macchina}}</td>
+			<td>{{processing.operatore}}</td>
+			<td>{{processing.scarto}}</td>
+			<td ng-if="riepilogo"><button type="button" class="btn btn-info btn-block" ng-click="viewChildrenProcess(process)">Realizzati</button></td>
+		</tr>
+    </tbody>
+</table>
+-->
+<fieldset ng-repeat = "processing in processingListCtrl.processingList | orderBy:'data'">
+    <legend>
+        <div class="row">
+            <div class="col-md-3">
+                <b>LAVORAZIONE {{processingListCtrl.processingList.indexOf(processing)+1}}</b>
+            </div>
+            <div class="col-md-3">
+                {{processing.data | date:'medium'}}
+            </div>
+            <div class="col-md-2">
+                Operatore: {{processing.operatore}}
+            </div>
+            <div class="col-md-2">
+                Macchinario: {{processing.macchinario}}
+            </div>
+            <div class="col-md-2">
+                Scarto: {{processing.scarto}}
+            </div>
+        </div>
+    </legend>
+    <br>
+    <div>
+        <inbound-products-table inbound-list="processing.products1" entry-limit="processing.products1.length" current-page=1 caption="STOCK UTILIZZATI">
+        </inbound-products-table>
+    </div>
+    <br>
+    <div>
+        <inbound-products-table inbound-list="processing.products2" entry-limit="processing.products2.length" current-page=1 caption="COLLO REALIZZATO">
+        </inbound-products-table>
+    </div>
+    <br><br>
+</fieldset>
+		

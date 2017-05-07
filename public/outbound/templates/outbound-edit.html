@@ -1,7 +1,7 @@
 <fieldset>
     <legend>Articoli selezionati:</legend>
 
-    <outbound-article-table article-list = "outboundEditCtrl.outbound.articles">
+    <outbound-article-table article-list = "outboundEditCtrl.outbound.articles" attribute = "weightSelected">
         <weight-column>
             <td>
                 {{$parent.article.weightSelected}}
@@ -24,12 +24,13 @@
         </action-button>
     </outbound-article-table>
 </fieldset>
+<div ng-transclude = "confirmButton"></div>
 <br><br>
 
 <br><br>
 <fieldset>
-    <legend>Lista articoli:</legend>    
-    <outbound-article-table article-list = "outboundEditCtrl.freeArticles">
+    <legend>Lista articoli non assegnati:</legend>    
+    <outbound-article-table article-list = "outboundEditCtrl.freeArticles" attribute = "peso">
         <table-filters>
             <div>
                 <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>REGIONI</b></span>&nbsp&nbsp
@@ -68,3 +69,7 @@
         </action-button>
     </outbound-article-table>
 </fieldset>
+
+<!--
+articoli da aggiunge: {{outboundEditCtrl.addedArticles}}
+articoli da rimuove: {{outboundEditCtrl.removedArticles}}-->

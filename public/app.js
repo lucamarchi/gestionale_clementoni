@@ -153,6 +153,7 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
 		.when('/login', {
         	templateUrl: 'public/login/templates/login.html',
 			controller:'LoginController',
+            controllerAs: 'loginCtrl',
 			access: { 
 				requiredLogin: false 
 			}
@@ -193,6 +194,15 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
             controllerAs: 'prodStateCreateCtrl',
 			access: { 
 				requiredLogin: true
+			}
+      	})
+    
+        .when('/productionState/update/:id', {
+        	templateUrl: 'public/production-state/templates/prod-state-update.html',
+			controller: 'ProdStateUpdateController',
+            controllerAs: 'prodStateUpdateCtrl',
+			access: { 
+				requiredLogin: true 
 			}
       	})
     
@@ -241,10 +251,10 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
 			}
       	})
     
-        .when('/outbound/despatch/:id', {
-        	templateUrl: 'public/outbound/templates/outbound-despatch.html',
-			controller: 'OutboundDespatchController',
-            controllerAs: 'outboundDespatchCtrl',
+        .when('/outbound/dispatch/:id', {
+        	templateUrl: 'public/outbound/templates/outbound-dispatch.html',
+			controller: 'OutboundDispatchController',
+            controllerAs: 'outboundDispatchCtrl',
 			access: { 
 				requiredLogin: true
 			}

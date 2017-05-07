@@ -17,10 +17,12 @@
                 </a>
             </td>
   			<td custom-date model="prodState" attribute="dataCreazione"></td>
-			<td>
-				<button type="button" class="btn btn-warning" ng-click="editProductionState(state)" data-target="#newstate" data-toggle="modal">Modifica <span class="glyphicon glyphicon-work"></span></button>	
-				<button type="button" class="btn btn-danger" ng-click="prepareDeleteState(state,states.indexOf(state))" data-target="#deletestate" data-toggle="modal">Cancella <span class="glyphicon glyphicon-trash"></span></button>	
-			</td>
+            <td>
+                <a ng-href="#/productionState/update/{{prodState._id}}">
+				    <button type="button" class="btn btn-warning btn-block">Modifica<span class="glyphicon glyphicon-cog"></span>
+                    </button>
+                </a>
+            </td>	
 		</tr>
 	</tbody>
 </table>

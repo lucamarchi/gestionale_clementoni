@@ -40,6 +40,7 @@ function inboundTable () {
 //                .catch(function(err) {
 //                    console.log(err);
 //                });
+                ctrl.inboundList.splice(ctrl.inboundList.indexOf(inbound),1);
                 console.log(inbound);
             }
         },
@@ -53,7 +54,10 @@ function inboundProductsTable () {
 		templateUrl:'public/inbound/templates/inbound-products-table.html',
 		scope: {},
         bindToController: {
-			inboundList: "="
+			inboundList: "=",
+            currentPage:"=",
+            entryLimit: "=",
+            caption: "@",
         },
         transclude: {
             'buttons': '?buttons'

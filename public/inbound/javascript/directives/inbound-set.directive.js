@@ -50,6 +50,7 @@ function inboundSet () {
                 modalId: 'inboundproductform',
                 modalClass: 'modal modal-xl fade',
                 expected: 'undefined',
+                oldProduct: {},
                 product: {},
             }
             
@@ -75,10 +76,6 @@ function inboundSet () {
             ctrl.unlockModificationForm = function () {
                 ctrl.inboundProductEntryModalContent.modalTitle = 'Modifica prodotto del carico';
                 ctrl.unlockedForm = 2;
-            }
-
-            ctrl.lockForm = function () {
-                ctrl.inboundProductEntryModalContent.expected = undefined;
             }
 
             ctrl.showExpectedList = function () {
@@ -111,12 +108,14 @@ function inboundSet () {
             }
             
             ctrl.selectInboundModifyProduct = function (product) {
-                ctrl.oldProduct = product;
+                ctrl.inboundProductEntryModalContent.oldProduct = product;
                 ctrl.inboundProductEntryModalContent.product = Object.assign({},product);
                 ctrl.unlockModificationForm();
             }
 
             ctrl.addInboundProduct = function (product) {
+                product.pesoNetto = product.pesoIniziale;
+                product.pesoLordo = product.pesoIniziale;
                 if (ctrl.inboundProductEntryModalContent.expected) {
                     var element = {};
                     
@@ -147,7 +146,6 @@ function inboundSet () {
                     ctrl.inbound.addedProducts.push(product)
                 }
                 ctrl.inbound.products.push(product);
-                ctrl.lockForm();
                 console.log("P2E", ctrl.product2expected);
             }
             
@@ -179,19 +177,19 @@ function inboundSet () {
             
             ctrl.updateInboundProduct = function (product) {
                 var pos;
-                pos = ctrl.inbound.products.indexOf(ctrl.oldProduct);
+                pos = ctrl.inbound.products.indexOf(ctrl.inboundProductEntryModalContent.oldProduct);
                 ctrl.inbound.products[pos] = product; 
                 if (product._id) {  
-                    if (ctrl.inbound.modifiedProducts.indexOf(ctrl.oldProduct) == -1) {
+                    if (ctrl.inbound.modifiedProducts.indexOf(ctrl.inboundProductEntryModalContent.oldProduct) == -1) {
                         ctrl.inbound.modifiedProducts.push(product);
                     }
                     else {
-                        pos = ctrl.inbound.modifiedProducts.indexOf(ctrl.oldProduct);
+                        pos = ctrl.inbound.modifiedProducts.indexOf(ctrl.inboundProductEntryModalContent.oldProduct);
                         ctrl.inbound.modifiedProducts[pos] = product;    
                     }
                 }
                 else {
-                    pos = ctrl.inbound.addedProducts.indexOf(ctrl.oldProduct);
+                    pos = ctrl.inbound.addedProducts.indexOf(ctrl.inboundProductEntryModalContent.oldProduct);
                     var trovato = ctrl.product2expected.find(function(e) {
                        return e.productPos == pos;
                     });

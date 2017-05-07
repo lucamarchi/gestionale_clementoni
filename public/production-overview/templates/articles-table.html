@@ -11,15 +11,13 @@
 			<th>Cod. Articolo</th>
 			<th>Materiale</th>
 			<th>Tipo</th>
-			<th>Spess</th>
-			<th>Largh</th>
-			<th>Lungh</th>
+			<th>Spessore</th>
+			<th>Larghezza</th>
+			<th>Lunghezza</th>
 			<th>Peso</th>
-			<th>Quant</th>
+			<th>Quantita</th>
 			<th ng-if="$root.user.role == 'admin'">Prezzo (&euro;/t)</th>
-			<th>Riepilogo</th>
 			<th>Stato Produzione</th>
-			<th>Stato Evasione</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,13 +26,6 @@
 			<td>{{article.region}}</td>
 			<td>{{article.provincia}}</td>
             <td>
-<!--
-                <modal-directive modal-content="articleTableCtrl.articleCustomerModalContent">
-                    <open-button>
-                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{articleTableCtrl.articleCustomerModalContent.modalId}}" ng-click="articleTableCtrl.getArticleCustomer(article.clienteCod)">{{article.clienteCod}}</button>
-                    </open-button>
-                </modal-directive>
--->
                 <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{articleTableCtrl.articleCustomerModalContent.modalId}}" ng-click="articleTableCtrl.getArticleCustomer(article.clienteCod)">{{article.clienteCod}}</button>
             </td>
 			<td>{{article.ordineCod}}</td>
@@ -47,14 +38,13 @@
 			<td>{{article.peso}}</td>
 			<td>{{article.quantita}}</td>
 			<td ng-if="$root.user.role == 'admin'">{{article.prezzo}}</td>
-			<td>
-<!--
-                <modal-directive ng-if="article.stockId != undefined" button-action="articleTableCtrl.getArticleStock(article.stockId)" button-name='Stock' modal-content="articleTableCtrl.articleStockModalContent"></modal-directive>
-                <modal-directive ng-if="article.statoProduzione == 'lavorazione' || article.statoProduzione == 'completato'" button-action="articleTableCtrl.getArticleProcessing(article)" button-name='Lavorazioni' modal-content="articleTableCtrl.articleProcessingModalContent"></modal-directive>
--->
-			</td>
-            <td production-state model = "article" attribute = "statoProduzione"></td>
-            <td evasion-state model = "article" attribute = "statoEvasione"></td>
+            <td> 
+                <div production-state model = "article" attribute = "statoProduzione"></div>
+                <br>
+                <div>
+                    <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{articleTableCtrl.articleProcessingModalContent.modalId}}" ng-click="">Lavorazioni</button>
+                </div>
+            </td>
             <td ng-transclude="buttonAction"></td>
 		</tr>
 	</tbody>
@@ -71,6 +61,21 @@
             </div>
             <div class="modal-body">
                 <customer-table customer='articleTableCtrl.articleCustomerModalContent.customer'></customer-table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal article customer-->
+<div ng-class="articleTableCtrl.articleProcessingModalContent.modalClass" id="{{articleTableCtrl.articleProcessingModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{articleTableCtrl.articleProcessingModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <processing-list></processing-list>
             </div>
         </div>
     </div>

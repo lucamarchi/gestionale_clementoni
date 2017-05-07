@@ -14,6 +14,14 @@ function outboundTable (OutboundFactory, $location) {
             ctrl.showOutboundDetails = function (outboundId) {
                 $location.path('/outbound/details/'+outboundId);    
             }
+            
+            ctrl.showOutboundDispatch = function (outboundId) {
+                $location.path('/outbound/dispatch/'+outboundId);    
+            }
+            
+            ctrl.showOutboundUpdate = function (outboundId) {
+                $location.path('/outbound/update/'+outboundId);    
+            }
         },
 
         controllerAs: 'outboundTableCtrl',
@@ -27,6 +35,7 @@ function outboundArticleTable (OutboundFactory, features) {
 		scope: {},
         bindToController: {
 			articleList: "=",
+            attribute: "@"
         },
         transclude: {
             tableFilters : "?tableFilters",
@@ -52,8 +61,8 @@ function outboundArticleTable (OutboundFactory, features) {
                     if (newVal) {
                         ctrl.regionArray = findDistinctRegion(newVal);
                         ctrl.provinceArray = findDistinctProvince(newVal);
-                        console.log ("111 ", ctrl.regionArray, "222 ", ctrl.provinceArray);
-                        ctrl.articleMap = ctrl.createArticleMap(newVal);
+//                        console.log ("111 ", ctrl.regionArray, "222 ", ctrl.provinceArray);
+                        ctrl.articleMap = ctrl.createArticleMap(newVal, ctrl.attribute);
                     }
                 }
             );
@@ -69,7 +78,7 @@ function outboundArticleTable (OutboundFactory, features) {
                 console.log(array);
             } 
             
-            ctrl.createArticleMap = function (articles) {
+            ctrl.createArticleMap = function (articles, attribute) {
                 var monster = [];
                 i=0;
                 for (rg of ctrl.regionArray){
@@ -77,17 +86,17 @@ function outboundArticleTable (OutboundFactory, features) {
                         return (el.region == rg);
                     });
                     if(temp.length != 0){
-                        monster.push({region: rg, lung: 0, weight: 0, value: []}); //i per accedere
+                        monster.push({region: rg, weight: 0, value: []}); //i per accedere
                         j=0;
                         for (pr of ctrl.provinceArray){
                             temp = articles.filter(function(el){
                                 return (el.region == rg) && (el.provincia == pr);
                             });
                             if(temp.length != 0){
-                                monster[i].value.push({province: pr, lung: 0, weight: 0, value: temp}); //j per accedere
+                                monster[i].value.push({province: pr, weight: 0, value: temp}); //j per accedere
                                 for (t of temp) {
-                                    monster[i].value[j].weight = monster[i].value[j].weight + t.peso;
-                                    monster[i].weight = monster[i].weight + t.peso; 
+                                    monster[i].value[j].weight += t[attribute];
+                                    monster[i].weight += t[attribute]; 
                                 }
                                 j++;
                             }
@@ -95,11 +104,11 @@ function outboundArticleTable (OutboundFactory, features) {
                         i++;
                     }
                 }
-                console.log("monster ", monster);
                 return monster;
             }
             
             ctrl.addArticle = function (article) {
+                console.log(article)
                 $scope.$emit('addArticle', article);    
             }
             
@@ -117,9 +126,16 @@ function outboundEdit (OutboundFactory, ProdStateFactory, features) {
         bindToController: {
 			outbound: "=",
         },
+        transclude: {
+            'confirmButton': '?confirmButton'
+        },
         controller: function ($scope) {
             var ctrl = this;
             ctrl.currentPage = 1;
+            ctrl.addedArticles = [];
+            ctrl.removedArticles = [];
+            ctrl.freeArticles = [];
+            
         
             $scope.$watchCollection(
                 function () {
@@ -130,7 +146,6 @@ function outboundEdit (OutboundFactory, ProdStateFactory, features) {
                     if (newVal) {
                         ctrl.outbound.order = newVal.order;
                         ctrl.outbound.articles = newVal.articles;  
-                        console.log("aaaaaaaaaaaaaa", newVal)
                     }
                 }
             );
@@ -154,6 +169,15 @@ function outboundEdit (OutboundFactory, ProdStateFactory, features) {
                 ctrl.outbound.articles.push(article);
                 index = ctrl.freeArticles.indexOf(article);
                 console.log(article, index);
+                if (article.statoEvasione == "libero") {
+                    ctrl.addedArticles.push(article);
+                }
+                else {
+                    var articlePos = ctrl.removedArticles.indexOf(article);
+                    if (articlePos != -1){
+                        ctrl.removedArticles.splice(articlePos,1);
+                    }
+                }
                 ctrl.freeArticles.splice(index,1);
             };
             
@@ -161,6 +185,15 @@ function outboundEdit (OutboundFactory, ProdStateFactory, features) {
                 ctrl.freeArticles.push(article);
                 index = ctrl.outbound.articles.indexOf(article);
                 console.log(article, index);
+                if (article.statoEvasione != "libero") {
+                    ctrl.removedArticles.push(article);
+                }
+                else {
+                    var articlePos = ctrl.addedArticles.indexOf(article);
+                    if (articlePos != -1){
+                        ctrl.addedArticles.splice(articlePos,1);
+                    }
+                }
                 ctrl.outbound.articles.splice(index,1);
             };
             
@@ -184,25 +217,26 @@ function outboundForm () {
 		templateUrl:'public/outbound/templates/outbound-form.html',
 		scope: {},
         bindToController: {
-			outboundOrder:"=",
+			model: "=",
         },
         
         controller: function ($scope) {
             var ctrl = this; 
+            
             $scope.$watchCollection(
                 function () {
                     return ctrl.outboundForm;
                 }, 
                 function (newVal) {
                     if (newVal) {
-                        $scope.$emit('orderFormValid', ctrl.outboundForm);
+                        $scope.$emit('outboundFormValid', ctrl.outboundForm);
                     }
                 }
             );   
         },
         
         
-        controllerAs: 'inOrderFormCtrl',
+        controllerAs: 'outboundFormCtrl',
     };
 };
 

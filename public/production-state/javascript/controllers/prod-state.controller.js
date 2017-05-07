@@ -1,6 +1,7 @@
 function ProdStateController (ProdStateFactory) {
     var ctrl = this;
     ctrl.prodStates = [];
+    
     ctrl.getProdStates = function () {
         ProdStateFactory.getProdStates()
             .then (function (resp) {
@@ -13,6 +14,7 @@ function ProdStateController (ProdStateFactory) {
     };
 
     ctrl.getProdStates();
+    
     
     
 }

@@ -30,8 +30,7 @@ function StockController ($scope, StockFactory,$location) {
     
     ctrl.deleteStock = function (stock) {
         //chiamata all api
-        ctrl.stocks.splice(ctrl.stocks.indexOf(stock),1);
-        $location.path('/outbound');    
+        ctrl.stocks.splice(ctrl.stocks.indexOf(stock),1);    
     }
 };
 

@@ -1,5 +1,12 @@
 function CutController (CutFactory) {
     var ctrl = this;
+    
+    ctrl.refreshLoadingModalContent = {
+        modalTitle: 'Scaricamento stock virtuale in corso',
+        modalId: 'refreshloading',
+        modalClass: 'modal fade',
+    }
+    
     ctrl.getCuts = function () {
         CutFactory.getCuts()
             .then (function (resp) {
@@ -16,12 +23,14 @@ function CutController (CutFactory) {
     ctrl.getCuts();
     
 	ctrl.refreshCuts = function () {
+        $('#'+ctrl.refreshLoadingModalContent.modalId).modal('show');
 		CutFactory.refreshCuts()
             .then (function (resp) {
 				console.log("REFRESH", resp);
 				if (resp.cuts != undefined) {
 					ctrl.cuts = ctrl.cuts.concat(resp.data.cuts);
 				}
+                $('#'+ctrl.refreshLoadingModalContent.modalId).modal('hide');
 			})
 			.catch(function(err) {
 				console.log(err);

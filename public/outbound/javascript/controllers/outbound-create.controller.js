@@ -4,6 +4,19 @@ function OutboundCreateController (OutboundFactory, ProdStateFactory, $location)
     ctrl.outbound.order = {};
     ctrl.outbound.articles = [];
     ctrl.outbound.products = [];
+    
+    ctrl.outboundConfirmationModalContent = {
+        modalTitle: 'Conferma creazione carico in uscita',
+        modalBody: 'Confermare la creazione del carico in uscita?',
+        modalId: 'outboundcreation',
+        modalClass: 'modal fade',
+    }
+    
+    
+    
+    ctrl.confirmOutbound = function (outbound) {
+        console.log(outbound);
+    }
 }
 
 angular

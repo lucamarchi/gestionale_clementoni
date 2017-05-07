@@ -78,7 +78,7 @@ function ProcessingController ($scope, features, ProcessingFactory, StockFactory
     
     ctrl.openProductForm = function () {
         console.log(ctrl.selectedArticles[0]);
-//        ctrl.producedProductEntryModalContent.producedProduct = ctrl.selectedArticles[0];
+        ctrl.producedProductEntryModalContent.producedProduct = Object.assign({},ctrl.selectedArticles[0]);
         
     }
     

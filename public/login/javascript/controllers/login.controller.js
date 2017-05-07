@@ -1,6 +1,14 @@
 function LoginController ($scope, $rootScope, $location, UserService) {
-	
-	$scope.logIn = function (user) {
+	var ctrl = this;
+    
+    ctrl.loginAlertModalContent = {
+        modalTitle: 'Errore di autenticazione',
+        modalId: 'loginalert',
+        modalClass: 'modal fade',
+        modalBody: 'Username e/o password errati'
+    }
+    
+	ctrl.logIn = function (user) {
 		var username = user.username;
         var password = user.password;
         if (username !== undefined && password !== undefined) {
@@ -16,6 +24,7 @@ function LoginController ($scope, $rootScope, $location, UserService) {
 					$location.path("/");
 				},
 				function(err){
+                    $('#'+ctrl.loginAlertModalContent.modalId).modal()
 					console.log(err.message);
 				}
 			);

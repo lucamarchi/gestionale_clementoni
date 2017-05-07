@@ -5,6 +5,13 @@ function OutboundUpdateController (OutboundFactory, ProdStateFactory, $location,
     ctrl.outbound.articles = [];
     ctrl.outbound.products = [];
     
+    ctrl.outboundConfirmationModalContent = {
+        modalTitle: 'Conferma modifiche carico in uscita',
+        modalBody: 'Confermare le modifiche del carico in uscita?',
+        modalId: 'outboundupdating',
+        modalClass: 'modal fade',
+    }
+    
     ctrl.getOutbound = function (id) {
         OutboundFactory.getOutbound(id)
         .then (function (resp) {
@@ -17,6 +24,10 @@ function OutboundUpdateController (OutboundFactory, ProdStateFactory, $location,
     }
         
     ctrl.getOutbound($routeParams.id);
+    
+    ctrl.updateOutbound = function (outbound) {
+        console.log(outbound);
+    }
 }
 
 angular
