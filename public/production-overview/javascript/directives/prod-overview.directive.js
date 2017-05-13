@@ -1,4 +1,4 @@
-function articleTable (ProdOverviewFactory) {
+function articleTable (ProcessingFactory, CustomerFactory, ProductFactory) {
 	return {
 		restrict: 'E',
 		templateUrl:'public/production-overview/templates/articles-table.html',
@@ -39,7 +39,7 @@ function articleTable (ProdOverviewFactory) {
             }
             
             ctrl.getArticleCustomer = function (clienteCod) {
-                ProdOverviewFactory.getCustomer(clienteCod)
+                CustomerFactory.getCustomer(clienteCod)
                     .then (function (resp) {
                         console.log(resp);
                         ctrl.articleCustomerModalContent.customer = resp.data.customer;
@@ -49,18 +49,18 @@ function articleTable (ProdOverviewFactory) {
                     })
             }
             
-            ctrl.getArticleStock = function(articleId) {
-                ProdOverviewFactory.getStock(articleId)
-                    .then (function (resp) {
-                        console.log(resp);
-                    })
-                    .catch(function(err) {
-                        console.log(err);
-                    })
-            }
+//            ctrl.getArticleStock = function(articleId) {
+//                ProductFactory.getStock(articleId)
+//                    .then (function (resp) {
+//                        console.log(resp);
+//                    })
+//                    .catch(function(err) {
+//                        console.log(err);
+//                    })
+//            }
             
             ctrl.getArticleProcessing = function (articleId) {
-                ProdOverviewFactory.getProcessing(articleId)
+                ProcessingFactory.getProcessing(articleId)
                     .then (function (resp) {
                         console.log(resp);
                     })
@@ -189,5 +189,5 @@ function processingList () {
 
 angular
     .module('store')
-    .directive('articleTable',['ProdOverviewFactory', articleTable])
+    .directive('articleTable',['ProcessingFactory', 'CustomerFactory', 'ProductFactory', articleTable])
     .directive('processingList', processingList)

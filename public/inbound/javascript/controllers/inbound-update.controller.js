@@ -35,6 +35,9 @@ function InboundUpdateController ($scope, $location, InboundFactory, ExpectedFac
     ctrl.updateInboundOrder = function (inbound) {
 		console.log(inbound);
         $location.path("/inbound");
+        
+        
+        
 //        InboundFactory.updateInbound({order: inbound.order, products: inbound.addedProducts, expected: inbound.selectedExpecteds})
 //            .then(function(resp){
 //				console.log(resp);

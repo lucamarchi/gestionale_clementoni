@@ -1,4 +1,4 @@
-function StockController ($scope, ProductFactory,$location) {
+function VirtualStockController ($scope, ProductFactory,$location) {
     var ctrl = this;
     ctrl.stocks = [];
 	
@@ -9,12 +9,12 @@ function StockController ($scope, ProductFactory,$location) {
         stock: {},
     }
     
-    ctrl.selectStock = function (stock) {
+    ctrl.selectVirtualStock = function (stock) {
         console.log(stock);
         ctrl.stockDeleteModalContent.stock = stock;
     }
     
-	ctrl.getStocks = function () {
+	ctrl.getVirtualStocks = function () {
 		ProductFactory.getProducts()
             .then (function (resp) {
                 console.log(resp);
@@ -26,9 +26,9 @@ function StockController ($scope, ProductFactory,$location) {
 			});
     };
 	
-	ctrl.getStocks();
+	ctrl.getVirtualStocks();
     
-    ctrl.deleteStock = function (stock) {
+    ctrl.deleteVirtualStock = function (stock) {
         //chiamata all api
         ctrl.stocks.splice(ctrl.stocks.indexOf(stock),1);    
     }
@@ -36,4 +36,4 @@ function StockController ($scope, ProductFactory,$location) {
 
 angular
     .module('store')
-    .controller('StockController', ['$scope', 'ProductFactory','$location', StockController]);
+    .controller('VirtualStockController', ['$scope', 'ProductFactory','$location', VirtualStockController]);

@@ -7,8 +7,6 @@
 //        return $http.get(urlBase);
 //    };
 //    
-
-    
 //    stockFactory.deleteStock = function (id) {
 //        return $http.delete(urlBase+'/'+id);
 //    };

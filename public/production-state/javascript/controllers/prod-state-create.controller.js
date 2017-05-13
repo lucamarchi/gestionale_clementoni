@@ -1,4 +1,4 @@
-function ProdStateCreateController (ProdStateFactory, ProdOverviewFactory, $location) {
+function ProdStateCreateController (ProdStateFactory, $location) {
     var ctrl = this;
     ctrl.prodStateArticles = [];
 
@@ -16,4 +16,4 @@ function ProdStateCreateController (ProdStateFactory, ProdOverviewFactory, $loca
 
 angular
     .module('store')
-    .controller('ProdStateCreateController', ['ProdStateFactory','ProdOverviewFactory','$location', ProdStateCreateController]);
+    .controller('ProdStateCreateController', ['ProdStateFactory', '$location', ProdStateCreateController]);

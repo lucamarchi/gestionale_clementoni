@@ -1,4 +1,4 @@
-function ProdStateUpdateController (ProdStateFactory, ProdOverviewFactory, $location, $routeParams) {
+function ProdStateUpdateController (ProdStateFactory, $location, $routeParams) {
     var ctrl = this;
     ctrl.prodStateArticles = [];
     
@@ -43,4 +43,4 @@ function ProdStateUpdateController (ProdStateFactory, ProdOverviewFactory, $loca
 
 angular
     .module('store')
-    .controller('ProdStateUpdateController', ['ProdStateFactory','ProdOverviewFactory','$location','$routeParams', ProdStateUpdateController]);
+    .controller('ProdStateUpdateController', ['ProdStateFactory','$location','$routeParams', ProdStateUpdateController]);

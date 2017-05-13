@@ -1,4 +1,4 @@
-function ProcessingController ($scope, features, ProcessingFactory, StockFactory, $location) {
+function ProcessingController ($scope, features, ProcessingFactory, ProductFactory, $location) {
     var ctrl = this;
     
     ctrl.selectedMachinery = {};
@@ -31,7 +31,7 @@ function ProcessingController ($scope, features, ProcessingFactory, StockFactory
       
     ctrl.backProdState = function () {
         var prodStateId = ProcessingFactory.getProdStateId();
-        $location.path("/productionState/info/"+prodStateId);
+        $location.path("/productionState/details/"+prodStateId);
     }
     
     $scope.$on('inboundProductFormValid', function (event, data) {
@@ -60,7 +60,7 @@ function ProcessingController ($scope, features, ProcessingFactory, StockFactory
     }
     
     ctrl.showStockList = function () {
-        StockFactory.getStocks()
+        ProductFactory.getProducts()
             .then (function (resp) {
                 console.log(resp);
                 ctrl.stockSelectionModalContent.stockList = resp.data.stocks;
@@ -92,4 +92,4 @@ function ProcessingController ($scope, features, ProcessingFactory, StockFactory
 
 angular
     .module('store')
-    .controller('ProcessingController',['$scope','features','ProcessingFactory','StockFactory','$location', ProcessingController])
+    .controller('ProcessingController',['$scope','features','ProcessingFactory','ProductFactory','$location', ProcessingController])

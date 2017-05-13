@@ -118,7 +118,7 @@ function outboundArticleTable (OutboundFactory, features) {
     }
 };
 
-function outboundEdit (OutboundFactory, ProdStateFactory, features) {
+function outboundEdit (OutboundFactory, ArticleFactory, features) {
 	return {
 		restrict: 'E',
 		templateUrl:'public/outbound/templates/outbound-edit.html',
@@ -151,7 +151,7 @@ function outboundEdit (OutboundFactory, ProdStateFactory, features) {
             );
             
             ctrl.getFreeArticles = function () {
-                ProdStateFactory.getFreeArticles()
+                ArticleFactory.getFreeArticles()
                     .then (function (resp) {
                         console.log(resp);
                         ctrl.freeArticles = resp.data.articles;
@@ -244,5 +244,5 @@ angular
     .module('store')
     .directive('outboundTable',['OutboundFactory', '$location', outboundTable])
     .directive('outboundArticleTable',['OutboundFactory', 'features', outboundArticleTable])
-    .directive('outboundEdit',['OutboundFactory','ProdStateFactory', 'features', outboundEdit])
+    .directive('outboundEdit',['OutboundFactory','ArticleFactory', 'features', outboundEdit])
     .directive('outboundForm', outboundForm)

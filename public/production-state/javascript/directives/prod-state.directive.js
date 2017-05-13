@@ -33,14 +33,15 @@ function prodStateTable (ProdStateFactory) {
             }
             
             ctrl.deleteProdStateArticle = function (article) {
-                ProdStateFactory.deleteProdStateArticle(article._id)
-                .then (function (resp) {
-                    console.log("ARTICLE ELIMINATO", resp);
-                    ctrl.prodStates.splice(ctrl.inboundList.indexOf(article),1);
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+//                ArticleFactory.deleteProdStateArticle(article._id)
+//                .then (function (resp) {
+//                    console.log("ARTICLE ELIMINATO", resp);
+//                    ctrl.prodStates.splice(ctrl.inboundList.indexOf(article),1);
+//                })
+//                .catch(function(err) {
+//                    console.log(err);
+//                });
+                console.log(article);
             }
         },
 
@@ -65,7 +66,7 @@ function machineryTable () {
     }
 }
 
-function prodStateEdit (ProdStateFactory) {
+function prodStateEdit (ArticleFactory) {
     return {
         restrict: 'E',
         templateUrl:'public/production-state/templates/prod-state-edit.html',
@@ -96,7 +97,7 @@ function prodStateEdit (ProdStateFactory) {
             );
             
             ctrl.getFreeArticles = function () {
-                ProdStateFactory.getFreeArticles()
+                ArticleFactory.getFreeArticles()
                     .then (function (resp) {
                         console.log(resp);
                         ctrl.freeArticles = resp.data.articles;
@@ -151,4 +152,4 @@ angular
     .module('store')
     .directive('prodStateTable',['ProdStateFactory', prodStateTable])
     .directive('machineryTable', machineryTable)
-    .directive('prodStateEdit', ['ProdStateFactory', prodStateEdit])
+    .directive('prodStateEdit', ['ArticleFactory', prodStateEdit])

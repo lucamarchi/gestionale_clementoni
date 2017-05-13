@@ -1,10 +1,10 @@
-function ProdOverviewController (ProdOverviewFactory) {
+function ProdOverviewController (ArticleFactory) {
     var ctrl = this;
     ctrl.currentPage = 1;
     ctrl.entryLimit = 10;
     
     ctrl.getArticles = function () {
-        ProdOverviewFactory.getArticles()
+        ArticleFactory.getArticles()
             .then (function (resp) {
                 console.log(resp);
                 ctrl.articles = resp.data.articles;
@@ -19,4 +19,4 @@ function ProdOverviewController (ProdOverviewFactory) {
 
 angular
     .module('store')
-    .controller('ProdOverviewController', ['ProdOverviewFactory', ProdOverviewController])
+    .controller('ProdOverviewController', ['ArticleFactory', ProdOverviewController])

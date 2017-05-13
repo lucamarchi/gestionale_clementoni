@@ -62,16 +62,15 @@ function ExpectedCreateController ($scope, $location, ExpectedFactory) {
     }
     
     ctrl.confirmExpectedOrder = function (expecteds) {
-//		ExpectedFactory.addExpecteds({expected:expecteds})
-//            .then(function(resp){
-//				console.log(resp);
-//                $location.path("/expected")
-//			})
-//			.catch(function(err){
-//				console.log(err);
-//			})
-        console.log(expecteds);
-        $location.path("/expected");
+		ExpectedFactory.addExpecteds({expected:expecteds})
+            .then(function(resp) {
+                console.log(expecteds);
+				console.log(resp);
+                $location.path("/expected")
+			})
+			.catch(function(err){
+				console.log(err);
+			})
     }
 }
 

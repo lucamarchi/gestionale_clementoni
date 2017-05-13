@@ -69,13 +69,13 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
 			}
       	})
 	
-//		.when('/stock2', {
-//        	templateUrl: 'stock/stock2.html',
-//			controller: 'stock2Controller',
-//			access: { 
-//				requiredLogin: true 
-//			}
-//      	})
+		.when('/virtualStock', {
+        	templateUrl: 'public/virtual-stock/templates/virtual-stock.html',
+			controller: 'VirtualStockController',
+			access: { 
+				requiredLogin: true 
+			}
+      	})
 	
 		.when('/inbound', {
         	templateUrl: 'public/inbound/templates/inbounds.html',
@@ -180,7 +180,7 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
       	})
     
         .when('/productionState/details/:id', {
-        	templateUrl: 'public/production-state/templates/prod-state-articles.html',
+        	templateUrl: 'public/production-state/templates/prod-state-details.html',
 			controller: 'ProdStateDetailsController',
             controllerAs: 'prodStateDetailsCtrl',
 			access: { 
