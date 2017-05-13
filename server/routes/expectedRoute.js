@@ -13,7 +13,7 @@ module.exports = function(app, apiRoutes) {
         .get('/expecteds', function(req,res,next) {
             var data = {};
             Expected.findAll().then(function(result) {
-                data.expected = result;
+                data.expecteds = result;
                 res.status(200).json({
                     "success": true,
                     "message": "Expected list",
@@ -27,8 +27,8 @@ module.exports = function(app, apiRoutes) {
                 });
             });
         })
-
-        .get('/expecteds/:expected_id', function(req,res,next) {
+        /*
+        .get('/expected/:expected_id', function(req,res,next) {
             var expectedId = req.params.expected_id;
             var data = {};
             Expected.findById(expectedId).then(function(result) {
@@ -45,12 +45,12 @@ module.exports = function(app, apiRoutes) {
                     "error": err.message
                 });
             });
-        })
+        })*/
 
         .post('/expecteds', function(req,res,next) {
             var expected = req.body.expected;
             var data = {};
-            var promises = expectedController.createExpecteds(expected)
+            var promises = expectedController.createExpecteds(expected);
             Q.all(promises).then(function(result) {
                 data.expecteds = result;
                 res.status(200).json({
@@ -67,7 +67,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .put('/expecteds/:expected_id', function(req,res,next) {
+        .put('/expected/:expected_id', function(req,res,next) {
             var expected = req.body.expected;
             var expectedId = req.params.expected_id;
             var data = {};
@@ -87,7 +87,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .delete('/expecteds/:expected_id', function(req,res,next) {
+        .delete('/expected/:expected_id', function(req,res,next) {
             var expectedId = req.params.expected_id;
             Expected.deleteExpected(expectedId).then(function(err,result) {
                 res.status(200).json({

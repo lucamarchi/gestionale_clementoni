@@ -31,7 +31,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .get('/orders/:order_id', function(req,res,next) {
+        .get('/order/:order_id', function(req,res,next) {
             var data = {};
             Order.findById(req.params.order_id).then(function(result) {
                 data.order = result;
@@ -52,7 +52,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .post('/orders', function(req,res,next) {
+        .post('/order', function(req,res,next) {
             var data = {};
             var order = req.body.order;
             Order.saveNewOrder(order).then(function(result) {
@@ -101,7 +101,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .put('/orders/:order_id', function(req,res,next) {
+        .put('/order/:order_id', function(req,res,next) {
             var data = {};
             var orderId = req.params.order_id;
             var order = req.body.order;
