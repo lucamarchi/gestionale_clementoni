@@ -67,7 +67,6 @@ angular
                 $scope.$watch('model.materiale',
                     function(newVal, oldVal) {
                         if (newVal && newVal != oldVal && oldVal != undefined) {
-                            console.log(newVal, oldVal); 
                             delete $scope.model[$scope.attributeM];
                         }
                     }
@@ -193,7 +192,6 @@ angular
                 }
                 
                 ctrl.require = function () {
-                    console.log(ctrl.disable && ctrl.required);
                     var disabled = ctrl.disable(); 
                     return !disabled && ctrl.required;
                 }
@@ -204,7 +202,6 @@ angular
                 }, 
                 function (newVal, oldVal) {
                     if (newVal && newVal != oldVal) {
-                        console.log(newVal, oldVal); 
                         delete ctrl.model[$scope.attributeM];
                     }
                 })

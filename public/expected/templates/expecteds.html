@@ -14,14 +14,14 @@
             <pagination total-items="expCtrl.expecteds.length" current-page="expCtrl.currentPage" entry-limit="expCtrl.entryLimit"></pagination>
         </table-pagination>
         <table-filter>
-            <expected-filters model="$parent.search"></expected-filters>
+            <expected-filter model="$parent.search"></expected-filter>
             <br>
         </table-filter>
         <table-button>
             <td>
-                <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#{{expCtrl.updateExpectedModalContent.modalId}}" ng-click = "expCtrl.selectExpected($parent.expected, $parent.expTableCtrl.expectedList.indexOf($parent.expected))">
+                <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#{{expCtrl.updateExpectedModalContent.modalId}}" ng-click = "expCtrl.selectExpected($parent.expected, $parent.expectedTableCtrl.expectedList.indexOf($parent.expected))">
                 Modifica <span class="glyphicon glyphicon-cog"></span></button>
-                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#{{expCtrl.deleteExpectedModalContent.modalId}}" ng-click = "expCtrl.selectExpected($parent.expected, $parent.expTableCtrl.expectedList.indexOf($parent.expected))">
+                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#{{expCtrl.deleteExpectedModalContent.modalId}}" ng-click = "expCtrl.selectExpected($parent.expected, $parent.expectedTableCtrl.expectedList.indexOf($parent.expected))">
                 Elimina <span class="glyphicon glyphicon-trash"></span></button>
 			</td>
         </table-button>

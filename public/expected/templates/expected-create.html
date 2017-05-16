@@ -10,10 +10,10 @@
     <expected-table expected-list="expCreateCtrl.expecteds" entry-limit="expCreateCtrl.entryLimit" current-page="expCreateCtrl.currentPage">
         <table-button>
             <td>
-                <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#{{expCreateCtrl.editExpectedModalContent.modalId}}" ng-click='expCreateCtrl.selectExpected($parent.expected, $parent.expTableCtrl.expectedList.indexOf($parent.expected))'>Modifica <span class="glyphicon glyphicon-trash"></span>
+                <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#{{expCreateCtrl.editExpectedModalContent.modalId}}" ng-click='expCreateCtrl.selectExpected($parent.expected, $parent.expectedTableCtrl.expectedList.indexOf($parent.expected))'>Modifica <span class="glyphicon glyphicon-trash"></span>
                 </button>
                 
-                <button type="button" class="btn btn-danger btn-block" ng-click='expCreateCtrl.deleteExpected($parent.expected, $parent.expTableCtrl.expectedList.indexOf($parent.expected))'>Cancella <span class="glyphicon glyphicon-trash"></span>
+                <button type="button" class="btn btn-danger btn-block" ng-click='expCreateCtrl.deleteExpected($parent.expected, $parent.expectedTableCtrl.expectedList.indexOf($parent.expected))'>Cancella <span class="glyphicon glyphicon-trash"></span>
                 </button>
 			</td>
         </table-button>
@@ -24,7 +24,7 @@
 
 <div class="row">
     <div class="col-md-2 col-md-offset-5">
-        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{expCreateCtrl.editExpectedModalContent.modalId}}" ng-click="expCreateCtrl.newExpected($parent.$parent.expFormCtrl.model)">Inserisci</button>
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{expCreateCtrl.editExpectedModalContent.modalId}}" ng-click="expCreateCtrl.newExpected($parent.$parent.expectedFormCtrl.model)">Inserisci</button>
     </div>
 </div>
 
@@ -76,7 +76,7 @@
                 {{expCreateCtrl.confirmExpectedModalContent.modalBody}}   
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "expCreateCtrl.confirmExpectedOrder(expCreateCtrl.expecteds)">Conferma</button>
             </div>
         </div>
