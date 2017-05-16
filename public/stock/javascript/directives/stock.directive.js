@@ -3,7 +3,7 @@ function stockTable () {
 		restrict: 'E',
 		templateUrl:'public/stock/templates/stock-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			stockList: "=",
         },
         transclude: {
@@ -102,7 +102,7 @@ function stockFilter() {
         restrict: 'E',
         templateUrl:'public/stock/templates/stock-filter.html',
         scope: {},
-        bindToController: {
+        bindToController: {
             model: "=",
         },
         controller: function ($scope, features) {

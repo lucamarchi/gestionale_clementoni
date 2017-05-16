@@ -13,15 +13,15 @@ function InboundFactory ($http, myConfig) {
     };
     
     inboundFactory.addInbound = function (inbound) {
-        return $http.post(urlOrders, inbound);
+        return $http.post(urlOrder, inbound);
     };
 
     inboundFactory.updateInbound = function (inbound) {
-        return $http.put(urlOrders+'/'+inbound.order._id, inbound)
+        return $http.put(urlOrder+'/'+inbound.order._id, inbound)
     };
 
     inboundFactory.deleteInbound = function (id) {
-        return $http.delete(urlOrders+'/'+id);
+        return $http.delete(urlOrder+'/'+id);
     };
     return inboundFactory;
 };

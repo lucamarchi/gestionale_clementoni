@@ -3,7 +3,7 @@ function outboundTable (OutboundFactory, $location) {
 		restrict: 'E',
 		templateUrl:'public/outbound/templates/outbound-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			outbounds: "=",
             currentPage: "=",
             entryLimit: "="
@@ -33,7 +33,7 @@ function outboundArticleTable (OutboundFactory, features) {
 		restrict: 'E',
 		templateUrl:'public/outbound/templates/outbound-article-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			articleList: "=",
             attribute: "@"
         },
@@ -123,7 +123,7 @@ function outboundEdit (OutboundFactory, ArticleFactory, features) {
 		restrict: 'E',
 		templateUrl:'public/outbound/templates/outbound-edit.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			outbound: "=",
         },
         transclude: {
@@ -216,7 +216,7 @@ function outboundForm () {
 		restrict: 'E',
 		templateUrl:'public/outbound/templates/outbound-form.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			model: "=",
         },
         

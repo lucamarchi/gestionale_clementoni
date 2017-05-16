@@ -19,7 +19,7 @@ angular
     .directive('productionState', function () {
         return {
             restrict: 'A',
-            bindToController: {
+            bindToController: {
                 model: "=",
                 attribute: "@"
             },
@@ -42,7 +42,7 @@ angular
     .directive('evasionState', function () {
         return {
             restrict: 'A',
-            bindToController: {
+            bindToController: {
                 model: "=",
                 attribute: "@"
             },

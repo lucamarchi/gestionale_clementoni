@@ -3,7 +3,7 @@ function cutTable () {
 		restrict: 'E',
 		templateUrl:'public/cut/templates/cut-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			cutList: "=",
             currentPage:"=",
             entryLimit: "=",
@@ -62,7 +62,7 @@ function cutArticleTable () {
 		restrict: 'E',
 		templateUrl:'public/cut/templates/cut-article-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			articleList: "=",
         },
         controller: function ($scope) {
@@ -112,7 +112,7 @@ function customerTable () {
 		restrict: 'E',
 		templateUrl:'public/cut/templates/customer-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
             customer: "="
         },
         controller: function ($scope) {

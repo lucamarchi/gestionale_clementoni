@@ -31,7 +31,6 @@ function inboundSet () {
                     if (newVal) {
                         ctrl.inbound.order = newVal.order;
                         ctrl.inbound.products = newVal.products;
-                        
                     }
                 }
             );
@@ -81,7 +80,7 @@ function inboundSet () {
             ctrl.showExpectedList = function () {
                 ExpectedFactory.getExpecteds()
                     .then (function (resp) {
-                        ctrl.expectedSelectionModalContent.expecteds = resp.data.expected;
+                        ctrl.expectedSelectionModalContent.expecteds = resp.data.data.expecteds;
                         console.log(resp);
                     })
                     .catch(function(err) {
@@ -91,12 +90,14 @@ function inboundSet () {
 
             ctrl.selectExpected = function (expected) {
                 ctrl.inboundProductEntryModalContent.expected = expected;
-                ctrl.inboundProductEntryModalContent.product= {};
                 ctrl.inboundProductEntryModalContent.product.materiale = ctrl.inboundProductEntryModalContent.expected.materiale;
                 ctrl.inboundProductEntryModalContent.product.qualita = ctrl.inboundProductEntryModalContent.expected.qualita;
                 ctrl.inboundProductEntryModalContent.product.colore = ctrl.inboundProductEntryModalContent.expected.colore;
                 ctrl.inboundProductEntryModalContent.product.finitura = ctrl.inboundProductEntryModalContent.expected.finitura;
                 ctrl.inboundProductEntryModalContent.product.tipo = ctrl.inboundProductEntryModalContent.expected.tipo;
+                if (ctrl.inboundProductEntryModalContent.product.tipo != 'coil' && ctrl.inboundProductEntryModalContent.product.tipo != 'nastro') {
+                    ctrl.inboundProductEntryModalContent.product.lunghezza = ctrl.inboundProductEntryModalContent.expected.lunghezza.toString();
+                }
                 if (ctrl.inboundProductEntryModalContent.expected.spessore) {
                     ctrl.inboundProductEntryModalContent.product.spessoreNominale = ctrl.inboundProductEntryModalContent.expected.spessore.toString();
                 }
@@ -138,7 +139,6 @@ function inboundSet () {
 
                     element.expectedPos = i;
                     ctrl.inbound.selectedExpecteds[i].pesoSaldo-=product.pesoIniziale;
-//                    ctrl.inbound.selectedExpecteds[i].pesoConsegnato+=product.pesoIniziale;
                     ctrl.inbound.selectedExpecteds[i].pesoConsegnato = ctrl.inbound.selectedExpecteds[i].pesoOrdinato -ctrl.inbound.selectedExpecteds[i].pesoSaldo;
                     ctrl.product2expected.push(element);
                 }
@@ -149,7 +149,7 @@ function inboundSet () {
                 console.log("P2E", ctrl.product2expected);
             }
             
-            ctrl.deleteProduct = function (product) {
+            ctrl.deleteInboundProduct = function (product) {
                 if (product._id && ctrl.inbound.deletedProducts.indexOf(product) == -1) {
                     ctrl.inbound.deletedProducts.push(product);
                 }

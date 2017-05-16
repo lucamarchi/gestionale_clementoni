@@ -1,7 +1,7 @@
 function ExpectedFactory ($http, myConfig) {
    
-    var urlExpecteds = myConfig.url+'/api/expecteds/';
-    var urlExpected = myConfig.url+'/api/expected/';
+    var urlExpecteds = myConfig.url+'/api/expecteds';
+    var urlExpected = myConfig.url+'/api/expected';
     var expectedFactory = {};
 
     expectedFactory.getExpecteds = function () {
@@ -13,11 +13,11 @@ function ExpectedFactory ($http, myConfig) {
     };
     
     expectedFactory.updateExpected = function (expected) {
-        return $http.put(urlExpected+'/'+expected._id, expected);
+        return $http.put(urlExpected+'/'+expected._id, {"expected":expected});
     };
 
     expectedFactory.deleteExpected = function (expectedId) {
-        return $http.put(urlExpected+'/'+expectedId);
+        return $http.delete(urlExpected+'/'+expectedId);
     };
 
     

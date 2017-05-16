@@ -3,7 +3,7 @@ function articleTable (ProcessingFactory, CustomerFactory, ProductFactory) {
 		restrict: 'E',
 		templateUrl:'public/production-overview/templates/articles-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			articleList: "=",
             currentPage: "=",
             entryLimit: "="
@@ -79,7 +79,7 @@ function processingList () {
 		restrict: 'E',
 		templateUrl:'public/production-overview/templates/processing-list.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
         },
         controller: function ($scope) {
             var ctrl = this;

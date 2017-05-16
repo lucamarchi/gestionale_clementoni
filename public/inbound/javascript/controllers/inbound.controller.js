@@ -5,7 +5,7 @@
         InboundFactory.getInbounds()
             .then (function (resp) {
                 console.log("TUTTI I CARICHI IN ENTRATA" , resp);
-                ctrl.inbounds = resp.data.orders;
+                ctrl.inbounds = resp.data.data.orders;
                 ctrl.entryLimit = 10;
                 ctrl.currentPage = 1;
             })

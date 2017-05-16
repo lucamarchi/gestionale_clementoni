@@ -2,8 +2,8 @@ function inboundProductForm () {
 	return {
 		restrict: 'E',
 		templateUrl:'public/inbound/templates/inbound-product-form.html',
-        bindToController: {
-			model:"=",
+        bindToController: {
+			model:"="
         },
         transclude: {
             'actionButton': '?actionButton',
@@ -34,7 +34,7 @@ function inboundOrderForm () {
 		restrict: 'E',
 		templateUrl:'public/inbound/templates/inbound-order-form.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			model:"=",
         },
         

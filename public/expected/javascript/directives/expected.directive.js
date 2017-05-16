@@ -11,7 +11,7 @@ angular
                 'pagination': '?tablePagination',
                 'filters': '?tableFilter'
             },
-            bindToController: {
+            bindToController: {
                 expectedList: "=",
                 currentPage:"=",
                 entryLimit: "=",
@@ -32,7 +32,7 @@ angular
             transclude: {
                 'formButton': '?formButton',
             },
-            bindToController: {
+            bindToController: {
                 model: "=",
             },
             controller: function ($scope) {
@@ -58,7 +58,7 @@ angular
             restrict: 'E',
             templateUrl:'public/expected/templates/expected-filters.html',
             scope: {},
-            bindToController: {
+            bindToController: {
                 model: "=",
             },
             controller: function () {

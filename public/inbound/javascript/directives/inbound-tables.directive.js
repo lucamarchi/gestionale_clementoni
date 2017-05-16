@@ -6,7 +6,7 @@ function inboundTable () {
         transclude: {
             'pagination': '?tablePagination'
         },
-        bindToController: {
+        bindToController: {
 			inboundList: "=",
             currentPage:"=",
             entryLimit: "=",
@@ -20,16 +20,16 @@ function inboundTable () {
                 modalId: 'deleteinbound',
                 modalClass: 'modal fade',
                 inbound: {},
-            }
+            };
             
             ctrl.selectInbound = function (inbound) {
                 console.log(inbound);
                 ctrl.deleteInboundModalContent.inbound = inbound;
-            }
+            };
             
             ctrl.showInboundDetails = function (inboundId) {
                 $location.path('/inbound/details/'+inboundId);    
-            }
+            };
             
             ctrl.deleteInbound = function (inbound) {
 //                InboundFactory.deleteInbound(inbound._id)
@@ -53,7 +53,7 @@ function inboundProductsTable () {
 		restrict: 'E',
 		templateUrl:'public/inbound/templates/inbound-products-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			inboundList: "=",
             currentPage:"=",
             entryLimit: "=",
@@ -72,4 +72,4 @@ function inboundProductsTable () {
 angular
     .module('store')
     .directive('inboundTable', inboundTable)
-    .directive('inboundProductsTable', inboundProductsTable)
+    .directive('inboundProductsTable', inboundProductsTable);

@@ -3,7 +3,7 @@ function prodStateTable (ProdStateFactory) {
 		restrict: 'E',
 		templateUrl:'public/production-state/templates/prod-state-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			prodStates: "=",
             currentPage: "=",
             entryLimit: "="
@@ -54,7 +54,7 @@ function machineryTable () {
 		restrict: 'E',
 		templateUrl:'public/production-state/templates/machinery-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			machineryList: "=",
         },
         transclude: {
@@ -71,7 +71,7 @@ function prodStateEdit (ArticleFactory) {
         restrict: 'E',
         templateUrl:'public/production-state/templates/prod-state-edit.html',
         scope: {},
-        bindToController: {
+        bindToController: {
             selectedArticles: "=",
         },
         transclude: {

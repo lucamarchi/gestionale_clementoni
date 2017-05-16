@@ -4,6 +4,7 @@ function InboundUpdateController ($scope, $location, InboundFactory, ExpectedFac
     ctrl.inbound = {
         products : [],
         order : {},
+        selectedExpecteds : [],
     }
     
     ctrl.inboundConfirmationModalContent = {
@@ -16,13 +17,10 @@ function InboundUpdateController ($scope, $location, InboundFactory, ExpectedFac
     ctrl.getInbound = function (id) {
         InboundFactory.getInbound(id)
         .then (function (resp) {
-            console.log("TUTTI I PRODOTTI DEL CARICO" , resp);
-            ctrl.inbound.products = resp.data.products;
-            ctrl.inbound.order.fornitore = resp.data.order.fornitore;
-            ctrl.inbound.order.ddt = resp.data.order.ddt;
-            ctrl.inbound.order.dataDdt = new Date(resp.data.order.dataDdt);
-            ctrl.inbound.order._id = resp.data.order._id;
-//            ctrl.models.inboundOrder = resp.data.order;
+            console.log("TUTTI I PRODOTTI DEL CARICO ", resp);
+            ctrl.inbound.products = resp.data.data.products;
+            ctrl.inbound.order = resp.data.data.order;
+            ctrl.inbound.order.dataDdt = new Date(resp.data.data.order.dataDdt);
             
         })
         .catch(function(err) {
@@ -30,14 +28,11 @@ function InboundUpdateController ($scope, $location, InboundFactory, ExpectedFac
         });
     }
     
-    ctrl.getInbound($routeParams.id)
+    ctrl.getInbound($routeParams.id);
     
     ctrl.updateInboundOrder = function (inbound) {
 		console.log(inbound);
         $location.path("/inbound");
-        
-        
-        
 //        InboundFactory.updateInbound({order: inbound.order, products: inbound.addedProducts, expected: inbound.selectedExpecteds})
 //            .then(function(resp){
 //				console.log(resp);

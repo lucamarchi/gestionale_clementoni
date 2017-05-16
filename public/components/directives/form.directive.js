@@ -66,7 +66,7 @@ angular
             controller: function ($scope, features) {
                 $scope.$watch('model.materiale',
                     function(newVal, oldVal) {
-                        if (newVal && newVal != oldVal) {
+                        if (newVal && newVal != oldVal && oldVal != undefined) {
                             console.log(newVal, oldVal); 
                             delete $scope.model[$scope.attributeM];
                         }
