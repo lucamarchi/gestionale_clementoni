@@ -51,7 +51,7 @@ function ExpectedController ($scope, ExpectedFactory,features) {
     
     ctrl.updateExpected = function (expected, index) {
         console.log(expected)
-        ExpectedFactory.updateExpected(expected)
+        ExpectedFactory.updateExpected({"expected":expected})
             .then (function (resp) {
                 ctrl.expecteds[index] = expected;
                 console.log(resp);

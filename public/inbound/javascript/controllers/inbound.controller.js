@@ -12,7 +12,7 @@
             .catch(function(err) {
                 console.log(err);
             });
-    }
+    };
 	
     ctrl.getInbounds();
  }

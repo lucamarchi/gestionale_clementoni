@@ -5,6 +5,7 @@ function InboundCreateController ($scope, $location, InboundFactory, ExpectedFac
         products : [],
         order : {},
         selectedExpecteds : [],
+        addedProducts: []
     }
     
     ctrl.inboundConfirmationModalContent = {
@@ -16,9 +17,9 @@ function InboundCreateController ($scope, $location, InboundFactory, ExpectedFac
     
     ctrl.confirmInboundOrder = function (inbound) {
         console.log("RICHIESTA", inbound);
-		InboundFactory.addInbound({order: inbound.order, products:inbound.products, expecteds:inbound.selectedExpecteds})
+		InboundFactory.addInbound({order: inbound.order, products:inbound.addedProducts, expecteds:inbound.selectedExpecteds})
             .then(function(resp){
-				console.log(resp);
+				console.log("CONFIRM ORDER ",resp);
                 $location.path("/inbound")
 			})
 			.catch(function (err){

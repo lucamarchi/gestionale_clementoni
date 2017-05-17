@@ -1,4 +1,4 @@
-function ExpectedCreateController ($scope, $location, ExpectedFactory) {
+function ExpectedCreateController ($scope, $location, ExpectedFactory, UtilityFactory) {
     var ctrl = this;
    
     ctrl.currentPage = 1;
@@ -47,6 +47,7 @@ function ExpectedCreateController ($scope, $location, ExpectedFactory) {
     ctrl.addExpected = function (expected) {
 		expected.pesoSaldo = expected.pesoOrdinato;
         expected.pesoConsegnato = 0;
+        UtilityFactory.productValuesForType(expected, "pesoOrdinato", "spessore", "larghezza");
         ctrl.expecteds.push(expected);
 		console.log(ctrl.expecteds);
 	}
@@ -76,4 +77,4 @@ function ExpectedCreateController ($scope, $location, ExpectedFactory) {
 
 angular
     .module('store')
-    .controller('ExpectedCreateController', ['$scope','$location','ExpectedFactory', ExpectedCreateController]);
+    .controller('ExpectedCreateController', ['$scope','$location','ExpectedFactory','UtilityFactory', ExpectedCreateController]);

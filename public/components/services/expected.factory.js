@@ -13,7 +13,8 @@ function ExpectedFactory ($http, myConfig) {
     };
     
     expectedFactory.updateExpected = function (expected) {
-        return $http.put(urlExpected+'/'+expected._id, {"expected":expected});
+        console.log(expected);
+        return $http.put(urlExpected+'/'+expected.expected._id, expected);
     };
 
     expectedFactory.deleteExpected = function (expectedId) {

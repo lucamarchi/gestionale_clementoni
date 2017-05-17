@@ -21,7 +21,7 @@ function InboundFactory ($http, myConfig) {
     };
 
     inboundFactory.deleteInbound = function (id) {
-        return $http.delete(urlOrder+'/'+id);
+        return $http.delete(urlOrders+'/'+id);
     };
     return inboundFactory;
 };

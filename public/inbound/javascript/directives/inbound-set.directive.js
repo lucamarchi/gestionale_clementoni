@@ -4,33 +4,32 @@ function inboundSet () {
         templateUrl: 'public/inbound/templates/inbound-set.html',
         scope: {},
         bindToController: {
-            model: "=",
+            inbound: "=",
         },
         transclude: {
             'confirmButton': 'confirmButton'
         },
-        controller: function ($scope, InboundFactory, ExpectedFactory, $element, $transclude) {
+        controller: function ($scope, InboundFactory, ExpectedFactory, UtilityFactory) {
             var ctrl = this;
             ctrl.product2expected = [];
             ctrl.currentPage = 1;
-            ctrl.inbound = {};
-            ctrl.inbound.order = {};
-            ctrl.inbound.products = [];
-            ctrl.inbound.addedProducts = [];
-            ctrl.inbound.modifiedProducts = [];
-            ctrl.inbound.deletedProducts = [];
-            ctrl.inbound.selectedExpecteds = [];
+            // ctrl.inbound = {};
+            // ctrl.inbound.order = {};
+            // ctrl.inbound.products = [];
+            // ctrl.inbound.addedProducts = [];
+            // ctrl.inbound.modifiedProducts = [];
+            // ctrl.inbound.deletedProducts = [];
+            // ctrl.inbound.selectedExpecteds = [];
             ctrl.unlockedForm = 0;
             
             $scope.$watchCollection(
                 function () {
-                    return ctrl.model;
+                    return ctrl.inbound;
                 }, 
                 function (newVal) {
                     console.log(newVal)
                     if (newVal) {
-                        ctrl.inbound.order = newVal.order;
-                        ctrl.inbound.products = newVal.products;
+                        ctrl.inbound = newVal;
                     }
                 }
             );
@@ -71,11 +70,6 @@ function inboundSet () {
                 ctrl.inboundProductEntryModalContent.expected = undefined;
                 ctrl.unlockedForm = 1;
             }
-            
-            ctrl.unlockModificationForm = function () {
-                ctrl.inboundProductEntryModalContent.modalTitle = 'Modifica prodotto del carico';
-                ctrl.unlockedForm = 2;
-            }
 
             ctrl.showExpectedList = function () {
                 ExpectedFactory.getExpecteds()
@@ -89,6 +83,7 @@ function inboundSet () {
             }
 
             ctrl.selectExpected = function (expected) {
+                ctrl.inboundProductEntryModalContent.product = {};
                 ctrl.inboundProductEntryModalContent.expected = expected;
                 ctrl.inboundProductEntryModalContent.product.materiale = ctrl.inboundProductEntryModalContent.expected.materiale;
                 ctrl.inboundProductEntryModalContent.product.qualita = ctrl.inboundProductEntryModalContent.expected.qualita;
@@ -104,6 +99,7 @@ function inboundSet () {
                 if (ctrl.inboundProductEntryModalContent.expected.larghezza) {
                     ctrl.inboundProductEntryModalContent.product.larghezzaNominale = ctrl.inboundProductEntryModalContent.expected.larghezza.toString();
                 }
+                ctrl.inboundProductEntryModalContent.modalTitle = 'Inserisci prodotto del carico';
                 ctrl.unlockedForm = 1;
                 console.log(ctrl.inboundProductEntryModalContent.product);
             }
@@ -111,12 +107,13 @@ function inboundSet () {
             ctrl.selectInboundModifyProduct = function (product) {
                 ctrl.inboundProductEntryModalContent.oldProduct = product;
                 ctrl.inboundProductEntryModalContent.product = Object.assign({},product);
-                ctrl.unlockModificationForm();
+                ctrl.inboundProductEntryModalContent.modalTitle = 'Modifica prodotto del carico';
+                ctrl.unlockedForm = 2;
             }
 
             ctrl.addInboundProduct = function (product) {
                 product.pesoNetto = product.pesoIniziale;
-                product.pesoLordo = product.pesoIniziale;
+                product.pesoLordo = product.pesoNetto;
                 if (ctrl.inboundProductEntryModalContent.expected) {
                     var element = {};
                     
@@ -143,6 +140,7 @@ function inboundSet () {
                     ctrl.product2expected.push(element);
                 }
                 else {
+                    UtilityFactory.productValuesForType(product, "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");
                     ctrl.inbound.addedProducts.push(product)
                 }
                 ctrl.inbound.products.push(product);
@@ -167,6 +165,12 @@ function inboundSet () {
                                 p2e.productPos--;
                             }
                         }
+                        var trovato2 = ctrl.product2expected.find(function(e) {
+                            return e.expectedPos == trovato.expectedPos;
+                        });
+                        if (!trovato2) {
+                            ctrl.inbound.selectedExpecteds.splice(trovato.expectedPos,1);
+                        }
                     }
                     ctrl.inbound.addedProducts.splice(pos,1);
                     
@@ -178,6 +182,7 @@ function inboundSet () {
             ctrl.updateInboundProduct = function (product) {
                 var pos;
                 pos = ctrl.inbound.products.indexOf(ctrl.inboundProductEntryModalContent.oldProduct);
+                UtilityFactory.productValuesForType(product, "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");
                 ctrl.inbound.products[pos] = product; 
                 if (product._id) {  
                     if (ctrl.inbound.modifiedProducts.indexOf(ctrl.inboundProductEntryModalContent.oldProduct) == -1) {
@@ -197,9 +202,9 @@ function inboundSet () {
                         ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoConsegnato+=(product.pesoIniziale-trovato.peso);
                         ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoSaldo = ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoOrdinato - ctrl.inbound.selectedExpecteds[trovato.expectedPos].pesoConsegnato;
                     }
+
                     ctrl.inbound.addedProducts[pos] = product;  
                 }
-                ctrl.lockForm();
                 console.log(product);
             }
         },

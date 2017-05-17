@@ -24,7 +24,7 @@ function CutController (CutFactory) {
     
 	ctrl.refreshCuts = function () {
         $('#'+ctrl.refreshLoadingModalContent.modalId).modal('show');
-		CutFactory.refreshCuts()
+		/*CutFactory.refreshCuts()
             .then (function (resp) {
 				console.log("REFRESH", resp);
 				if (resp.cuts != undefined) {
@@ -34,7 +34,7 @@ function CutController (CutFactory) {
 			})
 			.catch(function(err) {
 				console.log(err);
-			})
+			})*/
 	};
 }
 
