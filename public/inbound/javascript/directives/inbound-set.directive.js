@@ -13,13 +13,6 @@ function inboundSet () {
             var ctrl = this;
             ctrl.product2expected = [];
             ctrl.currentPage = 1;
-            // ctrl.inbound = {};
-            // ctrl.inbound.order = {};
-            // ctrl.inbound.products = [];
-            // ctrl.inbound.addedProducts = [];
-            // ctrl.inbound.modifiedProducts = [];
-            // ctrl.inbound.deletedProducts = [];
-            // ctrl.inbound.selectedExpecteds = [];
             ctrl.unlockedForm = 0;
             
             $scope.$watchCollection(
@@ -27,7 +20,7 @@ function inboundSet () {
                     return ctrl.inbound;
                 }, 
                 function (newVal) {
-                    console.log(newVal)
+                    console.log(newVal);
                     if (newVal) {
                         ctrl.inbound = newVal;
                     }
