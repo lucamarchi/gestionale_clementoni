@@ -9,7 +9,7 @@
 //        return $http.get(urlProds);
 //    };
 //    
-//    prodStateFactory.getFreeArticles = function () {
+//    prodStateFactory.getUnassignedToStateProdArticles = function () {
 //        return $http.get(urlArticles+'/libero');
 //    };
 //    

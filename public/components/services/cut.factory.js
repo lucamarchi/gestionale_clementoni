@@ -1,23 +1,27 @@
 function CutFactory ($http, myConfig) {
    
-    var urlBase = myConfig.url+'/api/cuts';
-    var urlBase2 = myConfig.url+'/api/cut'
+    var urlCuts = myConfig.url+'/api/cuts';
+    var urlCut = myConfig.url+'/api/cut'
     var cutFactory = {};
 
     cutFactory.getCuts = function () {
-        return $http.get(urlBase);
+        return $http.get(urlCuts);
     };
 
     cutFactory.getCut = function (id) {
-        return $http.get(urlBase2+'/'+id);
+        return $http.get(urlCut+'/'+id);
     };
     
     cutFactory.refreshCuts = function () {
-        return $http.get(urlBase+'/update');
+        return $http.get(urlCuts+'/update');
     };
-    
+
+    cutFactory.deleteCut = function (id) {
+        return $http.delete(urlCut+'/'+id);
+    }
+
     cutFactory.confirmCut = function (id) {
-        return $http.put(urlBase2+'/accepted/'+id);
+        return $http.put(urlCut+'/accepted/'+id);
     };
 
     return cutFactory;

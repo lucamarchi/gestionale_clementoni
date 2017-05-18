@@ -11,9 +11,9 @@ function CutDetailsController (CutFactory, $routeParams,$location) {
         CutFactory.getCut(id)
             .then (function (resp) {
                 console.log("TUTTI GLI ARTICOLI DELL'ORDINE" , resp);
-                ctrl.cut.order = resp.data.cut;
-                ctrl.cut.articles = resp.data.articles;
-                ctrl.cut.customer = resp.data.customer;
+                ctrl.cut.order = resp.data.data.cut;
+                ctrl.cut.articles = resp.data.data.articles;
+                ctrl.cut.customer = resp.data.data.customer;
             })
             .catch(function(err) {
                 console.log(err);

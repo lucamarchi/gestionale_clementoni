@@ -7,7 +7,7 @@ function ProdOverviewController (ArticleFactory) {
         ArticleFactory.getArticles()
             .then (function (resp) {
                 console.log(resp);
-                ctrl.articles = resp.data.articles;
+                ctrl.articles = resp.data.data.articles;
             })
             .catch(function(err) {
                 console.log(err);

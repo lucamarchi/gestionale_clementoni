@@ -150,8 +150,8 @@ function outboundEdit (OutboundFactory, ArticleFactory, features) {
                 }
             );
             
-            ctrl.getFreeArticles = function () {
-                ArticleFactory.getFreeArticles()
+            ctrl.getUnassignedToStateProdArticles = function () {
+                ArticleFactory.getUnassignedToStateProdArticles()
                     .then (function (resp) {
                         console.log(resp);
                         ctrl.freeArticles = resp.data.articles;
@@ -163,7 +163,7 @@ function outboundEdit (OutboundFactory, ArticleFactory, features) {
                     })
             };
 
-            ctrl.getFreeArticles();
+            ctrl.getUnassignedToStateProdArticles();
             
             ctrl.addSelectedArticle = function (article) {
                 ctrl.outbound.articles.push(article);
