@@ -11,7 +11,7 @@
 
 <br><br>
 
-<prod-state-edit selected-articles = "prodStateCreateCtrl.prodStateArticles">
+<prod-state-edit prod-state = "prodStateCreateCtrl.prodState">
     <confirm-button>
         <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateCreateCtrl.prodStateArticles.length > 0" data-toggle="modal" data-target="#{{prodStateCreateCtrl.prodStateConfirmationModalContent.modalId}}">Conferma</button>
         <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateCreateCtrl.prodStateArticles.length == 0" disabled>Conferma</button>

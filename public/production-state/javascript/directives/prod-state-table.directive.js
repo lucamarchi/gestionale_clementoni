@@ -16,13 +16,13 @@ function prodStateTable (ProdStateFactory) {
             var ctrl = this;
 
             ctrl.prodStateModalContent = {
-                url:'public/production-state/templates/prod-state-articles.html',
+                url:'public/production-state/templates/prod-state-details.html',
                 modalTitle: '',
-                modalId: 'prodstatearticles',
+                modalId: 'prodstatedetails',
                 prodStateArticles: [],
                 currentPage: 1,
-                entryLimit: 20
-            }
+                entryLimit: 10
+            };
 
             ctrl.getProdState = function (id) {
                 ProdStateFactory.getProdState(id)
@@ -34,7 +34,7 @@ function prodStateTable (ProdStateFactory) {
                     .catch(function(err) {
                         console.log(err);
                     });
-            }
+            };
 
             ctrl.deleteProdStateArticle = function (article) {
 //                ArticleFactory.deleteProdStateArticle(article._id)
@@ -51,7 +51,7 @@ function prodStateTable (ProdStateFactory) {
 
         controllerAs: 'prodStateTableCtrl',
     }
-};
+}
 
 angular
     .module('store')

@@ -1,4 +1,5 @@
 function ProdStateDetailsController (ProdStateFactory, ProcessingFactory, $routeParams,$location) {
+
     var ctrl = this;
     ctrl.prodStateArticles = [];
     ctrl.currentPage = 1;

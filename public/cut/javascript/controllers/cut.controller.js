@@ -31,7 +31,8 @@ function CutController (CutFactory) {
 				if (resp.data.data.cuts != undefined) {
 					ctrl.cuts = ctrl.cuts.concat(resp.data.data.cuts);
 				}
-                $('#'+ctrl.refreshLoadingModalContent.modalId).modal('hide');
+
+                // $('#'+ctrl.refreshLoadingModalContent.modalId).modal('hide');
 			})
 			.catch(function(err) {
 				console.log(err);

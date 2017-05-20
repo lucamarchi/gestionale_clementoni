@@ -1,6 +1,9 @@
 function ProdStateCreateController (ProdStateFactory, $location) {
     var ctrl = this;
-    ctrl.prodStateArticles = [];
+    ctrl.prodState = {};
+    ctrl.prodState.articles = [];
+    ctrl.prodState.prod = {};
+    ctrl.prodState.addedArticles;
 
     ctrl.prodStateConfirmationModalContent = {
         modalTitle: 'Conferma Stato Produzione',

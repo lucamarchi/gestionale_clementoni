@@ -8,26 +8,23 @@ function prodStateEdit (ArticleFactory) {
         templateUrl:'public/production-state/templates/prod-state-edit.html',
         scope: {},
         bindToController: {
-            selectedArticles: "=",
+            prodState: "=",
         },
         transclude: {
             'confirmButton': '?confirmButton'
         },
         controller: function ($scope) {
             var ctrl = this;
-            ctrl.addedArticles = [];
-            ctrl.removedArticles = [];
             ctrl.freeArticles = [];
 
             $scope.$watchCollection(
                 function () {
-                    return ctrl.selectedArticles;
+                    return ctrl.prodState;
                 },
                 function (newVal) {
-
                     if (newVal) {
-                        ctrl.selectedArticles = newVal;
-                        console.log(newVal)
+                        ctrl.prodState = newVal;
+                        console.log(newVal);
                     }
                 }
             );
@@ -36,7 +33,7 @@ function prodStateEdit (ArticleFactory) {
                 ArticleFactory.getUnassignedToStateProdArticles()
                     .then (function (resp) {
                         console.log(resp);
-                        ctrl.freeArticles = resp.data.articles;
+                        ctrl.freeArticles = resp.data.data.articles;
                         ctrl.entryLimit = 10;
                         ctrl.currentPage = 1;
                     })
