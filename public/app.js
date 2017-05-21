@@ -277,6 +277,7 @@ store.config(function ($httpProvider) {
 
 store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', function($rootScope, $location, AuthenticationService, UserService) {
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+        $('.modal').modal('hide');
 		AuthenticationService.save({},{},
 			function(resp) {
 				$rootScope.isLogged = true;

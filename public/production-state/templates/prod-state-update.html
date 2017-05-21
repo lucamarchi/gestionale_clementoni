@@ -11,10 +11,10 @@
 
 <br><br>
 
-<prod-state-edit selected-articles = "prodStateUpdateCtrl.prodStateArticles">
+<prod-state-edit prod-state = "prodStateUpdateCtrl.prodState">
     <confirm-button>
-        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateUpdateCtrl.prodStateArticles.length > 0" data-toggle="modal" data-target="#{{prodStateUpdateCtrl.prodStateConfirmationModalContent.modalId}}">Modifica</button>
-        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateUpdateCtrl.prodStateArticles.length == 0" disabled>Modifica</button>
+        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateUpdateCtrl.prodState.articles.length > 0" data-toggle="modal" data-target="#{{prodStateUpdateCtrl.prodStateConfirmationModalContent.modalId}}">Modifica</button>
+        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateUpdateCtrl.prodState.articles.length == 0" disabled>Modifica</button>
     </confirm-button>
 </prod-state-edit>
 

@@ -1,7 +1,9 @@
 function ProdStateDetailsController (ProdStateFactory, ProcessingFactory, $routeParams,$location) {
 
     var ctrl = this;
-    ctrl.prodStateArticles = [];
+    ctrl.prodState = {};
+    ctrl.prodState.prod = {};
+    ctrl.prodState.articles = [];
     ctrl.currentPage = 1;
     ctrl.entryLimit = 10;
     
@@ -9,8 +11,8 @@ function ProdStateDetailsController (ProdStateFactory, ProcessingFactory, $route
         ProdStateFactory.getProdState(id)
         .then (function (resp) {
             console.log("ARTICOLI STATO PRODUZIONE" , resp);
-            ctrl.prodState = resp.data.prod;
-            ctrl.prodStateArticles = resp.data.articoli;
+            ctrl.prodState.prod = resp.data.data.prod;
+            ctrl.prodState.articles = resp.data.data.articles;
         })
         .catch(function(err) {
             console.log(err);

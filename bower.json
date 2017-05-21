@@ -24,6 +24,7 @@
     "angular-bootstrap": "*",
     "jquery-migrate": "*",
     "angular-touch": "*",
-    "angular-animate": "*"
+    "angular-animate": "*",
+    "angular-cookies": "*"
   }
 }

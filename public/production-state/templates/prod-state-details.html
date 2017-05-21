@@ -1,4 +1,3 @@
-<!--<article-table article-list="modalDirCtrl.modalContent.prodStateArticles" entry-limit="modalDirCtrl.modalContent.entryLimit" current-page="modalDirCtrl.modalContent.currentPage">-->
 <h1>
     STATI PRODUZIONE
     <a ng-href="#/productionState">
@@ -6,9 +5,9 @@
     </a>
 </h1>
 <br>
-<h2>Stato Produzione n. {{prodStateDetailsCtrl.prodState.numero}}</h2>
+<h2>Stato Produzione n. {{prodStateDetailsCtrl.prodState.prod.numero}}</h2>
 <br><br>
-<article-table article-list="prodStateDetailsCtrl.prodStateArticles" entry-limit="prodStateDetailsCtrl.entryLimit" current-page="prodStateDetailsCtrl.currentPage">
+<article-table article-list="prodStateDetailsCtrl.prodState.articles" entry-limit="prodStateDetailsCtrl.entryLimit" current-page="prodStateDetailsCtrl.currentPage">
 
     <button-action>
         <button type="button" class="btn btn-primary btn-block" ng-click="prodStateDetailsCtrl.startProcessing($parent.article)">Lavora</button>

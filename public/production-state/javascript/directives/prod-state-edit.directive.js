@@ -45,16 +45,16 @@ function prodStateEdit (ArticleFactory) {
             ctrl.getUnassignedToStateProdArticles();
 
             ctrl.addSelectedArticle = function (article) {
-                ctrl.selectedArticles.push(article);
+                ctrl.prodState.articles.push(article);
                 var index = ctrl.freeArticles.indexOf(article);
                 console.log(article, index);
                 if (article.statoProduzione == "libero") {
-                    ctrl.addedArticles.push(article);
+                    ctrl.prodState.addedArticles.push(article);
                 }
                 else {
-                    var articlePos = ctrl.removedArticles.indexOf(article);
+                    var articlePos = ctrl.prodState.removedArticles.indexOf(article);
                     if (articlePos != -1){
-                        ctrl.removedArticles.splice(articlePos,1);
+                        ctrl.prodState.removedArticles.splice(articlePos,1);
                     }
                 }
                 ctrl.freeArticles.splice(index,1);
@@ -62,18 +62,18 @@ function prodStateEdit (ArticleFactory) {
 
             ctrl.removeSelectedArticle = function (article){
                 ctrl.freeArticles.push(article);
-                var index = ctrl.selectedArticles.indexOf(article);
+                var index = ctrl.prodState.articles.indexOf(article);
                 console.log(article, index);
                 if (article.statoProduzione !== "libero") {
-                    ctrl.removedArticles.push(article);
+                    ctrl.prodState.removedArticles.push(article);
                 }
                 else {
-                    var articlePos = ctrl.addedArticles.indexOf(article);
+                    var articlePos = ctrl.prodState.addedArticles.indexOf(article);
                     if (articlePos !== -1){
-                        ctrl.addedArticles.splice(articlePos,1);
+                        ctrl.prodState.addedArticles.splice(articlePos,1);
                     }
                 }
-                ctrl.selectedArticles.splice(index,1);
+                ctrl.prodState.articles.splice(index,1);
             };
         },
         controllerAs: 'prodStateEditCtrl',

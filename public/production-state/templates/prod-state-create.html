@@ -13,8 +13,8 @@
 
 <prod-state-edit prod-state = "prodStateCreateCtrl.prodState">
     <confirm-button>
-        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateCreateCtrl.prodStateArticles.length > 0" data-toggle="modal" data-target="#{{prodStateCreateCtrl.prodStateConfirmationModalContent.modalId}}">Conferma</button>
-        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateCreateCtrl.prodStateArticles.length == 0" disabled>Conferma</button>
+        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateCreateCtrl.prodState.articles.length > 0" data-toggle="modal" data-target="#{{prodStateCreateCtrl.prodStateConfirmationModalContent.modalId}}">Conferma</button>
+        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateCreateCtrl.prodState.articles.length == 0" disabled>Conferma</button>
     </confirm-button>
 </prod-state-edit>
 
@@ -30,7 +30,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "prodStateCreateCtrl.confirmProductionState(prodStateCreateCtrl.prodStateArticles)">Conferma</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "prodStateCreateCtrl.confirmProductionState(prodStateCreateCtrl.prodState)">Conferma</button>
             </div>
         </div>
     </div>

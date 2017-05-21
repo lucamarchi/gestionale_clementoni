@@ -37,7 +37,7 @@
 
 <fieldset>
     <legend>Articoli selezionati:</legend>
-    <article-table article-list="prodStateEditCtrl.selectedArticles" entry-limit="prodOverCtrl.entryLimit" current-page="prodOverCtrl.currentPage">
+    <article-table article-list="prodStateEditCtrl.prodState.articles" entry-limit="prodOverCtrl.entryLimit" current-page="prodOverCtrl.currentPage">
         <button-action>
             <button type="button" class="btn btn-primary btn-circle" ng-click="prodStateEditCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
         </button-action>
@@ -48,7 +48,9 @@
 <br><br><br>
 
 
-<!--
-articoli da aggiunge: {{prodStateEditCtrl.addedArticles}}
-articoli da rimuove: {{prodStateEditCtrl.removedArticles}}
--->
+articoli dello stato: {{prodStateEditCtrl.prodState.articles}}
+<br><br>
+articoli da aggiunge: {{prodStateEditCtrl.prodState.addedArticles}}
+<br><br>
+articoli da rimuove: {{prodStateEditCtrl.prodState.removedArticles}}
+
