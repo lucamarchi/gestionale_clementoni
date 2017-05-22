@@ -26,30 +26,36 @@
         <div>
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Giacenza </b><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span><span class="caret"></span></a>
+                    <a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Giacenza </b><span
+                            class="glyphicon glyphicon-align-left" aria-hidden="true"></span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a ng-href="#/stock">Giacenza effettiva</a></li>
                         <!--								<li><a href="">Stock Virtuale</a></li> -->
                     </ul>
                 </li>
                 <li>
-                    <a ng-if="isLogged" ng-href="#/expected"><b>Ordini al fornitore </b><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></a>
+                    <a ng-if="isLogged" ng-href="#/expected"><b>Ordini al fornitore </b><span
+                            class="glyphicon glyphicon-earphone" aria-hidden="true"></span></a>
                 </li>
                 <li>
-                    <a ng-if="isLogged" ng-href="#/inbound"><b>Entrate </b><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                    <a ng-if="isLogged" ng-href="#/inbound"><b>Entrate </b><span class="glyphicon glyphicon-log-in"
+                                                                                 aria-hidden="true"></span></a>
                 </li>
                 <li>
-                    <a ng-if="isLogged && (user.role == 'logistica' || user.role == 'admin')" ng-href="#/cut"><b>Ordini Cliente </b><span class="glyphicon glyphicon-scissors" aria-hidden="true"></span></a>
+                    <a ng-if="isLogged && (user.role == 'logistica' || user.role == 'admin')" ng-href="#/cut"><b>Ordini
+                        Cliente </b><span class="glyphicon glyphicon-scissors" aria-hidden="true"></span></a>
                 </li>
                 <li class="dropdown">
-                    <a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Produzione </b><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span><span class="caret"></span></a>
+                    <a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Produzione </b><span
+                            class="glyphicon glyphicon-wrench" aria-hidden="true"></span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a ng-href="#/productionOverview">Riepilogo</a></li>
                         <li><a ng-href="#/productionState">Stato produzione</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a ng-if="isLogged" ng-href="#/outbound"><b>Uscite </b><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+                    <a ng-if="isLogged" ng-href="#/outbound"><b>Uscite </b><span class="glyphicon glyphicon-log-out"
+                                                                                 aria-hidden="true"></span></a>
                 </li>
             </ul>
 
@@ -63,8 +69,10 @@
             -->
 
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a ng-if="!isLogged" href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
-                <li class="active"><a href ng-if="isLogged" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+                <li class="active"><a ng-if="!isLogged" href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a>
+                </li>
+                <li class="active"><a href ng-if="isLogged" ng-click="logout()"><span
+                        class="glyphicon glyphicon-log-out"></span>Logout</a></li>
             </ul>
         </div>
     </div>
@@ -183,10 +191,13 @@
 <script src="public/outbound/javascript/controllers/outbound-update.controller.js"></script>
 <script src="public/outbound/javascript/controllers/outbound-details.controller.js"></script>
 <script src="public/outbound/javascript/controllers/outbound-dispatch.controller.js"></script>
-<script src="public/outbound/javascript/directives/outbound.directive.js"></script>
+<script src="public/outbound/javascript/directives/outbound-table.directive.js"></script>
+<script src="public/outbound/javascript/directives/outbound-article-table.directive.js"></script>
+<script src="public/outbound/javascript/directives/outbound-form.directive.js"></script>
+<script src="public/outbound/javascript/directives/outbound-edit.directive.js"></script>
+
 <script src="public/outbound/javascript/filters/outbound.filter.js"></script>
 <script src="public/outbound/javascript/services/outbound.factory.js"></script>
-
 
 
 <script src="public/login/javascript/controllers/login.controller.js"></script>

@@ -21,7 +21,15 @@ function UtilityFactory () {
             console.log("MANCANO ATTRIBUTI");
         }
         return;
-    }
+    };
+
+    utilityFactory.calculateArticleQuantity = function (article, peso, spessore, larghezza, lunghezza) {
+        var quantita = 0;
+        if (article.tipo != "nastro" || article.tipo != "coil") {
+        quantita = Math.round(article[peso] / ((article[larghezza] * article.lunghezza * article[spessore] * 7.85) / 1000000));
+
+        return quantita;
+    };
 
     return utilityFactory;
 }

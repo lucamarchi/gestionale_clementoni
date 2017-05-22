@@ -1,36 +1,6 @@
 <fieldset>
-    <legend>Articoli selezionati:</legend>
-
-    <outbound-article-table article-list = "outboundEditCtrl.outbound.articles" attribute = "weightSelected">
-        <weight-column>
-            <td>
-                {{$parent.article.weightSelected}}
-            </td>
-        </weight-column>
-        <quantity-column>
-            <td>
-                {{$parent.article.quantitySelected}}
-            </td>
-        </quantity-column>
-        <unit-column>
-            <td>
-                {{$parent.article.unitSelected}}
-            </td>
-        </unit-column>
-        <action-button>
-            <td>
-				<button type="button" class="btn btn-primary btn-circle" ng-click="outboundEditCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
-            </td>
-        </action-button>
-    </outbound-article-table>
-</fieldset>
-<div ng-transclude = "confirmButton"></div>
-<br><br>
-
-<br><br>
-<fieldset>
     <legend>Lista articoli non assegnati:</legend>    
-    <outbound-article-table article-list = "outboundEditCtrl.freeArticles" attribute = "peso">
+    <outbound-article-table article-list = "outboundEditCtrl.freeArticles" attribute = "pesoAttuale">
         <table-filters>
             <div>
                 <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>REGIONI</b></span>&nbsp&nbsp
@@ -70,6 +40,40 @@
     </outbound-article-table>
 </fieldset>
 
-<!--
-articoli da aggiunge: {{outboundEditCtrl.addedArticles}}
-articoli da rimuove: {{outboundEditCtrl.removedArticles}}-->
+<br><br>
+
+<fieldset>
+    <legend>Articoli selezionati:</legend>
+
+    <outbound-article-table article-list = "outboundEditCtrl.outbound.articles" attribute = "weightSelected">
+        <weight-column>
+            <td>
+                {{$parent.article.weightSelected}}
+            </td>
+        </weight-column>
+        <quantity-column>
+            <td>
+                {{$parent.article.quantitySelected}}
+            </td>
+        </quantity-column>
+        <unit-column>
+            <td>
+                {{$parent.article.unitSelected}}
+            </td>
+        </unit-column>
+        <action-button>
+            <td>
+                <button type="button" class="btn btn-primary btn-circle" ng-click="outboundEditCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
+            </td>
+        </action-button>
+    </outbound-article-table>
+</fieldset>
+<div ng-transclude = "confirmButton"></div>
+<br><br>
+
+articoli: {{outboundEditCtrl.outbound.articles}}
+<br><br>
+articoli da aggiunge: {{outboundEditCtrl.outbound.addedArticles}}
+<br><br>
+articoli da rimuove: {{outboundEditCtrl.outbound.removedArticles}}
+<br><br>

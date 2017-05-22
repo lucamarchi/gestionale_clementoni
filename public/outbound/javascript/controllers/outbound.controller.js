@@ -9,7 +9,7 @@ function OutboundController (OutboundFactory) {
         OutboundFactory.getOutbounds()
             .then (function (resp) {
                 console.log(resp);
-                ctrl.outbounds = resp.data.releases;
+                ctrl.outbounds = resp.data.data.releases;
             })
             .catch(function(err) {
                 console.log(err);

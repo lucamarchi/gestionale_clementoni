@@ -1,3 +1,4 @@
+/*
 function outboundTable (OutboundFactory, $location) {
 	return {
 		restrict: 'E',
@@ -13,15 +14,15 @@ function outboundTable (OutboundFactory, $location) {
             
             ctrl.showOutboundDetails = function (outboundId) {
                 $location.path('/outbound/details/'+outboundId);    
-            }
+            };
             
             ctrl.showOutboundDispatch = function (outboundId) {
                 $location.path('/outbound/dispatch/'+outboundId);    
-            }
+            };
             
             ctrl.showOutboundUpdate = function (outboundId) {
                 $location.path('/outbound/update/'+outboundId);    
-            }
+            };
         },
 
         controllerAs: 'outboundTableCtrl',
@@ -116,7 +117,7 @@ function outboundArticleTable (OutboundFactory, features) {
 
         controllerAs: 'outboundArticleTableCtrl',
     }
-};
+}
 
 function outboundEdit (OutboundFactory, ArticleFactory, features) {
 	return {
@@ -209,7 +210,7 @@ function outboundEdit (OutboundFactory, ArticleFactory, features) {
 
         controllerAs: 'outboundEditCtrl',
     }
-};
+}
 
 function outboundForm () {
 	return {
@@ -238,11 +239,12 @@ function outboundForm () {
         
         controllerAs: 'outboundFormCtrl',
     };
-};
+}
 
 angular
     .module('store')
     .directive('outboundTable',['OutboundFactory', '$location', outboundTable])
     .directive('outboundArticleTable',['OutboundFactory', 'features', outboundArticleTable])
     .directive('outboundEdit',['OutboundFactory','ArticleFactory', 'features', outboundEdit])
-    .directive('outboundForm', outboundForm)
+    .directive('outboundForm', outboundForm);
+*/
