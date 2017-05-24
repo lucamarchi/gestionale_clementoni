@@ -75,7 +75,7 @@ function articleTable (ProcessingFactory, CustomerFactory) {
         },
         controllerAs: 'articleTableCtrl',
     };
-};
+}
 
 angular
     .module('store')

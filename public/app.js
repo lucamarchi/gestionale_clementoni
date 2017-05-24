@@ -1,4 +1,4 @@
-var store = angular.module('store', ['ngRoute', 'ngResource', 'ngTouch', 'ngAnimate', 'ui.bootstrap']);
+var store = angular.module('store', ['ngRoute', 'ngResource', 'ngTouch', 'ngAnimate', 'ui.bootstrap','ngCookies']);
 
 store.constant("myConfig", {
 	"url": "http://localhost:8080",
@@ -275,11 +275,12 @@ store.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 });
 
-store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', function($rootScope, $location, AuthenticationService, UserService) {
+store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService','$cookies', function($rootScope, $location, AuthenticationService, UserService, $cookies) {
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
         $('.modal').modal('hide');
 		AuthenticationService.save({},{},
 			function(resp) {
+				console.log(resp);
 				$rootScope.isLogged = true;
 				$rootScope.user = UserService.getUser();
 			},

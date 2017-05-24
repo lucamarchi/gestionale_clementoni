@@ -22,8 +22,10 @@ function ProdStateDetailsController (ProdStateFactory, ProcessingFactory, $route
     ctrl.getProdState($routeParams.id);
     
     ctrl.startProcessing = function (article) {
-        ProcessingFactory.addArticles(article, $routeParams.id);
-        $location.path("/productionState/processing/"+article._id);    
+        var articles = [];
+        articles.push(article);
+        ProcessingFactory.startProcessing(articles);
+        $location.path("/productionState/processing/"+$routeParams.id);
     }
     
     
@@ -31,4 +33,4 @@ function ProdStateDetailsController (ProdStateFactory, ProcessingFactory, $route
 
 angular
     .module('store')
-    .controller('ProdStateDetailsController', ['ProdStateFactory','ProcessingFactory','$routeParams','$location', ProdStateDetailsController])
+    .controller('ProdStateDetailsController', ['ProdStateFactory','ProcessingFactory','$routeParams','$location', ProdStateDetailsController]);

@@ -18,12 +18,12 @@
         </table-filters>
         <weight-column>
             <td>
-                <input type="number" ng-model="$parent.article.weightSelected" class="form-control" required>
+                <input type="number" ng-model="$parent.article.weightSelected" ng-change="outboundEditCtrl.setQuantitySelected($parent.article)" class="form-control" required>
             </td>
         </weight-column>
         <quantity-column>
             <td>
-                <input type="number" ng-model="$parent.article.quantitySelected" class="form-control">
+                <input type="number" ng-model="$parent.article.quantitySelected" class="form-control" disabled>
             </td>
         </quantity-column>
         <unit-column>

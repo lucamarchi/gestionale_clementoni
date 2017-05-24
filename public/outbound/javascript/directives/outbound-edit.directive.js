@@ -46,10 +46,14 @@ function outboundEdit (OutboundFactory, ArticleFactory, UtilityFactory) {
 
             ctrl.getUnassignedToOutboundArticles();
 
+            ctrl.setQuantitySelected = function (article) {
+                console.log(article);
+                article.quantitySelected = UtilityFactory.calculateQuantity(article, 'weightSelected', 'spessore', 'larghezza');
+            };
+
             ctrl.addSelectedArticle = function (article) {
-                UtilityFactory.calculateArticleQuantity(article, 'weightSelected', 'spessore', 'larghezza');
                 ctrl.outbound.articles.push(article);
-                index = ctrl.freeArticles.indexOf(article);
+                var index = ctrl.freeArticles.indexOf(article);
                 console.log(article, index);
                 if (article.statoEvasione == "libero") {
                     ctrl.outbound.addedArticles.push(article);
@@ -65,7 +69,7 @@ function outboundEdit (OutboundFactory, ArticleFactory, UtilityFactory) {
 
             ctrl.removeSelectedArticle = function (article){
                 ctrl.freeArticles.push(article);
-                index = ctrl.outbound.articles.indexOf(article);
+                var index = ctrl.outbound.articles.indexOf(article);
                 console.log(article, index);
                 if (article.statoEvasione != "libero") {
                     ctrl.outbound.removedArticles.push(article);

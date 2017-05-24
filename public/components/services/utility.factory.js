@@ -2,7 +2,7 @@
  * Created by nexse on 17/05/2017.
  */
 
-function UtilityFactory () {
+function UtilityFactory() {
 
     var utilityFactory = {};
 
@@ -16,6 +16,7 @@ function UtilityFactory () {
                 product.tipo.toLowerCase() == "ondulata" || product.tipo.toLowerCase() == "grecata") {
                 product.quantita = Math.round(product[peso] / ((product[larghezza] * product.lunghezza * product[spessore] * 7.85) / 1000000));
             }
+            product.quantita = utilityFactory.calculateQuantity(product, peso, spessore, larghezza);
         }
         else {
             console.log("MANCANO ATTRIBUTI");
@@ -23,11 +24,11 @@ function UtilityFactory () {
         return;
     };
 
-    utilityFactory.calculateArticleQuantity = function (article, peso, spessore, larghezza, lunghezza) {
+    utilityFactory.calculateQuantity = function (model, peso, spessore, larghezza) {
         var quantita = 0;
-        if (article.tipo != "nastro" || article.tipo != "coil") {
-        quantita = Math.round(article[peso] / ((article[larghezza] * article.lunghezza * article[spessore] * 7.85) / 1000000));
-
+        if (model.tipo != "nastro" || model.tipo != "coil") {
+            quantita = Math.round(model[peso] / ((model[larghezza] * model.lunghezza * model[spessore] * 7.85) / 1000000));
+        };
         return quantita;
     };
 

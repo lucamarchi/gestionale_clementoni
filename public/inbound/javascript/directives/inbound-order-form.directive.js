@@ -29,8 +29,8 @@ function inboundOrderForm () {
 
         controllerAs: 'inOrderFormCtrl',
     };
-};
+}
 
 angular
     .module('store')
-    .directive('inboundOrderForm', inboundOrderForm)
+    .directive('inboundOrderForm', inboundOrderForm);
