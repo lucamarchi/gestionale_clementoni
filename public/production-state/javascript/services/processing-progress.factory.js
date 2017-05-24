@@ -1,4 +1,4 @@
-function ProcessingFactory ($cookies) {
+function ProcessingProgressFactory ($cookies) {
 
     var processing = {};
 
@@ -12,10 +12,6 @@ function ProcessingFactory ($cookies) {
         return $cookies.getObject("articles");
     };
 
-    /*processing.getProdStateId = function () {
-        return processing.prodStateId;
-    };*/
-
     return processing;
 }
 
@@ -23,4 +19,4 @@ function ProcessingFactory ($cookies) {
 
 angular
     .module('store')
-    .service('ProcessingFactory', ['$cookies',ProcessingFactory]);
+    .service('ProcessingProgressFactory', ['$cookies',ProcessingProgressFactory]);

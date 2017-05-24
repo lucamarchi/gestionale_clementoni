@@ -1,4 +1,4 @@
-function ProcessingController ($scope, features, ProcessingFactory, ProductFactory, $location) {
+function ProcessingController ($scope, features, ProcessingProgressFactory, ProductFactory, $location, $routeParams) {
     var ctrl = this;
     
     ctrl.selectedMachinery = {};
@@ -30,8 +30,7 @@ function ProcessingController ($scope, features, ProcessingFactory, ProductFacto
     };
       
     ctrl.backProdState = function () {
-        var prodStateId = ProcessingFactory.getProdStateId();
-        $location.path("/productionState/details/"+prodStateId);
+        $location.path("/productionState/details/"+$routeParams.id);
     };
     
     $scope.$on('inboundProductFormValid', function (event, data) {
@@ -41,8 +40,8 @@ function ProcessingController ($scope, features, ProcessingFactory, ProductFacto
     });
     
     ctrl.selectArticle = function () {
-        console.log(ProcessingFactory.getArticles());
-        ctrl.selectedArticles = ProcessingFactory.getArticles();   
+        console.log(ProcessingProgressFactory.getArticles());
+        ctrl.selectedArticles = ProcessingProgressFactory.getArticles();
 //        if (ctrl.selectedArticles.length == 0) {
 //            $location.path("/productionState");
 //        }
@@ -63,7 +62,7 @@ function ProcessingController ($scope, features, ProcessingFactory, ProductFacto
         ProductFactory.getProducts()
             .then (function (resp) {
                 console.log(resp);
-                ctrl.stockSelectionModalContent.stockList = resp.data.stocks;
+                ctrl.stockSelectionModalContent.stockList = resp.data.data.stocks;
 				console.log("STOCKS", ctrl.stocks);
 			})
 			.catch(function(err) {
@@ -92,4 +91,4 @@ function ProcessingController ($scope, features, ProcessingFactory, ProductFacto
 
 angular
     .module('store')
-    .controller('ProcessingController',['$scope','features','ProcessingFactory','ProductFactory','$location', ProcessingController])
+    .controller('ProcessingController',['$scope','features','ProcessingProgressFactory','ProductFactory','$location','$routeParams', ProcessingController])

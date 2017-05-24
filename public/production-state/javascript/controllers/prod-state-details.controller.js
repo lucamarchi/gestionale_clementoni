@@ -1,9 +1,10 @@
-function ProdStateDetailsController (ProdStateFactory, ProcessingFactory, $routeParams,$location) {
+function ProdStateDetailsController (ProdStateFactory, ProcessingProgressFactory, $routeParams,$location) {
 
     var ctrl = this;
     ctrl.prodState = {};
     ctrl.prodState.prod = {};
     ctrl.prodState.articles = [];
+    ctrl.workingArticles = [];
     ctrl.currentPage = 1;
     ctrl.entryLimit = 10;
     
@@ -20,11 +21,23 @@ function ProdStateDetailsController (ProdStateFactory, ProcessingFactory, $route
     }
 	
     ctrl.getProdState($routeParams.id);
-    
-    ctrl.startProcessing = function (article) {
-        var articles = [];
-        articles.push(article);
-        ProcessingFactory.startProcessing(articles);
+
+    ctrl.addWorkingArticle = function (article) {
+        ctrl.workingArticles.push(article);
+        var index = ctrl.prodState.articles.indexOf(article);
+        console.log(article, index);
+        ctrl.prodState.articles.splice(index,1);
+    };
+
+    ctrl.removeWorkingArticle = function (article){
+        ctrl.prodState.articles.push(article);
+        var index = ctrl.workingArticles.indexOf(article);
+        console.log(article, index);
+        ctrl.workingArticles.splice(index,1);
+    };
+
+    ctrl.startProcessing = function (articles) {
+        ProcessingProgressFactory.startProcessing(articles);
         $location.path("/productionState/processing/"+$routeParams.id);
     }
     
@@ -33,4 +46,4 @@ function ProdStateDetailsController (ProdStateFactory, ProcessingFactory, $route
 
 angular
     .module('store')
-    .controller('ProdStateDetailsController', ['ProdStateFactory','ProcessingFactory','$routeParams','$location', ProdStateDetailsController]);
+    .controller('ProdStateDetailsController', ['ProdStateFactory','ProcessingProgressFactory','$routeParams','$location', ProdStateDetailsController]);
