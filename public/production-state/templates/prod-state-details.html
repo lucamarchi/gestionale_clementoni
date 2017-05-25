@@ -32,4 +32,5 @@
         </button-action>
     </article-table>
 </fieldset>
-<button type="button" class="btn btn-primary btn-lg" ng-click = "prodStateDetailsCtrl.startProcessing(prodStateDetailsCtrl.workingArticles)">Conferma</button>
+<button type="button" class="btn btn-primary btn-lg" ng-if="prodStateDetailsCtrl.workingArticles && prodStateDetailsCtrl.workingArticles.length > 0" ng-click = "prodStateDetailsCtrl.startProcessing(prodStateDetailsCtrl.workingArticles)">Conferma</button>
+<button type="button" class="btn btn-primary btn-lg" ng-if="!prodStateDetailsCtrl.workingArticles || prodStateDetailsCtrl.workingArticles.length == 0" disabled>Conferma</button>

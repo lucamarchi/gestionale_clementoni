@@ -62,8 +62,8 @@ function ProcessingController ($scope, features, ProcessingProgressFactory, Prod
         ProductFactory.getProducts()
             .then (function (resp) {
                 console.log(resp);
-                ctrl.stockSelectionModalContent.stockList = resp.data.data.stocks;
-				console.log("STOCKS", ctrl.stocks);
+                ctrl.stockSelectionModalContent.stockList = resp.data.data.products;
+				console.log("STOCKS", ctrl.stockSelectionModalContent.stockList);
 			})
 			.catch(function(err) {
 				console.log(err);
