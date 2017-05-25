@@ -280,7 +280,6 @@ store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService','$c
         $('.modal').modal('hide');
 		AuthenticationService.save({},{},
 			function(resp) {
-				console.log(resp);
 				$rootScope.isLogged = true;
 				$rootScope.user = UserService.getUser();
 			},
