@@ -32,7 +32,7 @@ function CutController (CutFactory) {
 					ctrl.cuts = ctrl.cuts.concat(resp.data.data.cuts);
 				}
 
-                // $('#'+ctrl.refreshLoadingModalContent.modalId).modal('hide');
+                $('#'+ctrl.refreshLoadingModalContent.modalId).modal('hide');
 			})
 			.catch(function(err) {
 				console.log(err);

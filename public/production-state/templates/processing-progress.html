@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-2">
             <button type="button" class="btn btn-info btn-block" data-toggle="modal"
-                    data-target="#{{processCtrl.machinerySelectionModalContent.modalId}}">Seleziona
+                    data-target="#{{processCtrl.machinerySelectionModalContent.modalId}}" ng-click="processCtrl.showMachineryList()">Seleziona
             </button>
         </div>
     </div>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-md-2">
-            <button type="button" class="btn btn-info btn-block" data-toggle="modal"
+            <button type="button" class="btn btn-info btn-block" ng-disabled = true data-toggle="modal"
                     data-target="#{{processCtrl.stockSelectionModalContent.modalId}}"
                     ng-click="processCtrl.showStockList()">Seleziona
             </button>
@@ -57,7 +57,7 @@
         <article-table article-list="processCtrl.selectedArticles" entry-limit="processCtrl.selectedArticles.length"
                        current-page="processCtrl.currentPage">
             <button-action>
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                <button ng-disabled ="processCtrl.selectedStocks.length == 0 && !processCtrl.selectedMachinery" type="button" class="btn btn-primary btn-block" data-toggle="modal"
                         data-target="#{{processCtrl.producedProductEntryModalContent.modalId}}"
                         ng-click=processCtrl.openProductForm()>Lavora
                 </button>
@@ -132,7 +132,7 @@
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
                 <button ng-disabled="!processCtrl.producedProductFormValid" type="button" class="btn btn-primary"
                         data-dismiss="modal"
-                        ng-click="processCtrl.addProducedProduct(processCtrl.producedProductEntryModalContent.producedProduct)">
+                        ng-click="processCtrl.addProducedProduct(processCtrl.producedProductEntryModalContent.producedProduct, processCtrl.producedProductEntryModalContent.selectedArticle)">
                     Inserisci
                 </button>
             </div>

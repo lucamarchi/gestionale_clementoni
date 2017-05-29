@@ -34,7 +34,7 @@ function inboundSet () {
                 modalClass: 'modal modal-xl fade',
                 entryLimit: 10,
                 expecteds: [],
-            }
+            };
             
             ctrl.inboundProductEntryModalContent = {
                 modalTitle: '',
@@ -43,26 +43,26 @@ function inboundSet () {
                 expected: 'undefined',
                 oldProduct: {},
                 product: {},
-            }
+            };
             
             $scope.$on('orderFormValid', function (event, data) {
                 if (data) {
                     ctrl.orderFormValid = data.$valid;
                 }
-            })
+            });
             
             $scope.$on('inboundProductFormValid', function (event, data) {
                 if (data) {
                     ctrl.inboundProductFormValid = data.$valid;
                 }
-            })
+            });
             
             ctrl.newInboundProduct = function () {
                 ctrl.inboundProductEntryModalContent.modalTitle = 'Inserisci prodotto del carico';
                 ctrl.inboundProductEntryModalContent.product = {};
                 ctrl.inboundProductEntryModalContent.expected = undefined;
                 ctrl.unlockedForm = 1;
-            }
+            };
 
             ctrl.showExpectedList = function () {
                 ExpectedFactory.getExpecteds()
@@ -73,7 +73,7 @@ function inboundSet () {
                     .catch(function(err) {
                         console.log(err);
                     });
-            }
+            };
 
             ctrl.selectExpected = function (expected) {
                 ctrl.inboundProductEntryModalContent.product = {};
@@ -95,14 +95,14 @@ function inboundSet () {
                 ctrl.inboundProductEntryModalContent.modalTitle = 'Inserisci prodotto del carico';
                 ctrl.unlockedForm = 1;
                 console.log(ctrl.inboundProductEntryModalContent.product);
-            }
+            };
             
             ctrl.selectInboundModifyProduct = function (product) {
                 ctrl.inboundProductEntryModalContent.oldProduct = product;
                 ctrl.inboundProductEntryModalContent.product = Object.assign({},product);
                 ctrl.inboundProductEntryModalContent.modalTitle = 'Modifica prodotto del carico';
                 ctrl.unlockedForm = 2;
-            }
+            };
 
             ctrl.addInboundProduct = function (product) {
                 product.pesoNetto = product.pesoIniziale;
@@ -119,7 +119,7 @@ function inboundSet () {
                     });
                     
                     console.log("trovato",trovato);
-                    
+                    var i; //prova col findindex;
                     if (trovato) {
                         i = ctrl.inbound.selectedExpecteds.indexOf(trovato);
                     }
@@ -138,7 +138,7 @@ function inboundSet () {
                 }
                 ctrl.inbound.products.push(product);
                 console.log("P2E", ctrl.product2expected);
-            }
+            };
             
             ctrl.deleteInboundProduct = function (product) {
                 if (product._id && ctrl.inbound.deletedProducts.indexOf(product) == -1) {
@@ -170,7 +170,7 @@ function inboundSet () {
                 }
                 ctrl.inbound.products.splice(ctrl.inbound.products.indexOf(product),1);
                 console.log(product);
-            }
+            };
             
             ctrl.updateInboundProduct = function (product) {
                 var pos;
@@ -203,8 +203,8 @@ function inboundSet () {
         },
         controllerAs: 'inboundSetCtrl',
     };
-};
+}
 
 angular
     .module('store')
-    .directive('inboundSet', inboundSet)
+    .directive('inboundSet', inboundSet);
