@@ -78,7 +78,7 @@ function inboundSet () {
             ctrl.selectExpected = function (expected) {
                 ctrl.inboundProductEntryModalContent.product = {};
                 ctrl.inboundProductEntryModalContent.expected = expected;
-                ctrl.inboundProductEntryModalContent.product.materiale = ctrl.inboundProductEntryModalContent.expected.materiale;
+                /*ctrl.inboundProductEntryModalContent.product.materiale = ctrl.inboundProductEntryModalContent.expected.materiale;
                 ctrl.inboundProductEntryModalContent.product.qualita = ctrl.inboundProductEntryModalContent.expected.qualita;
                 ctrl.inboundProductEntryModalContent.product.colore = ctrl.inboundProductEntryModalContent.expected.colore;
                 ctrl.inboundProductEntryModalContent.product.finitura = ctrl.inboundProductEntryModalContent.expected.finitura;
@@ -91,7 +91,8 @@ function inboundSet () {
                 }
                 if (ctrl.inboundProductEntryModalContent.expected.larghezza) {
                     ctrl.inboundProductEntryModalContent.product.larghezzaNominale = ctrl.inboundProductEntryModalContent.expected.larghezza.toString();
-                }
+                }*/
+                UtilityFactory.inboundProductFromExpected(ctrl.inboundProductEntryModalContent.product, expected);
                 ctrl.inboundProductEntryModalContent.modalTitle = 'Inserisci prodotto del carico';
                 ctrl.unlockedForm = 1;
                 console.log(ctrl.inboundProductEntryModalContent.product);

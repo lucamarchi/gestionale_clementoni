@@ -1,4 +1,4 @@
-function ProcessingController($scope, features, ProcessingProgressFactory, ProductFactory, $location, $routeParams) {
+function ProcessingController($scope, features, ProcessingProgressFactory, ProductFactory, UtilityFactory, $location, $routeParams) {
     var ctrl = this;
 
     ctrl.processingList = [];
@@ -8,12 +8,16 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
     ctrl.selectedStocks = [];
     ctrl.producedProducts = [];
 
+    ctrl.isMachinerySelected = function () {
+        return Object.keys(ctrl.selectedMachinery).length != 0;
+    };
+
     ctrl.machinerySelectionModalContent = {
         url: 'public/production-state/templates/machinery-selection.html',
         modalTitle: 'Seleziona macchinario',
         modalClass: 'modal fade',
         modalId: 'machineryselection',
-        machineryList: {},
+        machineryList: undefined,
     };
 
     ctrl.stockSelectionModalContent = {
@@ -117,33 +121,37 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
 
     ctrl.openProductForm = function (article) {
         ctrl.producedProductEntryModalContent.selectedArticle = article;
-        ctrl.producedProductEntryModalContent.producedProduct.materiale = ctrl.selectedStocks[0].materiale;
-        ctrl.producedProductEntryModalContent.producedProduct.tipo = ctrl.selectedStocks[0].tipo;
-        if (ctrl.selectedStocks[0].qualita) {
-            ctrl.producedProductEntryModalContent.producedProduct.qualita = ctrl.selectedStocks[0].qualita;
-        }
-        ctrl.producedProductEntryModalContent.producedProduct.spessoreNominale = ctrl.selectedStocks[0].spessoreNominale.toString();
-        ctrl.producedProductEntryModalContent.producedProduct.spessoreEffettivo = ctrl.selectedStocks[0].spessoreEffettivo;
-        ctrl.producedProductEntryModalContent.producedProduct.larghezzaNominale = ctrl.selectedStocks[0].larghezzaNominale.toString();
-        ctrl.producedProductEntryModalContent.producedProduct.larghezzaEffettiva = ctrl.selectedStocks[0].larghezzaEffettiva;
-        if (ctrl.selectedStocks[0].superficie) {
-            ctrl.producedProductEntryModalContent.producedProduct.superficie = ctrl.selectedStocks[0].superficie;
-        }
-        if (ctrl.selectedStocks[0].finitura) {
-            ctrl.producedProductEntryModalContent.producedProduct.finitura = ctrl.selectedStocks[0].finitura;
-        }
-        if (ctrl.selectedStocks[0].colore) {
-            ctrl.producedProductEntryModalContent.producedProduct.colore = ctrl.selectedStocks[0].colore;
-        }
-        ctrl.producedProductEntryModalContent.producedProduct.scelta = ctrl.selectedStocks[0].scelta;
+        UtilityFactory.producedProductFromStock(ctrl.producedProductEntryModalContent.producedProduct, ctrl.selectedStocks[0]);
+        /*ctrl.producedProductEntryModalContent.producedProduct.materiale = ctrl.selectedStocks[0].materiale;
+         ctrl.producedProductEntryModalContent.producedProduct.tipo = ctrl.selectedStocks[0].tipo;
+         if (ctrl.selectedStocks[0].qualita) {
+         ctrl.producedProductEntryModalContent.producedProduct.qualita = ctrl.selectedStocks[0].qualita;
+         }
+         ctrl.producedProductEntryModalContent.producedProduct.spessoreNominale = ctrl.selectedStocks[0].spessoreNominale.toString();
+         ctrl.producedProductEntryModalContent.producedProduct.spessoreEffettivo = ctrl.selectedStocks[0].spessoreEffettivo;
+         ctrl.producedProductEntryModalContent.producedProduct.larghezzaNominale = ctrl.selectedStocks[0].larghezzaNominale.toString();
+         ctrl.producedProductEntryModalContent.producedProduct.larghezzaEffettiva = ctrl.selectedStocks[0].larghezzaEffettiva;
+         if (ctrl.selectedStocks[0].superficie) {
+         ctrl.producedProductEntryModalContent.producedProduct.superficie = ctrl.selectedStocks[0].superficie;
+         }
+         if (ctrl.selectedStocks[0].finitura) {
+         ctrl.producedProductEntryModalContent.producedProduct.finitura = ctrl.selectedStocks[0].finitura;
+         }
+         if (ctrl.selectedStocks[0].colore) {
+         ctrl.producedProductEntryModalContent.producedProduct.colore = ctrl.selectedStocks[0].colore;
+         }
+         ctrl.producedProductEntryModalContent.producedProduct.scelta = ctrl.selectedStocks[0].scelta;*/
     };
 
     ctrl.addProducedProduct = function (product, article) {
+        product.pesoNetto = product.pesoIniziale;
+        product.pesoLordo = product.pesoNetto;
+        UtilityFactory.productValuesForType(ctrl.producedProductEntryModalContent.producedProduct, "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");;
         console.log(product);
         ctrl.producedProducts.push(product);
         var trovato = ctrl.processingList.findIndex(function (processing) {
             processing.article == article;
-        })
+        });
         if (trovato != -1) {
             ctrl.processingList[trovato].producedProduct = product;
         }
@@ -154,4 +162,4 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
 
 angular
     .module('store')
-    .controller('ProcessingController', ['$scope', 'features', 'ProcessingProgressFactory', 'ProductFactory', '$location', '$routeParams', ProcessingController])
+    .controller('ProcessingController', ['$scope', 'features', 'ProcessingProgressFactory', 'ProductFactory', 'UtilityFactory', '$location', '$routeParams', ProcessingController]);
