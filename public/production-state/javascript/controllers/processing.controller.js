@@ -55,7 +55,7 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
             processing = {};
             processing.article = article;
             processing.stocks = [];
-            processing.producedProduct = {};
+            processing.producedProduct = undefined;
             processing.machinery = "";
             ctrl.processingList.push(processing);
         });
@@ -89,12 +89,13 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
                 .then(function (resp) {
                     console.log(resp);
                     ctrl.stockSelectionModalContent.stockList = resp.data.data.products;
-                    console.log("STOCKS", ctrl.stockSelectionModalContent.stockList);
+
                 })
                 .catch(function (err) {
                     console.log(err);
                 });
         }
+        console.log("STOCKS", ctrl.stockSelectionModalContent.stockList);
     };
 
     $scope.$on('producedProductFormValid', function (event, data) {
@@ -106,58 +107,60 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
     ctrl.addStock = function (stock) {
         console.log(stock);
         if (ctrl.selectedMachinery.hasOwnProperty('slitter')) {
+            ctrl.stockSelectionModalContent.stockList = ctrl.stockSelectionModalContent.stockList.concat(ctrl.selectedStocks);
             ctrl.selectedStocks = [];
+
         }
         ctrl.selectedStocks.push(stock);
+
         $('#' + ctrl.stockSelectionModalContent.modalId).modal('hide');
         var index = ctrl.stockSelectionModalContent.stockList.indexOf(stock);
         ctrl.stockSelectionModalContent.stockList.splice(index, 1);
+        console.log("dopo ", ctrl.stockSelectionModalContent.stockList, ctrl.selectedStocks);
         ctrl.processingList = ctrl.processingList.map(function (processing) {
             processing.stocks = ctrl.selectedStocks;
             return processing;
         });
+
         console.log("processingList", ctrl.processingList);
     };
 
     ctrl.openProductForm = function (article) {
-        ctrl.producedProductEntryModalContent.selectedArticle = article;
-        UtilityFactory.producedProductFromStock(ctrl.producedProductEntryModalContent.producedProduct, ctrl.selectedStocks[0]);
-        /*ctrl.producedProductEntryModalContent.producedProduct.materiale = ctrl.selectedStocks[0].materiale;
-         ctrl.producedProductEntryModalContent.producedProduct.tipo = ctrl.selectedStocks[0].tipo;
-         if (ctrl.selectedStocks[0].qualita) {
-         ctrl.producedProductEntryModalContent.producedProduct.qualita = ctrl.selectedStocks[0].qualita;
-         }
-         ctrl.producedProductEntryModalContent.producedProduct.spessoreNominale = ctrl.selectedStocks[0].spessoreNominale.toString();
-         ctrl.producedProductEntryModalContent.producedProduct.spessoreEffettivo = ctrl.selectedStocks[0].spessoreEffettivo;
-         ctrl.producedProductEntryModalContent.producedProduct.larghezzaNominale = ctrl.selectedStocks[0].larghezzaNominale.toString();
-         ctrl.producedProductEntryModalContent.producedProduct.larghezzaEffettiva = ctrl.selectedStocks[0].larghezzaEffettiva;
-         if (ctrl.selectedStocks[0].superficie) {
-         ctrl.producedProductEntryModalContent.producedProduct.superficie = ctrl.selectedStocks[0].superficie;
-         }
-         if (ctrl.selectedStocks[0].finitura) {
-         ctrl.producedProductEntryModalContent.producedProduct.finitura = ctrl.selectedStocks[0].finitura;
-         }
-         if (ctrl.selectedStocks[0].colore) {
-         ctrl.producedProductEntryModalContent.producedProduct.colore = ctrl.selectedStocks[0].colore;
-         }
-         ctrl.producedProductEntryModalContent.producedProduct.scelta = ctrl.selectedStocks[0].scelta;*/
+        var trovato = ctrl.processingList.findIndex(function (processing) {
+            return processing.article == article;
+        });
+        if (trovato != -1) {
+            ctrl.producedProductEntryModalContent.selectedArticle = article;
+            if (ctrl.processingList[trovato].producedProduct) {
+                ctrl.producedProductEntryModalContent.producedProduct = ctrl.processingList[trovato].producedProduct;
+                console.log("if");
+            }
+            else {
+                ctrl.producedProductEntryModalContent.producedProduct = {};
+                UtilityFactory.producedProductFromStock(ctrl.producedProductEntryModalContent.producedProduct, ctrl.selectedStocks[0]);
+            }
+        }
     };
 
     ctrl.addProducedProduct = function (product, article) {
         product.pesoNetto = product.pesoIniziale;
         product.pesoLordo = product.pesoNetto;
-        UtilityFactory.productValuesForType(ctrl.producedProductEntryModalContent.producedProduct, "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");;
+        UtilityFactory.productValuesForType(ctrl.producedProductEntryModalContent.producedProduct, "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");
         console.log(product);
-        ctrl.producedProducts.push(product);
+
         var trovato = ctrl.processingList.findIndex(function (processing) {
-            processing.article == article;
+            return processing.article == article;
         });
         if (trovato != -1) {
             ctrl.processingList[trovato].producedProduct = product;
+            ctrl.producedProducts[trovato] = product;
         }
         console.log(ctrl.processingList);
     };
 
+    ctrl.calculateScarto = function () {
+
+    }
 }
 
 angular

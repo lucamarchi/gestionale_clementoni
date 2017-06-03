@@ -22,4 +22,4 @@ function ProdStateController (ProdStateFactory) {
 
 angular
     .module('store')
-    .controller('ProdStateController', ['ProdStateFactory', ProdStateController])
+    .controller('ProdStateController', ['ProdStateFactory', ProdStateController]);

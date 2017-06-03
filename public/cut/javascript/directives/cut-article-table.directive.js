@@ -1,7 +1,3 @@
-/**
- * Created by nexse on 18/05/2017.
- */
-
 function cutArticleTable() {
     return {
         restrict: 'E',
@@ -19,7 +15,7 @@ function cutArticleTable() {
                 modalClass: 'modal fade',
                 article: {},
                 index: null,
-            }
+            };
 
             ctrl.cutArticleDeletionModalContent = {
                 modalTitle: 'Cancellazion dell\'articolo dell\'ordine di taglio',
@@ -33,6 +29,12 @@ function cutArticleTable() {
             ctrl.selectArticle = function (article, index) {
                 var articleCopy = Object.assign({}, article);
                 ctrl.dimensionSelectionModalContent.article = articleCopy;
+                if (ctrl.dimensionSelectionModalContent.article.lunghezzaAssegnata) {
+                    ctrl.dimensionSelectionModalContent.article.lunghezzaAssegnata = articleCopy.lunghezzaAssegnata.toString();
+                }
+                if (ctrl.dimensionSelectionModalContent.article.larghezzaAssegnata) {
+                    ctrl.dimensionSelectionModalContent.article.larghezzaAssegnata = articleCopy.larghezzaAssegnata.toString();
+                }
                 ctrl.cutArticleDeletionModalContent.article = article;
                 ctrl.dimensionSelectionModalContent.index = index;
                 ctrl.cutArticleDeletionModalContent.index = index;
@@ -48,6 +50,7 @@ function cutArticleTable() {
                     .catch(function (err) {
                         console.log(err);
                     })
+                console.log("adsdadadsa", article);
 
 
             }

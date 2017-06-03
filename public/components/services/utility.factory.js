@@ -54,6 +54,7 @@ function UtilityFactory() {
     };
 
     utilityFactory.inboundProductFromExpected = function (product, expected) {
+
         product.materiale = expected.materiale;
         product.qualita = expected.qualita;
         product.colore = expected.colore;

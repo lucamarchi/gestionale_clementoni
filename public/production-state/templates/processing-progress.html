@@ -8,11 +8,11 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-md-2">
-            <legend>Macchinario Selezionato:</legend>
+        <div class="col-md-3">
+            <legend>1. SELEZIONE MACCHINARIO:</legend>
         </div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-info btn-block" data-toggle="modal"
+        <div class="col-md-1">
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
                     data-target="#{{processCtrl.machinerySelectionModalContent.modalId}}" ng-click="processCtrl.showMachineryList()">Seleziona
             </button>
         </div>
@@ -27,12 +27,12 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-md-2">
-            <legend>Stock selezionati:</legend>
+        <div class="col-md-3">
+            <legend>2. INSERIMENTO STOCK DA LAVORARE:</legend>
         </div>
 
-        <div class="col-md-2">
-            <button type="button" class="btn btn-info btn-block" ng-disabled = "!processCtrl.isMachinerySelected()" data-toggle="modal"
+        <div class="col-md-1">
+            <button type="button" class="btn btn-primary btn-block" ng-disabled = "!processCtrl.isMachinerySelected()" data-toggle="modal"
                     data-target="#{{processCtrl.stockSelectionModalContent.modalId}}"
                     ng-click="processCtrl.showStockList()">Seleziona
             </button>
@@ -49,8 +49,8 @@
 
 <fieldset>
     <div class="row">
-        <div class="col-md-2">
-            <legend>Articoli in lavorazione:</legend>
+        <div class="col-md-3">
+            <legend>3. LAVORAZIONE ARTICOLI:</legend>
         </div>
     </div>
     <div>
@@ -59,7 +59,7 @@
             <button-action>
                 <button ng-disabled ="processCtrl.selectedStocks.length == 0 || !processCtrl.isMachinerySelected()" type="button" class="btn btn-primary btn-block" data-toggle="modal"
                         data-target="#{{processCtrl.producedProductEntryModalContent.modalId}}"
-                        ng-click=processCtrl.openProductForm()>Lavora
+                        ng-click=processCtrl.openProductForm($parent.article)>Lavora
                 </button>
             </button-action>
 
@@ -67,7 +67,7 @@
     </div>
 </fieldset>
 
-<br><br><br>
+<br>
 
 
 <fieldset>
