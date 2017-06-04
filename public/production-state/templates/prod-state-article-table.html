@@ -1,0 +1,42 @@
+<fieldset ng-repeat-start="type2articles in prodStateArticleTableCtrl.articleMap">
+    <h3 align="center"><b>{{type2articles.key|uppercase}}</b> {{type2articles.weight}} kg</h3>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Data Consegna</th>
+            <th>Cod. Cliente</th>
+            <th>Num. Ordine</th>
+            <th>Cod. Articolo</th>
+            <th>Materiale</th>
+            <th>Tipo</th>
+            <th>Spess</th>
+            <th>Largh</th>
+            <th>Lungh</th>
+            <th>Peso</th>
+            <th>Quant</th>
+            <th>Prezzo (&euro;/t)</th>
+            <th>Stato Produzione</th>
+            <th>Stato Evasione</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="article in type2articles.value">
+            <td>{{article.dataConsegna | date:'medium'}}</td>
+            <td>{{article.clienteCod}}</td>
+            <td>{{article.ordineCod}}</td>
+            <td>{{article.codArticolo}}</td>
+            <td>{{article.materiale}}</td>
+            <td>{{article.tipo}}</td>
+            <td>{{article.spessore}}</td>
+            <td>{{article.larghezza}}</td>
+            <td>{{article.lunghezza}}</td>
+            <td>{{article.pesoAttuale}}</td>
+            <td>{{article.quantita}}</td>
+            <td>{{article.prezzo}}</td>
+            <td production-state model="article" attribute="statoProduzione"></td>
+            <td evasion-state model="article" attribute="statoEvasione"></td>
+        </tr>
+        </tbody>
+    </table>
+</fieldset>
+<fieldset ng-repeat-end ng-hide="true"></fieldset>

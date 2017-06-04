@@ -1,8 +1,8 @@
-function LoginController ($scope, $rootScope, $location, UserService) {
+function LoginController ($rootScope, $location, UserService){
 	var ctrl = this;
     
-    ctrl.loginAlertModalContent = {
-        modalTitle: 'Errore di autenticazione',
+	ctrl.loginAlertModalContent = {
+		modalTitle: 'Errore di autenticazione',
         modalId: 'loginalert',
         modalClass: 'modal fade',
         modalBody: 'Username e/o password errati'
@@ -34,4 +34,4 @@ function LoginController ($scope, $rootScope, $location, UserService) {
 
 angular
     .module('store')
-    .controller('LoginController', ['$scope', '$rootScope', '$location', 'UserService', LoginController]);
+    .controller('LoginController', ['$rootScope', '$location', 'UserService', LoginController]);

@@ -1,0 +1,31 @@
+<h1>GIACENZA</h1> 
+<br><br>
+<stock-table stock-list = "stockCtrl.stocks">
+    <stock-filters>
+        <stock-filter model="$parent.stockTableCtrl.filterObject"></stock-filter>
+    </stock-filters>
+    <button-action>
+        <button type="button" class="btn btn-danger btn-block" ng-click="stockCtrl.selectStock($parent.stock)" data-target="#{{stockCtrl.stockDeleteModalContent.modalId}}" data-toggle="modal">
+        <div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
+        </button>
+    </button-action>
+</stock-table>
+
+
+<div ng-class="stockCtrl.stockDeleteModalContent.modalClass" id="{{stockCtrl.stockDeleteModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{stockCtrl.stockDeleteModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div>Eliminare definitivamente il prodotto dalla giacenza?</div>
+            </div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+				<button type="button" class="btn btn-primary" ng-click="stockCtrl.deleteStock(stockCtrl.stockDeleteModalContent.stock)" data-dismiss="modal">Conferma</button>
+			</div>
+        </div>
+    </div>
+</div>

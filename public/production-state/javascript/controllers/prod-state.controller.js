@@ -1,4 +1,5 @@
 function ProdStateController (ProdStateFactory) {
+
     var ctrl = this;
     ctrl.prodStates = [];
     
@@ -6,7 +7,7 @@ function ProdStateController (ProdStateFactory) {
         ProdStateFactory.getProdStates()
             .then (function (resp) {
                 console.log(resp);
-                ctrl.prodStates = resp.data.prods;
+                ctrl.prodStates = resp.data.data.prods;
             })
             .catch(function(err) {
                 console.log(err);
@@ -21,4 +22,4 @@ function ProdStateController (ProdStateFactory) {
 
 angular
     .module('store')
-    .controller('ProdStateController', ['ProdStateFactory', ProdStateController])
+    .controller('ProdStateController', ['ProdStateFactory', ProdStateController]);

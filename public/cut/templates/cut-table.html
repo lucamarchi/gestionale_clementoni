@@ -31,7 +31,7 @@
 			<td>{{cut.note}}</td>
 			<td ng-if="cut.accepted == true"><span class="label label-success">Confermato</span></td>
 			<td ng-if="cut.accepted == false">
-                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{cutTableCtrl.cutConfirmationModalContent.modalId}}" ng-click="cutTableCtrl.selectCut(cut)">Conferma</button>
+                <button ng-disabled="!cut.flag" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{cutTableCtrl.cutConfirmationModalContent.modalId}}" ng-click="cutTableCtrl.selectCut(cut)">Conferma</button>
                 <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#{{cutTableCtrl.cutDeletionModalContent.modalId}}" ng-click="cutTableCtrl.selectCut(cut)">Elimina</button>
             </td>
 		</tr>

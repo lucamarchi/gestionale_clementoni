@@ -1,9 +1,10 @@
+/*
 function outboundTable (OutboundFactory, $location) {
 	return {
 		restrict: 'E',
 		templateUrl:'public/outbound/templates/outbound-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			outbounds: "=",
             currentPage: "=",
             entryLimit: "="
@@ -13,15 +14,15 @@ function outboundTable (OutboundFactory, $location) {
             
             ctrl.showOutboundDetails = function (outboundId) {
                 $location.path('/outbound/details/'+outboundId);    
-            }
+            };
             
             ctrl.showOutboundDispatch = function (outboundId) {
                 $location.path('/outbound/dispatch/'+outboundId);    
-            }
+            };
             
             ctrl.showOutboundUpdate = function (outboundId) {
                 $location.path('/outbound/update/'+outboundId);    
-            }
+            };
         },
 
         controllerAs: 'outboundTableCtrl',
@@ -33,7 +34,7 @@ function outboundArticleTable (OutboundFactory, features) {
 		restrict: 'E',
 		templateUrl:'public/outbound/templates/outbound-article-table.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			articleList: "=",
             attribute: "@"
         },
@@ -116,14 +117,14 @@ function outboundArticleTable (OutboundFactory, features) {
 
         controllerAs: 'outboundArticleTableCtrl',
     }
-};
+}
 
-function outboundEdit (OutboundFactory, ProdStateFactory, features) {
+function outboundEdit (OutboundFactory, ArticleFactory, features) {
 	return {
 		restrict: 'E',
 		templateUrl:'public/outbound/templates/outbound-edit.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			outbound: "=",
         },
         transclude: {
@@ -150,8 +151,8 @@ function outboundEdit (OutboundFactory, ProdStateFactory, features) {
                 }
             );
             
-            ctrl.getFreeArticles = function () {
-                ProdStateFactory.getFreeArticles()
+            ctrl.getUnassignedToStateProdArticles = function () {
+                ArticleFactory.getUnassignedToStateProdArticles()
                     .then (function (resp) {
                         console.log(resp);
                         ctrl.freeArticles = resp.data.articles;
@@ -163,7 +164,7 @@ function outboundEdit (OutboundFactory, ProdStateFactory, features) {
                     })
             };
 
-            ctrl.getFreeArticles();
+            ctrl.getUnassignedToStateProdArticles();
             
             ctrl.addSelectedArticle = function (article) {
                 ctrl.outbound.articles.push(article);
@@ -209,14 +210,14 @@ function outboundEdit (OutboundFactory, ProdStateFactory, features) {
 
         controllerAs: 'outboundEditCtrl',
     }
-};
+}
 
 function outboundForm () {
 	return {
 		restrict: 'E',
 		templateUrl:'public/outbound/templates/outbound-form.html',
 		scope: {},
-        bindToController: {
+        bindToController: {
 			model: "=",
         },
         
@@ -238,11 +239,12 @@ function outboundForm () {
         
         controllerAs: 'outboundFormCtrl',
     };
-};
+}
 
 angular
     .module('store')
     .directive('outboundTable',['OutboundFactory', '$location', outboundTable])
     .directive('outboundArticleTable',['OutboundFactory', 'features', outboundArticleTable])
-    .directive('outboundEdit',['OutboundFactory','ProdStateFactory', 'features', outboundEdit])
-    .directive('outboundForm', outboundForm)
+    .directive('outboundEdit',['OutboundFactory','ArticleFactory', 'features', outboundEdit])
+    .directive('outboundForm', outboundForm);
+*/

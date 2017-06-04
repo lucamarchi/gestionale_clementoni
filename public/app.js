@@ -1,4 +1,4 @@
-var store = angular.module('store', ['ngRoute', 'ngResource', 'ngTouch', 'ngAnimate', 'ui.bootstrap']);
+var store = angular.module('store', ['ngRoute', 'ngResource', 'ngTouch', 'ngAnimate', 'ui.bootstrap','ngCookies']);
 
 store.constant("myConfig", {
 	"url": "http://localhost:8080",
@@ -69,13 +69,13 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
 			}
       	})
 	
-//		.when('/stock2', {
-//        	templateUrl: 'stock/stock2.html',
-//			controller: 'stock2Controller',
-//			access: { 
-//				requiredLogin: true 
-//			}
-//      	})
+		.when('/virtualStock', {
+        	templateUrl: 'public/virtual-stock/templates/virtual-stock.html',
+			controller: 'VirtualStockController',
+			access: { 
+				requiredLogin: true 
+			}
+      	})
 	
 		.when('/inbound', {
         	templateUrl: 'public/inbound/templates/inbounds.html',
@@ -180,7 +180,7 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
       	})
     
         .when('/productionState/details/:id', {
-        	templateUrl: 'public/production-state/templates/prod-state-articles.html',
+        	templateUrl: 'public/production-state/templates/prod-state-details.html',
 			controller: 'ProdStateDetailsController',
             controllerAs: 'prodStateDetailsCtrl',
 			access: { 
@@ -275,8 +275,9 @@ store.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 });
 
-store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', function($rootScope, $location, AuthenticationService, UserService) {
+store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService','$cookies', function($rootScope, $location, AuthenticationService, UserService, $cookies) {
 	$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+        $('.modal').modal('hide');
 		AuthenticationService.save({},{},
 			function(resp) {
 				$rootScope.isLogged = true;

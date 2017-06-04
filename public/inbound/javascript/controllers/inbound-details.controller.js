@@ -10,8 +10,8 @@ function InboundDetailsController (InboundFactory, $routeParams,$location) {
         InboundFactory.getInbound(id)
         .then (function (resp) {
             console.log("DETTAGLI CARICO IN USCITA" , resp);
-            ctrl.inbound.order = resp.data.order;
-            ctrl.inbound.products = resp.data.products;
+            ctrl.inbound.order = resp.data.data.order;
+            ctrl.inbound.products = resp.data.data.products;
         })
         .catch(function(err) {
             console.log(err);

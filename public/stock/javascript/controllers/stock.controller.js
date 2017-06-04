@@ -1,4 +1,4 @@
-function StockController ($scope, StockFactory,$location) {
+function StockController ($scope, ProductFactory,$location) {
     var ctrl = this;
     ctrl.stocks = [];
 	
@@ -15,10 +15,10 @@ function StockController ($scope, StockFactory,$location) {
     }
     
 	ctrl.getStocks = function () {
-		StockFactory.getStocks()
+		ProductFactory.getProducts()
             .then (function (resp) {
                 console.log(resp);
-				ctrl.stocks = resp.data.stocks;
+				ctrl.stocks = resp.data.data.products;
 				console.log("STOCKS", ctrl.stocks);
 			})
 			.catch(function(err) {
@@ -36,4 +36,4 @@ function StockController ($scope, StockFactory,$location) {
 
 angular
     .module('store')
-    .controller('StockController', ['$scope', 'StockFactory','$location', StockController]);
+    .controller('StockController', ['$scope', 'ProductFactory','$location', StockController]);

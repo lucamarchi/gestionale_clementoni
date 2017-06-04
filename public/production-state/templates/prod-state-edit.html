@@ -1,14 +1,4 @@
-<fieldset>
-    <legend>Articoli selezionati:</legend>
-    <article-table article-list="prodStateEditCtrl.selectedArticles" entry-limit="prodOverCtrl.entryLimit" current-page="prodOverCtrl.currentPage">
-        <button-action>
-            <button type="button" class="btn btn-primary btn-circle" ng-click="prodStateEditCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
-        </button-action>
-    </article-table>
-    <div ng-transclude="confirmButton"></div>
-</fieldset>
 
-<br><br><br><br>
 
 <fieldset>
    <legend>Lista articoli:</legend>
@@ -42,8 +32,25 @@
         </button-action>
     </article-table>
 </fieldset>
+
+<br><br><br><br>
+
+<fieldset>
+    <legend>Articoli selezionati:</legend>
+    <article-table article-list="prodStateEditCtrl.prodState.articles" entry-limit="prodOverCtrl.entryLimit" current-page="prodOverCtrl.currentPage">
+        <button-action>
+            <button type="button" class="btn btn-primary btn-circle" ng-click="prodStateEditCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
+        </button-action>
+    </article-table>
+</fieldset>
+<div ng-transclude="confirmButton"></div>
+
 <br><br><br>
-<!--
-articoli da aggiunge: {{prodStateEditCtrl.addedArticles}}
-articoli da rimuove: {{prodStateEditCtrl.removedArticles}}
--->
+
+
+articoli dello stato: {{prodStateEditCtrl.prodState.articles}}
+<br><br>
+articoli da aggiunge: {{prodStateEditCtrl.prodState.addedArticles}}
+<br><br>
+articoli da rimuove: {{prodStateEditCtrl.prodState.removedArticles}}
+

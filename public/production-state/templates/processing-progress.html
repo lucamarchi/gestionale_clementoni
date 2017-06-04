@@ -1,30 +1,20 @@
 <h1>
     LAVORAZIONE IN CORSO
-    <button type="button" class="btn btn-primary btn-lg" ng-click = "processCtrl.backProdState()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-primary btn-lg" ng-click="processCtrl.backProdState()"><span
+            class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></button>
 </h1>
 
 <br><br>
 
 <fieldset>
     <div class="row">
-        <div class="col-md-2">
-            <legend>Articolo in lavorazione:</legend>
+        <div class="col-md-3">
+            <legend>1. SELEZIONE MACCHINARIO:</legend>
         </div>
-    </div>
-    <div>
-        <article-table article-list="processCtrl.selectedArticles" entry-limit="processCtrl.selectedArticles.length" current-page="processCtrl.currentPage"></article-table>
-    </div>
-</fieldset>
-
-<br><br><br>
-
-<fieldset>
-    <div class="row">
-        <div class="col-md-2">
-            <legend>Macchinario Selezionato:</legend>
-        </div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{processCtrl.machinerySelectionModalContent.modalId}}">Seleziona</button>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                    data-target="#{{processCtrl.machinerySelectionModalContent.modalId}}" ng-click="processCtrl.showMachineryList()">Seleziona
+            </button>
         </div>
     </div>
     <br>
@@ -36,87 +26,115 @@
 <br><br><br>
 
 <fieldset>
-    
-        <div class="row">
-            <div class="col-md-2">
-                <legend>Stock selezionati:</legend>
-            </div>
-        
-            <div class="col-md-2">
-                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{processCtrl.stockSelectionModalContent.modalId}}" ng-click = "processCtrl.showStockList()">Seleziona</button>
-            </div>
+    <div class="row">
+        <div class="col-md-3">
+            <legend>2. INSERIMENTO STOCK DA LAVORARE:</legend>
         </div>
-        <div>
-            <inbound-products-table inbound-list="processCtrl.selectedStocks" entry-limit="processCtrl.selectedStocks.length" current-page="processCtrl.currentPage">
-            </inbound-products-table>
+
+        <div class="col-md-1">
+            <button type="button" class="btn btn-primary btn-block" ng-disabled = "!processCtrl.isMachinerySelected()" data-toggle="modal"
+                    data-target="#{{processCtrl.stockSelectionModalContent.modalId}}"
+                    ng-click="processCtrl.showStockList()">Seleziona
+            </button>
         </div>
-        <br>
-    
+    </div>
+    <div>
+        <inbound-product-table inbound-list="processCtrl.selectedStocks" entry-limit="processCtrl.selectedStocks.length"
+                               current-page="processCtrl.currentPage">
+        </inbound-product-table>
+    </div>
 </fieldset>
 
 <br><br><br>
 
 <fieldset>
     <div class="row">
-        <div class="col-md-2">
-            <legend>Collo Prodotto</legend>
-        </div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#{{processCtrl.producedProductEntryModalContent.modalId}}" ng-click = processCtrl.openProductForm()>Seleziona</button>
+        <div class="col-md-3">
+            <legend>3. LAVORAZIONE ARTICOLI:</legend>
         </div>
     </div>
     <div>
-        <inbound-products-table inbound-list="processCtrl.producedProducts" entry-limit="processCtrl.producedProducts.length" current-page="processCtrl.currentPage">
-        </inbound-products-table>
+        <article-table article-list="processCtrl.selectedArticles" entry-limit="processCtrl.selectedArticles.length"
+                       current-page="processCtrl.currentPage">
+            <button-action>
+                <button ng-disabled ="processCtrl.selectedStocks.length == 0 || !processCtrl.isMachinerySelected()" type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                        data-target="#{{processCtrl.producedProductEntryModalContent.modalId}}"
+                        ng-click=processCtrl.openProductForm($parent.article)>Lavora
+                </button>
+            </button-action>
+
+        </article-table>
+    </div>
+</fieldset>
+
+<br>
+
+
+<fieldset>
+    <legend>Colli Prodotti</legend>
+    <div>
+        <inbound-product-table inbound-list="processCtrl.producedProducts"
+                               entry-limit="processCtrl.producedProducts.length" current-page="processCtrl.currentPage">
+        </inbound-product-table>
     </div>
 </fieldset>
 
 
 <!--Modal machinery selection-->
-<div ng-class="processCtrl.machinerySelectionModalContent.modalClass" id="{{processCtrl.machinerySelectionModalContent.modalId}}" tabindex="-1" role="dialog">
+<div ng-class="processCtrl.machinerySelectionModalContent.modalClass"
+     id="{{processCtrl.machinerySelectionModalContent.modalId}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title">{{processCtrl.machinerySelectionModalContent.modalTitle}}</h4>
             </div>
             <div class="modal-body">
-                <div ng-include = "processCtrl.machinerySelectionModalContent.url"></div>
+                <div ng-include="processCtrl.machinerySelectionModalContent.url"></div>
             </div>
         </div>
     </div>
 </div>
 
 <!--Modal stock selection-->
-<div ng-class="processCtrl.stockSelectionModalContent.modalClass" id="{{processCtrl.stockSelectionModalContent.modalId}}" tabindex="-1" role="dialog">
+<div ng-class="processCtrl.stockSelectionModalContent.modalClass"
+     id="{{processCtrl.stockSelectionModalContent.modalId}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title">{{processCtrl.stockSelectionModalContent.modalTitle}}</h4>
             </div>
             <div class="modal-body">
-                <div ng-include = "processCtrl.stockSelectionModalContent.url"></div>
+                <div ng-include="processCtrl.stockSelectionModalContent.url"></div>
             </div>
         </div>
     </div>
 </div>
 
 <!--Modal produced product entry-->
-<div ng-class="processCtrl.producedProductEntryModalContent.modalClass" id="{{processCtrl.producedProductEntryModalContent.modalId}}" tabindex="-1" role="dialog">
+<div ng-class="processCtrl.producedProductEntryModalContent.modalClass"
+     id="{{processCtrl.producedProductEntryModalContent.modalId}}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title">{{processCtrl.producedProductEntryModalContent.modalTitle}}</h4>
             </div>
             <div class="modal-body">
-                <inbound-product-form model="processCtrl.producedProductEntryModalContent.producedProduct"></inbound-product-form>
+                <produced-product-form
+                        model="processCtrl.producedProductEntryModalContent.producedProduct"></produced-product-form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal" >Annulla</button>
-                <button ng-if="processCtrl.producedProductFormValid" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="processCtrl.addProducedProduct(processCtrl.producedProductEntryModalContent.producedProduct)">Inserisci</button>
-                <button ng-if="!processCtrl.producedProductFormValid" type="button" class="btn btn-primary" disabled>Inserisci</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+                <button ng-disabled="!processCtrl.producedProductFormValid" type="button" class="btn btn-primary"
+                        data-dismiss="modal"
+                        ng-click="processCtrl.addProducedProduct(processCtrl.producedProductEntryModalContent.producedProduct, processCtrl.producedProductEntryModalContent.selectedArticle)">
+                    Inserisci
+                </button>
             </div>
         </div>
     </div>

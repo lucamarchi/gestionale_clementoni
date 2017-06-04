@@ -1,4 +1,48 @@
 <fieldset>
+    <legend>Lista articoli non assegnati:</legend>    
+    <outbound-article-table article-list = "outboundEditCtrl.freeArticles" attribute = "pesoAttuale">
+        <table-filters>
+            <div>
+                <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>REGIONI</b></span>&nbsp&nbsp
+                <span ng-repeat="region in $parent.outboundArticleTableCtrl.regionArray">
+                    <input type="checkbox" ng-click="$parent.$parent.outboundArticleTableCtrl.includeVal(region, $parent.$parent.outboundArticleTableCtrl.regionArrayFilter)">{{region}}&nbsp&nbsp
+                </span>
+            </div>
+
+            <div>
+                <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>PROVINCE</b></span>&nbsp&nbsp
+                <span ng-repeat="province in $parent.outboundArticleTableCtrl.provinceArray">
+                    <input type="checkbox" ng-click="$parent.$parent.outboundArticleTableCtrl.includeVal(province, $parent.$parent.outboundArticleTableCtrl.provinceArrayFilter)">{{province}}&nbsp&nbsp
+                </span>
+            </div>    
+        </table-filters>
+        <weight-column>
+            <td>
+                <input type="number" ng-model="$parent.article.weightSelected" ng-change="outboundEditCtrl.setQuantitySelected($parent.article)" class="form-control" required>
+            </td>
+        </weight-column>
+        <quantity-column>
+            <td>
+                <input type="number" ng-model="$parent.article.quantitySelected" class="form-control" disabled>
+            </td>
+        </quantity-column>
+        <unit-column>
+            <td>
+                <select ng-model="$parent.article.unitSelected" ng-options="unita for unita in $parent.outboundArticleTableCtrl.features.unita" class="form-control" required></select>
+            </td>
+        </unit-column>
+        <action-button>
+            <td>
+				<button ng-if="$parent.article.weightSelected && $parent.article.unitSelected" type="button" class="btn btn-primary btn-circle" ng-click="$parent.$parent.outboundArticleTableCtrl.addArticle($parent.$parent.article)"><span class="glyphicon glyphicon-plus"></span></button>
+				<button ng-if="!$parent.article.weightSelected || !$parent.article.unitSelected" type="button" class="btn btn-primary btn-circle" disabled><span class="glyphicon glyphicon-plus"></span></button>
+            </td>
+        </action-button>
+    </outbound-article-table>
+</fieldset>
+
+<br><br>
+
+<fieldset>
     <legend>Articoli selezionati:</legend>
 
     <outbound-article-table article-list = "outboundEditCtrl.outbound.articles" attribute = "weightSelected">
@@ -19,7 +63,7 @@
         </unit-column>
         <action-button>
             <td>
-				<button type="button" class="btn btn-primary btn-circle" ng-click="outboundEditCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
+                <button type="button" class="btn btn-primary btn-circle" ng-click="outboundEditCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
             </td>
         </action-button>
     </outbound-article-table>
@@ -27,49 +71,9 @@
 <div ng-transclude = "confirmButton"></div>
 <br><br>
 
+articoli: {{outboundEditCtrl.outbound.articles}}
 <br><br>
-<fieldset>
-    <legend>Lista articoli non assegnati:</legend>    
-    <outbound-article-table article-list = "outboundEditCtrl.freeArticles" attribute = "peso">
-        <table-filters>
-            <div>
-                <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>REGIONI</b></span>&nbsp&nbsp
-                <span ng-repeat="region in $parent.outboundArticleTableCtrl.regionArray">
-                    <input type="checkbox" ng-click="$parent.$parent.outboundArticleTableCtrl.includeVal(region, $parent.$parent.outboundArticleTableCtrl.regionArrayFilter)">{{region}}&nbsp&nbsp
-                </span>
-            </div>
-
-            <div>
-                <span class="glyphicon glyphicon-filter" aria-hidden="true"><b>PROVINCE</b></span>&nbsp&nbsp
-                <span ng-repeat="province in $parent.outboundArticleTableCtrl.provinceArray">
-                    <input type="checkbox" ng-click="$parent.$parent.outboundArticleTableCtrl.includeVal(province, $parent.$parent.outboundArticleTableCtrl.provinceArrayFilter)">{{province}}&nbsp&nbsp
-                </span>
-            </div>    
-        </table-filters>
-        <weight-column>
-            <td>
-                <input type="number" ng-model="$parent.article.weightSelected" class="form-control" required>
-            </td>
-        </weight-column>
-        <quantity-column>
-            <td>
-                <input type="number" ng-model="$parent.article.quantitySelected" class="form-control">
-            </td>
-        </quantity-column>
-        <unit-column>
-            <td>
-                <select ng-model="$parent.article.unitSelected" ng-options="unita for unita in $parent.outboundArticleTableCtrl.features.unita" class="form-control" required></select>
-            </td>
-        </unit-column>
-        <action-button>
-            <td>
-				<button ng-if="$parent.article.weightSelected && $parent.article.unitSelected" type="button" class="btn btn-primary btn-circle" ng-click="$parent.$parent.outboundArticleTableCtrl.addArticle($parent.$parent.article)"><span class="glyphicon glyphicon-plus"></span></button>
-				<button ng-if="!$parent.article.weightSelected || !$parent.article.unitSelected" type="button" class="btn btn-primary btn-circle" disabled><span class="glyphicon glyphicon-plus"></span></button>
-            </td>
-        </action-button>
-    </outbound-article-table>
-</fieldset>
-
-<!--
-articoli da aggiunge: {{outboundEditCtrl.addedArticles}}
-articoli da rimuove: {{outboundEditCtrl.removedArticles}}-->
+articoli da aggiunge: {{outboundEditCtrl.outbound.addedArticles}}
+<br><br>
+articoli da rimuove: {{outboundEditCtrl.outbound.removedArticles}}
+<br><br>

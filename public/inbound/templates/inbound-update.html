@@ -6,7 +6,7 @@
 <br>
 <h3><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Modifica del carico</h3>
 <br><br>
-<inbound-set model = "inUpdateCtrl.inbound">
+<inbound-set inbound = "inUpdateCtrl.inbound">
     <confirm-button>
         <button ng-if="$parent.inboundSetCtrl.orderFormValid && inUpdateCtrl.inbound.products.length > 0" type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#{{inUpdateCtrl.inboundConfirmationModalContent.modalId}}">Completa</button>
         <button ng-if="!$parent.inboundSetCtrl.orderFormValid || inUpdateCtrl.inbound.products.length == 0" type="button" class="btn btn-warning btn-block" disabled>Completa</button>  

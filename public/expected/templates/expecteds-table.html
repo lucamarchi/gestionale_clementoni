@@ -22,7 +22,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="expected in expTableCtrl.expectedList | expectedFilter:search | orderBy:'dataPrevista'|startFrom:(expTableCtrl.currentPage-1)*expTableCtrl.entryLimit | limitTo:expTableCtrl.entryLimit">
+		<tr ng-repeat="expected in expectedTableCtrl.expectedList | expectedFilter:search | orderBy:'dataPrevista'|startFrom:(expectedTableCtrl.currentPage-1)*expectedTableCtrl.entryLimit | limitTo:expectedTableCtrl.entryLimit">
             <td>{{expected.fornitore}}</td>
             <td custom-date model="expected" attribute="dataPrevista"></td>
 			<td>{{expected.materiale}}</td>

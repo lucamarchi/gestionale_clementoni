@@ -15,43 +15,15 @@
 
 <fieldset>
 	<legend>Prodotti del carico:</legend>
-	<inbound-products-table inbound-list="inboundSetCtrl.inbound.products" entry-limit="inboundSetCtrl.inbound.products.length" current-page="inboundSetCtrl.currentPage">
+	<inbound-product-table inbound-list="inboundSetCtrl.inbound.products" entry-limit="inboundSetCtrl.inbound.products.length" current-page="inboundSetCtrl.currentPage">
         <buttons>
-            <button type="button" class="btn btn-danger btn-block" ng-click="inboundSetCtrl.deleteProduct($parent.inboundProduct)">Cancella<span class="glyphicon glyphicon-trash"></span></button>
+            <button type="button" class="btn btn-danger btn-block" ng-click="inboundSetCtrl.deleteInboundProduct($parent.inboundProduct)">Cancella<span class="glyphicon glyphicon-trash"></span></button>
             <button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#{{inboundSetCtrl.inboundProductEntryModalContent.modalId}}" ng-click="inboundSetCtrl.selectInboundModifyProduct($parent.inboundProduct)">Modifica<span class="glyphicon glyphicon-cog"></span></button>
         </buttons>
-    </inbound-products-table>
+    </inbound-product-table>
 </fieldset>
 
 <br><br>
-
-<!--
-<fieldset ng-if="inboundSetCtrl.unlockedForm != 0">
-	<legend>Inserisci prodotto del carico:</legend>
-    <div ng-if= "inboundSetCtrl.unlockedForm == 1">
-        <inbound-product-form model="inboundSetCtrl.inboundProduct">
-            <action-button>
-                <button ng-if="$parent.inboundProductFormCtrl.inProdForm.$valid" type="button" class="btn btn-block btn-primary" ng-click="inboundSetCtrl.addInboundProduct(inboundSetCtrl.inboundProduct)">Inserisci</button>
-                <button ng-if="!$parent.inboundProductFormCtrl.inProdForm.$valid" type="button" class="btn btn-block btn-primary" disabled>Inserisci</button>
-            </action-button>
-            <cancel-button>
-                <button type="button" class="btn btn-block btn-danger" ng-click="inboundSetCtrl.lockForm()" >Annulla</button>
-            </cancel-button>
-        </inbound-product-form>
-    </div>
-    <div ng-if= "inboundSetCtrl.unlockedForm == 2">
-        <inbound-product-form model="inboundSetCtrl.inboundProduct">
-            <action-button>
-                <button ng-if="$parent.inboundProductFormCtrl.inProdForm.$valid" type="button" class="btn btn-block btn-warning" ng-click="inboundSetCtrl.updateInboundProduct(inboundSetCtrl.inboundProduct)">Modifica</button>
-                <button ng-if="!$parent.inboundProductFormCtrl.inProdForm.$valid" type="button" class="btn btn-block btn-warning" disabled>Modifica</button>
-            </action-button>
-            <cancel-button>
-                <button type="button" class="btn btn-block btn-danger" ng-click="inboundSetCtrl.lockForm()" >Annulla</button>
-            </cancel-button>
-        </inbound-product-form>
-    </div>
-</fieldset>
--->
 
 <fieldset>
     <div class="row">
@@ -115,23 +87,21 @@
 </div>
 
 <br><br>
-<!--
 Inbound Order: {{inboundSetCtrl.inbound.order | json}}
-<br>
+<br><br>
 Inbound Product: {{inboundSetCtrl.inboundProductEntryModalContent.product | json}}
-<br>
+<br><br>
 Inbound Selected Expecteds : {{inboundSetCtrl.inbound.selectedExpecteds | json}}
-<br>
+<br><br>
 Inbound Products: {{inboundSetCtrl.inbound.products | json}}
-<br>
+<br><br>
 Inbound AddedProducts: {{inboundSetCtrl.inbound.addedProducts | json}}
-<br>
+<br><br>
 Inbound DeletedProducts: {{inboundSetCtrl.inbound.deletedProducts | json}}
-<br>
-product2expected: {{inboundSetCtrl.product2expected}}
-<br>
+<br><br>
 Inbound ModifiedProducts: {{inboundSetCtrl.inbound.modifiedProducts | json}}
-<br>
+<br><br>
+product2expected: {{inboundSetCtrl.product2expected}}
+<br><br>
 unlockedForm: {{inboundSetCtrl.unlockedForm}}
-
--->
+<br><br>

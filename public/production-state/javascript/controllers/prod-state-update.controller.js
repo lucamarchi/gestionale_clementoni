@@ -1,6 +1,10 @@
-function ProdStateUpdateController (ProdStateFactory, ProdOverviewFactory, $location, $routeParams) {
+function ProdStateUpdateController (ProdStateFactory, $location, $routeParams) {
     var ctrl = this;
-    ctrl.prodStateArticles = [];
+    ctrl.prodState = {};
+    ctrl.prodState.articles = [];
+    ctrl.prodState.prod = {};
+    ctrl.prodState.addedArticles = [];
+    ctrl.prodState.removedArticles = [];
     
     ctrl.prodStateConfirmationModalContent = {
         modalTitle: 'Conferma Stato Produzione',
@@ -13,8 +17,8 @@ function ProdStateUpdateController (ProdStateFactory, ProdOverviewFactory, $loca
         ProdStateFactory.getProdState(id)
         .then (function (resp) {
             console.log("ARTICOLI STATO PRODUZIONE" , resp);
-            ctrl.prodState = resp.data.prod;
-            ctrl.prodStateArticles = resp.data.articoli;
+            ctrl.prodState.prod = resp.data.data.prod;
+            ctrl.prodState.articles = resp.data.data.articles;
         })
         .catch(function(err) {
             console.log(err);
@@ -43,4 +47,4 @@ function ProdStateUpdateController (ProdStateFactory, ProdOverviewFactory, $loca
 
 angular
     .module('store')
-    .controller('ProdStateUpdateController', ['ProdStateFactory','ProdOverviewFactory','$location','$routeParams', ProdStateUpdateController]);
+    .controller('ProdStateUpdateController', ['ProdStateFactory','$location','$routeParams', ProdStateUpdateController]);

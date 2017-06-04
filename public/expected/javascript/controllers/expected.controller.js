@@ -23,7 +23,7 @@ function ExpectedController ($scope, ExpectedFactory,features) {
     ctrl.getExpecteds = function () {
         ExpectedFactory.getExpecteds()
             .then (function (resp) {
-                ctrl.expecteds = resp.data.expected;
+                ctrl.expecteds = resp.data.data.expecteds;
                 console.log(resp);
             })
             .catch(function(err) {
@@ -39,32 +39,39 @@ function ExpectedController ($scope, ExpectedFactory,features) {
         ctrl.deleteExpectedModalContent.index = index;
         var expectedCopy = Object.assign({},expected);
         ctrl.updateExpectedModalContent.expected = expectedCopy;
-        ctrl.updateExpectedModalContent.expected.dataPrevista = new Date(expectedCopy.dataPrevista);
         ctrl.deleteExpectedModalContent.expected = expectedCopy;
+        ctrl.updateExpectedModalContent.expected.dataPrevista = new Date(expectedCopy.dataPrevista);
         ctrl.deleteExpectedModalContent.expected.dataPrevista = new Date(expectedCopy.dataPrevista);
+        ctrl.updateExpectedModalContent.expected.larghezza = expectedCopy.larghezza.toString();
+        ctrl.deleteExpectedModalContent.expected.larghezza = expectedCopy.larghezza.toString();
+        ctrl.updateExpectedModalContent.expected.spessore = expectedCopy.spessore.toString();
+        ctrl.deleteExpectedModalContent.expected.spessore = expectedCopy.spessore.toString();
+        console.log(ctrl.updateExpectedModalContent.expected, "aaa");
     }
     
     ctrl.updateExpected = function (expected, index) {
-//        ExpectedFactory.updateExpected(expected)
-//            .then (function (resp) {
-//                
-//                console.log(resp);
-//            })
-//            .catch(function(err) {
-//                console.log(resp);
-//            });
-        
-        console.log(expected, index);
-        ctrl.expecteds[index] = expected;
-        
+        console.log(expected)
+        ExpectedFactory.updateExpected({"expected":expected})
+            .then (function (resp) {
+                ctrl.expecteds[index] = expected;
+                console.log(resp);
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
     }
     
     ctrl.deleteExpected = function (expected, index) {
-        //chiamata all'api e aggiungi lo splice dentro
-        console.log(expected, index);
-        ctrl.expecteds.splice(index,1);
-    }
-    
+        ExpectedFactory.deleteExpected(expected._id)
+            .then (function (resp) {
+                console.log(expected, index);
+                ctrl.expecteds.splice(index,1);
+            })
+            .catch(function(err) {
+                console.log(resp);
+            });
+        
+    } 
 };
 
 	

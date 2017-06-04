@@ -1,78 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="store" ng-jq>
-	<head>
-		<title>COPAL</title>
+<head>
+    <title>COPAL</title>
 
 
-		<!-- Bootstrap CSS -->
-<!--
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">		
--->
+    <!-- Bootstrap CSS -->
+    <!--
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    -->
 
-		
-		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">	
-		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 
-		<link rel="stylesheet" type="text/css" href="public/mystyle.css">
-	</head>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 
-	<body>
-		<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand"><b>Plimco</b></a>
-				</div>
-				<div>
-					<ul class="nav navbar-nav">
-						<li class="dropdown">
-							<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Giacenza </b><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span><span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a ng-href="#/stock">Giacenza effettiva</a></li>
-<!--								<li><a href="">Stock Virtuale</a></li> -->
-							</ul>
-						</li>
-                        <li>
-							<a ng-if="isLogged" ng-href="#/expected"><b>Ordini al fornitore </b><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></a>
-						</li>
-                        <li>
-							<a ng-if="isLogged" ng-href="#/inbound"><b>Entrate </b><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
-						</li>
-						<li>
-							<a ng-if="isLogged && (user.role == 'logistica' || user.role == 'admin')" ng-href="#/cut"><b>Ordini Cliente </b><span class="glyphicon glyphicon-scissors" aria-hidden="true"></span></a>
-						</li>
-						<li class="dropdown">
-							<a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Produzione </b><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span><span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a ng-href="#/productionOverview">Riepilogo</a></li>
-								<li><a ng-href="#/productionState">Stato produzione</a></li> 
-							</ul>
-						</li>
-						<li>
-							<a ng-if="isLogged" ng-href="#/outbound"><b>Uscite </b><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
-						</li>
-					</ul>
+    <link rel="stylesheet" type="text/css" href="public/mystyle.css">
+</head>
 
-	<!--
-					<form class="navbar-form navbar-left" role="search" ng-if="isLogged">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search">
-						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
-					</form>
-	-->
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand"><b>Plimco</b></a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Giacenza </b><span
+                            class="glyphicon glyphicon-align-left" aria-hidden="true"></span><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-href="#/stock">Giacenza effettiva</a></li>
+                        <!--								<li><a href="">Stock Virtuale</a></li> -->
+                    </ul>
+                </li>
+                <li>
+                    <a ng-if="isLogged" ng-href="#/expected"><b>Ordini al fornitore </b><span
+                            class="glyphicon glyphicon-earphone" aria-hidden="true"></span></a>
+                </li>
+                <li>
+                    <a ng-if="isLogged" ng-href="#/inbound"><b>Entrate </b><span class="glyphicon glyphicon-log-in"
+                                                                                 aria-hidden="true"></span></a>
+                </li>
+                <li>
+                    <a ng-if="isLogged && (user.role == 'logistica' || user.role == 'admin')" ng-href="#/cut"><b>Ordini
+                        Cliente </b><span class="glyphicon glyphicon-scissors" aria-hidden="true"></span></a>
+                </li>
+                <li class="dropdown">
+                    <a ng-if="isLogged" class="dropdown-toggle" data-toggle="dropdown" href=""><b>Produzione </b><span
+                            class="glyphicon glyphicon-wrench" aria-hidden="true"></span><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-href="#/productionOverview">Riepilogo</a></li>
+                        <li><a ng-href="#/productionState">Stato produzione</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a ng-if="isLogged" ng-href="#/outbound"><b>Uscite </b><span class="glyphicon glyphicon-log-out"
+                                                                                 aria-hidden="true"></span></a>
+                </li>
+            </ul>
 
-					<ul class="nav navbar-nav navbar-right">
-						<li class="active"><a ng-if="!isLogged" href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
-						<li class="active"><a href ng-if="isLogged" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+            <!--
+                            <form class="navbar-form navbar-left" role="search" ng-if="isLogged">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
+            -->
 
-		<div class="container-fluid" ng-view></div>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a ng-if="!isLogged" href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a>
+                </li>
+                <li class="active"><a href ng-if="isLogged" ng-click="logout()"><span
+                        class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-	
+<div class="container-fluid" ng-view></div>
+
+
 <!--
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -84,90 +92,126 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-touch.min.js"></script>
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.5/ui-bootstrap-tpls.min.js"></script>
 -->
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-		<!--		<script src="bower_components/jquery-migrate/jquery-migrate.min.js"></script>-->
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="bower_components/angular/angular.min.js"></script>
-		<script src="bower_components/angular-route/angular-route.min.js"></script>
-		<script src="bower_components/angular-resource/angular-resource.min.js"></script>
-		<script src="bower_components/angular-animate/angular-animate.min.js"></script>
-		<script src="bower_components/angular-touch/angular-touch.min.js"></script>
-		<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-	
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!--		<script src="bower_components/jquery-migrate/jquery-migrate.min.js"></script>-->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="bower_components/angular-touch/angular-touch.min.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
-		<script src="public/app.js"></script>
-		<script src="public/components/services.js"></script>
-		
-		
-        
-		<script src="public/components/directive.js"></script>
-        <script src="public/components/directives/form.directive.js"></script>
-        <script src="public/components/directives/filter.directive.js"></script>
-        <script src="public/components/directives/attribute.directive.js"></script>
-        <script src="public/components/directives/pagination.directive.js"></script>
-		
-        <script src="public/components/function.js"></script>
-		<script src="public/components/filter.js"></script>
-        
-        <script src="public/stock/javascript/controllers/stock.controller.js"></script>
-        <script src="public/stock/javascript/services/stock.factory.js"></script>
-        <script src="public/stock/javascript/filters/stock.filter.js"></script>
-        <script src="public/stock/javascript/directives/stock.directive.js"></script>
-        
-        <script src="public/inbound/javascript/services/product.factory.js"></script>
-        
-		<script src="public/inbound/javascript/controllers/inbound.controller.js"></script>
-        <script src="public/inbound/javascript/controllers/inbound-create.controller.js"></script>
-        <script src="public/inbound/javascript/controllers/inbound-update.controller.js"></script>
-        <script src="public/inbound/javascript/controllers/inbound-details.controller.js"></script>
-        <script src="public/inbound/javascript/services/inbound.factory.js"></script>
-        <script src="public/inbound/javascript/directives/inbound-form.directive.js"></script>
-        <script src="public/inbound/javascript/directives/inbound-tables.directive.js"></script>
-        <script src="public/inbound/javascript/directives/inbound-set.directive.js"></script>
-        
-		<script src="public/expected/javascript/controllers/expected.controller.js"></script>
-        <script src="public/expected/javascript/controllers/expected-create.controller.js"></script>
-        <script src="public/expected/javascript/directives/expected.directive.js"></script>
-        <script src="public/expected/javascript/filters/expected-table.filter.js"></script>
-        <script src="public/expected/javascript/services/expected.factory.js"></script>
-    
-        <script src="public/cut/javascript/controllers/cut.controller.js"></script>
-        <script src="public/cut/javascript/controllers/cut-details.controller.js"></script>
-        <script src="public/cut/javascript/services/cut.factory.js"></script>
-        <script src="public/cut/javascript/directives/cut-tables.directive.js"></script>
-        <script src="public/cut/javascript/filters/cuts.filter.js"></script>
-        
-        <script src="public/production-overview/javascript/controllers/prod-overview.controller.js"></script>
-        <script src="public/production-overview/javascript/directives/prod-overview.directive.js"></script>
-        <script src="public/production-overview/javascript/filters/prod-overview.filter.js"></script>
-        <script src="public/production-overview/javascript/services/prod-overview.factory.js"></script>
-        
-        <script src="public/production-state/javascript/controllers/prod-state.controller.js"></script>
-        <script src="public/production-state/javascript/controllers/prod-state-create.controller.js"></script>
-        <script src="public/production-state/javascript/controllers/prod-state-details.controller.js"></script>
-        <script src="public/production-state/javascript/controllers/prod-state-update.controller.js"></script>
-        <script src="public/production-state/javascript/controllers/processing.controller.js"></script>
-        <script src="public/production-state/javascript/directives/prod-state.directive.js"></script>
-        <script src="public/production-state/javascript/filters/prod-state.filter.js"></script>
-        <script src="public/production-state/javascript/services/prod-state.factory.js"></script>
-        <script src="public/production-state/javascript/services/processing.factory.js"></script>
-        
-        <script src="public/outbound/javascript/controllers/outbound.controller.js"></script>
-        <script src="public/outbound/javascript/controllers/outbound-create.controller.js"></script>
-        <script src="public/outbound/javascript/controllers/outbound-update.controller.js"></script>
-        <script src="public/outbound/javascript/controllers/outbound-details.controller.js"></script>
-        <script src="public/outbound/javascript/controllers/outbound-dispatch.controller.js"></script>
-        <script src="public/outbound/javascript/directives/outbound.directive.js"></script>
-        <script src="public/outbound/javascript/filters/outbound.filter.js"></script>
-        <script src="public/outbound/javascript/services/outbound.factory.js"></script>
-        
-        <script src="public/login/javascript/controllers/login.controller.js"></script>
+
+
+<script src="public/app.js"></script>
+<script src="public/components/services.js"></script>
+
+<script src="public/components/services/product.factory.js"></script>
+<script src="public/components/services/inbound.factory.js"></script>
+<script src="public/components/services/expected.factory.js"></script>
+<script src="public/components/services/article.factory.js"></script>
+<script src="public/components/services/customer.factory.js"></script>
+<script src="public/components/services/prod-state.factory.js"></script>
+<script src="public/components/services/processing.factory.js"></script>
+<script src="public/components/services/cut.factory.js"></script>
+<script src="public/components/services/outbound.factory.js"></script>
+<script src="public/components/services/utility.factory.js"></script>
+
+<script src="public/components/directive.js"></script>
+<script src="public/components/directives/form.directive.js"></script>
+<script src="public/components/directives/filter.directive.js"></script>
+<script src="public/components/directives/attribute.directive.js"></script>
+<script src="public/components/directives/pagination.directive.js"></script>
+
+<script src="public/components/function.js"></script>
+<script src="public/components/filter.js"></script>
+
+<script src="public/stock/javascript/controllers/stock.controller.js"></script>
+<script src="public/stock/javascript/services/stock.factory.js"></script>
+<script src="public/stock/javascript/filters/stock.filter.js"></script>
+<script src="public/stock/javascript/directives/stock.directive.js"></script>
+
+
+<script src="public/inbound/javascript/controllers/inbound.controller.js"></script>
+<script src="public/inbound/javascript/controllers/inbound-create.controller.js"></script>
+<script src="public/inbound/javascript/controllers/inbound-update.controller.js"></script>
+<script src="public/inbound/javascript/controllers/inbound-details.controller.js"></script>
+
+<script src="public/inbound/javascript/directives/inbound-product-form.directive.js"></script>
+<script src="public/inbound/javascript/directives/inbound-order-form.directive.js"></script>
+<script src="public/inbound/javascript/directives/inbound-table.directive.js"></script>
+<script src="public/inbound/javascript/directives/inbound-product-table.directive.js"></script>
+<script src="public/inbound/javascript/directives/inbound-set.directive.js"></script>
+
+<script src="public/expected/javascript/controllers/expected.controller.js"></script>
+<script src="public/expected/javascript/controllers/expected-create.controller.js"></script>
+
+<script src="public/expected/javascript/directives/expected-filter.directive.js"></script>
+<script src="public/expected/javascript/directives/expected-form.directive.js"></script>
+<script src="public/expected/javascript/directives/expected-table.directive.js"></script>
+
+<script src="public/expected/javascript/filters/expected-table.filter.js"></script>
+
+
+<script src="public/cut/javascript/controllers/cut.controller.js"></script>
+<script src="public/cut/javascript/controllers/cut-details.controller.js"></script>
+
+<script src="public/cut/javascript/directives/customer-table.directive.js"></script>
+<script src="public/cut/javascript/directives/cut-table.directive.js"></script>
+<script src="public/cut/javascript/directives/cut-article-table.directive.js"></script>
+
+<script src="public/cut/javascript/filters/cuts.filter.js"></script>
+
+
+<script src="public/production-overview/javascript/controllers/prod-overview.controller.js"></script>
+
+<script src="public/production-overview/javascript/directives/article-table.directive.js"></script>
+<script src="public/production-overview/javascript/directives/processing-list.directive.js"></script>
+
+<script src="public/production-overview/javascript/filters/prod-overview.filter.js"></script>
+
+
+<script src="public/production-state/javascript/controllers/prod-state.controller.js"></script>
+<script src="public/production-state/javascript/controllers/prod-state-create.controller.js"></script>
+<script src="public/production-state/javascript/controllers/prod-state-details.controller.js"></script>
+<script src="public/production-state/javascript/controllers/prod-state-update.controller.js"></script>
+<script src="public/production-state/javascript/controllers/processing.controller.js"></script>
+
+<script src="public/production-state/javascript/directives/prod-state-table.directive.js"></script>
+<script src="public/production-state/javascript/directives/prod-state-edit.directive.js"></script>
+<script src="public/production-state/javascript/directives/machinery-table.directive.js"></script>
+<script src="public/production-state/javascript/directives/produced-product-form.directive.js"></script>
+
+
+<script src="public/production-state/javascript/filters/prod-state.filter.js"></script>
+<script src="public/production-state/javascript/services/processing-progress.factory.js"></script>
+
+
+<script src="public/outbound/javascript/controllers/outbound.controller.js"></script>
+<script src="public/outbound/javascript/controllers/outbound-create.controller.js"></script>
+<script src="public/outbound/javascript/controllers/outbound-update.controller.js"></script>
+<script src="public/outbound/javascript/controllers/outbound-details.controller.js"></script>
+<script src="public/outbound/javascript/controllers/outbound-dispatch.controller.js"></script>
+<script src="public/outbound/javascript/directives/outbound-table.directive.js"></script>
+<script src="public/outbound/javascript/directives/outbound-article-table.directive.js"></script>
+<script src="public/outbound/javascript/directives/outbound-form.directive.js"></script>
+<script src="public/outbound/javascript/directives/outbound-edit.directive.js"></script>
+
+<script src="public/outbound/javascript/filters/outbound.filter.js"></script>
+<script src="public/outbound/javascript/services/outbound.factory.js"></script>
+
+
+<script src="public/login/javascript/controllers/login.controller.js"></script>
 <!--
 		<script src="public/production/production.controller.js"></script>
 		<script src="public/production/production_state/production_state.controller.js"></script>
 		<script src="public/release/release.controller.js"></script>
         <script src="public/components/release.service.js"></script>
 -->
-	</body>
+
+
+</body>
 
 </html>

@@ -5,9 +5,9 @@ function prodOverviewFilter() {
 		if (input) {
 			output = input.slice();
             if (search) {
-                if (search.dataPrevista) {
+                if (search.dataConsegna) {
                     output = output.filter(function(el){
-                        return (new Date(el.dataPrevista).getTime() == new Date(search.dataPrevista).getTime());
+                        return (new Date(el.dataConsegna).getTime() == new Date(search.dataConsegna).getTime());
                     });
                 }
                 if (search.region) {

@@ -1,32 +1,33 @@
-angular
-    .module('store')
-    
-    .directive('convertToNumber', function() {
-      return {
+function convertToNumber() {
+    return {
         require: 'ngModel',
-        link: function(scope, element, attrs, ngModel) {
-            ngModel.$parsers.push(function(val) {
+        link: function (scope, element, attrs, ngModel) {
+            ngModel.$parsers.push(function (val) {
                 return parseInt(val, 10);
             });
-            ngModel.$formatters.push(function(val) {
+            ngModel.$formatters.push(function (val) {
                 return '' + val;
             });
         }
-      };
-    })
+    };
+}
 
-    .directive('convertToFloat', function() {
-      return {
+function convertToFloat() {
+    return {
         require: 'ngModel',
-        link: function(scope, element, attrs, ngModel) {
-          ngModel.$parsers.push(function(val) {
-            return parseFloat(val);
-          });
-          ngModel.$formatters.push(function(val) {
-            return '' + val;
-          });
+        link: function (scope, element, attrs, ngModel) {
+            ngModel.$parsers.push(function (val) {
+                return parseFloat(val);
+            });
+            ngModel.$formatters.push(function (val) {
+                return '' + val;
+            });
         }
-      };
-    })
+    };
+}
 
+angular
+    .module('store')
+    .directive('convertToNumber', convertToNumber)
+    .directive('convertToFloat', convertToFloat);
 

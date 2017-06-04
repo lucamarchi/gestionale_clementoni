@@ -24,12 +24,13 @@
             <td>{{article.spessore}}</td>
             <td>{{article.larghezza}}</td>
             <td>{{article.lunghezza}}</td>
-            <td>{{article.peso}}</td>
+            <td>{{article.pesoAttuale}}</td>
             <td custom-date model="article" attribute = "dataConsegna"></td>
             <td>
                 <ul>
                     <li>Larghezza: {{article.larghezzaAssegnata}}</li>
                     <li>Lunghezza: {{article.lunghezzaAssegnata}}</li>
+                    <li>Qualita: {{article.qualita}}</li>
 
                 </ul>
             </td>
@@ -53,21 +54,24 @@
             <div class="modal-body">
                 <form name="cutArticleTableCtrl.articleForm" class="form" novalidate>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <select-larghezza-form label-name="Larghezza" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="larghezzaAssegnata" required=true>
                             </select-larghezza-form>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <select-lunghezza-form label-name="Lunghezza" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="lunghezzaAssegnata" required=true>
                             </select-lunghezza-form>
+                        </div>
+                        <div class="col-md-4">
+                            <select-qualita-form label-name="Qualita" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="qualita" required=true>
+                            </select-qualita-form>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
-                <button ng-if="cutArticleTableCtrl.articleForm.$valid" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cutArticleTableCtrl.assignDimension(cutArticleTableCtrl.dimensionSelectionModalContent.article, cutArticleTableCtrl.dimensionSelectionModalContent.index)">Inserisci</button>
-                <button ng-if="!cutArticleTableCtrl.articleForm.$valid" type="button" class="btn btn-primary" disabled>Inserisci</button>
+                <button ng-disabled="!cutArticleTableCtrl.articleForm.$valid" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cutArticleTableCtrl.assignDimension(cutArticleTableCtrl.dimensionSelectionModalContent.article, cutArticleTableCtrl.dimensionSelectionModalContent.index)">Inserisci</button>
             </div>
         </div>
     </div>
@@ -85,7 +89,7 @@
             </div>
             <div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
-				<button type="button" class="btn btn-primary" ng-click="cutArticleTableCtrl.deleteCutArticle(cutArticleTableCtrl.cutArticleDeletionModalContent.cut)" data-dismiss="modal">Conferma</button>
+				<button type="button" class="btn btn-primary" ng-click="cutArticleTableCtrl.deleteCutArticle(cutArticleTableCtrl.cutArticleDeletionModalContent.article)" data-dismiss="modal">Conferma</button>
 			</div>
         </div>
     </div>

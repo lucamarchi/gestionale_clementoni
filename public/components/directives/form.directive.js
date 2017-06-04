@@ -5,16 +5,16 @@ angular
         return {
             restrict: 'E',
             template: [
-                    '<label>',
-                        '{{labelName}}',
-                    '</label>',
-                    '<input type="{{type}}" class="form-control" ng-model="model" ng-required="required">',
+                '<label>',
+                '{{labelName}}',
+                '</label>',
+                '<input type="{{type}}" class="form-control" ng-model="model" ng-required="required">',
             ].join(''),
-            scope: { 
+            scope: {
                 labelName: "@",
                 type: "@",
                 model: "=",
-                required:"="
+                required: "="
             }
         }
     })
@@ -23,18 +23,18 @@ angular
         return {
             restrict: 'E',
             template: [
-                    '<label>',
-                        '{{labelName}}',
-                    '</label>',
-                    '<select ng-model="model" ng-options="option for option in options" class="form-control" ng-required="required">',
-                    '</select>',
+                '<label>',
+                '{{labelName}}',
+                '</label>',
+                '<select ng-model="model" ng-options="option for option in options" class="form-control" ng-required="required">',
+                '</select>',
             ].join(''),
-            scope: { 
+            scope: {
                 labelName: "@",
                 model: "=",
                 options: "=",
                 required: "="
-                
+
             },
         }
     })
@@ -42,32 +42,32 @@ angular
     .directive('selectMaterialeSwitchForm', function () {
         return {
             restrict: 'E',
-            template: [ 
+            template: [
                 '<span ng-repeat="(key,value) in options[attributeO]">',
-                    '<span ng-if="model.materiale == key">',
-                        '<select-form label-name="{{labelName}}" model="model[attributeM]" options="value">',
-                        '</select-form>',
-                    '</span>',
+                '<span ng-if="model.materiale == key">',
+                '<select-form label-name="{{labelName}}" model="model[attributeM]" options="value" required = "required">',
+                '</select-form>',
+                '</span>',
                 '</span>',
                 '<span ng-if="!(options[attributeO].hasOwnProperty(model.materiale))">',
-                    '<label>',
-                            '{{labelName}}',
-                    '</label>',
-                    '<select disabled ng-model="model[attributeM]" class="form-control">',
-                    '</select>',
+                '<label>',
+                '{{labelName}}',
+                '</label>',
+                '<select disabled ng-model="model[attributeM]" class="form-control" ng-required=false>',
+                '</select>',
                 '</span>',
             ].join(''),
-            scope: { 
+            scope: {
                 labelName: "@",
                 model: "=",
                 attributeM: "@",
-                attributeO:"@"
+                attributeO: "@",
+                required: "=",
             },
             controller: function ($scope, features) {
                 $scope.$watch('model.materiale',
-                    function(newVal, oldVal) {
-                        if (newVal && newVal != oldVal) {
-                            console.log(newVal, oldVal); 
+                    function (newVal, oldVal) {
+                        if (newVal && newVal != oldVal && oldVal != undefined) {
                             delete $scope.model[$scope.attributeM];
                         }
                     }
@@ -79,11 +79,11 @@ angular
 
     .component('selectMaterialeForm', {
         restrict: 'E',
-        template: [ 
+        template: [
             '<select-form label-name="{{$ctrl.labelName}}" model="$ctrl.model[$ctrl.attributeM]" options="$ctrl.options" required="$ctrl.required">',
             '</select-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -93,14 +93,14 @@ angular
             this.options = features.materiali;
         }
     })
-    
+
     .component('selectTipoForm', {
         restrict: 'E',
-        template: [ 
+        template: [
             '<select-form label-name="{{$ctrl.labelName}}" model="$ctrl.model[$ctrl.attributeM]" options="$ctrl.options" required="$ctrl.required">',
             '</select-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -114,11 +114,11 @@ angular
 
     .component('selectSpessoreForm', {
         restrict: 'E',
-        template: [ 
+        template: [
             '<select-form label-name="{{$ctrl.labelName}}" model="$ctrl.model[$ctrl.attributeM]" options="$ctrl.options" required="$ctrl.required">',
             '</select-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -132,11 +132,11 @@ angular
 
     .component('selectLarghezzaForm', {
         restrict: 'E',
-        template: [ 
+        template: [
             '<select-form label-name="{{$ctrl.labelName}}" model="$ctrl.model[$ctrl.attributeM]" options="$ctrl.options" required="$ctrl.required">',
             '</select-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -150,11 +150,11 @@ angular
 
     .component('selectSceltaForm', {
         restrict: 'E',
-        template: [ 
+        template: [
             '<select-form label-name="{{$ctrl.labelName}}" model="$ctrl.model[$ctrl.attributeM]" options="$ctrl.options" required="$ctrl.required">',
             '</select-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -167,17 +167,17 @@ angular
     })
 
 
-    .directive ('selectLunghezzaForm', function() {
+    .directive('selectLunghezzaForm', function () {
         return {
             restrict: 'E',
-            template: [ 
+            template: [
                 '<label>',
-                    '{{selectLunghFormCtrl.labelName}}',
+                '{{selectLunghFormCtrl.labelName}}',
                 '</label>',
                 '<select ng-disabled = "selectLunghFormCtrl.disable()" ng-model="selectLunghFormCtrl.model[selectLunghFormCtrl.attributeM]" ng-options="option for option in selectLunghFormCtrl.options" class="form-control" ng-required="selectLunghFormCtrl.require()">',
                 '</select>',
             ].join(''),
-            bindToController: { 
+            bindToController: {
                 labelName: "@",
                 model: "=",
                 attributeM: "@",
@@ -186,28 +186,26 @@ angular
             controller: function ($scope, features) {
                 var ctrl = this;
                 ctrl.options = features.lunghezze;
-                
+
                 ctrl.disable = function () {
                     var boolean = ctrl.model.tipo == undefined || ctrl.model.tipo == "nastro" || ctrl.model.tipo == "coil";
                     return boolean;
                 }
-                
+
                 ctrl.require = function () {
-                    console.log(ctrl.disable && ctrl.required);
-                    var disabled = ctrl.disable(); 
+                    var disabled = ctrl.disable();
                     return !disabled && ctrl.required;
                 }
-                
+
                 $scope.$watchCollection(
-                function () {
-                    return ctrl.model.tipo;
-                }, 
-                function (newVal, oldVal) {
-                    if (newVal && newVal != oldVal) {
-                        console.log(newVal, oldVal); 
-                        delete ctrl.model[$scope.attributeM];
-                    }
-                })
+                    function () {
+                        return ctrl.model.tipo;
+                    },
+                    function (newVal, oldVal) {
+                        if (newVal && newVal != oldVal) {
+                            delete ctrl.model[$scope.attributeM];
+                        }
+                    })
             },
             controllerAs: 'selectLunghFormCtrl'
         }
@@ -215,11 +213,11 @@ angular
 
     .component('selectFornitoreForm', {
         restrict: 'E',
-        template: [ 
+        template: [
             '<select-form label-name="{{$ctrl.labelName}}" model="$ctrl.model[$ctrl.attributeM]" options="$ctrl.options" required="$ctrl.required">',
             '</select-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -232,11 +230,11 @@ angular
 
     .component('selectTrasportatoreForm', {
         restrict: 'E',
-        template: [ 
+        template: [
             '<select-form label-name="{{$ctrl.labelName}}" model="$ctrl.model[$ctrl.attributeM]" options="$ctrl.options" required="$ctrl.required">',
             '</select-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -249,11 +247,11 @@ angular
 
     .component('selectFinituraForm', {
         restrict: 'E',
-        template: [ 
+        template: [
             '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="finiture">',
             '</select-materiale-switch-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -262,24 +260,25 @@ angular
 
     .component('selectQualitaForm', {
         restrict: 'E',
-        template: [ 
-            '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="qualita">',
+        template: [
+            '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="qualita" required="$ctrl.required">',
             '</select-materiale-switch-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
+            required:"="
         },
     })
 
     .component('selectSuperficieForm', {
         restrict: 'E',
-        template: [ 
+        template: [
             '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="superfici">',
             '</select-materiale-switch-form>'
         ].join(''),
-        bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -292,7 +291,7 @@ angular
             '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="colori">',
             '</select-materiale-switch-form>'
         ].join(''),
-         bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -303,11 +302,11 @@ angular
         restrict: 'E',
         template: [
             '<span ng-if="userRole == \'logistica\' || userRole == \'admin\'">',
-                '<input-num-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" required="$ctrl.required">',
-                '</input-num-form>',
+            '<input-num-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" required="$ctrl.required">',
+            '</input-num-form>',
             '</span>',
         ].join(''),
-         bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
@@ -318,7 +317,7 @@ angular
                 function () {
                     return $rootScope.user;
                 },
-                function(newVal, oldVal) {
+                function (newVal, oldVal) {
                     if (newVal) {
                         $scope.userRole = newVal.role;
                     }
@@ -327,28 +326,28 @@ angular
         }
     })
 
-    
+
     .component('inputNumForm', {
         restrict: 'E',
         template: [
-                '<input-form label-name="{{$ctrl.labelName}}" type="number" model="$ctrl.model[$ctrl.attributeM]" required="$ctrl.required">',
-                '</input-form>',
+            '<input-form label-name="{{$ctrl.labelName}}" type="number" model="$ctrl.model[$ctrl.attributeM]" required="$ctrl.required">',
+            '</input-form>',
         ].join(''),
-         bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
             required: "="
         },
     })
-    
+
     .component('inputDateForm', {
         restrict: 'E',
         template: [
             '<input-form label-name="{{$ctrl.labelName}}" type="date" model="$ctrl.model[$ctrl.attributeM]" required="$ctrl.required">',
             '</input-form>',
         ].join(''),
-         bindings: { 
+        bindings: {
             labelName: '@',
             model: "=",
             attributeM: '@',
@@ -362,7 +361,7 @@ angular
             '<input-form label-name="{{$ctrl.labelName}}" type="text" model="$ctrl.model[$ctrl.attributeM]" required="$ctrl.required">',
             '</input-form>',
         ].join(''),
-         bindings: { 
+        bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
