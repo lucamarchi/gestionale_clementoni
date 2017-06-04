@@ -60,7 +60,7 @@ module.exports = {
     saveNewProcess: function(process) {
         var deferred = Q.defer();
         var newProcess = new processModel();
-        newProcess.macchina = process.macchina;
+        newProcess.macchina = process.machinery;
         newProcess.scarto = process.scarto;
         newProcess.operatore = process.operatore;
         newProcess.save(function(err) {

@@ -257,6 +257,12 @@ module.exports = {
         return product;
     },
 
+    deleteStock: function(productId) {
+        var query = {$set: {'pesoNetto': 0}};
+        var product = this.updateProduct(productId,query);
+        return product;
+    },
+
     createReso: function(product,reso) {
         var deferred = Q.defer();
         var newProduct = new productModel();

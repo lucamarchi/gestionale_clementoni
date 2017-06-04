@@ -60,6 +60,25 @@ module.exports = function(app, apiRoutes) {
                 });
             });
         })
+
+        .delete('/product/stock/:product_id', function(req,res,next) {
+            var productId = req.params.product_id;
+            var data = {};
+            Product.deleteStock(productId).then(function(result) {
+                data.product = result;
+                res.status(200).json({
+                    "success": true,
+                    "message": "Stock deleted",
+                    "data": data
+                });
+            }).catch(function(err) {
+                res.status(500).json({
+                    "success": false,
+                    "message": "Internal server error",
+                    "error": err.message
+                });
+            });
+        })
     
         .put('/products/:product_id', function(req,res,next) {
             var data = {};

@@ -147,7 +147,10 @@ module.exports = function(app, apiRoutes) {
             var articleId = req.params.article_id;
             var article = req.body.article;
             Article.modifyArticle(articleId, article).then(function(result) {
-                if (article.lunghezzaAssegnata && article.larghezzaAssegnata && article.qualita) {
+                console.log(((article.hasOwnProperty("lunghezzaAssegnata") && article.hasOwnProperty("larghezzaAssegnata") && article.hasOwnProperty("qualita")) || ((article.tipo == "coil" || article.tipo == "nastro") & article.hasOwnProperty("larghezzaAssegnata") && article.hasOwnProperty("qualita"))));
+                console.log((article.lunghezzaAssegnata && article.larghezzaAssegnata && article.qualita));
+                console.log(((article.tipo == "coil" || article.tipo == "nastro") & article.larghezzaAssegnata && article.qualita));
+                if (((article.hasOwnProperty("lunghezzaAssegnata") && article.hasOwnProperty("larghezzaAssegnata") && article.hasOwnProperty("qualita")) || ((article.tipo == "coil" || article.tipo == "nastro") & article.hasOwnProperty("larghezzaAssegnata") && article.hasOwnProperty("qualita")))) {
                     articleController.setArticleInit(articleId,"libero").then(function() {
                         cutController.checkArticlesInCut(articleId).then(function(result) {
                             if (result == true) {

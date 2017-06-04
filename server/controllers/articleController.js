@@ -138,7 +138,7 @@ module.exports = {
         Q.all(promises).then(function(articles) {
             var check = true;
             articles.forEach(function(currArticles) {
-                if (!currArticles.lunghezzaAssegnata && !currArticles.larghezzaAssegnata && !currArticles.qualita) {
+                if (((!article.hasOwnProperty("lunghezzaAssegnata") && !article.hasOwnProperty("larghezzaAssegnata") && !article.hasOwnProperty("qualita")) || ((article.tipo == "coil" || article.tipo == "nastro") & !article.hasOwnProperty("larghezzaAssegnata") && !article.hasOwnProperty("qualita")))) {
                     check = false;
                 }
             });

@@ -78,7 +78,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .delete('/orders/:order_id', function(req,res,next) {
+        .delete('/order/:order_id', function(req,res,next) {
             var orderId = req.params.order_id;
             Order.findById(orderId).then(function(order) {
                 var products = order.productsId;

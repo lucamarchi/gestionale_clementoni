@@ -86,10 +86,13 @@ module.exports = function(app, apiRoutes) {
                    cutController.acceptedCut(cut._id, operator).then(function(result) {
                        data.cut = result;
                        if (result.articoli && result.articoli.length > 0) {
-                           res.status(200).json({
-                               "success": true,
-                               "message": "Cut accepted",
-                               "data": data
+                           articleController.setArticlesInit(result.articoli,"libero").then(function(result) {
+                               data.articles = result;
+                               res.status(200).json({
+                                   "success": true,
+                                   "message": "Cut accepted",
+                                   "data": data
+                               });
                            });
                        } else {
                            res.status(200).json({

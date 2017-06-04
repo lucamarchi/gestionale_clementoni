@@ -99,7 +99,112 @@ module.exports = function(app, apiRoutes) {
             });
         })
 
-        .post('/processes', function(req,res,next) {
+        .post('/processes', function (req, res, next) {
+            var processes = req.body.processes;
+            var promises = [];
+            var data = {};
+            var processesCreated = [];
+            var count = 0;
+            processes.forEach(function (currProcess) {
+                count++;
+                var products = currProcess.stocks;
+                products.forEach(function (currProduct) {
+                    promises.push(Product.modifyProduct(currProduct._id, currProduct));
+                    promises.push(Product.increaseLavorazione(currProduct._id));
+                });
+                var scartoMap = currProcess.scarto;
+                var scarto = 0;
+                for (var key in scartoMap) {
+                    scarto += scartoMap[key];
+                }
+                currProcess["scarto"] = scarto;
+                if (currProcess.hasOwnProperty("article") && currProcess.article) {
+                    var article = currProcess.article;
+                    var clienteCod = article.clienteCod;
+                    promises.push(Article.setArticleStatusProd(article._id, "lavorazione"));
+                    promises.push(Article.unsetProductToArticle(article._id));
+                    promises.push(Article.increaseScarto(article._id, scarto));
+                }
+                Process.saveNewProcess(currProcess).then(function (result) {
+                    processesCreated.push(result);
+                    var singleFatherProd = [];
+                    var multiFatherProd = [];
+                    var numeroCollo = "";
+                    products.forEach(function (currProduct) {
+                        if (currProduct.numeroCollo.indexOf("/") !== -1) {
+                            multiFatherProd.push(currProduct);
+                        } else {
+                            singleFatherProd.push(currProduct);
+                        }
+                        numeroCollo += currProduct.numeroCollo;
+                    });
+                    this.checkNumber(products).then(function (number) {
+                        numeroCollo += "/" + number + currProcess.machinery;
+                        var promisesFather = [];
+                        if (multiFatherProd.length > 0) {
+                            multiFatherProd.forEach(function (currProduct) {
+                                currProduct.fatherId.forEach(function (currP) {
+                                    var newMethod = Product.findById(currP);
+                                    promisesFather.push(newMethod);
+                                });
+                            });
+                        }
+                        singleFatherProd.forEach(function (currProduct) {
+                            var newMethod = Product.findById(currProduct._id);
+                            promisesFather.push(newMethod);
+                        });
+                        Q.all(promisesFather).then(function (fatherResultTmp) {
+                            var fatherResult = utils.deleteDuplicates(fatherResultTmp);
+                            var scartoFatherMap = createScartoFatherMap(fatherResult,products,scartoMap);
+                            fatherResult.forEach(function (currProduct) {
+                                if (scartoFatherMap[currProduct._id])
+                                    promises.push(Product.increaseScarto(currProduct._id, scartoFatherMap[currProduct._id]));
+                            });
+                            products.forEach(function (currProduct) {
+                                promises.push(Process.addProductToProcess(result._id, currProduct._id));
+                            });
+                            var figlio = currProcess.producedProduct;
+                            Product.saveNewProduct(figlio).then(function (figlioProduct) {
+                                if (clienteCod) {
+                                    promises.push(Product.addClienteCodToProduct(figlioProduct._id, clienteCod));
+                                }
+                                Process.setFiglioToProcess(result.id, figlioProduct.id).then(function (lastProcess) {
+                                    fatherResult.forEach(function (currFather) {
+                                        var newMethod = Product.addFatherId(figlioProduct.id, currFather._id);
+                                        promises.push(newMethod);
+                                    });
+                                    promises.push(Product.updateNumeroCollo(figlioProduct.id, numeroCollo));
+                                    if (count == processes.length) {
+                                        data.process = processesCreated;
+                                        Q.all(promises).then(function () {
+                                            res.status(200).json({
+                                                "message": "Process done",
+                                                "data": data,
+                                                "status": true
+                                            });
+                                        }).catch(function (err) {
+                                            res.status(500).json({
+                                                "message": "Internal problem",
+                                                "status": false,
+                                                "err": err.message
+                                            });
+                                        })
+                                    }
+                                });
+                            });
+                        });
+                    });
+                }).catch(function(err) {
+                    res.status(500).json({
+                        "message": "Internal problem",
+                        "status": false,
+                        "err": err.message
+                    });
+                });
+            });
+        })
+
+        /*.post('/processes', function(req,res,next) {
             var productOriginal = req.body.products;
             var process = req.body.process;
             var scarto = process.scarto;
@@ -110,7 +215,7 @@ module.exports = function(app, apiRoutes) {
                 promises.push(Product.modifyProduct(currProduct._id,currProduct));
                 promises.push(Product.increaseLavorazione(currProduct._id));
             });
-            if (req.body.article) {p
+            if (req.body.article) {
                 var article = req.body.article;
                 var clienteCod = article.clienteCod;
                 promises.push(Article.setArticleStatusProd(article._id,"lavorazione"));
@@ -181,7 +286,33 @@ module.exports = function(app, apiRoutes) {
                     "err": err.message
                 });
             });
-        });
+        })*/;
+
+    createScartoFatherMap = function(father,products,scartoMap) {
+        var scartoFatherMap = {};
+        var check = true;
+        for (var key in scartoMap) {
+            check = true;
+            for (var i=0; i<products.length && check; i++) {
+                if (products[i]._id == key) {
+                    for (var j=0; j<father.length && check; j++) {
+                        if (products[i].fatherId.length > 0) {
+                            for (var k=0; k<products[i].fatherId.length && check; j++) {
+                                if (products[i].fatherId[k] == father[j]._id) {
+                                    scartoFatherMap[father[j]._id] = scartoMap[key];
+                                    check = false;
+                                }
+                            }
+                        } else {
+                            scartoFatherMap[key] = scartoMap[key];
+                            check = false;
+                        }
+                    }
+                }
+            }
+        }
+        return scartoFatherMap;
+    }
 
     checkNumber = function(products) {
         var promises = [];
