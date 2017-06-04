@@ -1,21 +1,25 @@
 function prodStateArticleTable(features) {
     return {
         restrict: 'E',
-        templateUrl: 'public/prodState/templates/prod-state-article-table.html',
+        templateUrl: 'public/production-state/templates/prod-state-article-table.html',
         scope: {},
         bindToController: {
             articleList: "=",
         },
-        transclude: {},
+        transclude: {
+            buttonAction: "buttonAction"
+        },
         controller: function ($scope) {
             var ctrl = this;
             ctrl.features = features;
 
+            console.log("aaaaa", ctrl.articleList);
             $scope.$watchCollection(
                 function () {
                     return ctrl.articleList;
                 },
                 function (newVal) {
+
                     if (newVal) {
                         ctrl.articleMap = ctrl.createArticleMap(newVal);
                     }
@@ -33,9 +37,9 @@ function prodStateArticleTable(features) {
                     });
                     if (typeArticles.length != 0) {
                         angular.forEach(typeArticles, function (el) {
-                            weight += el.peso;
+                            weight += el.pesoAttuale;
                         });
-                        articleMap.push({key: type, weight: weight, value: temp});
+                        articleMap.push({key: type, weight: weight, value: typeArticles});
                     }
                 }
                 console.log(articleMap);

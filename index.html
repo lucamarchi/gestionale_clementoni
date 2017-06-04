@@ -30,7 +30,7 @@
                             class="glyphicon glyphicon-align-left" aria-hidden="true"></span><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a ng-href="#/stock">Giacenza effettiva</a></li>
-                        <!--								<li><a href="">Stock Virtuale</a></li> -->
+                        <li><a ng-href="#/virtualStock">Stock Virtuale</a></li>
                     </ul>
                 </li>
                 <li>
@@ -133,6 +133,9 @@
 <script src="public/stock/javascript/filters/stock.filter.js"></script>
 <script src="public/stock/javascript/directives/stock.directive.js"></script>
 
+<script src="public/virtual-stock/javascript/controllers/virtual-stock.controller.js"></script>
+<script src="public/virtual-stock/javascript/services/virtual-stock.factory.js"></script>
+
 
 <script src="public/inbound/javascript/controllers/inbound.controller.js"></script>
 <script src="public/inbound/javascript/controllers/inbound-create.controller.js"></script>
@@ -179,6 +182,7 @@
 <script src="public/production-state/javascript/controllers/prod-state-update.controller.js"></script>
 <script src="public/production-state/javascript/controllers/processing.controller.js"></script>
 
+<script src="public/production-state/javascript/directives/prod-state-article-table.directive.js"></script>
 <script src="public/production-state/javascript/directives/prod-state-table.directive.js"></script>
 <script src="public/production-state/javascript/directives/prod-state-edit.directive.js"></script>
 <script src="public/production-state/javascript/directives/machinery-table.directive.js"></script>

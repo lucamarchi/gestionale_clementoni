@@ -8,10 +8,9 @@
             <th>Num. Ordine</th>
             <th>Cod. Articolo</th>
             <th>Materiale</th>
-            <th>Tipo</th>
             <th>Spess</th>
-            <th>Largh</th>
-            <th>Lungh</th>
+            <th>Larghezza</th>
+            <th>Lunghezza</th>
             <th>Peso</th>
             <th>Quant</th>
             <th>Prezzo (&euro;/t)</th>
@@ -26,7 +25,6 @@
             <td>{{article.ordineCod}}</td>
             <td>{{article.codArticolo}}</td>
             <td>{{article.materiale}}</td>
-            <td>{{article.tipo}}</td>
             <td>{{article.spessore}}</td>
             <td>{{article.larghezza}}</td>
             <td>{{article.lunghezza}}</td>
@@ -35,6 +33,7 @@
             <td>{{article.prezzo}}</td>
             <td production-state model="article" attribute="statoProduzione"></td>
             <td evasion-state model="article" attribute="statoEvasione"></td>
+            <td ng-transclude="buttonAction"></td>
         </tr>
         </tbody>
     </table>

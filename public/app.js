@@ -72,6 +72,7 @@ store.config(['$locationProvider', '$routeProvider', function($locationProvider,
 		.when('/virtualStock', {
         	templateUrl: 'public/virtual-stock/templates/virtual-stock.html',
 			controller: 'VirtualStockController',
+            controllerAs: 'virtualStockCtrl',
 			access: { 
 				requiredLogin: true 
 			}
