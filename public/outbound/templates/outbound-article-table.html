@@ -1,54 +1,57 @@
+<div ng-transclude="tablePagination"></div>
 <div ng-transclude="tableFilters"></div>
-<fieldset ng-repeat-start="r2a in outboundArticleTableCtrl.articleMap | outboundArticleFilter:outboundArticleTableCtrl.regionArrayFilter:'region'">
-	<h3 align="center"><b>{{r2a.region|uppercase}}</b> {{r2a.weight}} kg</h3>
-	<div ng-repeat-start="p2a in r2a.value | outboundArticleFilter:outboundArticleTableCtrl.provinceArrayFilter:'province'">
-		<legend><b>{{p2a.province|uppercase}}</b> {{p2a.weight}} kg</legend>
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<th>Data Consegna</th>
-					<th>Cod. Cliente</th>
-					<th>Num. Ordine</th>
-					<th>Cod. Articolo</th>
-					<th>Materiale</th>
-					<th>Tipo</th>
-					<th>Spess</th>
-					<th>Largh</th>
-					<th>Lungh</th>
-					<th>Peso</th>
-					<th>Quant</th>
-					<th>Prezzo (&euro;/t)</th>
-					<th>Stato Produzione</th>
-					<th>Stato Evasione</th>
-					<th>Kg da evadere</th>
-                    <th>Quantita</th>
-					<th>Unita selezionata</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="article in p2a.value" ng-init="article.weightSelected = article.weightSelected == undefined ? article.pesoAttuale : article.weightSelected; article.quantitySelected = article.quantitySelected == undefined ? article.quantita : article.quantitySelected; article.unitSelected = article.unitSelected == undefined ? '0' : article.unitSelected">
-					<td>{{article.dataConsegna | date:'medium'}}</td>
-					<td>{{article.clienteCod}}</td>
-					<td>{{article.ordineCod}}</td>
-					<td>{{article.codArticolo}}</td>
-					<td>{{article.materiale}}</td>
-					<td>{{article.tipo}}</td>
-					<td>{{article.spessore}}</td>
-					<td>{{article.larghezza}}</td>
-					<td>{{article.lunghezza}}</td>
-					<td>{{article.pesoAttuale}}</td>
-					<td>{{article.quantita}}</td>
-					<td>{{article.prezzo}}</td>
-					<td production-state model = "article" attribute = "statoProduzione"></td>
-                    <td evasion-state model = "article" attribute = "statoEvasione"></td>
-					<td ng-transclude="weightColumn"></td>
-                    <td ng-transclude="quantityColumn"></td>
-                    <td ng-transclude="unitColumn"></td>
-                    <td ng-transclude="actionButton"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div ng-repeat-end ng-hide="true"></div>
+<fieldset
+        ng-repeat-start="r2a in outboundArticleTableCtrl.articleMap | outboundArticleFilter:outboundArticleTableCtrl.regionArrayFilter:'region' | startFrom:(outboundArticleTableCtrl.currentPage-1)*outboundArticleTableCtrl.entryLimit | limitTo:outboundArticleTableCtrl.entryLimit">
+    <h3 align="center"><b>{{r2a.region|uppercase}}</b> {{r2a.weight}} kg</h3>
+    <div ng-repeat-start="p2a in r2a.value | outboundArticleFilter:outboundArticleTableCtrl.provinceArrayFilter:'province'">
+        <legend><b>{{p2a.province|uppercase}}</b> {{p2a.weight}} kg</legend>
+        <table class=" table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>Data Consegna</th>
+                <th>Cod. Cliente</th>
+                <th>Num. Ordine</th>
+                <th>Cod. Articolo</th>
+                <th>Materiale</th>
+                <th>Tipo</th>
+                <th>Spess</th>
+                <th>Largh</th>
+                <th>Lungh</th>
+                <th>Peso</th>
+                <th>Quant</th>
+                <th>Prezzo (&euro;/t)</th>
+                <th>Stato Produzione</th>
+                <th>Stato Evasione</th>
+                <th>Kg da evadere</th>
+                <th>Quantita</th>
+                <th>Unita selezionata</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="article in p2a.value"
+                ng-init="article.weightSelected = article.weightSelected == undefined ? article.pesoAttuale : article.weightSelected; article.quantitySelected = article.quantitySelected == undefined ? article.quantita : article.quantitySelected; article.unitSelected = article.unitSelected == undefined ? '0' : article.unitSelected">
+                <td>{{article.dataConsegna | date:'medium'}}</td>
+                <td>{{article.clienteCod}}</td>
+                <td>{{article.ordineCod}}</td>
+                <td>{{article.codArticolo}}</td>
+                <td>{{article.materiale}}</td>
+                <td>{{article.tipo}}</td>
+                <td>{{article.spessore}}</td>
+                <td>{{article.larghezza}}</td>
+                <td>{{article.lunghezza}}</td>
+                <td>{{article.pesoAttuale}}</td>
+                <td>{{article.quantita}}</td>
+                <td>{{article.prezzo}}</td>
+                <td production-state model="article" attribute="statoProduzione"></td>
+                <td evasion-state model="article" attribute="statoEvasione"></td>
+                <td ng-transclude="weightColumn"></td>
+                <td ng-transclude="quantityColumn"></td>
+                <td ng-transclude="unitColumn"></td>
+                <td ng-transclude="actionButton"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-repeat-end ng-hide="true"></div>
 </fieldset>
 <fieldset ng-repeat-end ng-hide="true"></fieldset>

@@ -16,6 +16,7 @@ function outboundEdit (OutboundFactory, ArticleFactory, UtilityFactory) {
         controller: function ($scope) {
             var ctrl = this;
             ctrl.currentPage = 1;
+            ctrl.entryLimit = 1;
             ctrl.freeArticles = [];
 
 
@@ -36,8 +37,6 @@ function outboundEdit (OutboundFactory, ArticleFactory, UtilityFactory) {
                     .then (function (resp) {
                         console.log(resp);
                         ctrl.freeArticles = resp.data.data.articles;
-                        ctrl.entryLimit = 10;
-                        ctrl.currentPage = 1;
                     })
                     .catch(function(err) {
                         console.log(err);

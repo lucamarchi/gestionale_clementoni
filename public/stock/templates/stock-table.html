@@ -1,71 +1,73 @@
-<div ng-transclude = "stockFilters"></div>
+<div ng-transclude="stockFilters"></div>
 <br><br>
 <fieldset ng-repeat-start="m2p in stockTableCtrl.stockMap | stockFilter:stockTableCtrl.filterObject.materialeArray">
-	<h3 align="center"><b>Materiale: {{m2p.key|uppercase}}</b> {{m2p.weight}} kg</h3>
-	<div ng-repeat-start="t2p in m2p.value |stockFilter:stockTableCtrl.filterObject.tipoArray">
-		<legend><b>Tipo: {{t2p.key|uppercase}}</b> {{t2p.weight}} kg</legend>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>Num Collo</th>
-					<th>Matricola</th>
-					<th>Spessore Nominale</th>
-                    <th>Spessore Effettivo</th>
-					<th>Larghezza Nominale</th>
-					<th>Larghezza Effettiva</th>
-					<th>Qualita</th>
-					<th>Scelta</th>
-					<th>Finitura</th>
-					<th>Colore</th>
-                    <th>Ral</th>
-					<th>Superficie</th>
-					<th>Lungh</th>
-					<th>Quantita</th>
-					<th>Peso Netto(kg)</th>
-					<th>Peso Lordo(kg)</th>
-					<th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
-					<th>Difetti</th>
-					<th>Stab</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat-start="s2p in t2p.value|stockFilter:stockTableCtrl.filterObject.spessoreArray"></tr>
-				<tr ng-repeat-start="l2p in s2p.value|stockFilter:stockTableCtrl.filterObject.larghezzaArray"></tr>
-				<tr ng-repeat="stock in l2p.value">
-					<td>
-						<span style="color:blue">{{stock.numeroCollo}}</span>
-					</td>
-					<td>{{stock.matricola}}</td>
-					<td>{{s2p.key}}</td>
-                    <td>{{stock.spessoreEffettivo}}</td>
-					<td>{{l2p.key}}</td>
-					<td>{{stock.larghezzaEffettiva}}</td>
-					<td>{{stock.qualita}}</td>
-					<td>{{stock.scelta}}</td>
-					<td>{{stock.finitura}}</td>
-					<td>{{stock.colore}}</td>
-                    <td>{{stock.ral}}</td>
-					<th>{{stock.superficie}}</th>
-					<td>{{stock.lunghezza}}</td>
-					<td>{{stock.quantita}}</td>
-					<td>
-						<span ng-if="p.pesoNetto>=5000" style="color:green">{{stock.pesoNetto}}</span>
-						<span ng-if="p.pesoNetto<5000" style="color:orange">{{stock.pesoNetto}}</span>
-					</td>
-					<td>{{stock.pesoLordo}}</td>
-					
-					<td ng-if="userRole == 'logistica' || userRole == 'admin'">{{stock.prezzo}}</td>
-					<td>{{stock.difetti}}</td>
-					<td>{{stock.stabilimento}}</td>
-					<td ng-transclude = "buttonAction"></td>
-				</tr>
-				<tr ng-repeat-end>
-					<td colspan="16"><div align="right"><b>Totale:</b> {{l2p.weight}} kg</div></td>
-				</tr>
-				<tr ng-repeat-end ng-hide="true"></tr>
-			</tbody>
-		</table>
-	</div>
-	<div ng-repeat-end ng-hide="true"></div>
+    <h3 align="center"><b>Materiale: {{m2p.key|uppercase}}</b> {{m2p.weight}} kg</h3>
+    <div ng-repeat-start="t2p in m2p.value |stockFilter:stockTableCtrl.filterObject.tipoArray">
+        <legend><b>Tipo: {{t2p.key|uppercase}}</b> {{t2p.weight}} kg</legend>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Num Collo</th>
+                <th>Matricola</th>
+                <th>Spessore Nominale</th>
+                <th>Spessore Effettivo</th>
+                <th>Larghezza Nominale</th>
+                <th>Larghezza Effettiva</th>
+                <th>Qualita</th>
+                <th>Scelta</th>
+                <th>Finitura</th>
+                <th>Colore</th>
+                <th>Ral</th>
+                <th>Superficie</th>
+                <th>Lungh</th>
+                <th>Quantita</th>
+                <th>Peso Netto(kg)</th>
+                <th>Peso Lordo(kg)</th>
+                <th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
+                <th>Difetti</th>
+                <th>Stab</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat-start="s2p in t2p.value|stockFilter:stockTableCtrl.filterObject.spessoreArray"></tr>
+            <tr ng-repeat-start="l2p in s2p.value|stockFilter:stockTableCtrl.filterObject.larghezzaArray"></tr>
+            <tr ng-repeat="stock in l2p.value">
+                <td>
+                    <span style="color:blue">{{stock.numeroCollo}}</span>
+                </td>
+                <td>{{stock.matricola}}</td>
+                <td>{{s2p.key}}</td>
+                <td>{{stock.spessoreEffettivo}}</td>
+                <td>{{l2p.key}}</td>
+                <td>{{stock.larghezzaEffettiva}}</td>
+                <td>{{stock.qualita}}</td>
+                <td>{{stock.scelta}}</td>
+                <td>{{stock.finitura}}</td>
+                <td>{{stock.colore}}</td>
+                <td>{{stock.ral}}</td>
+                <th>{{stock.superficie}}</th>
+                <td>{{stock.lunghezza}}</td>
+                <td>{{stock.quantita}}</td>
+                <td>
+                    <span ng-if="p.pesoNetto>=5000" style="color:green">{{stock.pesoNetto}}</span>
+                    <span ng-if="p.pesoNetto<5000" style="color:orange">{{stock.pesoNetto}}</span>
+                </td>
+                <td>{{stock.pesoLordo}}</td>
+
+                <td ng-if="userRole == 'logistica' || userRole == 'admin'">{{stock.prezzo}}</td>
+                <td>{{stock.difetti}}</td>
+                <td>{{stock.stabilimento}}</td>
+                <td ng-transclude="buttonAction"></td>
+            </tr>
+            <tr ng-repeat-end>
+                <td colspan="16">
+                    <div align="right"><b>Totale:</b> {{l2p.weight}} kg</div>
+                </td>
+            </tr>
+            <tr ng-repeat-end ng-hide="true"></tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-repeat-end ng-hide="true"></div>
 </fieldset>
 <fieldset ng-repeat-end ng-hide="true"></fieldset>

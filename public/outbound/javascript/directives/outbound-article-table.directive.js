@@ -2,21 +2,24 @@
  * Created by nexse on 22/05/2017.
  */
 
-function outboundArticleTable (OutboundFactory, features) {
+function outboundArticleTable(OutboundFactory, features) {
     return {
         restrict: 'E',
-        templateUrl:'public/outbound/templates/outbound-article-table.html',
+        templateUrl: 'public/outbound/templates/outbound-article-table.html',
         scope: {},
         bindToController: {
             articleList: "=",
+            currentPage: "=",
+            entryLimit: "=",
             attribute: "@"
         },
         transclude: {
-            tableFilters : "?tableFilters",
-            weightColumn : "?weightColumn",
-            quantityColumn : "?quantityColumn",
-            unitColumn : "?unitColumn",
-            actionButton : "?actionButton"
+            tablePagination: "?tablePagination",
+            tableFilters: "?tableFilters",
+            weightColumn: "?weightColumn",
+            quantityColumn: "?quantityColumn",
+            unitColumn: "?unitColumn",
+            actionButton: "?actionButton"
 
         },
         controller: function ($scope) {
@@ -27,7 +30,7 @@ function outboundArticleTable (OutboundFactory, features) {
             ctrl.regionArrayFilter = [];
             ctrl.provinceArrayFilter = [];
 
-            $scope.$watchCollection (
+            $scope.$watchCollection(
                 function () {
                     return ctrl.articleList;
                 },
@@ -41,7 +44,7 @@ function outboundArticleTable (OutboundFactory, features) {
                 }
             );
 
-            ctrl.includeVal = function(val, array) {
+            ctrl.includeVal = function (val, array) {
                 var i = array.indexOf(val);
                 if (i > -1) {
                     array.splice(i, 1);
@@ -54,19 +57,19 @@ function outboundArticleTable (OutboundFactory, features) {
 
             ctrl.createArticleMap = function (articles, attribute) {
                 var monster = [];
-                i=0;
-                for (rg of ctrl.regionArray){
-                    temp = articles.filter(function(el){
+                i = 0;
+                for (rg of ctrl.regionArray) {
+                    temp = articles.filter(function (el) {
                         return (el.region == rg);
                     });
-                    if(temp.length != 0){
+                    if (temp.length != 0) {
                         monster.push({region: rg, weight: 0, value: []}); //i per accedere
-                        j=0;
-                        for (pr of ctrl.provinceArray){
-                            temp = articles.filter(function(el){
+                        j = 0;
+                        for (pr of ctrl.provinceArray) {
+                            temp = articles.filter(function (el) {
                                 return (el.region == rg) && (el.provincia == pr);
                             });
-                            if(temp.length != 0){
+                            if (temp.length != 0) {
                                 monster[i].value.push({province: pr, weight: 0, value: temp}); //j per accedere
                                 for (t of temp) {
                                     monster[i].value[j].weight += t[attribute];
@@ -81,20 +84,20 @@ function outboundArticleTable (OutboundFactory, features) {
                 return monster;
             };
 
-            function findDistinctRegion (data) {
+            function findDistinctRegion(data) {
                 var regionArray = [];
-                for(i = 0; i< data.length; i++){
-                    if(regionArray.indexOf(data[i].region) === -1){
+                for (i = 0; i < data.length; i++) {
+                    if (regionArray.indexOf(data[i].region) === -1) {
                         regionArray.push(data[i].region);
                     }
                 }
                 return regionArray;
             }
 
-            function findDistinctProvince (data) {
+            function findDistinctProvince(data) {
                 var provinciaArray = [];
-                for(i = 0; i< data.length; i++){
-                    if(provinciaArray.indexOf(data[i].provincia) === -1){
+                for (i = 0; i < data.length; i++) {
+                    if (provinciaArray.indexOf(data[i].provincia) === -1) {
                         provinciaArray.push(data[i].provincia);
                     }
                 }
@@ -114,5 +117,5 @@ function outboundArticleTable (OutboundFactory, features) {
 
 angular
     .module('store')
-    .directive('outboundArticleTable',['OutboundFactory', 'features', outboundArticleTable]);
+    .directive('outboundArticleTable', ['OutboundFactory', 'features', outboundArticleTable]);
 

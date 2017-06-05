@@ -66,8 +66,12 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
     ctrl.selectArticles();
 
     ctrl.showMachineryList = function () {
-        if (ctrl.selectedArticles && ctrl.selectedArticles.length > 1) {
+        if ((ctrl.selectedArticles && ctrl.selectedArticles.length) > 1) {
             ctrl.machinerySelectionModalContent.machineryList = {"slitter": "a"};
+        }
+        else if (ctrl.selectedStocks && ctrl.selectedStocks.length > 1) {
+            ctrl.machinerySelectionModalContent.machineryList = features.macchinari;
+            delete ctrl.machinerySelectionModalContent.machineryList.slitter;
         }
         else {
             ctrl.machinerySelectionModalContent.machineryList = features.macchinari;
