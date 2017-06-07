@@ -1,0 +1,16 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Numero Collo</th>
+        <th>Nuovo Peso</th>
+        <th>Scarto</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="stock in weighingStockCtrl.stockList">
+        <td>{{stock.numeroCollo}}</td>
+        <td><input type="number" ng-model="stock.nuovoPesoLordo" class="form-control" required></td>
+        <td><input type="number" ng-model="stock.nuovoScarto" class="form-control" required></td>
+    </tr>
+    </tbody>
+</table>

@@ -1,4 +1,4 @@
-function OutboundDispatchController (OutboundFactory, StockFactory, $location, $scope, $routeParams) {
+function OutboundDispatchController (OutboundFactory,ProductFactory, $location, $scope, $routeParams) {
     var ctrl = this;
     ctrl.outbound = {};
     ctrl.outbound.order = {};
@@ -17,8 +17,8 @@ function OutboundDispatchController (OutboundFactory, StockFactory, $location, $
         OutboundFactory.getOutbound(id)
         .then (function (resp) {
             console.log("DETTAGLI CARICO IN USCITA" , resp);
-            ctrl.outbound.articles = resp.data.articles;
-            ctrl.outbound.products = resp.data.products;
+            ctrl.outbound.articles = resp.data.data.articles;
+            ctrl.outbound.products = resp.data.data.products;
         })
         .catch(function(err) {
             console.log(err);
@@ -33,10 +33,10 @@ function OutboundDispatchController (OutboundFactory, StockFactory, $location, $
     
     //cambiare con i prodotti liberi
     ctrl.getStocks = function () {
-		StockFactory.getStocks()
+		ProductFactory.getProducts()
             .then (function (resp) {
                 console.log("STOCK FREE ", resp);
-				ctrl.freeProducts = resp.data.stocks;
+				ctrl.freeProducts = resp.data.data.products;
 			})
 			.catch(function(err) {
 				console.log(err);
@@ -69,4 +69,4 @@ function OutboundDispatchController (OutboundFactory, StockFactory, $location, $
 
 angular
     .module('store')
-    .controller('OutboundDispatchController', ['OutboundFactory', 'StockFactory', '$location','$scope', '$routeParams', OutboundDispatchController]);
+    .controller('OutboundDispatchController', ['OutboundFactory','ProductFactory','$location','$scope', '$routeParams', OutboundDispatchController]);

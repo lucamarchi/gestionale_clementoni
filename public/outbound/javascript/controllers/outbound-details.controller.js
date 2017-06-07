@@ -11,8 +11,8 @@ function OutboundDetailsController (OutboundFactory, ProdStateFactory, $routePar
         .then (function (resp) {
             console.log("DETTAGLI CARICO IN USCITA" , resp);
             ctrl.outbound = resp.data.release;
-            ctrl.outboundArticles = resp.data.articles;
-            ctrl.outboundProducts = resp.data.products;
+            ctrl.outboundArticles = resp.data.data.articles;
+            ctrl.outboundProducts = resp.data.data.products;
         })
         .catch(function(err) {
             console.log(err);

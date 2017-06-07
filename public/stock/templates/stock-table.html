@@ -9,21 +9,17 @@
             <tr>
                 <th>Num Collo</th>
                 <th>Matricola</th>
-                <th>Spessore Nominale</th>
-                <th>Spessore Effettivo</th>
-                <th>Larghezza Nominale</th>
-                <th>Larghezza Effettiva</th>
+                <th>Spessore</th>
+                <th>Larghezza</th>
                 <th>Qualita</th>
                 <th>Scelta</th>
                 <th>Finitura</th>
                 <th>Colore</th>
-                <th>Ral</th>
                 <th>Superficie</th>
-                <th>Lungh</th>
+                <th>Lunghezza</th>
                 <th>Quantita</th>
-                <th>Peso Netto(kg)</th>
-                <th>Peso Lordo(kg)</th>
-                <th ng-if="userRole == 'logistica' || userRole == 'admin'">Prezzo (&euro;/t)</th>
+                <th>Peso(kg)</th>
+                <th>Prezzo (&euro;/t)</th>
                 <th>Difetti</th>
                 <th>Stab</th>
             </tr>
@@ -33,28 +29,32 @@
             <tr ng-repeat-start="l2p in s2p.value|stockFilter:stockTableCtrl.filterObject.larghezzaArray"></tr>
             <tr ng-repeat="stock in l2p.value">
                 <td>
-                    <span style="color:blue">{{stock.numeroCollo}}</span>
+                    {{stock.numeroCollo}}
                 </td>
                 <td>{{stock.matricola}}</td>
-                <td>{{s2p.key}}</td>
-                <td>{{stock.spessoreEffettivo}}</td>
-                <td>{{l2p.key}}</td>
-                <td>{{stock.larghezzaEffettiva}}</td>
+                <td>
+                    <div>nominale:{{s2p.key}}</div>
+                    <div>effettivo:{{stock.spessoreEffettivo}}</div>
+                </td>
+                <td>
+                    <div>nominale:{{l2p.key}}</div>
+                    <div>effettiva:{{stock.larghezzaEffettiva}}</div>
+                </td>
                 <td>{{stock.qualita}}</td>
                 <td>{{stock.scelta}}</td>
                 <td>{{stock.finitura}}</td>
-                <td>{{stock.colore}}</td>
-                <td>{{stock.ral}}</td>
+                <td>
+                    <div>{{stock.colore}}</div>
+                    <div>{{stock.ral}}</div>
+                </td>
                 <th>{{stock.superficie}}</th>
                 <td>{{stock.lunghezza}}</td>
                 <td>{{stock.quantita}}</td>
                 <td>
-                    <span ng-if="p.pesoNetto>=5000" style="color:green">{{stock.pesoNetto}}</span>
-                    <span ng-if="p.pesoNetto<5000" style="color:orange">{{stock.pesoNetto}}</span>
+                    <div>lordo:{{stock.pesoLordo}}</div>
+                    <div>netto:{{stock.pesoNetto}}</div>
                 </td>
-                <td>{{stock.pesoLordo}}</td>
-
-                <td ng-if="userRole == 'logistica' || userRole == 'admin'">{{stock.prezzo}}</td>
+                <td>{{stock.prezzo}}</td>
                 <td>{{stock.difetti}}</td>
                 <td>{{stock.stabilimento}}</td>
                 <td ng-transclude="buttonAction"></td>

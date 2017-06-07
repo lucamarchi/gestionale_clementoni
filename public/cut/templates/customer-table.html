@@ -3,9 +3,8 @@
         <tr>
             <th>Nome</th>
             <th>Agente</th>
-            <th>Banca Abi</th>
-            <th>Banca Cab</th>
-            <th>Cod. Fiscale</th>
+            <th>Banca</th>
+            <th>Codice Fiscale</th>
             <th>Email</th>
             <th>Fax</th>
             <th>Ident</th>
@@ -13,8 +12,6 @@
             <th>Località</th>
             <th>Pagamento</th>
             <th>Partita Iva</th>
-            <th>Provincia</th>
-            <th>Regione</th>
             <th>Telefono</th>
         </tr>
     </thead>
@@ -22,18 +19,22 @@
         <tr>
             <td>{{customerTableCtrl.customer.nome}}</td>
             <td>{{customerTableCtrl.customer.agente}}</td>
-            <td>{{customerTableCtrl.customer.bancaAbi}}</td>
-            <td>{{customerTableCtrl.customer.bancaCab}}</td>
+            <td>
+                <div>abi:{{customerTableCtrl.customer.bancaAbi}}</div>
+                <div>cab:{{customerTableCtrl.customer.bancaCab}}</div>
+            </td>
             <td>{{customerTableCtrl.customer.codFiscale}}</td>
             <td>{{customerTableCtrl.customer.email}}</td>
             <td>{{customerTableCtrl.customer.fax}}</td>
             <td>{{customerTableCtrl.customer.ident}}</td>
             <td>{{customerTableCtrl.customer.indirizzo}}</td>
-            <td>{{customerTableCtrl.customer.localita}}</td>
+            <td>
+                <div>{{customerTableCtrl.customer.localita}}</div>
+                <div>({{customerTableCtrl.customer.provincia}})</div>
+                <div>{{customerTableCtrl.customer.regione}}</div>
+            </td>
             <td>{{customerTableCtrl.customer.pagamento}}</td>
             <td>{{customerTableCtrl.customer.partitaIva}}</td>
-            <td>{{customerTableCtrl.customer.provincia}}</td>
-            <td>{{customerTableCtrl.customer.regione}}</td>
             <td>{{customerTableCtrl.customer.telefono}}</td>
         </tr>
     </tbody>

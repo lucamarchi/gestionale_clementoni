@@ -11,7 +11,7 @@ function ExpectedCreateController ($scope, $location, ExpectedFactory, UtilityFa
         modalClass: 'modal modal-xl fade',
         expected: {},
         index: null,
-    }
+    };
     
     ctrl.confirmExpectedModalContent = {
         modalTitle: 'Conferma creazione ordine al fornitore',
@@ -19,19 +19,19 @@ function ExpectedCreateController ($scope, $location, ExpectedFactory, UtilityFa
         modalId: 'expectedconfirmation',
         modalClass: 'modal fade',
         index: null,
-    }
+    };
     
     $scope.$on('expectedFormValid', function (event, data) {
         if (data) {
             ctrl.expectedFormValid = data.$valid;
         }
-    })
+    });
     
     ctrl.newExpected = function () {
         ctrl.editExpectedModalContent.modalTitle = 'Inserisci nuovo ordine al fornitore';
         ctrl.editExpectedModalContent.expected = {};
         ctrl.unlockedForm = 1;
-    }
+    };
     
     ctrl.selectExpected = function (expected, index) {
         console.log(expected,index);
@@ -41,7 +41,7 @@ function ExpectedCreateController ($scope, $location, ExpectedFactory, UtilityFa
         ctrl.editExpectedModalContent.expected = expectedCopy;
         ctrl.editExpectedModalContent.expected.dataPrevista = new Date(expectedCopy.dataPrevista);
         ctrl.unlockedForm = 2;
-    }
+    };
     
     
     ctrl.addExpected = function (expected) {
@@ -50,17 +50,17 @@ function ExpectedCreateController ($scope, $location, ExpectedFactory, UtilityFa
         UtilityFactory.productValuesForType(expected, "pesoOrdinato", "spessore", "larghezza");
         ctrl.expecteds.push(expected);
 		console.log(ctrl.expecteds);
-	}
+	};
     
     ctrl.updateExpected = function (expected, index) {
         console.log(expected);
         ctrl.expecteds[index] = expected;
-    }
+    };
     
     ctrl.deleteExpected = function (expected, index) {
         console.log(expected);
         ctrl.expecteds.splice(index,1);
-    }
+    };
     
     ctrl.confirmExpectedOrder = function (expecteds) {
 		ExpectedFactory.addExpecteds({expected:expecteds})

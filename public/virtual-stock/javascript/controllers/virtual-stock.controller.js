@@ -52,7 +52,6 @@ function VirtualStockController($scope, VirtualStockFactory) {
                 };
             }
         }
-        console.log(quadruple);
         return quadruple;
     };
 
@@ -80,14 +79,14 @@ function VirtualStockController($scope, VirtualStockFactory) {
             }
             angular.forEach(el1, function (el2) {
                 var pesoMagazzino = ctrl.calculateWeight(el2[0], "pesoNetto");
-                var pesoClienti = ctrl.calculateWeight(el2[1], "pesoAttuale");
-                var pesoArrivo = ctrl.calculateWeight(el2[2], "peso");
+                var pesoArrivo = ctrl.calculateWeight(el2[1], "pesoSaldo");
+                var pesoClienti = ctrl.calculateWeight(el2[2], "pesoAttuale");
                 var disponibilita = pesoMagazzino - pesoClienti;
                 var lungLarg = ctrl.findLungLarg(el2);
                 if (virtualStockMap[index1] && lungLarg) {
                     lungLarg.pesoMagazzino = pesoMagazzino;
-                    lungLarg.pesoClienti = pesoClienti;
                     lungLarg.pesoArrivo = pesoArrivo;
+                    lungLarg.pesoClienti = pesoClienti;
                     lungLarg.disponibilita = disponibilita;
                     virtualStockMap[index1].lungLargArray.push(lungLarg);
                 }

@@ -11,7 +11,7 @@ function OutboundCreateController(OutboundFactory, $location) {
         modalBody: 'Confermare la creazione del carico in uscita?',
         modalId: 'outboundcreation',
         modalClass: 'modal fade',
-    }
+    };
 
 
     ctrl.confirmOutbound = function (outbound) {
@@ -25,7 +25,7 @@ function OutboundCreateController(OutboundFactory, $location) {
                 console.log(err);
             })
 
-    }
+    };
 }
 
 angular

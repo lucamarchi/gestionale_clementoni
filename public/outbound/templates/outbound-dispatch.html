@@ -19,22 +19,7 @@
 <br><br>
 
 <fieldset>
-    <legend>Prodotti selezionati:</legend>    
-    <stock-table stock-list = "outboundDispatchCtrl.outbound.products">
-        <button-action>
-            <button type="button" class="btn btn-primary btn-block" ng-click="outboundDispatchCtrl.removeSelectedProduct($parent.stock)"><span class="glyphicon glyphicon-minus"></span>
-            </button>
-        </button-action>
-    </stock-table>
-</fieldset>
-
-<button type="button" class="btn btn-primary btn-lg" ng-if = "outboundDispatchCtrl.outboundFormValid && outboundDispatchCtrl.outbound.products && outboundDispatchCtrl.outbound.products.length > 0" data-toggle="modal" data-target="#{{outboundDispatchCtrl.outboundDispatchModalContent.modalId}}">Conferma</button>
-<button type="button" class="btn btn-primary btn-lg" ng-if = "!outboundDispatchCtrl.outboundFormValid || (outboundDispatchCtrl.outbound.products && outboundDispatchCtrl.outbound.products.length == 0)" disabled>Conferma</button>
-
-<br><br>
-
-<fieldset>
-    <legend>Lista prodotti:</legend>    
+    <legend>Lista prodotti:</legend>
     <stock-table stock-list = "outboundDispatchCtrl.freeProducts">
         <stock-filters>
             <stock-filter model="$parent.stockTableCtrl.filterObject"></stock-filter>
@@ -45,6 +30,22 @@
         </button-action>
     </stock-table>
 </fieldset>
+
+<br><br>
+
+<fieldset>
+    <legend>Prodotti selezionati:</legend>    
+    <stock-table stock-list = "outboundDispatchCtrl.outbound.products">
+        <button-action>
+            <button type="button" class="btn btn-primary btn-block" ng-click="outboundDispatchCtrl.removeSelectedProduct($parent.stock)"><span class="glyphicon glyphicon-minus"></span>
+            </button>
+        </button-action>
+    </stock-table>
+</fieldset>
+
+<button type="button" class="btn btn-primary btn-lg" ng-disabled = "!outboundDispatchCtrl.outboundFormValid || (outboundDispatchCtrl.outbound.products && outboundDispatchCtrl.outbound.products.length == 0)" data-toggle="modal" data-target="#{{outboundDispatchCtrl.outboundDispatchModalContent.modalId}}">Conferma</button>
+
+
 
 
 <div ng-class="outboundDispatchCtrl.outboundDispatchModalContent.modalClass" id="{{outboundDispatchCtrl.outboundDispatchModalContent.modalId}}" tabindex="-1" role="dialog">

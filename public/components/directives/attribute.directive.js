@@ -5,16 +5,15 @@ angular
         return {
             restrict: 'A',
             template: [
-                    '{{model[attribute]| date:\'EEE, dd/MM/yy\'}}'
+                '{{model[attribute]| date:\'EEE, dd/MM/yy\'}}'
             ].join(''),
-            scope: { 
+            scope: {
                 model: "=",
                 attribute: "@"
             }
         }
     })
 
-    
 
     .directive('productionState', function () {
         return {
@@ -24,18 +23,17 @@ angular
                 attribute: "@"
             },
             template: [
-                    '<div ng-switch="prodStateCtrl.model[prodStateCtrl.attribute]" style="text-align: center;">',
-                        '<span ng-switch-when="libero" class="label label-default">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
-                        '<span ng-switch-when="assegnato" class="label label-info">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
-                        '<span ng-switch-when="lavorazione" class="label label-warning">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
-                        '<span ng-switch-when="completato" class="label label-success">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
-                    '</div>'
+                '<span ng-switch="prodStateCtrl.model[prodStateCtrl.attribute]" style="text-align: center;">',
+                '<span ng-switch-when="libero" class="label label-default">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
+                '<span ng-switch-when="assegnato" class="label label-info">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
+                '<span ng-switch-when="lavorazione" class="label label-warning">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
+                '<span ng-switch-when="completato" class="label label-success">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
+                '</span>'
             ].join(''),
             controller: function () {
             },
             controllerAs: 'prodStateCtrl',
-            scope: { 
-            }
+            scope: {}
         }
     })
 
@@ -47,16 +45,16 @@ angular
                 attribute: "@"
             },
             template: [
-                    '<div ng-switch="evasionStateCtrl.model[evasionStateCtrl.attribute]" style="text-align: center;">',
-                        '<span ng-switch-when="libero" class="label label-default">{{evasionStateCtrl.model[evasionStateCtrl.attribute]}}</span>',
-                        '<span ng-switch-when="assegnato" class="label label-info">{{evasionStateCtrl.model[evasionStateCtrl.attribute]}}</span>',
-                        '<span ng-switch-when="evaso" class="label label-success">{{evasionStateCtrl.model[evasionStateCtrl.attribute]}}</span>',
-                    '</div>'
+                '<div ng-switch="evasionStateCtrl.model[evasionStateCtrl.attribute]" style="text-align: center;">',
+                '<span ng-switch-when="libero" class="label label-default">{{evasionStateCtrl.model[evasionStateCtrl.attribute]}}</span>',
+                '<span ng-switch-when="assegnato" class="label label-info">{{evasionStateCtrl.model[evasionStateCtrl.attribute]}}</span>',
+                '<span ng-switch-when="evaso" class="label label-success">{{evasionStateCtrl.model[evasionStateCtrl.attribute]}}</span>',
+                '</div>'
             ].join(''),
             controller: function () {
             },
             controllerAs: 'evasionStateCtrl',
-            scope: { 
-            }
+            scope: {}
         }
-    })
+    });
+

@@ -6,10 +6,8 @@
             <th>Matricola</th>
             <th>Materiale</th>
             <th>Tipo</th>
-            <th>Spessore Nominale</th>
-            <th>Spessore Effettivo</th>
-            <th>Larghezza Nominale</th>
-            <th>Larghezza Effettiva</th>
+            <th>Spessore </th>
+            <th>Larghezza</th>
             <th>Qualita</th>
             <th>Scelta</th>
             <th>Finitura</th>
@@ -17,10 +15,8 @@
             <th>Superficie</th>
             <th>Lunghezza</th>
             <th>Quantita</th>
-            <th>Peso Iniziale</th>
-            <th>Peso Netto</th>
-            <th>Peso Lordo</th>
-            <th ng-if="userRole == 'admin'">Prezzo (&euro;/t)</th>
+            <th>Peso</th>
+            <th>Prezzo (&euro;/t)</th>
             <th>Difetti</th>
             <th>Stab</th>
             <th>Scarto</th>
@@ -33,21 +29,31 @@
             <td>{{inboundProduct.matricola}}</td>
             <td>{{inboundProduct.materiale}}</td>
             <td>{{inboundProduct.tipo}}</td>
-            <td>{{inboundProduct.spessoreNominale}}</td>
-            <td>{{inboundProduct.spessoreEffettivo}}</td>
-            <td>{{inboundProduct.larghezzaNominale}}</td>
-            <td>{{inboundProduct.larghezzaEffettiva}}</td>
+            <td>
+                <div>nominale:{{inboundProduct.spessoreNominale}}</div>
+                <div>effettivo:{{inboundProduct.spessoreEffettivo}}</div>
+            </td>
+            <td>
+                <div>nominale:{{inboundProduct.larghezzaNominale}}</div>
+                <div>effettiva:{{inboundProduct.larghezzaEffettiva}}</div>
+            </td>
             <td>{{inboundProduct.qualita}}</td>
             <td>{{inboundProduct.scelta}}</td>
             <td>{{inboundProduct.finitura}}</td>
-            <td>{{inboundProduct.coloreRal}}</td>
+            <td>
+                <div>{{inboundProduct.colore}}</div>
+                <div>{{inboundProduct.ral}}</div>
+            </td>
             <td>{{inboundProduct.superficie}}</td>
             <td>{{inboundProduct.lunghezza}}</td>
             <td>{{inboundProduct.quantita}}</td>
-            <td>{{inboundProduct.pesoIniziale}}</td>
-            <td>{{inboundProduct.pesoNetto}}</td>
-            <td>{{inboundProduct.pesoLordo}}</td>
-            <td ng-if="userRole == 'admin'">{{inboundProduct.prezzo}}</td>
+
+            <td>
+                <div>iniziale:{{inboundProduct.pesoIniziale}}</div>
+                <div>lordo:{{inboundProduct.pesoLordo}}</div>
+                <div>netto:{{inboundProduct.pesoNetto}}</div>
+            </td>
+            <td>{{inboundProduct.prezzo}}</td>
             <td>{{inboundProduct.difetti}}</td>
             <td>{{inboundProduct.stabilimento}}</td>
             <td>{{inboundProduct.scarto}}</td>

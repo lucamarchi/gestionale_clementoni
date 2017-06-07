@@ -14,11 +14,9 @@
             <th>Qualita</th>
 			<th>Finitura</th>
 			<th>Colore</th>
-            <th ng-if="$root.user.role == 'admin'">Prezzo (&euro;/t)</th>
-			<th>Quantita</th>
-			<th>Peso Ordinato</th>
-            <th>Peso Consegnato</th>
-            <th>Peso Saldo</th>
+            <th ng-if="$root.user.role == 'admin'">Prezzo(&euro;/t)</th>
+			<!--<th>Quantita</th>-->
+			<th>Peso(Kg)</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -35,10 +33,12 @@
 			<td>{{expected.finitura}}</td>
 			<td>{{expected.colore}}</td>
             <td ng-if="$root.user.role == 'admin'">{{expected.prezzo}}</td>
-			<td>{{expected.quantita}}</td>
-			<td>{{expected.pesoOrdinato}}</td>
-			<td>{{expected.pesoConsegnato}}</td>
-            <td>{{expected.pesoSaldo}}</td>
+			<!--<td>{{expected.quantita}}</td>-->
+			<td>
+				<div>ordinato:{{expected.pesoOrdinato}}</div>
+				<div>consegnato:{{expected.pesoConsegnato}}</div>
+				<div>saldo:{{expected.pesoSaldo}}</div>
+			</td>
             <td ng-transclude="tableButton"></td>
 		</tr>
 	</tbody>

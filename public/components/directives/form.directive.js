@@ -174,7 +174,7 @@ angular
                 '<label>',
                 '{{selectLunghFormCtrl.labelName}}',
                 '</label>',
-                '<select ng-disabled = "selectLunghFormCtrl.disable()" ng-model="selectLunghFormCtrl.model[selectLunghFormCtrl.attributeM]" ng-options="option for option in selectLunghFormCtrl.options" class="form-control" ng-required="selectLunghFormCtrl.require()">',
+                '<select class="form-control" ng-disabled = "selectLunghFormCtrl.isDisabled" ng-model="selectLunghFormCtrl.model[selectLunghFormCtrl.attributeM]" ng-options="option for option in selectLunghFormCtrl.options" ng-required="selectLunghFormCtrl.isRequired">',
                 '</select>',
             ].join(''),
             bindToController: {
@@ -188,24 +188,24 @@ angular
                 ctrl.options = features.lunghezze;
 
                 ctrl.disable = function () {
-                    var boolean = ctrl.model.tipo == undefined || ctrl.model.tipo == "nastro" || ctrl.model.tipo == "coil";
-                    return boolean;
-                }
-
-                ctrl.require = function () {
-                    var disabled = ctrl.disable();
-                    return !disabled && ctrl.required;
-                }
+                    ctrl.isDisabled = ctrl.model.tipo == undefined || ctrl.model.tipo == "nastro" || ctrl.model.tipo == "coil";
+                    if (ctrl.isDisabled) {
+                        delete ctrl.model[ctrl.attributeM];
+                    }
+                    ctrl.isRequired = !ctrl.isDisabled && ctrl.required;
+                    console.log(ctrl.isDisabled, ctrl.isRequired);
+                };
 
                 $scope.$watchCollection(
                     function () {
-                        return ctrl.model.tipo;
+                        return ctrl.model;
                     },
                     function (newVal, oldVal) {
-                        if (newVal && newVal != oldVal) {
-                            delete ctrl.model[$scope.attributeM];
+                        if (newVal) {
+                            ctrl.disable();
                         }
                     })
+
             },
             controllerAs: 'selectLunghFormCtrl'
         }
@@ -268,7 +268,7 @@ angular
             labelName: "@",
             model: "=",
             attributeM: "@",
-            required:"="
+            required: "="
         },
     })
 

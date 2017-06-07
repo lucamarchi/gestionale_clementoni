@@ -50,7 +50,8 @@ function ExpectedController ($scope, ExpectedFactory,features) {
     }
     
     ctrl.updateExpected = function (expected, index) {
-        console.log(expected)
+        console.log(expected);
+        //in caso ricalcolare peso saldo
         ExpectedFactory.updateExpected({"expected":expected})
             .then (function (resp) {
                 ctrl.expecteds[index] = expected;

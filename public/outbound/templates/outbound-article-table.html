@@ -9,21 +9,20 @@
             <thead>
             <tr>
                 <th>Data Consegna</th>
-                <th>Cod. Cliente</th>
-                <th>Num. Ordine</th>
-                <th>Cod. Articolo</th>
+                <th>Codice Cliente</th>
+                <th>Codice Articolo</th>
                 <th>Materiale</th>
                 <th>Tipo</th>
                 <th>Spess</th>
-                <th>Largh</th>
-                <th>Lungh</th>
+                <th>Larghezza</th>
+                <th>Lunghezza</th>
                 <th>Peso</th>
-                <th>Quant</th>
+                <th>Quantita</th>
                 <th>Prezzo (&euro;/t)</th>
                 <th>Stato Produzione</th>
                 <th>Stato Evasione</th>
                 <th>Kg da evadere</th>
-                <th>Quantita</th>
+                <th>Quantita da evadere</th>
                 <th>Unita selezionata</th>
             </tr>
             </thead>
@@ -32,7 +31,6 @@
                 ng-init="article.weightSelected = article.weightSelected == undefined ? article.pesoAttuale : article.weightSelected; article.quantitySelected = article.quantitySelected == undefined ? article.quantita : article.quantitySelected; article.unitSelected = article.unitSelected == undefined ? '0' : article.unitSelected">
                 <td>{{article.dataConsegna | date:'medium'}}</td>
                 <td>{{article.clienteCod}}</td>
-                <td>{{article.ordineCod}}</td>
                 <td>{{article.codArticolo}}</td>
                 <td>{{article.materiale}}</td>
                 <td>{{article.tipo}}</td>

@@ -36,6 +36,12 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
         selectedArticle: {},
     };
 
+    ctrl.weighingStockModalContent = {
+        modalClass: 'modal fade',
+        modalTitle: 'Pesatura Stock',
+        modalId: 'weighingstock',
+    };
+
     ctrl.backProdState = function () {
         $location.path("/productionState/details/" + $routeParams.id);
     };
@@ -50,7 +56,6 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
         console.log(ProcessingProgressFactory.getArticles());
         var processing;
         ctrl.selectedArticles = ProcessingProgressFactory.getArticles();
-        console.log("asdasadsasdad", ctrl.selectedArticles);
         angular.forEach(ctrl.selectedArticles, function (article) {
             processing = {};
             processing.article = article;
@@ -80,10 +85,10 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
 
     ctrl.selectMachinery = function (machineryName, machinerySigle) {
         ctrl.selectedMachinery = {[machineryName]: machinerySigle};
-        ctrl.processingList = ctrl.processingList.map(function (processing) {
+        /*ctrl.processingList = ctrl.processingList.map(function (processing) {
             processing.machinery = machinerySigle;
             return processing;
-        });
+        });*/
         console.log("processingList", ctrl.processingList);
     };
 
@@ -121,10 +126,10 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
         var index = ctrl.stockSelectionModalContent.stockList.indexOf(stock);
         ctrl.stockSelectionModalContent.stockList.splice(index, 1);
         console.log("dopo ", ctrl.stockSelectionModalContent.stockList, ctrl.selectedStocks);
-        ctrl.processingList = ctrl.processingList.map(function (processing) {
+        /*ctrl.processingList = ctrl.processingList.map(function (processing) {
             processing.stocks = ctrl.selectedStocks;
             return processing;
-        });
+        });*/
 
         console.log("processingList", ctrl.processingList);
     };
@@ -162,9 +167,17 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
         console.log(ctrl.processingList);
     };
 
-    ctrl.calculateScarto = function () {
+    ctrl.confirmProcessing = function () {
+        var scartoMap = ctrl.selectedStocks.map(function (stock) {
+        })
+        ctrl.processingList = ctrl.processingList.map(function (processing) {
+            processing.machinery = machinerySigle;
+            processing.stocks = ctrl.selectedStocks;
+            return processing;
+        });
 
     }
+
 }
 
 angular

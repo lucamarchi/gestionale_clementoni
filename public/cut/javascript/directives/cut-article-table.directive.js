@@ -24,7 +24,7 @@ function cutArticleTable() {
                 modalBody: 'L\'articolo sara cancellato dall\'ordine di taglio e da ogni parte del sistema',
                 article: {},
                 index: null,
-            }
+            };
 
             ctrl.selectArticle = function (article, index) {
                 var articleCopy = Object.assign({}, article);
@@ -32,14 +32,17 @@ function cutArticleTable() {
                 if (ctrl.dimensionSelectionModalContent.article.lunghezzaAssegnata) {
                     ctrl.dimensionSelectionModalContent.article.lunghezzaAssegnata = articleCopy.lunghezzaAssegnata.toString();
                 }
+                else {
+                    ctrl.dimensionSelectionModalContent.article.lunghezzaAssegnata = 0;
+                }
                 if (ctrl.dimensionSelectionModalContent.article.larghezzaAssegnata) {
                     ctrl.dimensionSelectionModalContent.article.larghezzaAssegnata = articleCopy.larghezzaAssegnata.toString();
                 }
                 ctrl.cutArticleDeletionModalContent.article = article;
                 ctrl.dimensionSelectionModalContent.index = index;
                 ctrl.cutArticleDeletionModalContent.index = index;
-                console.log(article, index);
-            }
+                console.log("selecteArticle",article, index);
+            };
 
             ctrl.assignDimension = function (article, index) {
                 ArticleFactory.updateArticle({article: article})
@@ -49,11 +52,9 @@ function cutArticleTable() {
                     })
                     .catch(function (err) {
                         console.log(err);
-                    })
-                console.log("adsdadadsa", article);
-
-
-            }
+                    });
+                console.log("assignDimensione", ctrl.articleList[index], index);
+            };
 
             ctrl.deleteCutArticle = function (article, index) {
                 ArticleFactory.deleteArticle(article._id)

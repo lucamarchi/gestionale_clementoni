@@ -1,15 +1,15 @@
 <h1>STOCK VIRTUALE</h1>
-
+<br><br>
 <fieldset ng-repeat-start="quadruple in virtualStockCtrl.virtualStockMap">
-    <h3>{{quadruple.materiale|uppercase}}, {{quadruple.tipo|uppercase}}, {{quadruple.qualita|uppercase}}, {{quadruple.spessore|uppercase}}</h3>
+    <legend>{{quadruple.materiale|uppercase}}, {{quadruple.tipo|uppercase}}, {{quadruple.qualita|uppercase}}, {{quadruple.spessore|uppercase}}</legend>
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
             <th>Larghezza</th>
             <th>Lunghezza</th>
             <th>Magazzino</th>
-            <th>Clienti</th>
             <th>In Arrivo</th>
+            <th>Clienti</th>
             <th>Disponibilita</th>
         </tr>
         </thead>
