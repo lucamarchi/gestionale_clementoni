@@ -168,8 +168,8 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
     };
 
     ctrl.confirmProcessing = function () {
-        var scartoMap = ctrl.selectedStocks.map(function (stock) {
-        })
+        var scartoMap = ProcessingProcessFactory.createScartoMap (ctrl.selectedStocks, ctrl.selectedMachinery, ctrl.producedProducts);
+        
         ctrl.processingList = ctrl.processingList.map(function (processing) {
             processing.machinery = machinerySigle;
             processing.stocks = ctrl.selectedStocks;
