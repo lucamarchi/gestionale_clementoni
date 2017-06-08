@@ -11,12 +11,13 @@ function ProcessingProgressFactory($cookies) {
         return $cookies.getObject("articles");
     };
 
-    processing.createScartoMap = function (stockList, machinerySigle, producedProducts) {
+    processing.createScartoMap = function (stockList, machinerySigle, producedProducts, processingList) {
+        var scartoTemp;
         var scartoMap = {};
         var scarto = 0;
         var stockId;
         var producedWeight = producedProducts.reduce(function (a, b) {
-            return a + b.pesoLordo;
+            return a.pesoLordo + b.pesoLordo;
         });
         if (machinerySigle == "a") {
             scarto = stockList[0].pesoLordo - stockList[0].nuovoPesoLordo - producedWeight;
@@ -26,6 +27,12 @@ function ProcessingProgressFactory($cookies) {
             stockList[0].pesoNetto = stockList[0].pesoLordo; //controllare
             delete stockList[0].nuovoPesoLordo;
             delete stockList[0].nuovoScarto;
+            angular.forEach(processingList, function (processing) {
+                scartoTemp = (scartoMap[stockId] * processing.producedProduct.pesoNetto) / producedWeight;
+                processing.scarto = {[stockId] : scartoTemp};
+                processing.machinery = machinerySigle;
+                processing.stocks = stockList;
+            })
         }
         else {
             angular.forEach(stockList, function (stock) {
@@ -36,9 +43,12 @@ function ProcessingProgressFactory($cookies) {
                 stock.pesoNetto = stock.pesoLordo; //controllare
                 delete stock.nuovoPesoLordo;
                 delete stock.nuovoScarto;
-            })
+            });
+            processingList[0].scarto = scartoMap;
+            processingList[0].machinery = machinerySigle;
+            processingList[0].stocks = stockList;
         }
-        return scartoMap;
+        console.log(processingList);
     };
 
     return processing;

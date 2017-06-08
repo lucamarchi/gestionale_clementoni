@@ -5,6 +5,7 @@ function weighingStock () {
         scope: {},
         bindToController: {
             stockList: "=",
+            machinery: "="
         },
         transclude: {
         },

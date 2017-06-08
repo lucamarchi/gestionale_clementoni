@@ -7,7 +7,6 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
     ctrl.selectedArticles = [];
     ctrl.selectedStocks = [];
     ctrl.producedProducts = [];
-
     ctrl.isMachinerySelected = function () {
         return Object.keys(ctrl.selectedMachinery).length != 0;
     };
@@ -86,9 +85,9 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
     ctrl.selectMachinery = function (machineryName, machinerySigle) {
         ctrl.selectedMachinery = {[machineryName]: machinerySigle};
         /*ctrl.processingList = ctrl.processingList.map(function (processing) {
-            processing.machinery = machinerySigle;
-            return processing;
-        });*/
+         processing.machinery = machinerySigle;
+         return processing;
+         });*/
         console.log("processingList", ctrl.processingList);
     };
 
@@ -127,9 +126,9 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
         ctrl.stockSelectionModalContent.stockList.splice(index, 1);
         console.log("dopo ", ctrl.stockSelectionModalContent.stockList, ctrl.selectedStocks);
         /*ctrl.processingList = ctrl.processingList.map(function (processing) {
-            processing.stocks = ctrl.selectedStocks;
-            return processing;
-        });*/
+         processing.stocks = ctrl.selectedStocks;
+         return processing;
+         });*/
 
         console.log("processingList", ctrl.processingList);
     };
@@ -168,13 +167,7 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
     };
 
     ctrl.confirmProcessing = function () {
-        var scartoMap = ProcessingProcessFactory.createScartoMap (ctrl.selectedStocks, ctrl.selectedMachinery, ctrl.producedProducts);
-        
-        ctrl.processingList = ctrl.processingList.map(function (processing) {
-            processing.machinery = machinerySigle;
-            processing.stocks = ctrl.selectedStocks;
-            return processing;
-        });
+        ProcessingProgressFactory.createScartoMap(ctrl.selectedStocks, "b", ctrl.producedProducts, ctrl.processingList);
 
     }
 
