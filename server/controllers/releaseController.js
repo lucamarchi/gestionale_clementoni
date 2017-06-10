@@ -46,8 +46,8 @@ module.exports = {
         var deferred = Q.defer();
         var promises = [];
         articles.forEach(function(currArticle) {
-            var peso = currArticle.peso;
-            var quantita = currArticle.quantita;
+            var peso = currArticle.pesoSelezionato;
+            var quantita = currArticle.quantitaSelezionata;
             var unita = currArticle.unita;
             var triplaArticle = { article: currArticle._id, peso: peso, quantita: quantita, unita: unita };
             var newMethod = Release.addArticleToRelease(release.id,triplaArticle);
