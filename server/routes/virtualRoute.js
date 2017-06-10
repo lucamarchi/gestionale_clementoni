@@ -2,14 +2,31 @@
  * Created by luca on 27/01/17.
  */
 
+var Q = require('q');
+var _ = require('lodash');
 var Product = require('./../models/product');
 var Expected = require('./../models/expected');
 var Article = require('./../models/article');
-var Q = require('q');
+var virtualController = require('./../controllers/virtualController');
 
 module.exports = function(app, apiRoutes) {
 
     apiRoutes
+        .get('/virtual', function(req,res,next) {
+            var virtual = [];
+            var data = {};
+            virtualController.groupProductByProps().then(function(stocks) {
+                virtualController.groupArticlesByProps().then(function(articles) {
+                    virtualController.groupExpectedsByProps().then(function(expecteds) {
+                        console.log(stocks);
+                        console.log(articles);
+                        console.log(expecteds);
+                    });
+                });
+            });
+        });
+
+    /*apiRoutes
         .get('/virtual', function(req, res, next) {
             var virtual = [];
             var data = {};
@@ -490,6 +507,6 @@ module.exports = function(app, apiRoutes) {
             }
         }
         return index;
-    }
+    }*/
 
 };

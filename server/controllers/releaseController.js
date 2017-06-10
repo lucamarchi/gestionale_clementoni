@@ -46,9 +46,10 @@ module.exports = {
         var deferred = Q.defer();
         var promises = [];
         articles.forEach(function(currArticle) {
-            var quantita = currArticle.quantita;
+            var peso = currArticle.pesoSelezionato;
+            var quantita = currArticle.quantitaSelezionata;
             var unita = currArticle.unita;
-            var triplaArticle = { article: currArticle._id, quantita: quantita, unita: unita };
+            var triplaArticle = { article: currArticle._id, peso: peso, quantita: quantita, unita: unita };
             var newMethod = Release.addArticleToRelease(release.id,triplaArticle);
             var newMethodStat = Article.setArticleStatusEvas(currArticle._id, "assegnato");
             var newMethodScalaArt = Article.updatePesoAttualeArticle(currArticle._id,currArticle.pesoAttuale);

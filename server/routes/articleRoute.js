@@ -146,22 +146,23 @@ module.exports = function(app, apiRoutes) {
         .put('/articles/:article_id', function(req,res,next) {
             var articleId = req.params.article_id;
             var article = req.body.article;
+            var data = {};
             Article.modifyArticle(articleId, article).then(function(result) {
-                console.log(((article.hasOwnProperty("lunghezzaAssegnata") && article.hasOwnProperty("larghezzaAssegnata") && article.hasOwnProperty("qualita")) || ((article.tipo == "coil" || article.tipo == "nastro") & article.hasOwnProperty("larghezzaAssegnata") && article.hasOwnProperty("qualita"))));
-                console.log((article.lunghezzaAssegnata && article.larghezzaAssegnata && article.qualita));
-                console.log(((article.tipo == "coil" || article.tipo == "nastro") & article.larghezzaAssegnata && article.qualita));
                 if (((article.hasOwnProperty("lunghezzaAssegnata") && article.hasOwnProperty("larghezzaAssegnata") && article.hasOwnProperty("qualita")) || ((article.tipo == "coil" || article.tipo == "nastro") & article.hasOwnProperty("larghezzaAssegnata") && article.hasOwnProperty("qualita")))) {
-                    articleController.setArticleInit(articleId,"libero").then(function() {
+                    articleController.setArticleInit(articleId,"libero").then(function(result) {
+                        data.article = result;
                         cutController.checkArticlesInCut(articleId).then(function(result) {
                             if (result == true) {
                                 res.status(200).json({
                                     "success": true,
-                                    "message": "Article modified and Cut ready"
+                                    "message": "Article modified and Cut ready",
+                                    "data": data,
                                 });
                             } else {
                                 res.status(200).json({
                                     "success": true,
-                                    "message": "Article modified"
+                                    "message": "Article modified",
+                                    "data": data
                                 });
                             }
                         });

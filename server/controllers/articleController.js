@@ -25,11 +25,10 @@ module.exports = {
 
     setArticleInit: function(articleId,status) {
         var deferred = Q.defer();
-        var promises = [];
-        promises.push(Article.setArticleStatusProd(articleId,status));
-        promises.push(Article.setArticleStatusEvas(articleId,status));
-        Q.all(promises).then(function(result) {
-            deferred.resolve(result);
+        Article.setArticleStatusProd(articleId,status).then(function(article) {
+            Article.setArticleStatusEvas(articleId,status).then(function(result) {
+                deferred.resolve(result);
+            });
         }).catch(function(err) {
             deferred.reject(err);
         });
@@ -137,8 +136,8 @@ module.exports = {
         });
         Q.all(promises).then(function(articles) {
             var check = true;
-            articles.forEach(function(currArticles) {
-                if (((!article.hasOwnProperty("lunghezzaAssegnata") && !article.hasOwnProperty("larghezzaAssegnata") && !article.hasOwnProperty("qualita")) || ((article.tipo == "coil" || article.tipo == "nastro") & !article.hasOwnProperty("larghezzaAssegnata") && !article.hasOwnProperty("qualita")))) {
+            articles.forEach(function(currArticle) {
+                if (((!currArticle.hasOwnProperty("lunghezzaAssegnata") && !currArticle.hasOwnProperty("larghezzaAssegnata") && !currArticle.hasOwnProperty("qualita")) || ((currArticle.tipo == "coil" || currArticle.tipo == "nastro") & !currArticle.hasOwnProperty("larghezzaAssegnata") && !currArticle.hasOwnProperty("qualita")))) {
                     check = false;
                 }
             });

@@ -120,6 +120,18 @@ module.exports = {
             deferred.reject(err);
         });
         return deferred.promise;
+    },
+
+    deleteStock: function(productId) {
+        var deferred = Q.defer();
+        Product.deleteStockNetto(productId).then(function(product) {
+            Product.deleteStockLordo(productId).then(function(result) {
+                deferred.resolve(result);
+            });
+        }).catch(function(err) {
+            deferred.reject(err);
+        });
+        return deferred.promise;
     }
 
 };

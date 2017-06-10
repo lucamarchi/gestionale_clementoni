@@ -15,6 +15,8 @@ var ExpectedSchema = new Schema({
     spessore: {type: Number},
     lunghezza: {type: Number},
     larghezza: {type: Number},
+    superficie: {type: String},
+    quantita: {type: Number},
     fornitore: {type: String},
     dataPrevista: {type: Date},
     prezzo: {type: Number},
@@ -71,6 +73,8 @@ module.exports = {
         newExpected.spessore = expected.spessore;
         newExpected.lunghezza = expected.lunghezza;
         newExpected.larghezza = expected.larghezza;
+        newExpected.superficie = expected.superficie;
+        newExpected.quantita = expected.quantita;
         newExpected.fornitore = expected.fornitore;
         newExpected.dataPrevista = expected.dataPrevista;
         newExpected.prezzo = expected.prezzo;
@@ -103,6 +107,8 @@ module.exports = {
                     result.spessore = expected.spessore;
                     result.lunghezza = expected.lunghezza;
                     result.larghezza = expected.larghezza;
+                    result.superficie = expected.superficie;
+                    result.quantita = expected.quantita;
                     result.fornitore = expected.fornitore;
                     result.dataPrevista = expected.dataPrevista;
                     result.prezzo = expected.prezzo;

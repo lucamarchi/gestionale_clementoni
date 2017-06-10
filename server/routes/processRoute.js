@@ -8,6 +8,7 @@ var Article = require('./../models/article');
 var productController = require('./../controllers/productController');
 var utils = require('./../controllers/utilsController');
 var Q = require('q');
+var _ = require('lodash');
 
 module.exports = function(app, apiRoutes) {
 
@@ -136,7 +137,8 @@ module.exports = function(app, apiRoutes) {
                         } else {
                             singleFatherProd.push(currProduct);
                         }
-                        numeroCollo += currProduct.numeroCollo;
+                        if (!_.includes(numeroCollo, currProduct.numeroCollo))
+                            numeroCollo += currProduct.numeroCollo;
                     });
                     this.checkNumber(products).then(function (number) {
                         numeroCollo += "/" + number + currProcess.machinery;
@@ -163,6 +165,8 @@ module.exports = function(app, apiRoutes) {
                             products.forEach(function (currProduct) {
                                 promises.push(Process.addProductToProcess(result._id, currProduct._id));
                             });
+                            if (article && article._id)
+                                promises.push(Process.setArticleToProcess(result.id, article._id));
                             var figlio = currProcess.producedProduct;
                             Product.saveNewProduct(figlio).then(function (figlioProduct) {
                                 if (clienteCod) {
@@ -202,115 +206,35 @@ module.exports = function(app, apiRoutes) {
                     });
                 });
             });
-        })
-
-        /*.post('/processes', function(req,res,next) {
-            var productOriginal = req.body.products;
-            var process = req.body.process;
-            var scarto = process.scarto;
-            var createFiglio = req.body.figlio;
-            var promises = [];
-            var data = {};
-            productOriginal.forEach(function(currProduct) {
-                promises.push(Product.modifyProduct(currProduct._id,currProduct));
-                promises.push(Product.increaseLavorazione(currProduct._id));
-            });
-            if (req.body.article) {
-                var article = req.body.article;
-                var clienteCod = article.clienteCod;
-                promises.push(Article.setArticleStatusProd(article._id,"lavorazione"));
-                promises.push(Article.unsetProductToArticle(article._id));
-                promises.push(Article.increaseScarto(article._id,process.scarto));
-            }
-            Process.saveNewProcess(process).then(function(result) {
-                data.process = result;
-                var singleFatherProd = [];
-                var multiFatherProd = [];
-                var numeroCollo = "";
-                productOriginal.forEach(function(currProduct) {
-                    if (currProduct.numeroCollo.indexOf("/") !== -1) {
-                        multiFatherProd.push(currProduct);
-                    } else {
-                        singleFatherProd.push(currProduct);
-                    }
-                    numeroCollo += currProduct.numeroCollo;
-                });
-                this.checkNumber(productOriginal).then(function(number) {
-                    numeroCollo +=  "/" + number + process.macchina;
-                    var promisesFather = [];
-                    if (multiFatherProd.length > 0) {
-                        multiFatherProd.forEach(function(currProduct) {
-                            currProduct.fatherId.forEach(function(currP) {
-                                var newMethod = Product.findById(currP);
-                                promisesFather.push(newMethod);
-                            });
-                        });
-                    }
-                    singleFatherProd.forEach(function(currProduct) {
-                        var newMethod = Product.findById(currProduct._id);
-                        promisesFather.push(newMethod);
-                    });
-                    Q.all(promisesFather).then(function(fatherResultTmp) {
-                        var fatherResult = utils.deleteDuplicates(fatherResultTmp);
-                        fatherResult.forEach(function(currProduct) {
-                            promises.push(Product.increaseScarto(currProduct._id,scarto));
-                        });
-                        productOriginal.forEach(function(currProduct) {
-                            promises.push(Process.addProductToProcess(result._id,currProduct._id));
-                        });
-                        Product.saveNewProduct(createFiglio).then(function(figlioProduct) {
-                            if (clienteCod) {
-                                promises.push(Product.addClienteCodToProduct(figlioProduct._id,clienteCod));
-                            }
-                            Process.setFiglioToProcess(result.id,figlioProduct.id).then(function(lastProcess) {
-                                fatherResult.forEach(function(currFather) {
-                                    var newMethod = Product.addFatherId(figlioProduct.id, currFather._id);
-                                    promises.push(newMethod);
-                                });
-                                promises.push(Product.updateNumeroCollo(figlioProduct.id,numeroCollo));
-                                Q.all(promises).then(function(promises) {
-                                    res.status(200).json({
-                                        "message": "Process done",
-                                        "data": data,
-                                        "status": true
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
-            }).catch(function(err) {
-                res.status(500).json({
-                    "message": "Internal problem",
-                    "status": false,
-                    "err": err.message
-                });
-            });
-        })*/;
+        });
 
     createScartoFatherMap = function(father,products,scartoMap) {
         var scartoFatherMap = {};
-        var check = true;
-        for (var key in scartoMap) {
-            check = true;
-            for (var i=0; i<products.length && check; i++) {
-                if (products[i]._id == key) {
-                    for (var j=0; j<father.length && check; j++) {
-                        if (products[i].fatherId.length > 0) {
-                            for (var k=0; k<products[i].fatherId.length && check; j++) {
-                                if (products[i].fatherId[k] == father[j]._id) {
-                                    scartoFatherMap[father[j]._id] = scartoMap[key];
-                                    check = false;
-                                }
-                            }
-                        } else {
-                            scartoFatherMap[key] = scartoMap[key];
-                            check = false;
+        var tmpScartoMap = [];
+        for (var i=0; i<products.length; i++) {
+            if (!products[i].fatherId || products[i].fatherId.length == 0) {
+                tmpScartoMap.push({product: products[i]._id, father: products[i]._id, scarto: 0});
+            } else {
+                for (var j=0; j<products[i].fatherId.length; j++) {
+                    for (var k=0; k<father.length; k++) {
+                        if (products[i].fatherId[j] == father[k]._id) {
+                            tmpScartoMap.push({product: products[i]._id, father: father[k]._id, scarto: 0})
                         }
                     }
                 }
             }
         }
+        _.forOwn(scartoMap, function(value, key) {
+            _.each(tmpScartoMap, function(currTmp) {
+                if (currTmp.product == key) {
+                    if (_.has(scartoFatherMap, key)  && _.get(scartoFatherMap, key)) {
+                        scartoFatherMap[currTmp.father] += value;
+                    } else {
+                        scartoFatherMap[currTmp.father] = value;
+                    }
+                }
+            });
+        });
         return scartoFatherMap;
     }
 
