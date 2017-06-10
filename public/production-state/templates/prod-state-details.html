@@ -6,33 +6,24 @@
 </h1>
 <h2>Stato Produzione n. {{prodStateDetailsCtrl.prodState.prod.numero}}</h2>
 <fieldset>
-    <!--<article-table article-list="prodStateDetailsCtrl.prodState.articles" entry-limit="prodStateDetailsCtrl.entryLimit"
-                   current-page="prodStateDetailsCtrl.currentPage">
-        <button-action>
-            <button type="button" class="btn btn-primary btn-block"
-                    ng-click="prodStateDetailsCtrl.addWorkingArticle($parent.article)">Lavora <span class="glyphicon glyphicon-plus"></span>
-            </button>
-            <button type="button" class="btn btn-danger btn-block">Rimuovi</button>
-
-        </button-action>
-    </article-table>-->
     <prod-state-article-table article-list="prodStateDetailsCtrl.prodState.articles">
         <button-action>
             <button type="button" class="btn btn-primary btn-block"
                     ng-click="prodStateDetailsCtrl.addWorkingArticle($parent.article)">Lavora <span class="glyphicon glyphicon-plus"></span>
             </button>
-            <button type="button" class="btn btn-danger btn-block">Rimuovi</button>
         </button-action>
     </prod-state-article-table>
 </fieldset>
 
-<br><br><br><br>
+<br><br>
+<hr>
+<br><br>
 
 <fieldset>
     <legend>Articoli selezionati:</legend>
     <prod-state-article-table article-list="prodStateDetailsCtrl.workingArticles" entry-limit="prodStateDetailsCtrl.entryLimit" current-page="prodStateDetailsCtrl.currentPage">
         <button-action>
-            <button type="button" class="btn btn-primary btn-block" ng-click="prodStateDetailsCtrl.removeWorkingArticle($parent.article)">Lavora <span class="glyphicon glyphicon-minus"></span>
+            <button type="button" class="btn btn-primary btn-block" ng-click="prodStateDetailsCtrl.removeWorkingArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span>
             </button>
         </button-action>
     </prod-state-article-table>

@@ -18,7 +18,7 @@ function CutDetailsController (CutFactory, $routeParams,$location) {
             .catch(function(err) {
                 console.log(err);
             });
-    }
+    };
             
         
     ctrl.getCut($routeParams.id);

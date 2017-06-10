@@ -1,47 +1,30 @@
-
-
 <fieldset>
-   <legend>Lista articoli:</legend>
-    <article-table article-list="prodStateEditCtrl.freeArticles" entry-limit="prodStateEditCtrl.entryLimit" current-page="prodStateEditCtrl.currentPage">
-        <table-pagination>
-            <pagination total-items="prodStateEditCtrl.freeArticles.length" current-page="prodStateEditCtrl.currentPage" entry-limit="prodStateEditCtrl.entryLimit"></pagination>
-            <br><br>
-        </table-pagination>
+    <legend>Lista articoli:</legend>
 
-        <filters>
-            <div class="col-md-2">
-                <input-date-filter label-name="Data Consegna" model="$parent.search" attribute-m="dataConsegna"></input-date-filter>
-            </div>
-            <div class="col-md-2">
-                <input-text-filter label-name="Regione" model="$parent.search" attribute-m="region"></input-text-filter>
-            </div>
-            <div class="col-md-2">
-                <input-text-filter label-name="Provincia" model="$parent.search" attribute-m="provincia"></input-text-filter>
-            </div>
-            <div class="col-md-2">
-                <input-text-filter label-name="Cliente" model="$parent.search" attribute-m="clienteCod"></input-text-filter>
-            </div>
-            <div class="col-md-2">
-                <input-text-filter label-name="Ordine" model="$parent.search" attribute-m="ordineCod"></input-text-filter>
-            </div>
-            <br><br><br><br>
-        </filters>
-
+    <prod-state-article-table article-list="prodStateEditCtrl.freeArticles">
         <button-action>
-                <button type="button" class="btn btn-primary btn-circle" ng-click="prodStateEditCtrl.addSelectedArticle($parent.article)"><span class="glyphicon glyphicon-plus"></span></button>
+            <button type="button" class="btn btn-primary btn-circle"
+                    ng-click="prodStateEditCtrl.addSelectedArticle($parent.article)"><span
+                    class="glyphicon glyphicon-plus"></span></button>
         </button-action>
-    </article-table>
+        </article-table>
+    </prod-state-article-table>
 </fieldset>
 
-<br><br><br><br>
+<br><br>
+<hr>
+<br><br>
 
 <fieldset>
     <legend>Articoli selezionati:</legend>
-    <article-table article-list="prodStateEditCtrl.prodState.articles" entry-limit="prodOverCtrl.entryLimit" current-page="prodOverCtrl.currentPage">
+    <prod-state-article-table article-list="prodStateEditCtrl.prodState.articles">
         <button-action>
-            <button type="button" class="btn btn-primary btn-circle" ng-click="prodStateEditCtrl.removeSelectedArticle($parent.article)"><span class="glyphicon glyphicon-minus"></span></button>
+            <button type="button" class="btn btn-primary btn-circle"
+                    ng-click="prodStateEditCtrl.removeSelectedArticle($parent.article)"><span
+                    class="glyphicon glyphicon-minus"></span></button>
         </button-action>
-    </article-table>
+    </prod-state-article-table>
+    
 </fieldset>
 <div ng-transclude="confirmButton"></div>
 

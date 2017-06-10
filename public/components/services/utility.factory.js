@@ -19,11 +19,10 @@ function UtilityFactory() {
         else {
             console.log("MANCANO ATTRIBUTI");
         }
-        return;
     };
 
     utilityFactory.calculateQuantity = function (model, peso, spessore, larghezza) {
-        var quantita = 0;
+        var quantita = 1;
         if (model.tipo != "nastro" && model.tipo != "coil") {
             quantita = Math.round(model[peso] / ((model[larghezza] * model.lunghezza * model[spessore] * 7.85) / 1000000));
         };
@@ -50,7 +49,6 @@ function UtilityFactory() {
             product.colore = stock.colore;
         }
         product.scelta = stock.scelta;
-        return;
     };
 
     utilityFactory.inboundProductFromExpected = function (product, expected) {

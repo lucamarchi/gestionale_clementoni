@@ -15,6 +15,10 @@ function ProdStateFactory ($http, myConfig) {
     prodStateFactory.addProdState = function (prodState) {
         return $http.post(urlProds, prodState);
     };
+
+    prodStateFactory.updateProdState = function (id, prodState) {
+        return $http.put(urlProds+'/'+id, prodState);
+    };
     
     return prodStateFactory;
 };

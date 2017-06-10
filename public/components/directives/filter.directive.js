@@ -50,7 +50,7 @@ angular
                     '</span>',
                 '</span>',
                 '<span ng-if="!(options[attributeO].hasOwnProperty(model.materiale))">',
-                    '<select disabled ng-model="model[attributeM]" class="filter-control">',
+                    '<select disabled ng-model="model[attributeM]">',
                     '</select disabled>',
                 '</span>',
             ].join(''),
@@ -65,7 +65,7 @@ angular
                     function(newVal, oldVal) {
                         if (newVal) {
                             console.log(newVal, oldVal); 
-                            delete $scope.model[$scope.attributeM];
+                            $scope.model[$scope.attributeM] = "";
                         }
                     }
                 );

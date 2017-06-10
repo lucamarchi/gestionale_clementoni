@@ -1,26 +1,52 @@
 <h1>RIEPILOGO PRODUZIONE</h1>
-<article-table article-list="prodOverCtrl.articles" entry-limit="prodOverCtrl.entryLimit" current-page="prodOverCtrl.currentPage">
+<article-table article-list="prodOverCtrl.articles" entry-limit="prodOverCtrl.entryLimit"
+               current-page="prodOverCtrl.currentPage">
     <table-pagination>
-        <pagination total-items="prodOverCtrl.articles.length" current-page="prodOverCtrl.currentPage" entry-limit="prodOverCtrl.entryLimit"></pagination>
+        <pagination total-items="prodOverCtrl.articles.length" current-page="prodOverCtrl.currentPage"
+                    entry-limit="prodOverCtrl.entryLimit"></pagination>
         <br><br>
     </table-pagination>
-    
+
     <filters>
-        <div class="col-md-2">
-            <input-date-filter label-name="Data Consegna" model="$parent.search" attribute-m="dataConsegna"></input-date-filter>
+        <div class="row">
+            <div class="col-md-2">
+                <input-date-filter label-name="Data Consegna" model="$parent.search"
+                                   attribute-m="dataConsegna"></input-date-filter>
+            </div>
+            <div class="col-md-2">
+                <input-text-filter label-name="Regione" model="$parent.search" attribute-m="region"></input-text-filter>
+            </div>
+            <div class="col-md-2">
+                <input-text-filter label-name="Provincia" model="$parent.search"
+                                   attribute-m="provincia"></input-text-filter>
+            </div>
+            <div class="col-md-2">
+                <input-text-filter label-name="Cliente" model="$parent.search"
+                                   attribute-m="clienteCod"></input-text-filter>
+            </div>
+            <div class="col-md-2">
+                <input-text-filter label-name="Ordine" model="$parent.search"
+                                   attribute-m="ordineCod"></input-text-filter>
+            </div>
         </div>
-        <div class="col-md-2">
-            <input-text-filter label-name="Regione" model="$parent.search" attribute-m="region"></input-text-filter>
+        <br>
+        <div class="row">
+            <div class="col-md-2">
+                <select-materiale-filter label-name="Materiale" model="$parent.search"
+                                         attribute-m="materiale">
+                </select-materiale-filter>
+            </div>
+            <div class="col-md-2">
+                <select-materiale-filter label-name="Tipo" model="$parent.search"
+                                         attribute-m="tipo">
+                </select-materiale-filter>
+            </div>
+            <div class="col-md-2">
+                <select-spessore-filter label-name="Spessore" model="$parent.search"
+                                         attribute-m="spessore">
+                </select-spessore-filter>
+            </div>
         </div>
-        <div class="col-md-2">
-            <input-text-filter label-name="Provincia" model="$parent.search" attribute-m="provincia"></input-text-filter>
-        </div>
-        <div class="col-md-2">
-            <input-text-filter label-name="Cliente" model="$parent.search" attribute-m="clienteCod"></input-text-filter>
-        </div>
-        <div class="col-md-2">
-            <input-text-filter label-name="Ordine" model="$parent.search" attribute-m="ordineCod"></input-text-filter>
-        </div>
-        <br><br><br><br>
+        <br><br>
     </filters>
 </article-table>

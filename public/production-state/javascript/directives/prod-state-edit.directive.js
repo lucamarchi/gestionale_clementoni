@@ -2,10 +2,10 @@
  * Created by francescodicara on 19/05/17.
  */
 
-function prodStateEdit (ArticleFactory) {
+function prodStateEdit(ArticleFactory) {
     return {
         restrict: 'E',
-        templateUrl:'public/production-state/templates/prod-state-edit.html',
+        templateUrl: 'public/production-state/templates/prod-state-edit.html',
         scope: {},
         bindToController: {
             prodState: "=",
@@ -31,13 +31,13 @@ function prodStateEdit (ArticleFactory) {
 
             ctrl.getUnassignedToStateProdArticles = function () {
                 ArticleFactory.getUnassignedToStateProdArticles()
-                    .then (function (resp) {
+                    .then(function (resp) {
                         console.log(resp);
                         ctrl.freeArticles = resp.data.data.articles;
                         ctrl.entryLimit = 10;
                         ctrl.currentPage = 1;
                     })
-                    .catch(function(err) {
+                    .catch(function (err) {
                         console.log(err);
                     })
             };
@@ -53,14 +53,14 @@ function prodStateEdit (ArticleFactory) {
                 }
                 else {
                     var articlePos = ctrl.prodState.removedArticles.indexOf(article);
-                    if (articlePos != -1){
-                        ctrl.prodState.removedArticles.splice(articlePos,1);
+                    if (articlePos != -1) {
+                        ctrl.prodState.removedArticles.splice(articlePos, 1);
                     }
                 }
-                ctrl.freeArticles.splice(index,1);
+                ctrl.freeArticles.splice(index, 1);
             };
 
-            ctrl.removeSelectedArticle = function (article){
+            ctrl.removeSelectedArticle = function (article) {
                 ctrl.freeArticles.push(article);
                 var index = ctrl.prodState.articles.indexOf(article);
                 console.log(article, index);
@@ -69,12 +69,13 @@ function prodStateEdit (ArticleFactory) {
                 }
                 else {
                     var articlePos = ctrl.prodState.addedArticles.indexOf(article);
-                    if (articlePos !== -1){
-                        ctrl.prodState.addedArticles.splice(articlePos,1);
+                    if (articlePos !== -1) {
+                        ctrl.prodState.addedArticles.splice(articlePos, 1);
                     }
                 }
-                ctrl.prodState.articles.splice(index,1);
+                ctrl.prodState.articles.splice(index, 1);
             };
+
         },
         controllerAs: 'prodStateEditCtrl',
     }

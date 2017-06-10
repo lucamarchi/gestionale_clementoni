@@ -108,6 +108,7 @@ function inboundSet () {
             ctrl.addInboundProduct = function (product) {
                 product.pesoNetto = product.pesoIniziale;
                 product.pesoLordo = product.pesoNetto;
+                UtilityFactory.productValuesForType(product, "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");
                 if (ctrl.inboundProductEntryModalContent.expected) {
                     var element = {};
                     
@@ -134,7 +135,7 @@ function inboundSet () {
                     ctrl.product2expected.push(element);
                 }
                 else {
-                    UtilityFactory.productValuesForType(product, "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");
+
                     ctrl.inbound.addedProducts.push(product)
                 }
                 ctrl.inbound.products.push(product);

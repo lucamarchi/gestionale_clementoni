@@ -32,9 +32,6 @@ function cutArticleTable() {
                 if (ctrl.dimensionSelectionModalContent.article.lunghezzaAssegnata) {
                     ctrl.dimensionSelectionModalContent.article.lunghezzaAssegnata = articleCopy.lunghezzaAssegnata.toString();
                 }
-                else {
-                    ctrl.dimensionSelectionModalContent.article.lunghezzaAssegnata = 0;
-                }
                 if (ctrl.dimensionSelectionModalContent.article.larghezzaAssegnata) {
                     ctrl.dimensionSelectionModalContent.article.larghezzaAssegnata = articleCopy.larghezzaAssegnata.toString();
                 }
