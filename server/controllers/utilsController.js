@@ -9,7 +9,7 @@ module.exports = {
         array.forEach(function(currElem) {
             var check = true;
             for (var i=0; i<tmpArray.length; i++) {
-                if (tmpArray[i]._id == currElem._id) {
+                if (tmpArray[i].numeroCollo == currElem.numeroCollo) {
                     check = false;
                 }
             }

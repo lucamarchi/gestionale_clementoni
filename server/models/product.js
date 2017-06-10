@@ -26,6 +26,7 @@ var ProductSchema = new Schema({
     pesoNetto: {type: Number},
     pesoLordo: {type: Number},
     superficie: {type: String},
+    quantita: {type: Number},
     prezzo: {type: Number},
     difetti: {type: String},
     stabilimento: {type: String},
@@ -139,6 +140,7 @@ module.exports = {
         newProduct.pesoNetto = product.pesoNetto;
         newProduct.pesoLordo = product.pesoLordo;
         newProduct.superficie = product.superficie;
+        newProduct.quantita = product.quantita;
         newProduct.prezzo = product.prezzo;
         newProduct.difetti = product.difetti;
         newProduct.stabilimento = product.stabilimento;
@@ -214,6 +216,7 @@ module.exports = {
                     result.pesoNetto = product.pesoNetto;
                     result.pesoLordo = product.pesoLordo;
                     result.superficie = product.superficie;
+                    result.quantita = product.quantita;
                     result.prezzo = product.prezzo;
                     result.difetti = product.difetti;
                     result.stabilimento = product.stabilimento;
@@ -257,8 +260,14 @@ module.exports = {
         return product;
     },
 
-    deleteStock: function(productId) {
+    deleteStockNetto: function(productId) {
         var query = {$set: {'pesoNetto': 0}};
+        var product = this.updateProduct(productId,query);
+        return product;
+    },
+
+    deleteStockLordo: function(productId) {
+        var query = {$set: {'pesoLordo': 0}};
         var product = this.updateProduct(productId,query);
         return product;
     },
@@ -285,6 +294,7 @@ module.exports = {
         newProduct.pesoNetto = product.pesoNetto;
         newProduct.pesoLordo = product.pesoLordo;
         newProduct.superficie = product.superficie;
+        newProduct.quantita = product.quantita;
         newProduct.prezzo = product.prezzo;
         newProduct.difetti = product.difetti;
         newProduct.stabilimento = product.stabilimento;
