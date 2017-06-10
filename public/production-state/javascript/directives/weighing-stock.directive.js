@@ -10,6 +10,17 @@ function weighingStock () {
         transclude: {
         },
         controller: function ($scope) {
+            var ctrl = this;
+            $scope.$watchCollection(
+                function () {
+                    return ctrl.weighingStockForm;
+                },
+                function (newVal) {
+                    if (newVal) {
+                        $scope.$emit('weighingStockFormValid', newVal);
+                    }
+                }
+            );
         },
         controllerAs: 'weighingStockCtrl',
     }

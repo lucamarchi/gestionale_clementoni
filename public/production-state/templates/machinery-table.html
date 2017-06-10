@@ -4,9 +4,9 @@
         <th>Sigla</th>
     </thead>
     <tbody>
-        <tr ng-repeat="(name,sigle) in machineryTableCtrl.machineryList">
-            <td>{{name | uppercase}}</td>
-            <td>{{sigle | uppercase}}</td>
+        <tr ng-repeat="machinery in machineryTableCtrl.machineryList">
+            <td>{{machinery.name | uppercase}}</td>
+            <td>{{machinery.sigle | uppercase}}</td>
             <td ng-transclude="buttonAction"></td>
         </tr>
     </tbody>

@@ -11,30 +11,29 @@ function ProcessingProgressFactory($cookies) {
         return $cookies.getObject("articles");
     };
 
-    processing.createScartoMap = function (stockList, machinerySigle, producedProducts, processingList) {
-        var scartoTemp;
-        var scartoMap = {};
+    processing.createProcessing = function (stockList, machinerySigle, producedProducts, processingList) {
         var scarto = 0;
         var stockId;
-        var producedWeight = producedProducts.reduce(function (a, b) {
-            return a.pesoLordo + b.pesoLordo;
-        });
         if (machinerySigle == "a") {
+            var producedWeight = producedProducts.reduce(function (acc, obj) {
+                return acc + obj.pesoLordo;
+            }, 0);
+            var scartoTemp = 0;
             scarto = stockList[0].pesoLordo - stockList[0].nuovoPesoLordo - producedWeight;
             stockId = stockList[0]._id;
-            scartoMap[stockId] = scarto;
             stockList[0].pesoLordo = stockList[0].nuovoPesoLordo;
             stockList[0].pesoNetto = stockList[0].pesoLordo; //controllare
             delete stockList[0].nuovoPesoLordo;
             delete stockList[0].nuovoScarto;
             angular.forEach(processingList, function (processing) {
-                scartoTemp = (scartoMap[stockId] * processing.producedProduct.pesoNetto) / producedWeight;
-                processing.scarto = {[stockId] : scartoTemp};
+                scartoTemp = (scarto * processing.producedProduct.pesoNetto) / producedWeight;
+                processing.scarto = {[stockId]: scartoTemp};
                 processing.machinery = machinerySigle;
                 processing.stocks = stockList;
             })
         }
         else {
+            var scartoMap = {};
             angular.forEach(stockList, function (stock) {
                 scarto = stock.nuovoScarto;
                 stockId = stock._id;

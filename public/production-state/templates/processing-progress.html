@@ -60,8 +60,7 @@
                        current-page="processCtrl.currentPage">
             <button-action>
                 <button ng-disabled="processCtrl.selectedStocks.length == 0 || !processCtrl.isMachinerySelected()"
-                        type="button" class="btn btn-primary btn-block" data-toggle="modal"
-                        data-target="#{{processCtrl.producedProductEntryModalContent.modalId}}"
+                        type="button" class="btn btn-primary btn-block"
                         ng-click=processCtrl.openProductForm($parent.article)>Lavora
                 </button>
             </button-action>
@@ -81,8 +80,8 @@
 
 
 <button type="button" class="btn btn-primary btn-lg"
-        ng-disabled=false
-        data-toggle="modal" data-target="#{{processCtrl.weighingStockModalContent.modalId}}">Conferma
+        ng-disabled="!processCtrl.isComplete()"
+        data-toggle="modal" ng-click="processCtrl.confirmProcessing()">Conferma
 </button>
 
 
@@ -96,12 +95,13 @@
                 <h4 class="modal-title">{{processCtrl.weighingStockModalContent.modalTitle}}</h4>
             </div>
             <div class="modal-body">
-                <weighing-stock stock-list="processCtrl.selectedStocks" machinery="processCtrl.selectedMachinery"></weighing-stock>
+                <weighing-stock stock-list="processCtrl.selectedStocks"
+                                machinery="processCtrl.selectedMachinery"></weighing-stock>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        ng-click="processCtrl.confirmProcessing()">Conferma
+                        ng-disabled="!processCtrl.weighingStockFormValid" ng-click="processCtrl.completeProcessing()">Conferma
                 </button>
             </div>
         </div>
@@ -167,6 +167,32 @@
         </div>
     </div>
 </div>
+
+<!--Modal produced product entry-->
+<div ng-class="processCtrl.isolateProcessingModalContent.modalClass"
+     id="{{processCtrl.isolateProcessingModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{processCtrl.isolateProcessingModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                {{processCtrl.isolateProcessingModalContent.modalBody}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                        ng-click="processCtrl.createIsolatedProduct(false)">No
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        ng-click="processCtrl.createIsolatedProduct(true)">Si
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <br><br>
 SELECTED MACHINERY: {{processCtrl.selectedMachinery}}

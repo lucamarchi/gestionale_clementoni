@@ -3,12 +3,12 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
 
     ctrl.processingList = [];
 
-    ctrl.selectedMachinery = {};
+    ctrl.selectedMachinery = [];
     ctrl.selectedArticles = [];
     ctrl.selectedStocks = [];
     ctrl.producedProducts = [];
     ctrl.isMachinerySelected = function () {
-        return Object.keys(ctrl.selectedMachinery).length != 0;
+        return ctrl.selectedMachinery.length != 0;
     };
 
     ctrl.machinerySelectionModalContent = {
@@ -31,8 +31,21 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
         modalClass: 'modal modal-xl fade',
         modalTitle: 'Inserimento collo prodotto',
         modalId: 'producedproductentry',
-        producedProduct: {},
-        selectedArticle: {},
+        producedProduct: undefined,
+        selectedArticle: undefined,
+    };
+
+    ctrl.weighingStockModalContent = {
+        modalClass: 'modal fade',
+        modalTitle: 'Pesatura Stock',
+        modalId: 'weighingstock',
+    };
+
+    ctrl.isolateProcessingModalContent = {
+        modalBody: "Creare nastro/pacco a magazzino?",
+        modalClass: 'modal fade',
+        modalTitle: 'Pesatura Stock',
+        modalId: 'isolateprocessing',
     };
 
     ctrl.weighingStockModalContent = {
@@ -50,6 +63,12 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
             ctrl.producedProductFormValid = data.$valid;
         }
     });
+    $scope.$on('weighingStockFormValid', function (event, data) {
+        if (data) {
+            ctrl.weighingStockFormValid = data.$valid;
+        }
+    });
+
 
     ctrl.selectArticles = function () {
         console.log(ProcessingProgressFactory.getArticles());
@@ -71,24 +90,25 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
 
     ctrl.showMachineryList = function () {
         if ((ctrl.selectedArticles && ctrl.selectedArticles.length) > 1) {
-            ctrl.machinerySelectionModalContent.machineryList = {"slitter": "a"};
+            ctrl.machinerySelectionModalContent.machineryList = features.macchinari.filter(function (machine) {
+                return machine.name == "slitter";
+            })
         }
         else if (ctrl.selectedStocks && ctrl.selectedStocks.length > 1) {
-            ctrl.machinerySelectionModalContent.machineryList = features.macchinari;
-            delete ctrl.machinerySelectionModalContent.machineryList.slitter;
+            ctrl.machinerySelectionModalContent.machineryList = features.macchinari.filter(function (machine) {
+                return machine.name != "slitter";
+            })
         }
         else {
             ctrl.machinerySelectionModalContent.machineryList = features.macchinari;
         }
+        console.log(ctrl.machinerySelectionModalContent.machineryList);
     };
 
-    ctrl.selectMachinery = function (machineryName, machinerySigle) {
-        ctrl.selectedMachinery = {[machineryName]: machinerySigle};
-        /*ctrl.processingList = ctrl.processingList.map(function (processing) {
-         processing.machinery = machinerySigle;
-         return processing;
-         });*/
-        console.log("processingList", ctrl.processingList);
+    ctrl.selectMachinery = function (machinery) {
+        console.log("machinery", machinery);
+        ctrl.selectedMachinery = [];
+        ctrl.selectedMachinery.push(machinery);
     };
 
     ctrl.showStockList = function () {
@@ -114,61 +134,98 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
 
     ctrl.addStock = function (stock) {
         console.log(stock);
-        if (ctrl.selectedMachinery.hasOwnProperty('slitter')) {
+        if (ctrl.selectedMachinery[0].sigle == 'a') {
             ctrl.stockSelectionModalContent.stockList = ctrl.stockSelectionModalContent.stockList.concat(ctrl.selectedStocks);
             ctrl.selectedStocks = [];
-
         }
         ctrl.selectedStocks.push(stock);
 
         $('#' + ctrl.stockSelectionModalContent.modalId).modal('hide');
         var index = ctrl.stockSelectionModalContent.stockList.indexOf(stock);
         ctrl.stockSelectionModalContent.stockList.splice(index, 1);
-        console.log("dopo ", ctrl.stockSelectionModalContent.stockList, ctrl.selectedStocks);
-        /*ctrl.processingList = ctrl.processingList.map(function (processing) {
-         processing.stocks = ctrl.selectedStocks;
-         return processing;
-         });*/
 
-        console.log("processingList", ctrl.processingList);
     };
 
     ctrl.openProductForm = function (article) {
-        var trovato = ctrl.processingList.findIndex(function (processing) {
-            return processing.article == article;
-        });
-        if (trovato != -1) {
-            ctrl.producedProductEntryModalContent.selectedArticle = article;
-            if (ctrl.processingList[trovato].producedProduct) {
-                ctrl.producedProductEntryModalContent.producedProduct = ctrl.processingList[trovato].producedProduct;
-                console.log("if");
-            }
-            else {
-                ctrl.producedProductEntryModalContent.producedProduct = {};
-                UtilityFactory.producedProductFromStock(ctrl.producedProductEntryModalContent.producedProduct, ctrl.selectedStocks[0]);
+        if (article) {
+            var trovato = ctrl.processingList.findIndex(function (processing) {
+                return processing.article == article;
+            });
+            if (trovato != -1) {
+                ctrl.producedProductEntryModalContent.selectedArticle = article;
+                if (ctrl.processingList[trovato].producedProduct) {
+                    ctrl.producedProductEntryModalContent.producedProduct = ctrl.processingList[trovato].producedProduct;
+                }
+                else {
+                    ctrl.producedProductEntryModalContent.producedProduct = {};
+                    UtilityFactory.producedProductFromStock(ctrl.producedProductEntryModalContent.producedProduct, ctrl.selectedStocks[0]);
+                }
             }
         }
+        else {
+            ctrl.producedProductEntryModalContent.selectedArticle = undefined;
+            ctrl.producedProductEntryModalContent.producedProduct = {};
+            UtilityFactory.producedProductFromStock(ctrl.producedProductEntryModalContent.producedProduct, ctrl.selectedStocks[0]);
+        }
+        $('#' + ctrl.producedProductEntryModalContent.modalId).modal('show');
     };
 
     ctrl.addProducedProduct = function (product, article) {
         product.pesoNetto = product.pesoIniziale;
         product.pesoLordo = product.pesoNetto;
-        UtilityFactory.productValuesForType(ctrl.producedProductEntryModalContent.producedProduct, "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");
+        UtilityFactory.productValuesForType(product,
+            "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");
         console.log(product);
-
-        var trovato = ctrl.processingList.findIndex(function (processing) {
-            return processing.article == article;
-        });
-        if (trovato != -1) {
-            ctrl.processingList[trovato].producedProduct = product;
-            ctrl.producedProducts[trovato] = product;
+        if (article) {
+            var trovato = ctrl.processingList.findIndex(function (processing) {
+                return processing.article == article;
+            });
+            if (trovato != -1) {
+                ctrl.processingList[trovato].producedProduct = product;
+                ctrl.producedProducts[trovato] = product;
+            }
+        }
+        else {
+            var processing = {};
+            processing.article = undefined;
+            processing.stocks = [];
+            processing.producedProduct = product;
+            processing.machinery = "";
+            ctrl.processingList.push(processing);
+            ctrl.producedProducts.push(product);
         }
         console.log(ctrl.processingList);
     };
 
-    ctrl.confirmProcessing = function () {
-        ProcessingProgressFactory.createScartoMap(ctrl.selectedStocks, "b", ctrl.producedProducts, ctrl.processingList);
+    ctrl.isComplete = function () {
+        return ctrl.isMachinerySelected()
+            && ctrl.selectedStocks.length != 0
+            && (ctrl.selectedArticles.length <= ctrl.producedProducts.length);
+    };
 
+    ctrl.createIsolatedProduct = function (choose) {
+        if (choose == true) {
+            ctrl.openProductForm();
+        }
+        else {
+            $('#' + ctrl.weighingStockModalContent.modalId).modal('show');
+
+        }
+
+    };
+
+    ctrl.confirmProcessing = function () {
+        if (ctrl.selectedMachinery[0].sigle == "a") {
+            $('#' + ctrl.isolateProcessingModalContent.modalId).modal('show');
+        }
+        else {
+            $('#' + ctrl.weighingStockModalContent.modalId).modal('show');
+        }
+
+    };
+
+    ctrl.completeProcessing = function () {
+        ProcessingProgressFactory.createProcessing(ctrl.selectedStocks, ctrl.selectedMachinery[0].sigle, ctrl.producedProducts, ctrl.processingList);
     }
 
 }
