@@ -33,26 +33,27 @@ module.exports = function(app, apiRoutes) {
 
         .get('/release/:release_id', function(req,res,next) {
             var data = {};
-            Release.findById(req.params.release_id).then(function(result) {
+            Release.findById(req.params.release_id).then(function (result) {
                 data.release = result;
-                productController.retrieveProducts(result.productsId).then(function(products) {
+                productController.retrieveProducts(result.productsId).then(function (products) {
                     data.products = products;
-                    releaseController.retrieveArticles(result).then(function(articles) {
-                        data.articles = articles;
+                    releaseController.retrieveArticles(result).then(function (articles) {
+                        var newArticles = releaseController.sortArticlesToTriples(result, articles);
+                        data.articles = newArticles;
                         res.status(200).json({
                             "success": true,
                             "message": "Release and product list",
                             "data": data
                         });
                     });
+                }).catch(function (err) {
+                    res.status(500).json({
+                        "success": false,
+                        "message": "Internal server error",
+                        "error": err.message
+                    });
                 });
-            }).catch(function(err) {
-                res.status(500).json({
-                    "success": false,
-                    "message": "Internal server error",
-                    "error": err.message
-                });
-            });
+            })
         })
 
         .post('/release', function(req,res,next) {

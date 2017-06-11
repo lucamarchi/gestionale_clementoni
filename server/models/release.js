@@ -23,7 +23,7 @@ var ReleaseSchema = new Schema({
         article: {type: Schema.ObjectId, ref: 'Article'},
         quantita: {type: Number},
         unita: {type: String},
-        peso: {typ: Number}
+        peso: {type: Number}
     }],
     stato: {type: String, default: 'sospeso'},
     anno: {type: String},
