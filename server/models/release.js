@@ -21,9 +21,9 @@ var ReleaseSchema = new Schema({
     productsId: [{ type: Schema.ObjectId, ref: 'Product'}],
     articlesId: [{
         article: {type: Schema.ObjectId, ref: 'Article'},
-        peso: {typ: Number},
         quantita: {type: Number},
-        unita: {type: String}
+        unita: {type: String},
+        peso: {typ: Number}
     }],
     stato: {type: String, default: 'sospeso'},
     anno: {type: String},

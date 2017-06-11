@@ -16,13 +16,13 @@ module.exports = {
         Product.findAll().then(function(products) {
             _.each(products, function(currProduct) {
                 var index = checkIndexObj(tmpGroupedProducts,_.get(currProduct, 'tipo'), _.get(currProduct, 'qualita'),
-                _.get(currProduct, 'spessoreEffettivo'), _.get(currProduct, 'materiale'));
+                _.get(currProduct, 'spessoreNominale'), _.get(currProduct, 'materiale'));
                 if (index == -1) {
                     var tmpObjProduct = createObjProduct(currProduct);
                     tmpGroupedProducts.push(tmpObjProduct);
                 } else {
                     var tmpGroupProduct = tmpGroupedProducts[index]['data'];
-                    var indexData = checkIndexData(tmpGroupProduct, _.get(currProduct, 'lunghezza'), _.get(currProduct, 'larghezzaEffettiva'));
+                    var indexData = checkIndexData(tmpGroupProduct, _.get(currProduct, 'lunghezza'), _.get(currProduct, 'larghezzaNominale'), _.get(currProduct, 'tipo'));
                     if (indexData == -1) {
                         var tmpObj = createDataObjProd(currProduct);
                         tmpGroupedProducts[index]['data'].push(tmpObj);
@@ -49,7 +49,7 @@ module.exports = {
                     tmpGroupedProducts.push(tmpObjProduct);
                 } else {
                     var tmpGroupExpected = tmpGroupedProducts[index]['data'];
-                    var indexData = checkIndexData(tmpGroupExpected, _.get(currExpected, 'lunghezza'), _.get(currExpected, 'larghezza'));
+                    var indexData = checkIndexData(tmpGroupExpected, _.get(currExpected, 'lunghezza'), _.get(currExpected, 'larghezza'), _.get(currExpected, 'tipo'));
                     if (indexData == -1) {
                         var tmpObj = createDataObjExpe(currExpected);
                         tmpGroupedProducts[index]['data'].push(tmpObj);
@@ -76,7 +76,7 @@ module.exports = {
                     tmpGroupedExpecteds.push(tmpObjArticle);
                 } else {
                     var tmpGroupArticle = tmpGroupedExpecteds[index]['data'];
-                    var indexData = checkIndexData(tmpGroupArticle, _.get(currArticle, 'lunghezzaAssegnata'), _.get(currArticle, 'larghezzaAssegnata'));
+                    var indexData = checkIndexData(tmpGroupArticle, _.get(currArticle, 'lunghezzaAssegnata'), _.get(currArticle, 'larghezzaAssegnata'), _.get(currArticle, 'tipo'));
                     if (indexData == -1) {
                         var tmpObj = createDataObjArt(currArticle);
                         tmpGroupedExpecteds[index]['data'].push(tmpObj);
@@ -111,12 +111,13 @@ var checkIndexObj = function(tmpObj,tipo,qualita,spessore,materiale) {
     } else return -1;
 };
 
-var checkIndexData = function(tmpObj, lunghezza, larghezza) {
+var checkIndexData = function(tmpObj, lunghezza, larghezza, tipo) {
     var count = 0;
     var lastCount = 0;
     var check = false;
     _.each(tmpObj, function(currObj) {
-        if (_.get(currObj,'lunghezza') == lunghezza && _.get(currObj,'larghezza') == larghezza) {
+        if ((_.get(currObj,'lunghezza') == lunghezza && _.get(currObj,'larghezza') == larghezza) ||
+            ((tipo == "coil" || tipo == "pacco") && _.get(currObj, 'larghezza'))) {
             lastCount = count;
             check = true;
         }
@@ -131,18 +132,19 @@ var createObjProduct = function(currProduct) {
     var tmpObjProduct = {
         'tipo': _.get(currProduct, 'tipo'),
         'qualita': _.get(currProduct, 'qualita'),
-        'spessore': _.get(currProduct, 'spessoreEffettivo'),
+        'spessore': _.get(currProduct, 'spessoreNominale'),
         'materiale':_.get(currProduct, 'materiale')
     };
     var dataObj = {
-        'lunghezza': _.get(currProduct, 'lunghezza'),
-        'larghezza': _.get(currProduct, 'larghezzaEffettiva'),
+        'larghezza': _.get(currProduct, 'larghezzaNominale'),
         'data': {
             'products': [currProduct],
             'articles': [],
             'expecteds': []
         }
     };
+    if (!(_.get(currProduct, 'tipo') == "coil" || _.get(currProduct, 'tipo') == "pacco"))
+        _.set(dataObj, 'lunghezza', _.get(currProduct, 'lunghezza'));
     _.set(tmpObjProduct, 'data', [dataObj]);
     return tmpObjProduct;
 };
@@ -155,14 +157,15 @@ var createObjExpected = function(currExpected) {
         'materiale':_.get(currExpected, 'materiale')
     };
     var dataObj = {
-        'lunghezza': _.get(currExpected, 'lunghezza'),
-        'larghezza': _.get(currExpected, 'larghezzaEffettiva'),
+        'larghezza': _.get(currExpected, 'larghezza'),
         'data': {
             'products': [],
             'articles': [],
             'expecteds': [currExpected]
         }
     };
+    if (!_.get(currExpected, 'tipo') == "coil" || !_.get(currExpected, 'tipo') == "pacco")
+        _.set(dataObj, 'lunghezza', _.get(currExpected, 'lunghezza'));
     _.set(tmpObjExpected, 'data', [dataObj]);
     return tmpObjExpected;
 };
@@ -175,7 +178,6 @@ var createObjArticle = function(currArticle) {
         'materiale':_.get(currArticle, 'materiale')
     };
     var dataObj = {
-        'lunghezza': _.get(currArticle, 'lunghezzaAssegnata'),
         'larghezza': _.get(currArticle, 'larghezzaAssegnata'),
         'data': {
             'products': [],
@@ -183,26 +185,28 @@ var createObjArticle = function(currArticle) {
             'expecteds': []
         }
     };
+    if (!(_.get(currArticle, 'tipo') == "coil" || _.get(currArticle, 'tipo') == "pacco"))
+        _.set(dataObj, 'lunghezza', _.get(currArticle, 'lunghezzaAssegnata'));
     _.set(tmpObjArticle, 'data', [dataObj]);
     return tmpObjArticle;
 };
 
 var createDataObjProd = function(currProduct) {
     var dataObj = {
-        'lunghezza': _.get(currProduct, 'lunghezza'),
-        'larghezza': _.get(currProduct, 'larghezzaEffettiva'),
+        'larghezza': _.get(currProduct, 'larghezzaNominale'),
         'data': {
             'products': [currProduct],
             'articles': [],
             'expecteds': []
         }
     };
+    if (!(_.get(currProduct, 'tipo') == "coil" || _.get(currProduct, 'tipo') == "pacco"))
+        _.set(dataObj, 'lunghezza', _.get(currProduct, 'lunghezza'));
     return dataObj;
 };
 
 var createDataObjExpe = function(currExpected) {
     var dataObj = {
-        'lunghezza': _.get(currExpected, 'lunghezza'),
         'larghezza': _.get(currExpected, 'larghezza'),
         'data': {
             'products': [],
@@ -210,12 +214,13 @@ var createDataObjExpe = function(currExpected) {
             'expecteds': [currExpected]
         }
     };
+    if (!(_.get(currExpected, 'tipo') == "coil" || _.get(currExpected, 'tipo') == "pacco"))
+        _.set(dataObj, 'lunghezza', _.get(currExpected, 'lunghezza'));
     return dataObj;
 };
 
 var createDataObjArt = function(currArticle) {
     var dataObj = {
-        'lunghezza': _.get(currArticle, 'lunghezzaAssegnata'),
         'larghezza': _.get(currArticle, 'larghezzaAssegnata'),
         'data': {
             'products': [],
@@ -223,5 +228,7 @@ var createDataObjArt = function(currArticle) {
             'expecteds': []
         }
     };
+    if (!(_.get(currArticle, 'tipo') == "coil" || _.get(currArticle, 'tipo') == "pacco"))
+        _.set(dataObj, 'lunghezza', _.get(currArticle, 'lunghezzaAssegnata'));
     return dataObj;
 };
