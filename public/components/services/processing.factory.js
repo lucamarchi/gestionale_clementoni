@@ -3,8 +3,8 @@ function ProcessingFactory($http, myConfig) {
     var urlProcessing = myConfig.url + '/api/processes';
     var processingFactory = {};
 
-    processingFactory.getArticleProcessing = function (articleId) {
-        return $http.get(urlProcessing);
+    processingFactory.getArticleProcessing = function (id) {
+        return $http.get(urlProcessing+"/article/"+id);
     };
 
     processingFactory.addProcessing = function (processing) {

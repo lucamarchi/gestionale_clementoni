@@ -250,13 +250,14 @@ angular
     .component('selectFinituraForm', {
         restrict: 'E',
         template: [
-            '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="finiture">',
+            '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="finiture" required="$ctrl.required">',
             '</select-materiale-switch-form>'
         ].join(''),
         bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
+            required: "="
         },
     })
 
@@ -277,26 +278,28 @@ angular
     .component('selectSuperficieForm', {
         restrict: 'E',
         template: [
-            '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="superfici">',
+            '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="superfici" required="$ctrl.required">',
             '</select-materiale-switch-form>'
         ].join(''),
         bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
+            required: "="
         }
     })
 
     .component('selectColoreForm', {
         restrict: 'E',
         template: [
-            '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="colori">',
+            '<select-materiale-switch-form label-name="{{$ctrl.labelName}}" model="$ctrl.model" attribute-m="{{$ctrl.attributeM}}" attribute-o="colori" required="$ctrl.required">',
             '</select-materiale-switch-form>'
         ].join(''),
         bindings: {
             labelName: "@",
             model: "=",
             attributeM: "@",
+            required: "="
         },
     })
 

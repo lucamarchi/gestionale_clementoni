@@ -9,12 +9,12 @@ function StockController($scope, ProductFactory, $location) {
         modalClass: 'modal fade',
         modalId: 'stockdeletion',
         stock: {},
-    }
+    };
 
     ctrl.selectStock = function (stock) {
         console.log(stock);
         ctrl.stockDeleteModalContent.stock = stock;
-    }
+    };
 
     ctrl.getStocks = function () {
         ProductFactory.getProducts()

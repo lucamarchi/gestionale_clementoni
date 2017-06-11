@@ -5,29 +5,30 @@
                 <b>LAVORAZIONE {{processingListCtrl.processingList.indexOf(processing)+1}}</b>
             </div>
             <div class="col-md-3">
-                {{processing.data | date:'medium'}}
+                {{processing.process.data | date:'medium'}}
             </div>
             <div class="col-md-2">
-                Operatore: {{processing.operatore}}
+                Operatore: {{processing.process.operatore}}
             </div>
             <div class="col-md-2">
-                Macchinario: {{processing.macchinario}}
+                Macchinario: {{processing.process.macchina}}
             </div>
             <div class="col-md-2">
-                Scarto: {{processing.scarto}}
+                Scarto: {{processing.process.scarto}}
             </div>
         </div>
     </legend>
     <br>
     <div>
-        <inbound-product-table inbound-list="processing.products1" entry-limit="processing.products1.length" current-page=1 caption="STOCK UTILIZZATI">
+        <inbound-product-table inbound-list="processing.products" entry-limit="processing.products1.length" current-page=1 caption="STOCK UTILIZZATI">
         </inbound-product-table>
     </div>
     <br>
     <div>
-        <inbound-product-table inbound-list="processing.products2" entry-limit="processing.products2.length" current-page=1 caption="COLLO REALIZZATO">
+        <inbound-product-table inbound-list="[processing.figlio]" entry-limit="processing.products2.length" current-page=1 caption="COLLO REALIZZATO">
         </inbound-product-table>
     </div>
     <br><br>
 </fieldset>
-		
+
+{{processingListCtrl.processingList}}

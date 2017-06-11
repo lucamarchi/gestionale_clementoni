@@ -1,7 +1,7 @@
-function articleTable (ProcessingFactory, CustomerFactory) {
+function articleTable(ProcessingFactory, CustomerFactory) {
     return {
         restrict: 'E',
-        templateUrl:'public/production-overview/templates/article-table.html',
+        templateUrl: 'public/production-overview/templates/article-table.html',
         scope: {},
         bindToController: {
             articleList: "=",
@@ -24,7 +24,7 @@ function articleTable (ProcessingFactory, CustomerFactory) {
             };
 
             ctrl.articleStockModalContent = {
-                url:'public/inbound/templates/inbound-expected-selection.html',
+                url: 'public/inbound/templates/inbound-expected-selection.html',
                 modalTitle: 'Article Stock',
                 modalId: 'articlestock',
                 modalClass: 'modal modal-xl fade',
@@ -40,22 +40,24 @@ function articleTable (ProcessingFactory, CustomerFactory) {
 
             ctrl.getArticleCustomer = function (clienteCod) {
                 CustomerFactory.getCustomer(clienteCod)
-                    .then (function (resp) {
+                    .then(function (resp) {
                         console.log(resp);
                         ctrl.articleCustomerModalContent.customer = resp.data.data.customer;
                     })
-                    .catch(function(err) {
+                    .catch(function (err) {
                         console.log(err);
                     })
             };
 
             ctrl.getArticleProcessing = function (articleId) {
                 ProcessingFactory.getArticleProcessing(articleId)
-                    .then (function (resp) {
-                        ctrl.articleProcessingModalContent.processingList = resp.data;
+                    .then(function (resp) {
                         console.log(resp);
+                        if (resp.data.data) {
+                            ctrl.articleProcessingModalContent.processingList = resp.data.data.processes;
+                        }
                     })
-                    .catch(function(err) {
+                    .catch(function (err) {
                         console.log(err);
                     })
             };
@@ -66,4 +68,4 @@ function articleTable (ProcessingFactory, CustomerFactory) {
 
 angular
     .module('store')
-    .directive('articleTable',['ProcessingFactory', 'CustomerFactory', articleTable])
+    .directive('articleTable', ['ProcessingFactory', 'CustomerFactory', articleTable])
