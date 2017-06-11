@@ -32,7 +32,7 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Proce
         modalClass: 'modal modal-xl fade',
         modalTitle: 'Inserimento collo prodotto',
         modalId: 'producedproductentry',
-        producedProduct: undefined,
+        producedProduct: {},
         selectedArticle: undefined,
     };
 

@@ -196,7 +196,7 @@ angular
                     console.log(ctrl.isDisabled, ctrl.isRequired);
                 };
 
-                $scope.$watchCollection(
+                $scope.$watch(
                     function () {
                         return ctrl.model.tipo;
                     },

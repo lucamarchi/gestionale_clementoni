@@ -3,15 +3,15 @@
         <tr>
             <th>Nome</th>
             <th>Agente</th>
-            <th>Banca</th>
+            <th ng-if = "$root.isLogistica()">Banca</th>
             <th>Codice Fiscale</th>
             <th>Email</th>
             <th>Fax</th>
             <th>Ident</th>
             <th>Indirizzo</th>
             <th>Località</th>
-            <th>Pagamento</th>
-            <th>Partita Iva</th>
+            <th ng-if = "$root.isLogistica()">Pagamento</th>
+            <th ng-if = "$root.isLogistica()">Partita Iva</th>
             <th>Telefono</th>
         </tr>
     </thead>
@@ -19,7 +19,7 @@
         <tr>
             <td>{{customerTableCtrl.customer.nome}}</td>
             <td>{{customerTableCtrl.customer.agente}}</td>
-            <td>
+            <td ng-if = "$root.isLogistica()">
                 <div>abi:{{customerTableCtrl.customer.bancaAbi}}</div>
                 <div>cab:{{customerTableCtrl.customer.bancaCab}}</div>
             </td>
@@ -33,8 +33,8 @@
                 <div>({{customerTableCtrl.customer.provincia}})</div>
                 <div>{{customerTableCtrl.customer.regione}}</div>
             </td>
-            <td>{{customerTableCtrl.customer.pagamento}}</td>
-            <td>{{customerTableCtrl.customer.partitaIva}}</td>
+            <td ng-if = "$root.isLogistica()">{{customerTableCtrl.customer.pagamento}}</td>
+            <td ng-if = "$root.isLogistica()">{{customerTableCtrl.customer.partitaIva}}</td>
             <td>{{customerTableCtrl.customer.telefono}}</td>
         </tr>
     </tbody>

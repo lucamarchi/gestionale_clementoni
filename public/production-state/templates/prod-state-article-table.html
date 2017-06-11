@@ -12,7 +12,7 @@
             <th>Lunghezza</th>
             <th>Peso</th>
             <th>Quantita</th>
-            <th>Prezzo (&euro;/t)</th>
+            <th ng-if = "$root.isLogistica()">Prezzo (&euro;/t)</th>
             <th>Stato Produzione</th>
         </tr>
         </thead>
@@ -31,7 +31,7 @@
                     <span ng-if="article.tipo != 'coil' && article.tipo != 'nastro'">({{article.quantita*article.lunghezza}}ml)</span>
                 </div>
             </td>
-            <td>{{article.prezzo}}</td>
+            <td ng-if = "$root.isLogistica()">{{article.prezzo}}</td>
             <td production-state model="article" attribute="statoProduzione"></td>
             <td ng-transclude="buttonAction"></td>
         </tr>

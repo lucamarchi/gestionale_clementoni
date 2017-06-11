@@ -15,7 +15,7 @@
         <th>Lunghezza</th>
         <th>Peso</th>
         <th>Quantita</th>
-        <th ng-if="$root.user.role == 'admin'">Prezzo (&euro;/t)</th>
+        <th ng-if = "$root.isLogistica()">Prezzo (&euro;/t)</th>
         <th>Stato</th>
     </tr>
     </thead>
@@ -38,7 +38,7 @@
         <td>{{article.lunghezza}}</td>
         <td>{{article.pesoAttuale}}</td>
         <td>{{article.quantita}}</td>
-        <td ng-if="$root.user.role == 'admin'">{{article.prezzo}}</td>
+        <td ng-if = "$root.isLogistica()">{{article.prezzo}}</td>
         <td>
             <span production-state model="article" attribute="statoProduzione"></span>
 

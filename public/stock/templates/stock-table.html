@@ -20,7 +20,7 @@
                 <th>Lunghezza</th>
                 <th>Quantita</th>
                 <th>Peso(kg)</th>
-                <th>Prezzo (&euro;/t)</th>
+                <th ng-if = "$root.isLogistica()">Prezzo (&euro;/t)</th>
                 <th>Difetti</th>
                 <th>Stab</th>
             </tr>
@@ -56,7 +56,7 @@
                     <div>lordo:{{stock.pesoLordo}}</div>
                     <div>netto:{{stock.pesoNetto}}</div>
                 </td>
-                <td>{{stock.prezzo}}</td>
+                <td ng-if = "$root.isLogistica()">{{stock.prezzo}}</td>
                 <td>{{stock.difetti}}</td>
                 <td>{{stock.stabilimento}}</td>
                 <td ng-transclude="buttonAction"></td>

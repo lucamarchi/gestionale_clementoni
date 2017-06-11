@@ -1,7 +1,3 @@
-/**
- * Created by nexse on 18/05/2017.
- */
-
 function articleTable (ProcessingFactory, CustomerFactory) {
     return {
         restrict: 'E',

@@ -314,5 +314,17 @@ store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', '$
         UserService.emptySession();
         delete $rootScope.user;
         $location.path("/login");
+    };
+
+    $rootScope.isLogged = function () {
+        return $rootScope.isLogged;
+    };
+
+    $rootScope.isAdmin = function() {
+        return $rootScope.isLogged && $rootScope.user && $rootScope.user.role == "admin";
+    };
+
+    $rootScope.isLogistica = function () {
+        return $rootScope.isLogged && $rootScope.user && ($rootScope.user.role == "admin" || $rootScope.user.role == "logistica");
     }
 }]);
