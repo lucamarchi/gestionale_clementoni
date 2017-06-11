@@ -1,24 +1,3 @@
-<!--
-<table class="table table-condensed">
-    <thead>		
-		<tr>
-			<th>Data</th>
-			<th>Macchina</th>
-			<th>Operatore</th>
-			<th>Scarto</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat="processing in processingList | orderBy:'data'">
-			<td>{{processing.data | date:'medium'}}</td>
-			<td>{{processing.macchina}}</td>
-			<td>{{processing.operatore}}</td>
-			<td>{{processing.scarto}}</td>
-			<td ng-if="riepilogo"><button type="button" class="btn btn-info btn-block" ng-click="viewChildrenProcess(process)">Realizzati</button></td>
-		</tr>
-    </tbody>
-</table>
--->
 <fieldset ng-repeat = "processing in processingListCtrl.processingList | orderBy:'data'">
     <legend>
         <div class="row">

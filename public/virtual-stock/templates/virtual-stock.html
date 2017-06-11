@@ -1,7 +1,9 @@
 <h1>STOCK VIRTUALE</h1>
 <br><br>
 <fieldset ng-repeat-start="quadruple in virtualStockCtrl.virtualStockMap">
-    <legend>{{quadruple.materiale|uppercase}}, {{quadruple.tipo|uppercase}}, {{quadruple.qualita|uppercase}}, {{quadruple.spessore|uppercase}}</legend>
+    <legend>{{quadruple.materiale|uppercase}}, {{quadruple.tipo|uppercase}}, {{quadruple.qualita|uppercase}},
+        {{quadruple.spessore|uppercase}}
+    </legend>
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
@@ -15,14 +17,41 @@
         </thead>
         <tbody>
         <tr ng-repeat="lungLarg in quadruple.lungLargArray">
-            <td>{{lungLarg.largh}}</td>
+            <td>{{lungLarg.larghezza}}</td>
             <td>{{lungLarg.lunghezza}}</td>
             <td>{{lungLarg.pesoMagazzino}} kg</td>
-            <td><button type="button" class="btn btn-info btn-block">{{lungLarg.pesoClienti}} kg</button></td>
-            <td><button type="button" class="btn btn-info btn-block">{{lungLarg.pesoArrivo}} kg</button></td>
+            <td>
+                <button type="button" class="btn btn-info btn-block"
+                        ng-click="virtualStockCtrl.getFornitoreQuantity(lungLarg.expecteds)">{{lungLarg.pesoArrivo}} kg
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-info btn-block"
+                        ng-click="virtualStockCtrl.getClienteQuantity(lungLarg.articles)">{{lungLarg.pesoClienti}} kg
+                </button>
+            </td>
             <td>{{lungLarg.disponibilita}} kg</td>
         </tr>
         </tbody>
     </table>
 </fieldset>
 <fieldset ng-repeat-end ng-hide="true"></fieldset>
+
+<div ng-class="virtualStockCtrl.infoQuantityModalContent.modalClass"
+     id="{{virtualStockCtrl.infoQuantityModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{virtualStockCtrl.infoQuantityModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <info-quantity quantity-map="virtualStockCtrl.infoQuantityModalContent.quantityMap"
+                               key-header="virtualStockCtrl.infoQuantityModalContent.keyHeader"
+                               value-header="virtualStockCtrl.infoQuantityModalContent.valueHeader">
+                </info-quantity>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,116 +1,5 @@
 var store = angular.module('store');
 
-
-/*--------------------------> PRODUZIONE <----------------------------------------------------*/
-store.factory('articleFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return { 
-		resource: function () {
-			return $resource(myConfig.url+'/api/articles/', 
-				{},
-				{
-					getAll: {method:'GET', isArray: false},
-				}
-			);
-		},
-		resourceState: function () {
-			return $resource(myConfig.url+'/api/articles/:state', 
-				{
-					state: "@state"
-				},
-				{
-					getAll: {method:'GET', isArray: false},
-				}
-			);
-		},
-		resourceStock: function () {
-			return $resource(myConfig.url+'/api/articles/stock/:id', 
-				{
-					id: "@id"
-				},
-				{
-					update: {method:'PUT'},
-				}
-			);
-		},
-		resourceComplete: function () {
-			return $resource(myConfig.url+'/api/articles/complete/:id', 
-				{
-					id: "@id"
-				},
-				{
-					update: {method:'PUT'},
-				}
-			);
-		},
-		resourceCustomer: function () {
-			return $resource(myConfig.url+'/api/customer/articles/:id', 
-				{
-					id: "@id"
-				}
-			)
-		}
-	}
-}]);
-
-/*--------------------------------> PRODUCTION STATE<-------------------------------------*/
-store.factory('productionStateFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return $resource(myConfig.url+'/api/prods/:id', 
-		{
-			id: "@id"
-		},
-		{
-			update: {method:'PUT'},
-			getAll: {method:'GET', isArray: false}
-		}
-  	);
-}]);
-
-/*--------------------------------> PROCESS<-------------------------------------*/
-store.factory('processFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return {
-		resource: function() {
-			return $resource(myConfig.url+'/api/processes', {});
-		},
-		resourceArticle: function() {
-			return $resource(myConfig.url+'/api/processes/article/:id',
-				{
-					id:"@id"
-				}
-			);
-		},
-		resourceChildren: function() {
-			return $resource(myConfig.url+'/api/processes/figli/:id',
-				{
-					id:"@id"
-				}
-			);
-		}
-	} 
-}]);
-
-/*--------------------------------> CUSTOMER <-------------------------------------*/
-store.factory('customerFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-	return {
-		resourceGroup: function() {
-			return $resource(myConfig.url+'/api/customers', {});
-		},
-		resourceId: function() {
-			return $resource(myConfig.url+'/api/customer/:id', 
-				{
-					id:"@id"
-				}
-			);
-		},
-		resourceCod: function() {
-			return $resource(myConfig.url+'/api/customerCod/:id', 
-				{
-					id:"@id"
-				}
-			);
-		},
-	}
-}]);
-
 /*--------------------------------> LOGIN/LOGOUT <-------------------------------------*/
 store.factory('UserService', ['$resource','$window', 'myConfig', function ($resource, $window, myConfig) {
     return{ 
@@ -157,7 +46,6 @@ store.factory('TokenInterceptor', ['$q', '$window', '$location', '$rootScope', '
  
         requestError: function(rejection) {
             return $q.reject(rejection);
-            console.log("bbbb");
         },
   
         /* Revoke client authentication if 401 is received */

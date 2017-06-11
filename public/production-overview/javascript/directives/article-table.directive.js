@@ -39,7 +39,7 @@ function articleTable (ProcessingFactory, CustomerFactory) {
                 modalTitle: 'Lista lavorazioni articolo',
                 modalId: 'articleprocessing',
                 modalClass: 'modal modal-xl fade',
-                processing: [],
+                processingList: [],
             };
 
             ctrl.getArticleCustomer = function (clienteCod) {
@@ -64,8 +64,9 @@ function articleTable (ProcessingFactory, CustomerFactory) {
 //            }
 
             ctrl.getArticleProcessing = function (articleId) {
-                ProcessingFactory.getProcessing(articleId)
+                ProcessingFactory.getArticleProcessing(articleId)
                     .then (function (resp) {
+                        ctrl.articleProcessingModalContent.processingList = resp.data;
                         console.log(resp);
                     })
                     .catch(function(err) {

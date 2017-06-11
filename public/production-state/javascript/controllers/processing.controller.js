@@ -1,4 +1,4 @@
-function ProcessingController($scope, features, ProcessingProgressFactory, ProductFactory, UtilityFactory, $location, $routeParams) {
+function ProcessingController($scope, features, ProcessingProgressFactory, ProcessingFactory, ProductFactory, UtilityFactory, UserService, $location, $routeParams) {
     var ctrl = this;
 
     ctrl.processingList = [];
@@ -7,6 +7,7 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
     ctrl.selectedArticles = [];
     ctrl.selectedStocks = [];
     ctrl.producedProducts = [];
+
     ctrl.isMachinerySelected = function () {
         return ctrl.selectedMachinery.length != 0;
     };
@@ -225,11 +226,21 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Produ
     };
 
     ctrl.completeProcessing = function () {
-        ProcessingProgressFactory.createProcessing(ctrl.selectedStocks, ctrl.selectedMachinery[0].sigle, ctrl.producedProducts, ctrl.processingList);
+        var operatore = UserService.getUser().username;
+        ProcessingProgressFactory.createProcessing(ctrl.selectedStocks, ctrl.selectedMachinery[0].sigle, ctrl.producedProducts, ctrl.processingList, operatore);
+        console.log(ctrl.processingList);
+        ProcessingFactory.addProcessing({processes : ctrl.processingList})
+            .then(function (resp) {
+                console.log(resp);
+                $location.path("/productionState/details/" + $routeParams.id);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     }
 
 }
 
 angular
     .module('store')
-    .controller('ProcessingController', ['$scope', 'features', 'ProcessingProgressFactory', 'ProductFactory', 'UtilityFactory', '$location', '$routeParams', ProcessingController]);
+    .controller('ProcessingController', ['$scope', 'features', 'ProcessingProgressFactory', 'ProcessingFactory', 'ProductFactory', 'UtilityFactory', 'UserService', '$location', '$routeParams', ProcessingController]);

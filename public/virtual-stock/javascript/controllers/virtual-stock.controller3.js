@@ -1,3 +1,4 @@
+/*
 function VirtualStockController($scope, VirtualStockFactory) {
     var ctrl = this;
 
@@ -101,4 +102,4 @@ function VirtualStockController($scope, VirtualStockFactory) {
 
 angular
     .module('store')
-    .controller('VirtualStockController', ['$scope', 'VirtualStockFactory', VirtualStockController]);
+    .controller('VirtualStockController', ['$scope', 'VirtualStockFactory', VirtualStockController]);*/

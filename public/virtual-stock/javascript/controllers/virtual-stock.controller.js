@@ -1,6 +1,15 @@
 function VirtualStockController($scope, VirtualStockFactory) {
     var ctrl = this;
 
+    ctrl.infoQuantityModalContent = {
+        modalTitle: '',
+        modalClass: 'modal fade',
+        modalId: 'infoquantity',
+        quantityMap: undefined,
+        keyHeader: '',
+        valueHeader: '',
+    };
+
     ctrl.getVirtualStock = function () {
         VirtualStockFactory.getVirtualStock()
             .then(function (resp) {
@@ -22,50 +31,32 @@ function VirtualStockController($scope, VirtualStockFactory) {
     };
 
     ctrl.findQuadruple = function (el) {
-        var quadruple;
-        if (el[0]) {
-            if (el[0][0] && el[0][0][0]) {
-                quadruple = {
-                    materiale: el[0][0][0].materiale,
-                    tipo: el[0][0][0].tipo,
-                    spessore: el[0][0][0].spessoreNominale,
-                    qualita: el[0][0][0].qualita,
-                    lungLargArray: []
-                };
-            }
-            else if (el[0][1] && el[0][1][0]) {
-                quadruple = {
-                    materiale: el[0][1][0].materiale,
-                    tipo: el[0][1][0].tipo,
-                    spessore: el[0][1][0].spessore,
-                    qualita: el[0][1][0].qualita,
-                    lungLargArray: []
-                };
-            }
-            else if (el[0][2] && el[0][2][0]) {
-                quadruple = {
-                    materiale: el[0][2][0].materiale,
-                    tipo: el[0][2][0].tipo,
-                    spessore: el[0][2][0].spessore,
-                    qualita: el[0][2][0].qualita,
-                    lungLargArray: []
-                };
-            }
+        var quadruple = {};
+        if (el.materiale) {
+            quadruple.materiale = el.materiale;
         }
+        if (el.tipo) {
+            quadruple.tipo = el.tipo;
+        }
+        if (el.spessore) {
+            quadruple.spessore = el.spessore;
+        }
+        if (el.qualita) {
+            quadruple.qualita = el.qualita;
+        }
+        quadruple.lungLargArray = [];
         return quadruple;
     };
 
-    ctrl.findLungLarg = function (el) {
-        var lungLarg;
 
-        if (el[0] && el[0][0]) {
-            lungLarg = {largh: el[0][0].larghezzaNominale, lungh: el[0][0].lunghezza};
+    ctrl.findLungLarg = function (el) {
+        var lungLarg = {};
+
+        if (el.larghezza) {
+            lungLarg.larghezza = el.larghezza;
         }
-        else if (el[1] && el[1][0]) {
-            lungLarg = {largh: el[1][0].larghezza, lungh: el[1][0].lunghezza};
-        }
-        else if (el[2] && el[2][0]) {
-            lungLarg = {largh: el[2][0].larghezza, lungh: el[2][0].lunghezza};
+        if (el.lunghezza) {
+            lungLarg.lunghezza = el.lunghezza;
         }
         return lungLarg;
     };
@@ -77,23 +68,47 @@ function VirtualStockController($scope, VirtualStockFactory) {
             if (quadruple) {
                 virtualStockMap.push(quadruple);
             }
-            angular.forEach(el1, function (el2) {
-                var pesoMagazzino = ctrl.calculateWeight(el2[0], "pesoNetto");
-                var pesoArrivo = ctrl.calculateWeight(el2[1], "pesoSaldo");
-                var pesoClienti = ctrl.calculateWeight(el2[2], "pesoAttuale");
-                var disponibilita = pesoMagazzino - pesoClienti;
+            angular.forEach(el1.data, function (el2) {
                 var lungLarg = ctrl.findLungLarg(el2);
-                if (virtualStockMap[index1] && lungLarg) {
-                    lungLarg.pesoMagazzino = pesoMagazzino;
-                    lungLarg.pesoArrivo = pesoArrivo;
-                    lungLarg.pesoClienti = pesoClienti;
-                    lungLarg.disponibilita = disponibilita;
-                    virtualStockMap[index1].lungLargArray.push(lungLarg);
-                }
+                lungLarg.pesoMagazzino = ctrl.calculateWeight(el2.data.products, "pesoNetto");
+                lungLarg.pesoArrivo = ctrl.calculateWeight(el2.data.expecteds, "pesoSaldo");
+                lungLarg.expecteds = el2.data.expecteds;
+                lungLarg.pesoClienti = ctrl.calculateWeight(el2.data.articles, "pesoAttuale");
+                lungLarg.articles = el2.data.articles;
+                lungLarg.disponibilita = lungLarg.pesoMagazzino - lungLarg.pesoClienti;
+                virtualStockMap[index1].lungLargArray.push(lungLarg);
             })
         });
         console.log(virtualStockMap);
         return virtualStockMap;
+    };
+
+    ctrl.getFornitoreQuantity = function (expecteds) {
+        ctrl.infoQuantityModalContent.modalTitle = "Quantita in arrivo";
+        ctrl.infoQuantityModalContent.keyHeader = "Fornitore";
+        ctrl.infoQuantityModalContent.valueHeader = "Peso Ordinato";
+        ctrl.getQuantityMap(expecteds,'fornitore','pesoSaldo');
+    };
+
+    ctrl.getClienteQuantity = function (articles) {
+        ctrl.infoQuantityModalContent.modalTitle = "Quantita ordinata";
+        ctrl.infoQuantityModalContent.keyHeader = "Cliente";
+        ctrl.infoQuantityModalContent.valueHeader = "Peso Ordinato";
+        ctrl.getQuantityMap(articles,'clienteCod','pesoAttuale');
+    };
+
+    ctrl.getQuantityMap = function (collection, keyAttribute, pesoAttribute) {
+        console.log(collection);
+        ctrl.infoQuantityModalContent.quantityMap = {};
+        angular.forEach(collection, function (el) {
+            var key = el[keyAttribute];
+            if (!ctrl.infoQuantityModalContent.quantityMap[key]) {
+                ctrl.infoQuantityModalContent.quantityMap[key] = 0;
+            }
+            ctrl.infoQuantityModalContent.quantityMap[key]+=el[pesoAttribute];
+        });
+        console.log(ctrl.infoQuantityModalContent.quantityMap);
+        $('#' + ctrl.infoQuantityModalContent.modalId).modal('show');
     };
 
     ctrl.getVirtualStock();

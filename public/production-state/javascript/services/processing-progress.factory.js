@@ -11,7 +11,7 @@ function ProcessingProgressFactory($cookies) {
         return $cookies.getObject("articles");
     };
 
-    processing.createProcessing = function (stockList, machinerySigle, producedProducts, processingList) {
+    processing.createProcessing = function (stockList, machinerySigle, producedProducts, processingList, operatore) {
         var scarto = 0;
         var stockId;
         if (machinerySigle == "a") {
@@ -30,6 +30,7 @@ function ProcessingProgressFactory($cookies) {
                 processing.scarto = {[stockId]: scartoTemp};
                 processing.machinery = machinerySigle;
                 processing.stocks = stockList;
+                processing.operatore = operatore;
             })
         }
         else {
@@ -46,6 +47,7 @@ function ProcessingProgressFactory($cookies) {
             processingList[0].scarto = scartoMap;
             processingList[0].machinery = machinerySigle;
             processingList[0].stocks = stockList;
+            processingList[0].operatore = operatore;
         }
         console.log(processingList);
     };

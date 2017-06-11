@@ -25,4 +25,4 @@ function OutboundFactory ($http, myConfig) {
 
 angular
     .module('store')
-    .factory('OutboundFactory', ['$http','myConfig', OutboundFactory])
+    .factory('OutboundFactory', ['$http','myConfig', OutboundFactory]);
