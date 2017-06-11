@@ -1,7 +1,3 @@
-/**
- * Created by nexse on 22/05/2017.
- */
-
 function outboundArticleTable(OutboundFactory, features) {
     return {
         restrict: 'E',
@@ -30,6 +26,7 @@ function outboundArticleTable(OutboundFactory, features) {
             ctrl.regionArrayFilter = [];
             ctrl.provinceArrayFilter = [];
 
+
             $scope.$watchCollection(
                 function () {
                     return ctrl.articleList;
@@ -39,32 +36,23 @@ function outboundArticleTable(OutboundFactory, features) {
                         ctrl.regionArray = findDistinctRegion(newVal);
                         ctrl.provinceArray = findDistinctProvince(newVal);
 //                        console.log ("111 ", ctrl.regionArray, "222 ", ctrl.provinceArray);
-                        ctrl.articleMap = ctrl.createArticleMap(newVal, ctrl.attribute);
+                        console.log("aaaaa",ctrl.attribute, newVal);
+                        ctrl.articleMap = ctrl.createArticleMap(newVal, "pesoSelezionato");
+                        console.log("bbbb", ctrl.articleMap)
                     }
                 }
             );
 
-            ctrl.includeVal = function (val, array) {
-                var i = array.indexOf(val);
-                if (i > -1) {
-                    array.splice(i, 1);
-                }
-                else {
-                    array.push(val);
-                }
-                console.log(array);
-            }
-
             ctrl.createArticleMap = function (articles, attribute) {
                 var monster = [];
-                i = 0;
+                var i = 0;
                 for (rg of ctrl.regionArray) {
                     temp = articles.filter(function (el) {
                         return (el.region == rg);
                     });
                     if (temp.length != 0) {
                         monster.push({region: rg, weight: 0, value: []}); //i per accedere
-                        j = 0;
+                        var j = 0;
                         for (pr of ctrl.provinceArray) {
                             temp = articles.filter(function (el) {
                                 return (el.region == rg) && (el.provincia == pr);
@@ -103,12 +91,6 @@ function outboundArticleTable(OutboundFactory, features) {
                 }
                 return provinciaArray;
             }
-
-            ctrl.addArticle = function (article) {
-                console.log(article)
-                $scope.$emit('addArticle', article);
-            }
-
         },
 
         controllerAs: 'outboundArticleTableCtrl',

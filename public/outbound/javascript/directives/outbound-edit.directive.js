@@ -1,7 +1,3 @@
-/**
- * Created by nexse on 22/05/2017.
- */
-
 function outboundEdit (OutboundFactory, ArticleFactory, UtilityFactory) {
     return {
         restrict: 'E',
@@ -47,7 +43,7 @@ function outboundEdit (OutboundFactory, ArticleFactory, UtilityFactory) {
 
             ctrl.setQuantitySelected = function (article) {
                 console.log(article);
-                article.quantitySelected = UtilityFactory.calculateQuantity(article, 'weightSelected', 'spessore', 'larghezza');
+                article.quantitaSelezionata = UtilityFactory.calculateQuantity(article, 'pesoSelezionato', 'spessore', 'larghezza');
             };
 
             ctrl.addSelectedArticle = function (article) {
@@ -58,7 +54,7 @@ function outboundEdit (OutboundFactory, ArticleFactory, UtilityFactory) {
                     ctrl.outbound.addedArticles.push(article);
                 }
                 else {
-                    var articlePos = ctrl.removedArticles.indexOf(article);
+                    var articlePos = ctrl.outbound.removedArticles.indexOf(article);
                     if (articlePos != -1){
                         ctrl.outbound.removedArticles.splice(articlePos,1);
                     }
@@ -81,15 +77,6 @@ function outboundEdit (OutboundFactory, ArticleFactory, UtilityFactory) {
                 }
                 ctrl.outbound.articles.splice(index,1);
             };
-
-            $scope.$on('addArticle', function(event, data) {
-                ctrl.addSelectedArticle (data);
-            });
-
-            $scope.$on('removeArticle', function(event, data) {
-                ctrl.removeSelectedArticle (data);
-            });
-
         },
 
         controllerAs: 'outboundEditCtrl',

@@ -8,14 +8,14 @@ function InboundUpdateController($scope, $location, InboundFactory, ExpectedFact
         addedProducts: [],
         modifiedProducts: [],
         deletedProducts: [],
-    }
+    };
 
     ctrl.inboundConfirmationModalContent = {
         modalTitle: 'Modifica carico in entrata',
         modalBody: 'Confermare le modifiche al carico in entrata?',
         modalId: 'inboundconfirmation',
         modalClass: 'modal fade',
-    }
+    };
 
     ctrl.getInbound = function (id) {
         InboundFactory.getInbound(id)
@@ -29,7 +29,7 @@ function InboundUpdateController($scope, $location, InboundFactory, ExpectedFact
             .catch(function (err) {
                 console.log(err);
             });
-    }
+    };
 
     ctrl.getInbound($routeParams.id);
 

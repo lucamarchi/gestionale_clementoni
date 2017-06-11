@@ -1,5 +1,5 @@
 <fieldset ng-repeat-start="type2articles in prodStateArticleTableCtrl.articleMap">
-    <h3 align="center"><b>{{type2articles.key|uppercase}}</b> {{type2articles.weight}} kg</h3>
+    <h3 align="center"><b>{{type2articles.key|uppercase}}</b> {{type2articles.weight}} kg ({{type2articles.linearMeters}}ml)</h3>
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
@@ -26,7 +26,11 @@
             <td>{{article.larghezza}}</td>
             <td>{{article.lunghezza}}</td>
             <td>{{article.pesoAttuale}}</td>
-            <td>{{article.quantita}}</td>
+            <td>
+                <div>{{article.quantita}}
+                    <span ng-if="article.tipo != 'coil' && article.tipo != 'nastro'">({{article.quantita*article.lunghezza}}ml)</span>
+                </div>
+            </td>
             <td>{{article.prezzo}}</td>
             <td production-state model="article" attribute="statoProduzione"></td>
             <td ng-transclude="buttonAction"></td>

@@ -26,31 +26,28 @@
         </table-filters>
         <weight-column>
             <td>
-                <input type="number" ng-model="$parent.article.weightSelected"
+                <input type="number" ng-model="$parent.article.pesoSelezionato"
                        ng-change="outboundEditCtrl.setQuantitySelected($parent.article)" class="form-control" required>
             </td>
         </weight-column>
         <quantity-column>
             <td>
-                <input type="number" ng-model="$parent.article.quantitySelected" class="form-control" disabled>
+                <input type="number" ng-model="$parent.article.quantitaSelezionata" class="form-control" disabled>
             </td>
         </quantity-column>
         <unit-column>
             <td>
-                <select ng-model="$parent.article.unitSelected"
+                <select ng-model="$parent.article.unita"
                         ng-options="unita for unita in $parent.outboundArticleTableCtrl.features.unita"
                         class="form-control" required></select>
             </td>
         </unit-column>
         <action-button>
             <td>
-                <button ng-if="$parent.article.weightSelected && $parent.article.unitSelected" type="button"
+                <button ng-disabled="!$parent.article.pesoSelezionato || !$parent.article.unita" type="button"
                         class="btn btn-primary btn-circle"
-                        ng-click="$parent.$parent.outboundArticleTableCtrl.addArticle($parent.$parent.article)"><span
+                        ng-click="outboundEditCtrl.addSelectedArticle($parent.article)"><span
                         class="glyphicon glyphicon-plus"></span></button>
-                <button ng-if="!$parent.article.weightSelected || !$parent.article.unitSelected" type="button"
-                        class="btn btn-primary btn-circle" disabled><span class="glyphicon glyphicon-plus"></span>
-                </button>
             </td>
         </action-button>
     </outbound-article-table>
@@ -61,20 +58,20 @@
 <fieldset>
     <legend>Articoli selezionati:</legend>
 
-    <outbound-article-table article-list="outboundEditCtrl.outbound.articles" attribute="weightSelected">
+    <outbound-article-table article-list="outboundEditCtrl.outbound.articles" attribute="pesoSelezionato">
         <weight-column>
             <td>
-                {{$parent.article.weightSelected}}
+                {{$parent.article.pesoSelezionato}}
             </td>
         </weight-column>
         <quantity-column>
             <td>
-                {{$parent.article.quantitySelected}}
+                {{$parent.article.quantitaSelezionata}}
             </td>
         </quantity-column>
         <unit-column>
             <td>
-                {{$parent.article.unitSelected}}
+                {{$parent.article.unita}}
             </td>
         </unit-column>
         <action-button>

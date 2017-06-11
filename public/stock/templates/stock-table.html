@@ -1,6 +1,7 @@
+<div ng-transclude="tablePagination"></div>
 <div ng-transclude="stockFilters"></div>
 <br><br>
-<fieldset ng-repeat-start="m2p in stockTableCtrl.stockMap | stockFilter:stockTableCtrl.filterObject.materialeArray">
+<fieldset ng-repeat-start="m2p in stockTableCtrl.stockMap | stockFilter:stockTableCtrl.filterObject.materialeArray | startFrom:(stockTableCtrl.currentPage-1)*stockTableCtrl.entryLimit | limitTo:stockTableCtrl.entryLimit">
     <h3 align="center"><b>Materiale: {{m2p.key|uppercase}}</b> {{m2p.weight}} kg</h3>
     <div ng-repeat-start="t2p in m2p.value |stockFilter:stockTableCtrl.filterObject.tipoArray">
         <legend><b>Tipo: {{t2p.key|uppercase}}</b> {{t2p.weight}} kg</legend>

@@ -6,14 +6,14 @@ function InboundCreateController ($scope, $location, InboundFactory, ExpectedFac
         order : {},
         selectedExpecteds : [],
         addedProducts: []
-    }
+    };
     
     ctrl.inboundConfirmationModalContent = {
         modalTitle: 'Conferma carico in entrata',
         modalBody: 'Confermare la creazione del carico in entrata?',
         modalId: 'inboundconfirmation',
         modalClass: 'modal fade',
-    }
+    };
     
     ctrl.confirmInboundOrder = function (inbound) {
         console.log("RICHIESTA", inbound);

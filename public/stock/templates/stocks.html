@@ -1,6 +1,6 @@
 <h1>GIACENZA</h1> 
-<br><br>
-<stock-table stock-list = "stockCtrl.stocks">
+<br>
+<stock-table stock-list = "stockCtrl.stocks" current-page="stockCtrl.currentPage" entry-limit="stockCtrl.entryLimit">
     <stock-filters>
         <stock-filter model="$parent.stockTableCtrl.filterObject"></stock-filter>
     </stock-filters>
@@ -9,6 +9,12 @@
         <div>Esaurito</div><span class="glyphicon glyphicon-trash"></span>
         </button>
     </button-action>
+    <table-pagination>
+        <pagination total-items="$parent.stockTableCtrl.stockMap.length"
+                    current-page="$parent.stockTableCtrl.currentPage"
+                    entry-limit="$parent.stockTableCtrl.entryLimit">
+        </pagination>
+    </table-pagination>
 </stock-table>
 
 

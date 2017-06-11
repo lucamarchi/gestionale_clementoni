@@ -6,7 +6,7 @@ store.constant("myConfig", {
 });
 
 store.constant("features", {
-    "tipi": ["coil", "nastro", "piana", "ondulata", "grecata", "pressopiegata", "collaboranteh55", "collaboranteh55-s", "collaboranteh75", "collaboranteh75-s"],
+    "tipi": ["coil", "nastro", "piana", "ondulata", "grecata", "pressopiegata", "collaborante h55", "collaborante h55-s", "collaborante h75", "collaborante h75-s"],
     "materiali": ["zincato", "decapato", "elettrozincato", "laf", "preverniciato", "caldo", "aluzinc", "alluminato", "inox"],
     "qualita": {
         "zincato": ["dx51d", "dx52d", "dx53d", "dx54d", "s250gd", "s280gd"],

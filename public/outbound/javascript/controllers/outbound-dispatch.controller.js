@@ -5,6 +5,8 @@ function OutboundDispatchController (OutboundFactory,ProductFactory, $location, 
     ctrl.outbound.article = {};
     ctrl.outbound.products = [];
     ctrl.freeProducts = [];
+    ctrl.currentPage = 1;
+    ctrl.entryLimit = 1;
     
     ctrl.outboundDispatchModalContent = {
         modalTitle: 'Conferma evasione carico in uscita',

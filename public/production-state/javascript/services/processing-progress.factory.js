@@ -36,7 +36,7 @@ function ProcessingProgressFactory($cookies) {
         else {
             var scartoMap = {};
             angular.forEach(stockList, function (stock) {
-                scarto = stock.nuovoScarto;
+                scarto = stock.spessore * stock.larghezzaEffettiva * stock.nuovoScarto * (7.85/1000000);
                 stockId = stock._id;
                 scartoMap[stockId] = scarto;
                 stock.pesoLordo = stock.nuovoPesoLordo;

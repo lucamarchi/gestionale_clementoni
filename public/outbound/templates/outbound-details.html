@@ -6,7 +6,7 @@
 </h1>
 <br>
 <h3>
-    DETTAGLI CARICO IN USCITA N. {{outboundDetailsCtrl.outbound.numero}}
+    DETTAGLI CARICO IN USCITA N. {{outboundDetailsCtrl.outbound.order.numero}}
 </h3>
 
 <br><br>
@@ -14,7 +14,23 @@
 <fieldset>
     <legend>Articoli del carico:</legend>
     
-    <outbound-article-table article-list = "outboundDetailsCtrl.outboundArticles" attribute = "weightSelected"></outbound-article-table>
+    <outbound-article-table article-list = "outboundDetailsCtrl.outbound.articles" attribute = "pesoSelezionato">
+        <weight-column>
+            <td>
+                {{$parent.article.pesoSelezionato}}
+            </td>
+        </weight-column>
+        <quantity-column>
+            <td>
+                {{$parent.article.quantitaSelezionata}}
+            </td>
+        </quantity-column>
+        <unit-column>
+            <td>
+                {{$parent.article.unita}}
+            </td>
+        </unit-column>
+    </outbound-article-table>
     
 </fieldset>
 
@@ -22,6 +38,6 @@
 
 <fieldset>
     <legend>Prodotti del carico:</legend>
-    <inbound-product-table inbound-list="outboundDetailsCtrl.outboundProducts" entry-limit="outboundDetailsCtrl.outboundProducts.length" current-page="outboundDetailsCtrl.currentPage">
+    <inbound-product-table inbound-list="outboundDetailsCtrl.outbound.products" entry-limit="outboundDetailsCtrl.outbound.products.length" current-page="outboundDetailsCtrl.currentPage">
     </inbound-product-table>
 </fieldset>

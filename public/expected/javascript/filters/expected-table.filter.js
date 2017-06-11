@@ -28,7 +28,7 @@ function expectedFilter() {
                 }
                 if (search.spessore) {
                     output = output.filter(function(el){
-                        return (el.spessore == search.spessore);
+                        return (el.spessore.toString() == search.spessore);
                     });
                 }
             }

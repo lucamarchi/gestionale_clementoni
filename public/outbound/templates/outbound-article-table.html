@@ -28,7 +28,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="article in p2a.value"
-                ng-init="article.weightSelected = article.weightSelected == undefined ? article.pesoAttuale : article.weightSelected; article.quantitySelected = article.quantitySelected == undefined ? article.quantita : article.quantitySelected; article.unitSelected = article.unitSelected == undefined ? '0' : article.unitSelected">
+                ng-init="article.pesoSelezionato = article.pesoSelezionato == undefined ? article.pesoAttuale : article.pesoSelezionato; article.quantitaSelezionata = article.quantitaSelezionata == undefined ? article.quantita : article.quantitaSelezionata; article.unita = article.unita == undefined ? '0' : article.unita">
                 <td>{{article.dataConsegna | date:'medium'}}</td>
                 <td>{{article.clienteCod}}</td>
                 <td>{{article.codArticolo}}</td>

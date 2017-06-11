@@ -3,6 +3,8 @@ function OutboundUpdateController (OutboundFactory, ProdStateFactory, $location,
     ctrl.outbound = {};
     ctrl.outbound.order = {};
     ctrl.outbound.articles = [];
+    ctrl.outbound.addedArticles = [];
+    ctrl.outbound.removedArticles = [];
     ctrl.outbound.products = [];
     
     ctrl.outboundConfirmationModalContent = {
@@ -16,7 +18,7 @@ function OutboundUpdateController (OutboundFactory, ProdStateFactory, $location,
         OutboundFactory.getOutbound(id)
         .then (function (resp) {
             console.log("DETTAGLI CARICO IN USCITA" , resp);
-            ctrl.outbound.articles = resp.data.articles;
+            ctrl.outbound.articles = resp.data.data.articles;
         })
         .catch(function(err) {
             console.log(err);

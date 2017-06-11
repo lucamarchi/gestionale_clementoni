@@ -5,10 +5,14 @@ function stockTable () {
 		scope: {},
         bindToController: {
 			stockList: "=",
+            currentPage: "=",
+            entryLimit: "=",
         },
         transclude: {
             buttonAction: '?buttonAction',
-            stockFilters: '?stockFilters'
+            stockFilters: '?stockFilters',
+            tablePagination: "?tablePagination",
+
         },
         controller: function ($scope, features) {
             var ctrl = this;
@@ -79,7 +83,7 @@ function stockTable () {
                     }
                 }
                 return monster;
-            }
+            };
             
             $scope.$watchCollection (
                 function () {

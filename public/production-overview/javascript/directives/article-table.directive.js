@@ -53,16 +53,6 @@ function articleTable (ProcessingFactory, CustomerFactory) {
                     })
             };
 
-//            ctrl.getArticleStock = function(articleId) {
-//                ProductFactory.getStock(articleId)
-//                    .then (function (resp) {
-//                        console.log(resp);
-//                    })
-//                    .catch(function(err) {
-//                        console.log(err);
-//                    })
-//            }
-
             ctrl.getArticleProcessing = function (articleId) {
                 ProcessingFactory.getArticleProcessing(articleId)
                     .then (function (resp) {

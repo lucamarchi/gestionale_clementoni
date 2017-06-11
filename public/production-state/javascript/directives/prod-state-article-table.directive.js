@@ -30,16 +30,20 @@ function prodStateArticleTable(features) {
                 var typeArray = features.tipi;
                 var articleMap = [];
                 var typeArticles;
-                var weight = 0;
                 for (type of typeArray) {
+                    var weight = 0;
+                    var linearMeters = 0;
                     typeArticles = articles.filter(function (el) {
                         return (el.tipo == type);
                     });
                     if (typeArticles.length != 0) {
                         angular.forEach(typeArticles, function (el) {
                             weight += el.pesoAttuale;
+                            if (el.quantita != 0) {
+                                linearMeters += el.quantita * el.lunghezza;
+                            }
                         });
-                        articleMap.push({key: type, weight: weight, value: typeArticles});
+                        articleMap.push({key: type, weight: weight, linearMeters:linearMeters, value: typeArticles});
                     }
                 }
                 console.log(articleMap);

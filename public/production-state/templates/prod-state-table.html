@@ -1,6 +1,16 @@
 <pagination total-items="prodStateTableCtrl.prodStates.length" current-page="prodStateTableCtrl.currentPage" entry-limit="prodStateTableCtrl.entryLimit">
 </pagination>
-
+<div class="row">
+	<div class="col-md-3">
+		<input-text-filter label-name="Numero" model="search"
+						   attribute-m="numero"></input-text-filter>
+	</div>
+	<div class="col-md-3">
+		<input-date-filter label-name="Data" model="search"
+						   attribute-m="dataCreazione"></input-date-filter>
+	</div>
+</div>
+<br><br>
 <table class="table table-bordered table-hover">
 	<thead>
 	    <tr>
@@ -9,7 +19,7 @@
 		</tr>
 	</thead>
   	<tbody>
-    	<tr ng-repeat="prodState in prodStateTableCtrl.prodStates | orderBy:'dataCreazione':true">
+    	<tr ng-repeat="prodState in prodStateTableCtrl.prodStates | orderBy:'dataCreazione':true | prodStateTableFilter:search | startFrom:(prodStateTableCtrl.currentPage-1)*prodStateTableCtrl.entryLimit | limitTo:prodStateTableCtrl.entryLimit">
 			<td>
 <!--                <modal-directive button-action='prodStateTableCtrl.getProdState(prodState._id)' button-name='{{prodState.numero}}' modal-content="prodStateTableCtrl.prodStateModalContent"></modal-directive>-->
                 <a ng-href="#/productionState/details/{{prodState._id}}">

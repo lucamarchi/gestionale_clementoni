@@ -1,6 +1,8 @@
 function StockController ($scope, ProductFactory,$location) {
     var ctrl = this;
     ctrl.stocks = [];
+    ctrl.currentPage = 1;
+    ctrl.entryLimit = 1;
 	
     ctrl.stockDeleteModalContent = {
         modalTitle: 'Cancellazione prodotto giacenza',

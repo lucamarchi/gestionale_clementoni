@@ -198,10 +198,12 @@ angular
 
                 $scope.$watchCollection(
                     function () {
-                        return ctrl.model;
+                        return ctrl.model.tipo;
                     },
                     function (newVal, oldVal) {
-                        if (newVal) {
+                        console.log("aaa")
+                        if (newVal || (oldVal == undefined && newVal == undefined)) {
+                            console.log("bb")
                             ctrl.disable();
                         }
                     })

@@ -1,4 +1,4 @@
-function ExpectedController ($scope, ExpectedFactory,features) {
+function ExpectedController ($scope, UtilityFactory, ExpectedFactory,features) {
 	var ctrl = this;
     
     ctrl.currentPage = 1;
@@ -51,7 +51,8 @@ function ExpectedController ($scope, ExpectedFactory,features) {
     
     ctrl.updateExpected = function (expected, index) {
         console.log(expected);
-        //in caso ricalcolare peso saldo
+        UtilityFactory.productValuesForType(expected, "pesoOrdinato", "spessore", "larghezza");
+        expected.pesoSaldo = expected.pesoOrdinato - expected.pesoConsegnato;
         ExpectedFactory.updateExpected({"expected":expected})
             .then (function (resp) {
                 ctrl.expecteds[index] = expected;
@@ -78,4 +79,4 @@ function ExpectedController ($scope, ExpectedFactory,features) {
 	
 angular
     .module('store')
-    .controller('ExpectedController', ['$scope', 'ExpectedFactory', 'features', ExpectedController]);
+    .controller('ExpectedController', ['$scope', 'UtilityFactory','ExpectedFactory', 'features', ExpectedController]);

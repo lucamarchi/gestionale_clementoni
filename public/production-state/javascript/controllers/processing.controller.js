@@ -172,8 +172,8 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Proce
     };
 
     ctrl.addProducedProduct = function (product, article) {
-        product.pesoNetto = product.pesoIniziale;
-        product.pesoLordo = product.pesoNetto;
+        product.pesoLordo = product.pesoIniziale;
+        product.pesoNetto = product.pesoLordo - product.pesoBancale;
         UtilityFactory.productValuesForType(product,
             "pesoNetto", "spessoreEffettivo", "larghezzaEffettiva");
         console.log(product);
