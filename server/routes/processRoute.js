@@ -6,6 +6,7 @@ var Process = require('./../models/process');
 var Product = require('./../models/product');
 var Article = require('./../models/article');
 var productController = require('./../controllers/productController');
+var processController = require('./../controllers/processController');
 var utils = require('./../controllers/utilsController');
 var Q = require('q');
 var _ = require('lodash');
@@ -77,11 +78,13 @@ module.exports = function(app, apiRoutes) {
             var articleId = req.params.article_id;
             var data = {};
             Process.findByArticle(articleId).then(function (results) {
-                data.processes = results;
-                res.status(200).json({
-                    "success": true,
-                    "message": "Process with article found",
-                    "data": data
+                processController.findFigliAndArticleProcess(results).then(function(result) {
+                    data.processes = result;
+                    res.status(200).json({
+                        "success": true,
+                        "message": "Process with article found",
+                        "data": data
+                    });
                 });
             }).catch(function (err) {
                 if (err.message === "Process with article not found" && err.status === 400) {
@@ -138,10 +141,10 @@ module.exports = function(app, apiRoutes) {
                             singleFatherProd.push(currProduct);
                         }
                         if (!_.includes(numeroCollo, currProduct.numeroCollo))
-                            numeroCollo += currProduct.numeroCollo;
+                            numeroCollo += currProduct.numeroCollo + '/';
                     });
                     this.checkNumber(products).then(function (number) {
-                        numeroCollo += "/" + number + currProcess.machinery;
+                        numeroCollo += number + currProcess.machinery;
                         var promisesFather = [];
                         if (multiFatherProd.length > 0) {
                             multiFatherProd.forEach(function (currProduct) {
