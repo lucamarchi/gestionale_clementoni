@@ -123,6 +123,20 @@ module.exports = {
             deferred.reject(err);
         });
         return deferred.promise;
+    },
+
+    sortArticlesToTriples: function(release, articles) {
+        var triples = release.articlesId;
+        articles.forEach(function(currArticle) {
+            triples.forEach(function(trpl) {
+                if (trpl.article.toString() == currArticle._id.toString()) {
+                    currArticle['pesoSelezionato'] = trpl.peso;
+                    currArticle['quantitaSelezionata'] = trpl.quantita;
+                    currArticle['unita'] = trpl.unita;
+                }
+            });
+        });
+        return articles;
     }
 
 };
