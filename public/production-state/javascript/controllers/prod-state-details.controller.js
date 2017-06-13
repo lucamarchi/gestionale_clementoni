@@ -1,4 +1,4 @@
-function ProdStateDetailsController(ProdStateFactory, ProcessingProgressFactory, $routeParams, $location) {
+function ProdStateDetailsController(ProdStateFactory, ProcessingProgressFactory, ArticleFactory, $routeParams, $location) {
 
     var ctrl = this;
     ctrl.prodState = {};
@@ -40,8 +40,20 @@ function ProdStateDetailsController(ProdStateFactory, ProcessingProgressFactory,
         ProcessingProgressFactory.startProcessing(articles);
         $location.path("/productionState/processing/" + $routeParams.id);
     };
+
+    ctrl.completeArticle = function (article) {
+        article.statoProduzione = "completato";
+        // ArticleFactory.completeArticle()
+        //     .then(function (resp) {
+        //         console.log("ARTICOLI STATO PRODUZIONE", resp);
+        //         article.stato = "completato";
+        //     })
+        //     .catch(function (err) {
+        //         console.log(err);
+        //     });
+    };
 }
 
 angular
     .module('store')
-    .controller('ProdStateDetailsController', ['ProdStateFactory', 'ProcessingProgressFactory', '$routeParams', '$location', ProdStateDetailsController]);
+    .controller('ProdStateDetailsController', ['ProdStateFactory', 'ProcessingProgressFactory', 'ArticleFactory', '$routeParams', '$location', ProdStateDetailsController]);

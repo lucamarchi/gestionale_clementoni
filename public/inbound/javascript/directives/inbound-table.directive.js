@@ -8,7 +8,7 @@ function inboundTable () {
         templateUrl:'public/inbound/templates/inbound-table.html',
         scope: {},
         transclude: {
-            'pagination': '?tablePagination'
+            // 'pagination': '?tablePagination'
         },
         bindToController: {
             inboundList: "=",

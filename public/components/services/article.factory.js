@@ -31,6 +31,10 @@ function ArticleFactory ($http, myConfig) {
         return $http.delete(urlArticle+'/'+articleId);
     };
 
+    articleFactory.completeArticle = function (articleId) {
+      return $http.put(urlArticles+"/complete/"+articleId);
+    };
+
     
     
     

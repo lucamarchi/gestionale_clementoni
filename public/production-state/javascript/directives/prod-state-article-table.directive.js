@@ -43,7 +43,7 @@ function prodStateArticleTable(features) {
                                 linearMeters += el.quantita * el.lunghezza;
                             }
                         });
-                        articleMap.push({key: type, weight: weight, linearMeters:linearMeters, value: typeArticles});
+                        articleMap.push({key: type, weight: weight, linearMeters:linearMeters/1000, value: typeArticles});
                     }
                 }
                 console.log(articleMap);

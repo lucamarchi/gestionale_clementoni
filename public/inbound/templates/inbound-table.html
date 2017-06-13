@@ -1,4 +1,5 @@
-<div ng-transclude="pagination"></div>
+<pagination total-items="inboundTableCtrl.inboundList.length" current-page="inboundTableCtrl.currentPage" entry-limit="inboundTableCtrl.entryLimit">
+</pagination>
 <div class="row">
     <div class="col-md-3">
         <input-text-filter label-name="DDT" model="search"
