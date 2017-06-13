@@ -4,7 +4,7 @@ function CutDetailsController (CutFactory, $routeParams,$location) {
     ctrl.cut.order = {};
     ctrl.cut.customer = {};
     ctrl.cut.articles = [];
-    ctrl.currentPage = 1;
+
     
     
     ctrl.getCut = function (id) {

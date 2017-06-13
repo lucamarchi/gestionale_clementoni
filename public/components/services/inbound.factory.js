@@ -24,7 +24,7 @@ function InboundFactory ($http, myConfig) {
         return $http.delete(urlOrder+'/'+id);
     };
     return inboundFactory;
-};
+}
 
 angular
     .module('store')

@@ -9,11 +9,11 @@ function cutTable() {
         scope: {},
         bindToController: {
             cutList: "=",
-            currentPage: "=",
-            entryLimit: "=",
         },
         controller: function ($scope, CutFactory, $location) {
             var ctrl = this;
+            ctrl.currentPage = 1;
+            ctrl.entryLimit = 10;
 
             ctrl.cutDeletionModalContent = {
                 modalTitle: 'Conferma rimozione ordine di taglio',

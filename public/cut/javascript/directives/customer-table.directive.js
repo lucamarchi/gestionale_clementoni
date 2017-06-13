@@ -1,7 +1,3 @@
-/**
- * Created by nexse on 18/05/2017.
- */
-
 function customerTable () {
     return {
         restrict: 'E',
@@ -14,8 +10,8 @@ function customerTable () {
         },
         controllerAs: 'customerTableCtrl',
     };
-};
+}
 
 angular
     .module('store')
-    .directive('customerTable', customerTable)
+    .directive('customerTable', customerTable);

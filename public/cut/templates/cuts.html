@@ -2,7 +2,7 @@
 <br><br>
 <button type="button" class="btn btn-primary btn-lg" ng-click="cutCtrl.refreshCuts()">REFRESH</button>
 <br><br>
-<cut-table cut-list="cutCtrl.cuts" entry-limit="cutCtrl.entryLimit" current-page="cutCtrl.currentPage"></cut-table>
+<cut-table cut-list="cutCtrl.cuts"></cut-table>
 
 <div ng-class="cutCtrl.refreshLoadingModalContent.modalClass" id="{{cutCtrl.refreshLoadingModalContent.modalId}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">

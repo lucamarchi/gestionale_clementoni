@@ -66,8 +66,8 @@ function cutArticleTable() {
         },
         controllerAs: 'cutArticleTableCtrl',
     };
-};
+}
 
 angular
     .module('store')
-    .directive('cutArticleTable', cutArticleTable)
+    .directive('cutArticleTable', cutArticleTable);

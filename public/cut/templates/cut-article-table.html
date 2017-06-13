@@ -4,7 +4,7 @@
             <th>Cod. Articolo</th>
             <th>Tipo</th>
             <th>Materiale</th>
-            <th ng-if="$root.user.role == 'logistica' || $root.user.role == 'admin'">Prezzo</th>
+            <th>Prezzo</th>
             <th>Spess</th>
             <th>Larghezza</th>
             <th>Lunghezza</th>
@@ -19,7 +19,7 @@
             <td>{{article.codArticolo}}</td>
             <td>{{article.tipo}}</td>
             <td>{{article.materiale}}</td>
-            <td ng-if="$root.user.role == 'logistica' || $root.user.role == 'admin'">{{article.prezzo}}</td>
+            <td>{{article.prezzo}}</td>
             <td>{{article.spessore}}</td>
             <td>{{article.larghezza}}</td>
             <td>{{article.lunghezza}}</td>
@@ -59,7 +59,7 @@
                             </select-larghezza-form>
                         </div>
                         <div class="col-md-4">
-                            <select-lunghezza-form label-name="Lunghezza" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="lunghezzaAssegnata" required=true>
+                            <select-lunghezza-form label-name="Lunghezza" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="lunghezzaAssegnata" required=false>
                             </select-lunghezza-form>
                         </div>
                         <div class="col-md-4">

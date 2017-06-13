@@ -1,6 +1,6 @@
  function InboundController ($scope, InboundFactory, ExpectedFactory, features) {
 	var ctrl = this;
-	    
+
     ctrl.getInbounds = function() {
         InboundFactory.getInbounds()
             .then (function (resp) {

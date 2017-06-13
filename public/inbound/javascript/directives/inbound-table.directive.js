@@ -12,11 +12,13 @@ function inboundTable () {
         },
         bindToController: {
             inboundList: "=",
-            currentPage:"=",
-            entryLimit: "=",
+
         },
         controller: function ($scope, $location, InboundFactory) {
             var ctrl = this;
+
+            ctrl.currentPage = 1;
+            ctrl.entryLimit = 5;
 
             ctrl.deleteInboundModalContent = {
                 body:'Vuoi eliminare il carico in entrata? L\'operazione non sara reversibile',
@@ -50,8 +52,8 @@ function inboundTable () {
         },
         controllerAs: 'inboundTableCtrl',
     };
-};
+}
 
 angular
     .module('store')
-    .directive('inboundTable', inboundTable)
+    .directive('inboundTable', inboundTable);
