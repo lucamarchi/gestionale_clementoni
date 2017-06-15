@@ -40,11 +40,11 @@
         <td>{{article.quantita}}</td>
         <td ng-if = "$root.isLogistica()">{{article.prezzo}}</td>
         <td>
-            <production-state model="article" attribute="statoProduzione"></production-state>
-            <!--<span production-state model="article" attribute="statoProduzione"></span>
+            <!--<production-state model="article" attribute="statoProduzione"></production-state>-->
+            <span production-state model="article" attribute="statoProduzione"></span>
             <a href='' data-toggle="modal"
                data-target="#{{articleTableCtrl.articleProcessingModalContent.modalId}}" ng-click="articleTableCtrl.getArticleProcessing(article._id)"><span
-                    class='glyphicon glyphicon-info-sign'></span></a>-->
+                    class='glyphicon glyphicon-info-sign'></span></a>
         </td>
         <td ng-transclude="buttonAction"></td>
     </tr>

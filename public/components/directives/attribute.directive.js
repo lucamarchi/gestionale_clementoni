@@ -29,8 +29,6 @@ angular
                 '<span ng-switch-when="lavorazione" class="label label-warning">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
                 '<span ng-switch-when="completato" class="label label-success">{{prodStateCtrl.model[prodStateCtrl.attribute]}}</span>',
                 '</span>',
-                '<a href="" data-toggle="modal" data-target="#{{articleTableCtrl.articleProcessingModalContent.modalId}}" ng-click="articleTableCtrl.getArticleProcessing(article._id)">',
-                '<span class="glyphicon glyphicon-info-sign"></span></a>',
             ].join(''),
             controller: function () {
             },
