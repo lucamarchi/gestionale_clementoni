@@ -51,6 +51,26 @@ module.exports = {
 
     checkPassword: function(password, hash) {
         return bcrypt.compareSync(password, hash);
+    },
+
+    generateHash: function(password) {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    },
+
+    saveNewUser: function(user) {
+        var deferred = Q.defer();
+        var newUser = new user();
+        newUser.username = user.username;
+        newUser.dataSpedizione = user.password;
+        newUser.materiale = user.role;
+        newUser.save(function(err) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(newUser);
+            }
+        });
+        return deferred.promise;
     }
 
 };

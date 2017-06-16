@@ -15,7 +15,6 @@ module.exports = function(app, jwt, apiRoutes) {
                 User.findByUsername(username)
                     .then(function (user) {
                         if (user) {
-                            console.log(user)
                             if (!User.checkPassword(password, user.password)) {
                                 console.log(User.checkPassword(password, user.password))
                                 res.status(401).send({
@@ -78,6 +77,24 @@ module.exports = function(app, jwt, apiRoutes) {
             }
         })
 
-    .post('/create')
+    .post('/setup', function(req,res) {
+        var user = {};
+        user['username'] = req.body.username;
+        user['password'] = User.generateHash(req.body.password);
+        user['role'] = req.body.role;
+        User.saveNewUser(user).then(function(user) {
+            res.status(200).json({
+                "success": true,
+                "message": "User created",
+                "data": user
+            });
+        }).catch(function(err) {
+            res.status(500).json({
+                "success": false,
+                "message": "Internal server error",
+                "error": err.message
+            });
+        });
+    });
 
 };
