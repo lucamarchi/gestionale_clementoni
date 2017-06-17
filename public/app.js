@@ -1,9 +1,9 @@
 var store = angular.module('store', ['ngRoute', 'ngResource', 'ngTouch', 'ngAnimate', 'ui.bootstrap', 'ngCookies']);
 
 store.constant("myConfig", {
-    "url": "http://localhost:8080",
-//	"url": "http://clements-clementoni.rhcloud.com"
-});
+	// "url": "http://localhost:8080",
+	"url": "http://clements-clementoni.rhcloud.com"
+})
 
 store.constant("features", {
     "tipi": ["coil", "nastro", "piana", "ondulata", "grecata", "pressopiegata", "collaborante h55", "collaborante h55-s", "collaborante h75", "collaborante h75-s"],
