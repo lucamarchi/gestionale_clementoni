@@ -32,14 +32,11 @@ function ArticleFactory ($http, myConfig) {
     };
 
     articleFactory.completeArticle = function (articleId) {
-      return $http.put(urlArticles+"/complete/"+articleId);
+      return $http.put(urlArticle+"/complete/"+articleId);
     };
 
-    
-    
-    
     return articleFactory;
-};
+}
 
 
 

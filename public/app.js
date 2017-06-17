@@ -326,5 +326,5 @@ store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', '$
 
     $rootScope.isLogistica = function () {
         return $rootScope.isLogged && $rootScope.user && ($rootScope.user.role == "admin" || $rootScope.user.role == "logistica");
-    }
+    };
 }]);

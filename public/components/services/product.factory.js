@@ -1,7 +1,7 @@
 function ProductFactory($http, myConfig) {
 
     var urlBase = myConfig.url + '/api/products';
-    var urlStock = myConfig.url + '/api/product/stock'
+    var urlStock = myConfig.url + '/api/product/stock';
     var productFactory = {};
 
     productFactory.getProducts = function () {
@@ -28,7 +28,7 @@ function ProductFactory($http, myConfig) {
         return $http.delete(urlStock + '/'+id);
     };
     return productFactory;
-};
+}
 
 angular
     .module('store')

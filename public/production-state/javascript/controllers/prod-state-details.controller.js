@@ -8,6 +8,14 @@ function ProdStateDetailsController(ProdStateFactory, ProcessingProgressFactory,
     ctrl.currentPage = 1;
     ctrl.entryLimit = 10;
 
+    ctrl.completeArticleModalContent = {
+        modalBody: 'Confermare il completamento dell\'articolo? Non sara possibile effettuare ulteriori lavorazioni',
+        modalId:"completearticle",
+        modalTitle: 'Completamento articolo',
+        modalClass: 'modal fade',
+        article: '{}',
+    };
+
     ctrl.getProdState = function (id) {
         ProdStateFactory.getProdState(id)
             .then(function (resp) {
@@ -41,16 +49,22 @@ function ProdStateDetailsController(ProdStateFactory, ProcessingProgressFactory,
         $location.path("/productionState/processing/" + $routeParams.id);
     };
 
+    ctrl.selectArticle = function (article) {
+        console.log(article);
+        $('#' + ctrl.completeArticleModalContent.modalId).modal('show');
+        ctrl.completeArticleModalContent.article = article;
+    };
+
     ctrl.completeArticle = function (article) {
         article.statoProduzione = "completato";
-        // ArticleFactory.completeArticle()
-        //     .then(function (resp) {
-        //         console.log("ARTICOLI STATO PRODUZIONE", resp);
-        //         article.stato = "completato";
-        //     })
-        //     .catch(function (err) {
-        //         console.log(err);
-        //     });
+        ArticleFactory.completeArticle(article._id)
+            .then(function (resp) {
+                console.log("ARTICOLO COMPLETATO", resp);
+                article.statoProduzione = "completato";
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     };
 }
 

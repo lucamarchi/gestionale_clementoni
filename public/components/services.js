@@ -1,7 +1,7 @@
 var store = angular.module('store');
 
 /*--------------------------------> LOGIN/LOGOUT <-------------------------------------*/
-store.factory('UserService', ['$resource','$window', 'myConfig', function ($resource, $window, myConfig) {
+/*store.factory('UserService', ['$resource','$window', 'myConfig', function ($resource, $window, myConfig) {
     return{ 
 		resource: function(){
 			return $resource(myConfig.url+'/api/authenticate', {});
@@ -26,12 +26,11 @@ store.factory('UserService', ['$resource','$window', 'myConfig', function ($reso
 			delete $window.sessionStorage.token;
 		}
 	};
-}]);
+}]);*/
 
 
 store.factory('AuthenticationService', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return $resource(myConfig.url+'/api/verify', {
-  	});
+    return $resource(myConfig.url+'/api/verify', {});
 }]);
 
 store.factory('TokenInterceptor', ['$q', '$window', '$location', '$rootScope', 'myConfig', function ($q, $window, $location, $rootScope, myConfig) {

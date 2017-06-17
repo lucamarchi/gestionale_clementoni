@@ -9,15 +9,18 @@
 <fieldset>
     <prod-state-article-table article-list="prodStateDetailsCtrl.prodState.articles">
         <button-action>
-            <button type="button" class="btn btn-primary btn-block"
-                    ng-click="prodStateDetailsCtrl.addWorkingArticle($parent.article)">Lavora <span
-                    class="glyphicon glyphicon-plus"></span>
-            </button>
-            <button type="button" class="btn btn-success btn-block"
-                    ng-click="prodStateDetailsCtrl.completeArticle($parent.article)">Completa <span
-                    class="glyphicon glyphicon-ok"></span>
-            </button>
+            <div ng-show="$parent.article.statoProduzione != 'completato'">
+                <button type="button" class="btn btn-primary btn-block"
+                        ng-click="prodStateDetailsCtrl.addWorkingArticle($parent.article)">Lavora <span
+                        class="glyphicon glyphicon-plus"></span>
+                </button>
+                <button type="button" class="btn btn-success btn-block"
+                        ng-click="prodStateDetailsCtrl.selectArticle($parent.article)">Completa <span
+                        class="glyphicon glyphicon-ok"></span>
+                </button>
+            </div>
         </button-action>
+
     </prod-state-article-table>
 </fieldset>
 
@@ -42,3 +45,29 @@
         ng-disabled="!prodStateDetailsCtrl.workingArticles || prodStateDetailsCtrl.workingArticles.length == 0"
         ng-click="prodStateDetailsCtrl.startProcessing(prodStateDetailsCtrl.workingArticles)">Lavora
 </button>
+
+
+<!--confirmArticle modal content-->
+<div ng-class="prodStateDetailsCtrl.completeArticleModalContent.modalClass"
+     id="{{prodStateDetailsCtrl.completeArticleModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">{{prodStateDetailsCtrl.completeArticleModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                {{prodStateDetailsCtrl.completeArticleModalContent.modalBody}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        ng-click="prodStateDetailsCtrl.completeArticle(prodStateDetailsCtrl.completeArticleModalContent.article)">
+                    Si
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -160,6 +160,7 @@ function ProcessingController($scope, features, ProcessingProgressFactory, Proce
                 else {
                     ctrl.producedProductEntryModalContent.producedProduct = {};
                     UtilityFactory.producedProductFromStock(ctrl.producedProductEntryModalContent.producedProduct, ctrl.selectedStocks[0]);
+                    ctrl.producedProductEntryModalContent.producedProduct.lunghezza = article.lunghezza;
                 }
             }
         }

@@ -45,11 +45,11 @@ angular
                 attribute: "@"
             },
             template: [
-                '<div ng-switch="evasionStateCtrl.model[evasionStateCtrl.attribute]" style="text-align: center;">',
+                '<span ng-switch="evasionStateCtrl.model[evasionStateCtrl.attribute]" style="text-align: center;">',
                 '<span ng-switch-when="libero" class="label label-default">{{evasionStateCtrl.model[evasionStateCtrl.attribute]}}</span>',
                 '<span ng-switch-when="assegnato" class="label label-info">{{evasionStateCtrl.model[evasionStateCtrl.attribute]}}</span>',
                 '<span ng-switch-when="evaso" class="label label-success">{{evasionStateCtrl.model[evasionStateCtrl.attribute]}}</span>',
-                '</div>'
+                '</span>'
             ].join(''),
             controller: function () {
             },
