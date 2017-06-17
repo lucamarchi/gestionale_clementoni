@@ -106,7 +106,7 @@ module.exports = function(app, apiRoutes) {
             });
         })
     
-        .put('/articles/complete/:article_id', function(req,res,next) {
+        .put('/article/complete/:article_id', function(req,res,next) {
             var articleId = req.params.article_id;
             var data = {};
             Article.setArticleComplete(articleId).then(function(result) {

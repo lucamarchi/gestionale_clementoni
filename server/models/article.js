@@ -225,7 +225,7 @@ module.exports = {
     },
 
     setArticleComplete: function(articleId) {
-        var query = {$set: {'stato': 'completato'}};
+        var query = {$set: {'statoProduzione': 'completato'}};
         var article = this.updateArticle(articleId,query);
         return article;
     },
