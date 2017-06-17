@@ -1,0 +1,14 @@
+<expected-table expected-list="inboundSetCtrl.expectedSelectionModalContent.expecteds" entry-limit="inboundSetCtrl.expectedSelectionModalContent.entryLimit" current-page="inboundSetCtrl.currentPage">
+    <table-pagination>
+            <pagination total-items="$parent.expectedTableCtrl.expectedList.length" current-page="$parent.expectedTableCtrl.currentPage" entry-limit="$parent.expectedTableCtrl.entryLimit"></pagination>
+    </table-pagination>
+    <table-filter>
+        <expected-filter model="$parent.search"></expected-filter>
+    </table-filter>
+    <table-button>
+        <button type="button" class="btn btn-block btn-success btn-circle" data-dismiss="modal" data-toggle="modal" data-target="#{{inboundSetCtrl.inboundProductEntryModalContent.modalId}}" ng-click="inboundSetCtrl.selectExpected($parent.expected)">
+            <span class="glyphicon glyphicon-ok"></span>
+        </button>
+    </table-button>
+</expected-table>
+

@@ -1,0 +1,74 @@
+<pagination total-items="cutTableCtrl.cutList.length" current-page="cutTableCtrl.currentPage" entry-limit="cutTableCtrl.entryLimit"></pagination>
+<div class="row">
+    <div class="col-md-3">
+        <input-text-filter label-name="Num. Ordine" model="search" attribute-m="codice"></input-text-filter>
+    </div>
+    <div class="col-md-3">
+        <input-text-filter label-name="Codice Cliente" model="search" attribute-m="clienteCod"></input-text-filter>
+    </div>
+    <div class="col-md-3">
+        <input-date-filter label-name="Data Prevista" model="search" attribute-m="date"></input-date-filter>
+    </div>
+</div>
+<br>
+<table class="table table-condensed table-bordered table-hover">
+	<thead>
+        <th>Num Ordine</th>
+        <th>Codice Cliente</th>
+        <th>Data</th>
+        <th>Note</th>
+        <th>Stato</th>
+	</thead>
+	<tbody>
+		<tr ng-repeat="cut in cutTableCtrl.cutList | cutsFilter:search | orderBy:['accepted','-codice'] | startFrom:(cutTableCtrl.currentPage-1)*cutTableCtrl.entryLimit | limitTo:cutTableCtrl.entryLimit">
+            <td>
+                <button type="button" class="btn btn-info btn-block" ng-click = "cutTableCtrl.showCutDetails(cut._id)">{{cut.codice}}</button>
+            </td>
+			<td>{{cut.clienteCod}}</td>
+			<td custom-date model="cut" attribute="date"></td>
+			<td>{{cut.note}}</td>
+			<td ng-if="cut.accepted == true"><span class="label label-success">Confermato</span></td>
+			<td ng-if="cut.accepted == false">
+                <button ng-disabled="!cut.flag" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{cutTableCtrl.cutConfirmationModalContent.modalId}}" ng-click="cutTableCtrl.selectCut(cut)">Conferma</button>
+                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#{{cutTableCtrl.cutDeletionModalContent.modalId}}" ng-click="cutTableCtrl.selectCut(cut)">Elimina</button>
+            </td>
+		</tr>
+	</tbody>
+</table>
+
+<div ng-class="cutTableCtrl.cutConfirmationModalContent.modalClass" id="{{cutTableCtrl.cutConfirmationModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{cutTableCtrl.cutConfirmationModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div>{{cutTableCtrl.cutConfirmationModalContent.modalBody}}</div>
+            </div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+				<button type="button" class="btn btn-primary" ng-click="cutTableCtrl.confirmCut(cutTableCtrl.cutConfirmationModalContent.cut)" data-dismiss="modal">Conferma</button>
+			</div>
+        </div>
+    </div>
+</div>
+
+<div ng-class="cutTableCtrl.cutDeletionModalContent.modalClass" id="{{cutTableCtrl.cutDeletionModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{cutTableCtrl.cutDeletionModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div>{{cutTableCtrl.cutDeletionModalContent.modalBody}}</div>
+            </div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+				<button type="button" class="btn btn-primary" ng-click="cutTableCtrl.deleteCut(cutTableCtrl.cutDeletionModalContent.cut)" data-dismiss="modal">Conferma</button>
+			</div>
+        </div>
+    </div>
+</div>
+

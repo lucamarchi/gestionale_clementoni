@@ -1,0 +1,32 @@
+<form name="outboundFormCtrl.outboundForm" class="form" novalidate>
+    <div class="row">
+        <div class="col-md-3">
+            <select-trasportatore-form label-name="Trasportatore" model="outboundFormCtrl.model" attribute-m="trasportatore" required=true>
+            </select-trasportatore-form>
+        </div>
+        <div class="col-md-3">
+            <input-date-form label-name="Data spedizione" model="outboundFormCtrl.model" attribute-m="dataSpedizione" required=true>
+            </input-date-form>
+        </div>
+        <div class="col-md-3">
+            <input-text-form label-name="Materiale" model="outboundFormCtrl.model" attribute-m="materiale" required=false>
+            </input-text-form>
+        </div>
+        <div class="col-md-3">
+            <input-text-form label-name="Tipo Mezzo" model="outboundFormCtrl.model" attribute-m="tipo" required=false>
+            </input-text-form>
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-md-3">
+            <input-text-form label-name="Autista" model="outboundFormCtrl.model" attribute-m="materiale" required=false>
+            </input-text-form>
+        </div>
+        <div class="col-md-3">
+            <input-text-form label-name="Targa" model="outboundFormCtrl.model" attribute-m="tipo" required=false>
+            </input-text-form>
+        </div>
+     </div>
+</form>

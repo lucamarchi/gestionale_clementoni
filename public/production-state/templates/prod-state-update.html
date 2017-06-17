@@ -1,0 +1,38 @@
+<h1>
+    STATI PRODUZIONE
+    <a ng-href="#/productionState">
+        <button ng-if="user.role == 'logistica' || user.role == 'admin'" type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+    </a>
+</h1>
+
+<br>
+
+<h3><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Modifica stato produzione</h3>
+
+<br><br>
+
+<prod-state-edit prod-state = "prodStateUpdateCtrl.prodState">
+    <confirm-button>
+        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateUpdateCtrl.prodState.articles.length > 0" data-toggle="modal" data-target="#{{prodStateUpdateCtrl.prodStateConfirmationModalContent.modalId}}">Modifica</button>
+        <button type="button" class="btn btn-primary btn-lg" ng-if = "prodStateUpdateCtrl.prodState.articles.length == 0" disabled>Modifica</button>
+    </confirm-button>
+</prod-state-edit>
+
+
+<div ng-class="prodStateUpdateCtrl.prodStateConfirmationModalContent.modalClass" id="{{prodStateUpdateCtrl.prodStateConfirmationModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{prodStateUpdateCtrl.prodStateConfirmationModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                {{prodStateUpdateCtrl.prodStateConfirmationModalContent.modalBody}}   
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "prodStateUpdateCtrl.updateProdState(prodStateUpdateCtrl.prodState)">Conferma</button>
+            </div>
+        </div>
+    </div>
+</div>

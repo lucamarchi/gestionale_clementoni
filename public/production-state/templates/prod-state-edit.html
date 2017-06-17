@@ -1,0 +1,39 @@
+<fieldset>
+    <legend>Lista articoli:</legend>
+
+    <prod-state-article-table article-list="prodStateEditCtrl.freeArticles">
+        <button-action>
+            <button type="button" class="btn btn-primary btn-circle"
+                    ng-click="prodStateEditCtrl.addSelectedArticle($parent.article)"><span
+                    class="glyphicon glyphicon-plus"></span></button>
+        </button-action>
+        </article-table>
+    </prod-state-article-table>
+</fieldset>
+
+<br><br>
+<hr>
+<br><br>
+
+<fieldset>
+    <legend>Articoli selezionati:</legend>
+    <prod-state-article-table article-list="prodStateEditCtrl.prodState.articles">
+        <button-action>
+            <button type="button" class="btn btn-primary btn-circle"
+                    ng-click="prodStateEditCtrl.removeSelectedArticle($parent.article)"><span
+                    class="glyphicon glyphicon-minus"></span></button>
+        </button-action>
+    </prod-state-article-table>
+
+</fieldset>
+<div ng-transclude="confirmButton"></div>
+
+<br>
+
+<!--<br><br>
+articoli dello stato: {{prodStateEditCtrl.prodState.articles}}
+<br><br>
+articoli da aggiunge: {{prodStateEditCtrl.prodState.addedArticles}}
+<br><br>
+articoli da rimuove: {{prodStateEditCtrl.prodState.removedArticles}}-->
+

@@ -1,0 +1,35 @@
+<h1>
+    CARICHI IN USCITA
+    <a ng-href="#/outbound">
+        <button ng-if="user.role == 'logistica' || user.role == 'admin'" type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+    </a>
+</h1>
+<br>
+<h3>
+    <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Modifica carico in uscita
+</h3>
+<br><br>
+<outbound-edit outbound = "outboundUpdateCtrl.outbound">
+    <confirm-button>
+        <button type="button" class="btn btn-primary btn-lg" ng-if = "outboundUpdateCtrl.outbound.articles && outboundUpdateCtrl.outbound.articles.length > 0" data-toggle="modal" data-target="#{{outboundUpdateCtrl.outboundConfirmationModalContent.modalId}}">Conferma</button>
+        <button type="button" class="btn btn-primary btn-lg" ng-if = "outboundUpdateCtrl.outbound.articles && outboundUpdateCtrl.outbound.articles.length == 0" disabled>Conferma</button>
+    </confirm-button>
+</outbound-edit>
+
+<div ng-class="outboundUpdateCtrl.outboundConfirmationModalContent.modalClass" id="{{outboundUpdateCtrl.outboundConfirmationModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{outboundUpdateCtrl.outboundConfirmationModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                {{outboundUpdateCtrl.outboundConfirmationModalContent.modalBody}}   
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click = "outboundUpdateCtrl.updateOutbound(outboundUpdateCtrl.outbound)">Conferma</button>
+            </div>
+        </div>
+    </div>
+</div>

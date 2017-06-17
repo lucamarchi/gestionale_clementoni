@@ -1,159 +1,18 @@
 var store = angular.module('store');
 
-store.factory('orderFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-	return $resource(myConfig.url+'/api/orders/:id',
-		{
-			id: "@id"
-		}, 
-		{
-			update: {method:'PUT'},
-			getAll: {method:'GET', isArray: false}
-		}
-	);
-}]);
-
-store.factory('productFactory',  ['$resource', 'myConfig', function ($resource, myConfig) {
-    return $resource(myConfig.url+'/api/products/:id',
-		{
-			id: "@id"
-		}, 
-		{
-			update:{method:'PUT'}
-  		}
-	);
-}]);
-
-
-
-/*-----------------------> ORDINI DI TAGLIO <--------------------------------------------*/
-store.factory('cutFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return $resource(myConfig.url+'/api/cuts/:id',
-		{
-			id: "@id"
-		}, 
-		{
-			update: {method:'PUT'},
-			getAll: {method:'GET', isArray: false}
-		}
-	);
-}]);
-
-store.factory('refreshFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return resource = $resource(myConfig.url+'/api/cuts/update', {},
-		{
-			refresh: {method:'GET', isArray: false}
-		}
-  	);
-}]);
-
-
-/*--------------------------> PRODUZIONE <----------------------------------------------------*/
-store.factory('articleFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return { 
-		resourceState: function () {
-			return $resource(myConfig.url+'/api/articles/:state', 
-				{
-					state: "@state"
-				},
-				{
-					getAll: {method:'GET', isArray: false},
-				}
-			);
-		},
-		resourceStock: function () {
-			return $resource(myConfig.url+'/api/articles/stock/:id', 
-				{
-					id: "@id"
-				},
-				{
-					update: {method:'PUT'},
-				}
-			);
-		},
-		resourceComplete: function () {
-			return $resource(myConfig.url+'/api/articles/complete/:id', 
-				{
-					id: "@id"
-				},
-				{
-					update: {method:'PUT'},
-				}
-			);
-		},
-		resourceCustomer: function () {
-			return $resource(myConfig.url+'/api/customer/articles/:id', 
-				{
-					id: "@id"
-				}
-			)
-		}
-	}
-}]);
-
-/*--------------------------------> PRODUCTION STATE<-------------------------------------*/
-store.factory('productionStateFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return resource = $resource(myConfig.url+'/api/prods/:id', 
-		{
-			id: "@id"
-		},
-		{
-			update: {method:'PUT'},
-			getAll: {method:'GET', isArray: false}
-		}
-  	);
-}]);
-
-/*--------------------------------> EXPECTED LOAD<-------------------------------------*/
-store.factory('expectedLoadFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return resource = $resource(myConfig.url+'/api/expected/:id', 
-		{
-			id: "@id"
-		},
-		{
-			update: {method:'PUT'},
-			getAll: {method:'GET', isArray: false}
-		}
-  	);
-}]);
-
-/*--------------------------------> PROCESS<-------------------------------------*/
-store.factory('processFactory', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return {
-		resource: function() {
-			return $resource(myConfig.url+'/api/processes', {});
-		},
-		resourceArticle: function() {
-			return $resource(myConfig.url+'/api/processes/articles/:id',
-				{
-					id:"@id"
-				}
-			);
-		},
-		resourceChildren: function() {
-			return $resource(myConfig.url+'/api/processes/figli/:id',
-				{
-					id:"@id"
-				}
-			);
-		}
-	} 
-}]);
-
-
-
-
 /*--------------------------------> LOGIN/LOGOUT <-------------------------------------*/
-store.factory('UserService', ['$resource','$window', 'myConfig', function ($resource, $window, myConfig) {
+/*store.factory('UserService', ['$resource','$window', 'myConfig', function ($resource, $window, myConfig) {
     return{ 
 		resource: function(){
 			return $resource(myConfig.url+'/api/authenticate', {});
 		},
 		getUser: function(){
-			return {username : $window.sessionStorage.user, role: $window.sessionStorage.role};
+			return {username: $window.sessionStorage.username, role:$window.sessionStorage.role};
 		},
-		setUser: function(user, role) {
-			$window.sessionStorage.user = user;
-			$window.sessionStorage.role = role;
+		setUser: function(username, role) {
+            $window.sessionStorage.username = username;
+            $window.sessionStorage.role = role;
+            console.log($window.sessionStorage.username,$window.sessionStorage.role )
 		},
 		getToken: function(){
 			return $window.sessionStorage.token;
@@ -162,17 +21,16 @@ store.factory('UserService', ['$resource','$window', 'myConfig', function ($reso
 			$window.sessionStorage.token = token;
 		},
 		emptySession: function() {
-			delete $window.sessionStorage.user;	
-			delete $window.sessionStorage.role;
+			delete $window.sessionStorage.username;
+            delete $window.sessionStorage.role;
 			delete $window.sessionStorage.token;
 		}
 	};
-}]);
+}]);*/
 
 
 store.factory('AuthenticationService', ['$resource', 'myConfig', function ($resource, myConfig) {
-    return $resource(myConfig.url+'/api/verify', {
-  	});
+    return $resource(myConfig.url+'/api/verify', {});
 }]);
 
 store.factory('TokenInterceptor', ['$q', '$window', '$location', '$rootScope', 'myConfig', function ($q, $window, $location, $rootScope, myConfig) {

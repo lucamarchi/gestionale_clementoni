@@ -10,32 +10,7 @@ store.filter('startFrom', function () {
 	};
 });
 
-store.filter('filtercut', function() {
-	
-  	return function(input, codice, clienteCod, data) {
-		var output;
-		if (input) {
-			output = input.slice();
-			if (codice) {
-				output = output.filter(function(el){
-					return (el.codice.toString().substring(0,codice.length) == codice);
-				});
-			}
-			if (clienteCod) {
-				output = output.filter(function(el){
-					return (el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod);
-				});
-			}
-			if (data) {
-				output = output.filter(function(el){
-					return (new Date(el.date).getTime() == new Date(data).getTime());
-				});
-			}
-		}
-		return output;
-	}
 
-});	
 
 store.filter('filterca', function() {
 	
@@ -102,7 +77,7 @@ store.filter('filterstock', function() {
 
 store.filter('filterriep', function() {
 	
-  	return function(input, dataConsegna, ordineCod, clienteCod, materiale, tipo, spessore) {
+  	return function(input, dataConsegna, region, provincia, clienteCod, ordineCod, materiale, tipo, spessore) {
 		var output;
 		if (input) {
 			output = input.slice();
@@ -111,52 +86,24 @@ store.filter('filterriep', function() {
 					return (new Date(el.dataConsegna).getTime() == new Date(dataConsegna).getTime());
 				});
 			}
-			if (ordineCod) {
-				output = output.filter(function(el){
-					return (el.ordineCod.toString().substring(0,ordineCod.length) == ordineCod.toString());
-				});
-			}
 			if (clienteCod) {
 				output = output.filter(function(el){
-					console.log(el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
 					return (el.clienteCod.toString().substring(0,clienteCod.length) == clienteCod.toString());
 				});
 			}
-			if (materiale) {
+			if (region) {
 				output = output.filter(function(el){
-					return (el.materiale == materiale);
+					return (el.region.toString().substring(0,region.length) == region.toString());
 				});
 			}
-			if (tipo) {
+			if (provincia) {
 				output = output.filter(function(el){
-					return (el.tipo == tipo);
+					return (el.provincia.toString().substring(0,provincia.length) == provincia.toString());
 				});
 			}
-			if (spessore) {
+			if (ordineCod) {
 				output = output.filter(function(el){
-					return (el.spessore == spessore);
-				});
-			}
-			
-		}
-		return output;
-	}
-});
-
-store.filter('filterexp', function() {
-	
-  	return function(input, dataPrevista, fornitore, materiale, tipo, spessore) {
-		var output;
-		if (input) {
-			output = input.slice();
-			if (dataPrevista) {
-				output = output.filter(function(el){
-					return (new Date(el.dataPrevista).getTime() == new Date(dataPrevista).getTime());
-				});
-			}
-			if (fornitore) {
-				output = output.filter(function(el){
-					return (el.fornitore == fornitore);
+					return (el.ordineCod.toString().substring(0,ordineCod.length) == ordineCod.toString());
 				});
 			}
 			if (materiale) {

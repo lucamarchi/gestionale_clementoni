@@ -1,0 +1,96 @@
+<table class="table table-condensed table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Cod. Articolo</th>
+            <th>Tipo</th>
+            <th>Materiale</th>
+            <th>Prezzo</th>
+            <th>Spess</th>
+            <th>Larghezza</th>
+            <th>Lunghezza</th>
+            <th>Peso (kg)</th>
+            <th>Quantita</th>
+            <th>Data Consegna</th>
+            <th>Virtuale</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="article in cutArticleTableCtrl.articleList">
+            <td>{{article.codArticolo}}</td>
+            <td>{{article.tipo}}</td>
+            <td>{{article.materiale}}</td>
+            <td>{{article.prezzo}}</td>
+            <td>{{article.spessore}}</td>
+            <td>{{article.larghezza}}</td>
+            <td>{{article.lunghezza}}</td>
+            <td>{{article.pesoAttuale}}</td>
+            <td>{{article.quantita}}</td>
+            <td custom-date model="article" attribute = "dataConsegna"></td>
+            <td>
+                <ul>
+                    <li>Larghezza: {{article.larghezzaAssegnata}}</li>
+                    <li>Lunghezza: {{article.lunghezzaAssegnata}}</li>
+                    <li>Qualita: {{article.qualita}}</li>
+
+                </ul>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{cutArticleTableCtrl.dimensionSelectionModalContent.modalId}}" ng-click = "cutArticleTableCtrl.selectArticle(article, cutArticleTableCtrl.articleList.indexOf(article))">Dimensioni stock virtuale</button>
+                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#{{cutArticleTableCtrl.cutArticleDeletionModalContent.modalId}}" ng-click = "cutArticleTableCtrl.selectArticle(article, cutArticleTableCtrl.articleList.indexOf(article))">Elimina</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<!-- Modal dimension selection -->
+<div ng-class="cutArticleTableCtrl.dimensionSelectionModalContent.modalClass" id="{{cutArticleTableCtrl.dimensionSelectionModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{cutArticleTableCtrl.dimensionSelectionModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="cutArticleTableCtrl.articleForm" class="form" novalidate>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select-larghezza-form label-name="Larghezza" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="larghezzaAssegnata" required=true>
+                            </select-larghezza-form>
+                        </div>
+                        <div class="col-md-4">
+                            <select-lunghezza-form label-name="Lunghezza" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="lunghezzaAssegnata" required=false>
+                            </select-lunghezza-form>
+                        </div>
+                        <div class="col-md-4">
+                            <select-qualita-form label-name="Qualita" model="cutArticleTableCtrl.dimensionSelectionModalContent.article" attribute-m="qualita" required=true>
+                            </select-qualita-form>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Annulla</button>
+                <button ng-disabled="!cutArticleTableCtrl.articleForm.$valid" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="cutArticleTableCtrl.assignDimension(cutArticleTableCtrl.dimensionSelectionModalContent.article, cutArticleTableCtrl.dimensionSelectionModalContent.index)">Inserisci</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-class="cutArticleTableCtrl.cutArticleDeletionModalContent.modalClass" id="{{cutArticleTableCtrl.cutArticleDeletionModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{cutArticleTableCtrl.cutArticleDeletionModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div>{{cutArticleTableCtrl.cutArticleDeletionModalContent.modalBody}}</div>
+            </div>
+            <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+				<button type="button" class="btn btn-primary" ng-click="cutArticleTableCtrl.deleteCutArticle(cutArticleTableCtrl.cutArticleDeletionModalContent.article)" data-dismiss="modal">Conferma</button>
+			</div>
+        </div>
+    </div>
+</div>

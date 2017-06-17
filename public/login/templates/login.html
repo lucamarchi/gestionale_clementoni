@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-md-offset-4 col-md-4">
+            <img src="public/login/javascript/services/copal-picture.png" style="width: 100%">
+    </div>
+</div>  
+
+<br><br>
+
+<form name="loginCtrl.loginForm" class="form-horizontal" role="form" novalidate>
+    <div class="form-group">
+   		<label class="col-md-4 control-label">Username</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Username" ng-model="loginCtrl.user.username" required/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label">Password</label>
+        <div class="col-md-4">
+            <input type="password" class="form-control" placeholder="Password" ng-model="loginCtrl.user.password" required/>
+        </div>
+    </div>
+    
+    <br>
+    
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-4">
+            <button ng-if="loginCtrl.loginForm.$valid" type="submit" class="btn btn-primary btn-block" ng-click="loginCtrl.logIn(loginCtrl.user)">Log In</button>
+        </div>
+        <div class="col-md-offset-4 col-md-4">
+            <button ng-if="!loginCtrl.loginForm.$valid" class="btn btn-primary btn-block" disabled>Log In</button>
+        </div>
+    </div>
+</form>
+
+
+<div ng-class="loginCtrl.loginAlertModalContent.modalClass" id="{{loginCtrl.loginAlertModalContent.modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{loginCtrl.loginAlertModalContent.modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                {{loginCtrl.loginAlertModalContent.modalBody}}   
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+<div class="container">
+
+<form class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+</div>-->
