@@ -1,0 +1,45 @@
+<div ng-transclude="pagination"></div>
+<div ng-transclude="filters"></div>
+<table class="table table-condensed table-bordered table-hover">
+    <thead>
+		<tr>
+            <th>Fornitore</th>
+            <th>Data Prevista</th>
+			<th>Materiale</th>
+			<th>Tipo</th>
+			<th>Spessore</th>
+			<th>Larghezza</th>
+            <th>Lunghezza</th>
+			<th>Superficie</th>
+            <th>Qualita</th>
+			<th>Finitura</th>
+			<th>Colore</th>
+            <th ng-if="$root.user.role == 'admin'">Prezzo(&euro;/t)</th>
+			<th>Peso(Kg)</th>
+			<th>Quantita</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="expected in expectedTableCtrl.expectedList | expectedFilter:search | orderBy:'dataPrevista'|startFrom:(expectedTableCtrl.currentPage-1)*expectedTableCtrl.entryLimit | limitTo:expectedTableCtrl.entryLimit">
+            <td>{{expected.fornitore}}</td>
+            <td custom-date model="expected" attribute="dataPrevista"></td>
+			<td>{{expected.materiale}}</td>
+			<td>{{expected.tipo}}</td>
+			<td>{{expected.spessore}}</td>
+			<td>{{expected.larghezza}}</td>
+			<td>{{expected.lunghezza}}</td>
+            <td>{{expected.superficie}}</td>
+            <td>{{expected.qualita}}</td>
+			<td>{{expected.finitura}}</td>
+			<td>{{expected.colore}}</td>
+            <td ng-if="$root.user.role == 'admin'">{{expected.prezzo}}</td>
+			<td>
+				<div>ordinato:{{expected.pesoOrdinato}}</div>
+				<div>consegnato:{{expected.pesoConsegnato}}</div>
+				<div>saldo:{{expected.pesoSaldo}}</div>
+			</td>
+			<td>{{expected.quantita}}</td>
+            <td ng-transclude="tableButton"></td>
+		</tr>
+	</tbody>
+</table>

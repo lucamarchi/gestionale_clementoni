@@ -1,0 +1,12 @@
+<table class="table">
+    <thead>
+    <th>{{infoQuantityCtrl.keyHeader}}</th>
+    <th>{{infoQuantityCtrl.valueHeader}}</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="(key,value) in infoQuantityCtrl.quantityMap">
+        <td>{{key | uppercase}}</td>
+        <td>{{value | uppercase}}</td>
+    </tr>
+    </tbody>
+</table>

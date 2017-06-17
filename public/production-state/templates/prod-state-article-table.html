@@ -1,0 +1,41 @@
+<fieldset ng-repeat-start="type2articles in prodStateArticleTableCtrl.articleMap">
+    <h3 align="center"><b>{{type2articles.key|uppercase}}</b> {{type2articles.weight}} kg ({{type2articles.linearMeters}}ml)</h3>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Data Consegna</th>
+            <th>Cod. Cliente</th>
+            <th>Codice Articolo</th>
+            <th>Materiale</th>
+            <th>Spessore</th>
+            <th>Larghezza</th>
+            <th>Lunghezza</th>
+            <th>Peso</th>
+            <th>Quantita</th>
+            <th ng-if = "$root.isLogistica()">Prezzo (&euro;/t)</th>
+            <th>Stato Produzione</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="article in type2articles.value">
+            <td>{{article.dataConsegna | date:'medium'}}</td>
+            <td>{{article.clienteCod}}</td>
+            <td>{{article.codArticolo}}</td>
+            <td>{{article.materiale}}</td>
+            <td>{{article.spessore}}</td>
+            <td>{{article.larghezza}}</td>
+            <td>{{article.lunghezza}}</td>
+            <td>{{article.pesoAttuale}}</td>
+            <td>
+                <div>{{article.quantita}}
+                    <span ng-if="article.tipo != 'coil' && article.tipo != 'nastro'">({{article.quantita*article.lunghezza}}ml)</span>
+                </div>
+            </td>
+            <td ng-if = "$root.isLogistica()">{{article.prezzo}}</td>
+            <td production-state model="article" attribute="statoProduzione"></td>
+            <td ng-transclude="buttonAction"></td>
+        </tr>
+        </tbody>
+    </table>
+</fieldset>
+<fieldset ng-repeat-end ng-hide="true"></fieldset>

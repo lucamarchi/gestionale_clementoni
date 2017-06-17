@@ -1,0 +1,34 @@
+<fieldset ng-repeat = "processing in processingListCtrl.processingList | orderBy:'data'">
+    <legend>
+        <div class="row">
+            <div class="col-md-3">
+                <b>LAVORAZIONE {{processingListCtrl.processingList.indexOf(processing)+1}}</b>
+            </div>
+            <div class="col-md-3">
+                {{processing.process.data | date:'medium'}}
+            </div>
+            <div class="col-md-2">
+                Operatore: {{processing.process.operatore}}
+            </div>
+            <div class="col-md-2">
+                Macchinario: {{processing.process.macchina}}
+            </div>
+            <div class="col-md-2">
+                Scarto: {{processing.process.scarto}}
+            </div>
+        </div>
+    </legend>
+    <br>
+    <div>
+        <inbound-product-table inbound-list="processing.products" entry-limit="processing.products.length" current-page=1 caption="STOCK UTILIZZATI">
+        </inbound-product-table>
+    </div>
+    <br>
+    <div>
+        <inbound-product-table inbound-list="[processing.figlio]" entry-limit="1" current-page=1 caption="COLLO REALIZZATO">
+        </inbound-product-table>
+    </div>
+    <br><br>
+</fieldset>
+
+<!--{{processingListCtrl.processingList}}-->

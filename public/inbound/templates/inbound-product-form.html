@@ -1,0 +1,83 @@
+<form name="inboundProductFormCtrl.inboundProductForm" class="form" novalidate>
+    <div class="row">
+        <div class="col-md-3">
+            <input-text-form label-name="Matricola" model="inboundProductFormCtrl.model" attribute-m="matricola"
+                             required=true></input-text-form>
+        </div>
+        <div class="col-md-3">
+            <select-materiale-form label-name="Materiale" model="inboundProductFormCtrl.model" attribute-m="materiale"
+                                   required=false>
+            </select-materiale-form>
+        </div>
+        <div class="col-md-3">
+            <select-tipo-form label-name="Tipo" model="inboundProductFormCtrl.model" attribute-m="tipo" required=false>
+            </select-tipo-form>
+        </div>
+        <div class="col-md-3">
+            <select-qualita-form label-name="Qualita" model="inboundProductFormCtrl.model" attribute-m="qualita"
+                                 required=false></select-qualita-form>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-3">
+            <select-spessore-form label-name="Spessore Nominale" model="inboundProductFormCtrl.model"
+                                  attribute-m="spessoreNominale" required=false>
+            </select-spessore-form>
+        </div>
+        <div class="col-md-3">
+            <input-num-form label-name="Spessore Effettivo" model="inboundProductFormCtrl.model"
+                            attribute-m="spessoreEffettivo" required=false>
+            </input-num-form>
+        </div>
+        <div class="col-md-3">
+            <select-larghezza-form label-name="Larghezza Nominale" model="inboundProductFormCtrl.model"
+                                   attribute-m="larghezzaNominale" required=false>
+            </select-larghezza-form>
+        </div>
+        <div class="col-md-3">
+            <input-num-form label-name="Larghezza Effettiva" model="inboundProductFormCtrl.model"
+                            attribute-m="larghezzaEffettiva" required=false></input-num-form>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <select-superficie-form label-name="Superficie" model="inboundProductFormCtrl.model"
+                                    attribute-m="superficie">
+            </select-superficie-form>
+        </div>
+        <div class="col-md-3">
+            <select-finitura-form label-name="Finitura" model="inboundProductFormCtrl.model" attribute-m="finitura">
+            </select-finitura-form>
+        </div>
+
+        <div class="col-md-3">
+            <select-colore-form label-name="Colore" model="inboundProductFormCtrl.model" attribute-m="colore">
+            </select-colore-form>
+        </div>
+
+        <div class="col-md-3">
+            <select-scelta-form label-name="Scelta" model="inboundProductFormCtrl.model" attribute-m="scelta"
+                                required=false>
+            </select-scelta-form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <select-lunghezza-form label-name="Lunghezza" model="inboundProductFormCtrl.model" attribute-m="lunghezza"
+                                   required=false>
+            </select-lunghezza-form>
+        </div>
+        <div class="col-md-3">
+            <input-num-form label-name="Peso" model="inboundProductFormCtrl.model" attribute-m="pesoIniziale"
+                            required=true></input-num-form>
+        </div>
+        <div class="col-md-3">
+            <input-prezzo-form label-name="Prezzo" model="inboundProductFormCtrl.model" attribute-m="prezzo"
+                               required=true></input-prezzo-form>
+        </div>
+    </div>
+</form>
