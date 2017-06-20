@@ -1,8 +1,8 @@
 var store = angular.module('store', ['ngRoute', 'ngResource', 'ngTouch', 'ngAnimate', 'ui.bootstrap', 'ngCookies']);
 
 store.constant("myConfig", {
-	// "url": "http://localhost:8080",
-	"url": "http://clements-clementoni.rhcloud.com"
+    // "url": "http://localhost:8080",
+    "url": "http://clements-clementoni.rhcloud.com"
 })
 
 store.constant("features", {
@@ -291,22 +291,21 @@ store.config(function ($httpProvider) {
     $httpProvider.interceptors.push('TokenInterceptor');
 });
 
-store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', '$cookies', function ($rootScope, $location, AuthenticationService, UserService, $cookies) {
+store.run(['$rootScope', '$location', 'UserService', function ($rootScope, $location, UserService) {
     $rootScope.$on("$routeChangeStart", function (event, nextRoute, currentRoute) {
         $('.modal').modal('hide');
-        AuthenticationService.save({}, {},
-            function (resp) {
+        UserService.verify()
+            .then(function (resp) {
                 $rootScope.isLogged = true;
                 $rootScope.user = UserService.getUser();
-            },
-            function (err) {
+            })
+            .catch(function (err) {
                 if (nextRoute.access && nextRoute.access.requiredLogin) {
                     console.log(err.data.message);
                     $rootScope.isLogged = false;
                     $location.path("/login");
                 }
-            }
-        );
+            })
     });
 
     $rootScope.logout = function () {
@@ -320,7 +319,7 @@ store.run(['$rootScope', '$location', 'AuthenticationService', 'UserService', '$
         return $rootScope.isLogged;
     };
 
-    $rootScope.isAdmin = function() {
+    $rootScope.isAdmin = function () {
         return $rootScope.isLogged && $rootScope.user && $rootScope.user.role == "admin";
     };
 

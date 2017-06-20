@@ -1,5 +1,10 @@
-function UserService($window) {
+function UserService($window, $http, myConfig) {
     var userService = {};
+
+    userService.verify = function () {
+        return $http.post(myConfig.url+'/api/verify')
+    };
+
     userService.getUser = function () {
         return {username: $window.sessionStorage.username, role: $window.sessionStorage.role};
     };
@@ -25,4 +30,4 @@ function UserService($window) {
 
 angular
     .module('store')
-    .factory('UserService', ['$window', UserService]);
+    .factory('UserService', ['$window','$http', 'myConfig', UserService]);

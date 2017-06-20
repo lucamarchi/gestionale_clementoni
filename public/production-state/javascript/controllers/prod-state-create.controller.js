@@ -1,4 +1,4 @@
-function ProdStateCreateController (ProdStateFactory, $location) {
+function ProdStateCreateController(ProdStateFactory, $location) {
     var ctrl = this;
     ctrl.prodState = {};
     ctrl.prodState.articles = [];
@@ -11,15 +11,15 @@ function ProdStateCreateController (ProdStateFactory, $location) {
         modalId: 'prodstatecreation',
         modalClass: 'modal fade',
     }
-    
+
     ctrl.confirmProductionState = function (prodState) {
         console.log(prodState);
         ProdStateFactory.addProdState({prod: prodState.prod, articoli: prodState.addedArticles})
-            .then(function(resp){
-                console.log("CONFIRM PROD STATE ",resp);
+            .then(function (resp) {
+                console.log("CONFIRM PROD STATE ", resp);
                 $location.path("/productionState");
             })
-            .catch(function (err){
+            .catch(function (err) {
                 console.log(err);
             })
     };

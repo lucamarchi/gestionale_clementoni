@@ -51,7 +51,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a ng-if="!isLogged" href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a>
+                <li class="active"><a ng-if="!isLogged" ng-href="#/login"><span class="glyphicon glyphicon-user"></span>Login</a>
                 </li>
                 <li class="active"><a href ng-if="isLogged" ng-click="logout()"><span
                         class="glyphicon glyphicon-log-out"></span>Logout</a></li>
@@ -73,7 +73,7 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
 <script src="public/app.js"></script>
-<script src="public/components/services.js"></script>
+<script src="public/components/services/token-interceptor.factory.js"></script>
 <script src="public/components/services/product.factory.js"></script>
 <script src="public/components/services/inbound.factory.js"></script>
 <script src="public/components/services/expected.factory.js"></script>
@@ -87,14 +87,12 @@
 <script src="public/components/services/login.factory.js"></script>
 <script src="public/components/services/user-service.factory.js"></script>
 
-<script src="public/components/directive.js"></script>
+<script src="public/components/directives/convert-directive.js"></script>
 <script src="public/components/directives/form.directive.js"></script>
 <script src="public/components/directives/filter.directive.js"></script>
 <script src="public/components/directives/attribute.directive.js"></script>
 <script src="public/components/directives/pagination.directive.js"></script>
 
-<script src="public/components/function.js"></script>
-<script src="public/components/filter.js"></script>
 
 <script src="public/stock/javascript/controllers/stock.controller.js"></script>
 <script src="public/stock/javascript/services/stock.factory.js"></script>
