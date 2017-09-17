@@ -1,6 +1,3 @@
-/**
- * Created by francescodicara on 16/05/17.
- */
 
 function expectedFilter() {
     return {

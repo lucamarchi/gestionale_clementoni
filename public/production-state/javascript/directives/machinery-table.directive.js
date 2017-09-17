@@ -1,6 +1,3 @@
-/**
- * Created by francescodicara on 19/05/17.
- */
 
 function machineryTable () {
     return {

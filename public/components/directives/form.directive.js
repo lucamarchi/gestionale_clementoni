@@ -53,7 +53,7 @@ angular
                 '<label>',
                 '{{labelName}}',
                 '</label>',
-                '<select disabled ng-model="model[attributeM]" class="form-control" ng-required=false>',
+                '<select disabled class="form-control">',
                 '</select>',
                 '</span>',
             ].join(''),
